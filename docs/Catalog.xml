@@ -113,10 +113,6 @@
 				<Package Name="CertTool" Url="https://og.kakaobank.io/download/517591e5-9040-4393-b946-4de3ce14c886" />
 			</Packages>
 		</Service>
-		<Service Id="TossBank" DisplayName="토스뱅크" Category="Banking" Url="https://www.tossbank.com/">
-			<Packages>
-			</Packages>
-		</Service>
 		<Service Id="DGBDaeguBank" DisplayName="DGB대구은행" Category="Banking" Url="https://www.dgb.co.kr/">
 			<Packages>
 				<Package Name="Veraport" Url="http://varaportg3.dl.cdn.cloudn.co.kr/veraport-g3-x64-sha2.exe" Arguments="/silent" />
