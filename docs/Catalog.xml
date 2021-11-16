@@ -1376,6 +1376,7 @@
 			</Packages>
 		</Service>
 		<Service Id="GHealth" DisplayName="G-health 공공보건포털" Category="Government" Url="https://www.g-health.kr/">
+			<CompatNotes>G-health 공공보건포털의 경우 해당 기관의 보안 정책에 따라 NOS가 설치된 상태에서 원격 데스크톱, Hyper-V 고급 세션, 그리고 윈도우 샌드박스를 이용하여 웹 사이트를 방문하면 자동으로 종료되는 문제가 발생합니다.</CompatNotes>
 			<Packages>
 				<Package Name="AnySign" Url="https://www.g-health.kr/UserFiles/AnySign_Installer.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://www.g-health.kr/UserFiles/nos_setup.exe" Arguments="/silent" />
