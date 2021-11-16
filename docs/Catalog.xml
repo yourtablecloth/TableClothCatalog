@@ -1375,6 +1375,12 @@
 				<Package Name="KeySharpBiz" Url="https://cyber.ksure.or.kr/ws5/lib/raonnx/ksbiz/module/KSbiz_Installer_32bit.exe" />
 			</Packages>
 		</Service>
+		<Service Id="GHealth" DisplayName="G-health 공공보건포털" Category="Government" Url="https://www.g-health.kr/">
+			<Packages>
+				<Package Name="AnySign" Url="https://www.g-health.kr/UserFiles/AnySign_Installer.exe" Arguments="/silent" />
+				<Package Name="NOS" Url="https://www.g-health.kr/UserFiles/nos_setup.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
 		<!-- 공공기관 끝 -->
 
 		<!-- 교육기관 시작 - Category: Education -->
