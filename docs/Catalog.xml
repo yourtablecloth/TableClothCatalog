@@ -1388,23 +1388,5 @@
 		
 		<!-- 교육기관 끝 -->
 		
-		<!-- 공동인증서 스마트폰 복사 시작 - Category: TransmitCert -->
-		
-		<Service Id="KookminBankCert" DisplayName="국민은행 스마트폰 공동인증서 복사" Category="TransmitCert" Url="https://obank.kbstar.com/quics?page=C019653">
-			<Packages>
-				<Package Name="UniSign" Url="https://www.unisign.co.kr/EXE/install/UniSignCRSV3Setup.exe" Arguments="/silent" />
-				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
-			</Packages>
-		</Service>
-		
-		<!-- 공동인증서 스마트폰 복사 끝 -->
-		
-		<!-- 기타 시작 -->
-		
-		<Service Id="AnySupport" DisplayName="애니서포트 (822) 원격 지원 서비스" Category="Other" Url="http://822.co.kr/">
-		</Service>
-		
-		<!-- 기타 끝 -->
-
 	</InternetServices>
 </TableClothCatalog>
