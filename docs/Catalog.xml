@@ -7,7 +7,7 @@
 	-->
 	<Companions>
 		<!-- 모두의 프린터 -->
-		<Companion Id="EveryonesPrinter" DisplayName="모두의 프린터" Url="https://blog.kakaocdn.net/dn/BbHiA/btrj2gYTiEo/TeCEgV3VJuemSgjLZWc3T1/PIRODOWN_MOP64.exe?attach=1&knm=tfile.exe" Arguments="" />
+		<Companion Id="EveryonesPrinter" DisplayName="모두의 프린터" Url="https://blog.kakaocdn.net/dn/BbHiA/btrj2gYTiEo/TeCEgV3VJuemSgjLZWc3T1/PIRODOWN_MOP64.exe?attach=1&amp;knm=tfile.exe" Arguments="" />
 	</Companions>
 	<InternetServices>
 		<!-- 인터넷 뱅킹 시작 (https://www.kfb.or.kr/member/list_regular.php 참고함) -->
