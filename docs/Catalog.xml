@@ -901,6 +901,7 @@
 			<Packages>
 				<Package Name="Veraport" Url="https://www.shinhaninvest.com/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.shinhaninvest.com/siw/solution/download/SKCertServiceSetup_v2.5.17_149.exe" />
+				<Package Name="ASTX" Url="http://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="ePageSafer" Url="https://www.shinhaninvest.com/markany/bin/Setup_ePageSafer.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 			</Packages>
