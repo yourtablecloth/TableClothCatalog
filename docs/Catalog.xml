@@ -1383,6 +1383,11 @@
 				<Package Name="NOS" Url="https://www.g-health.kr/UserFiles/nos_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
+		<Service Id="VaccinationHelper" DisplayName="질병관리청 예방접종도우미" Category="Government" Url="https://nip.kdca.go.kr/">
+			<Packages>
+				<Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.2.7/AnySign_Installer.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
 		<!-- 공공기관 끝 -->
 
 		<!-- 교육기관 시작 - Category: Education -->
