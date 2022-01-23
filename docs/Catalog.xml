@@ -1388,6 +1388,11 @@
 				<Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.2.7/AnySign_Installer.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
+		<Service Id="Gubspb" DisplayName="경기도 청소년 교통비 지원 포털" Category="Government" Url="https://www.gbuspb.kr/">
+			<Packages>
+				<Package Name="iSASService" Url="https://www.gbuspb.kr/userResource/file/NXiSAS.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
 		<!-- 공공기관 끝 -->
 
 		<!-- 교육기관 시작 - Category: Education -->
