@@ -1370,6 +1370,12 @@
 				<Package Name="KeySharpBiz" Url="https://cyber.ksure.or.kr/ws5/lib/raonnx/ksbiz/module/KSbiz_Installer_32bit.exe" />
 			</Packages>
 		</Service>
+		<Service Id="Kmrs" DisplayName="착오송금반환지원정보시스템" Category="Government" Url="https://kmrs.kdic.or.kr/">
+			<Packages>
+				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
+				<Package Name="IniSafeCrossWebEx" Url="https://kmrs.kdic.or.kr/initech/SW/initech/extension/down/INIS_EX_SHA2.exe?ver=1.0.1.1021" Arguments="/silent" />
+			</Packages>
+		</Service>
 		<Service Id="GHealth" DisplayName="G-health 공공보건포털" Category="Government" Url="https://www.g-health.kr/">
 			<CompatNotes>G-health 공공보건포털의 경우 해당 기관의 보안 정책에 따라 NOS가 설치된 상태에서 원격 데스크톱, Hyper-V 고급 세션, 그리고 윈도우 샌드박스를 이용하여 웹 사이트를 방문하면 자동으로 종료되는 문제가 발생합니다.</CompatNotes>
 			<Packages>
