@@ -20,6 +20,7 @@
 				<Package Name="NOS" Url="https://www.wooribank.com/download/NOS/nos_setup.exe" Arguments="/silent" />
 				<Package Name="IPInside" Url="https://www.wooribank.com/download/IPinside/I3GSvcManager_3.0.0.7.exe" />
 			</Packages>
+			<!--
 			<CustomBootstrap>
 <![CDATA[
 Add-Type -AssemblyName PresentationCore,PresentationFramework
@@ -27,6 +28,7 @@ $msgBody = "This is a simple message with just the default OK button"
 [System.Windows.MessageBox]::Show($msgBody)
 ]]>
 			</CustomBootstrap>
+			-->
 		</Service>
 		<Service Id="KookminBank" DisplayName="KB국민은행" Category="Banking" Url="https://www.kbstar.com/">
 			<CompatNotes>KB국민은행의 경우 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 설치된 상태에서 원격 데스크톱, Hyper-V 고급 세션, 그리고 윈도우 샌드박스를 이용하여 웹 사이트를 방문하면 자동으로 종료되는 문제가 발생합니다.</CompatNotes>
