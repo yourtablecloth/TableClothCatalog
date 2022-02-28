@@ -544,9 +544,6 @@
 		<!-- 공공 - 국세청 홈택스 -->
 		<Site Domain="hometax.go.kr" Mode="Default" OpenIn="IE11" />
 
-		<!-- 교육 - 나이스 대국민 서비스 -->
-		<Site Domain="neis.go.kr" Mode="Default" OpenIn="IE11" />
-
 		<!-- 공공 - 기술보증기금 디지털지점 -->
 		<Site Domain="kibo.or.kr" Mode="Default" OpenIn="IE11" />
 
@@ -555,9 +552,21 @@
 
 		<!-- 공공 - 한국무역보험공사 사이버영업점 -->
 		<Site Domain="cyber.ksure.or.kr" Mode="Default" OpenIn="IE11" />
+		
+		<!-- 공공 - 착오송금반환지원정보시스템 -->
+		<Site Domain="kmrs.kdic.or.kr" Mode="Default" OpenIn="IE11" />
 
 		<!-- 공공 - G-health 공공보건포털 -->
 		<Site Domain="g-health.kr" Mode="Default" OpenIn="IE11" />
+		
+		<!-- 공공 - 질병관리청 예방접종도우미 -->
+		<Site Domain="nip.kdca.go.kr" Mode="Default" OpenIn="IE11" />
+		
+		<!-- 공공 - 경기도 청소년 교통비 지원 포털 -->
+		<Site Domain="www.gbuspb.kr" Mode="Default" OpenIn="IE11" />
+		
+		<!-- 교육 - 나이스 대국민 서비스 -->
+		<Site Domain="neis.go.kr" Mode="Default" OpenIn="IE11" />
 
 	</Sites>
 </IEModeList>
