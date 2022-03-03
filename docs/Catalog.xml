@@ -1402,7 +1402,7 @@
 				<Package Name="KCaseAgent" Url="https://update.ksign.com/eis/neis/KCaseAgent_Installer.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="DonggukUdrims" Display="동국대학교 정보시스템" Category="Education" Url="">
+		<Service Id="DonggukUdrims" Display="동국대학교 정보시스템" Category="Education" Url="http://udrims.dongguk.edu/">
 			<Packages>
 			</Packages>
 			<CustomBootstrap>
