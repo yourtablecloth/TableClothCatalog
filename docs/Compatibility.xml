@@ -567,6 +567,9 @@
 		
 		<!-- 교육 - 나이스 대국민 서비스 -->
 		<Site Domain="neis.go.kr" Mode="Default" OpenIn="IE11" />
+		
+		<!-- 교육 - 동국대학교 UDRIMS -->
+		<Site Domain="udrims.dongguk.edu" Mode="Default" OpenIn="IE11" />
 
 	</Sites>
 </IEModeList>
