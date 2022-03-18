@@ -550,6 +550,21 @@
 		<!-- 공공 - 주택금융공사 -->
 		<Site Domain="bank.hf.go.kr" Mode="Default" OpenIn="IE11" />
 
+		<!-- 공공 - 금융결제원 KFTCVAN -->
+		<Site Domain="kftcvan.or.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 금융결제원 CMS/EDI -->
+		<Site Domain="cmsedi.or.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 금융결제원 빌링원플러스 -->
+		<Site Domain="billingone.or.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 금융결제원 나라빌 -->
+		<Site Domain="narabill.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 금융결제원 트러스빌 -->
+		<Site Domain="trusbill.kr" Mode="Default" OpenIn="IE11" />
+
 		<!-- 공공 - 한국무역보험공사 사이버영업점 -->
 		<Site Domain="cyber.ksure.or.kr" Mode="Default" OpenIn="IE11" />
 		
