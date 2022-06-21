@@ -582,6 +582,9 @@
 		
 		<!-- 공공 - 경기도 청소년 교통비 지원 포털 -->
 		<Site Domain="www.gbuspb.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 서비스 - 컬처랜드 -->
+		<Site Domain="www.cultureland.co.kr" Mode="Default" OpenIn="IE11" />
 		
 		<!-- 교육 - 나이스 대국민 서비스 -->
 		<Site Domain="neis.go.kr" Mode="Default" OpenIn="IE11" />

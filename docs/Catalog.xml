@@ -1438,6 +1438,14 @@
 		</Service>
 		<!-- 공공기관 끝 -->
 
+		<!-- 일반 서비스 시작 -->
+		<Service Id="CultureLand" DisplayName="컬처랜드" Category="Service" Url="https://www.cultureland.co.kr/">
+			<Packages>
+				<Package Name="TouchEnKey32" Url="https://www.cultureland.co.kr/resources/web/js/raonnx/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
+		<!-- 일반 서비스 끝 -->
+
 		<!-- 교육기관 시작 - Category: Education -->
 		<Service Id="Neis" DisplayName="나이스 대국민 서비스" Category="Education" Url="https://neis.go.kr/">
 			<Packages>
