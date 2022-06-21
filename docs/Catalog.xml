@@ -1347,6 +1347,22 @@
 				<Package Name="EveryonesPrinter" Url="https://k.kakaocdn.net/dn/cEqior/btqCGQ8rVbX/KU5Kj1RmtQEmrpSyk256d0/MopInstaller.exe?attach=1&amp;knm=tfile.exe" />
 			</Packages>
 		</Service>
+		<Service Id="Ecfs" DisplayName="대한민국 법원 전자소송" Category="Government" Url="https://ecfs.scourt.go.kr/">
+			<Packages>
+				<Package Name="TouchEnKey32" Url="https://ecfs.scourt.go.kr/raonsecure/TouchEn/nxKey/module/TouchEn_nxKey_Installer_32bit.exe?ver=%201.0.0.75" Arguments="/silent" />
+				<Package Name="AnySign" Url="https://ecfs.scourt.go.kr/AnySign/AnySign4PC/AnySign_Installer.exe" Arguments="/silent" />
+				<Package Name="Markany" Url="https://ecfs.scourt.go.kr/markany/bin/installer.exe" Arguments="/silent" />
+				<Package Name="INNORIX" Url="https://ecfs.scourt.go.kr/innorix/install/INNORIX-Agent.exe" Arguments="/silent" />
+				<Package Name="Papyrus" Url="https://ecfs.scourt.go.kr/ecfdocs/install/etc/Papyrus-PlugIn-agent_5.0.4.186.exe" Arguments="/silent" />
+				<Package Name="Papyrus-PlugIn-web" Url="https://ecfs.scourt.go.kr/ecfdocs/install/etc/Papyrus-PlugIn-web.exe" Arguments="/silent" />
+				<Package Name="Papyrus-PlugIn-xfa" Url="https://ecfs.scourt.go.kr/papyrus/install/Papyrus-PlugIn-xfa.exe" Arguments="/silent" />
+				<Package Name="BankpayEFT" Url="https://www.bankpay.or.kr/download/BankPayEFT.exe" Arguments="/silent" />
+				<Package Name="yessign5" Url="https://www.bankpay.or.kr/download/yessign5Install.exe" Arguments="/silent" />
+				<Package Name="DetectorX" Url="https://ecfs.scourt.go.kr/ecfdocs/install/Advscourt/DetectorX_Advscourt.exe" Arguments="/silent" />
+				<Package Name="ezPDF" Url="https://ecfs.scourt.go.kr/ecfdocs/install/ezPDF%20WorkBoard2.0/ezPDF_WorkBoard_setup.exe" Arguments="/silent" />
+				<Package Name="EveryonesPrinter" Url="https://k.kakaocdn.net/dn/cEqior/btqCGQ8rVbX/KU5Kj1RmtQEmrpSyk256d0/MopInstaller.exe?attach=1&amp;knm=tfile.exe" />
+			</Packages>
+		</Service>
 		<Service Id="Hometax" DisplayName="국세청 홈택스" Category="Government" Url="https://hometax.go.kr/">
 			<Packages>
 				<Package Name="MagicLine4NX" Url="https://sesw.hometax.go.kr/dn_dir/veraport/magic-pki/magicline4nx_setup.exe" Arguments="/silent" />
