@@ -592,5 +592,8 @@
 		<!-- 교육 - 동국대학교 UDRIMS -->
 		<Site Domain="udrims.dongguk.edu" Mode="Default" OpenIn="IE11" />
 
+		<!-- 교육 - 대학 증명 발급 -->
+		<Site Domain="www.webminwon.com" Mode="Default" OpenIn="IE11" />
+
 	</Sites>
 </IEModeList>

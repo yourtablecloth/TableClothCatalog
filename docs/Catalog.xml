@@ -1496,6 +1496,11 @@ foreach ($EachMsi in $MsiList) {
 ]]>
 			</CustomBootstrap>
 		</Service>
+		<Service Id="Webminwon" DisplayName="대학 증명 발급" Category="Education" Url="https://www.webminwon.com/">
+			<Packages>
+				<Package Name="ICT_REPORTX" Url="https://uni.webminwon.com/wm1.0/activex/ICT_REPORTX_SETUP.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
 		<!-- 교육기관 끝 -->
 		
 	</InternetServices>
