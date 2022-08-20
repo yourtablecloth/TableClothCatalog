@@ -1442,6 +1442,11 @@
 				<Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.2.7/AnySign_Installer.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
+		<Service Id="KGeoPlatform" DisplayName="K-Geo 플랫폼" Category="Government" Url="https://kgeop.go.kr/">
+			<Packages>
+				<Package Name="UniSign" Url="https://kgeop.go.kr/myland/plugins/crosscert/CC_WSTD_home/install/UniSignCRSV3Setup.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
 		<!-- 공공기관 끝 -->
 
 		<!-- 일반 서비스 시작 -->
