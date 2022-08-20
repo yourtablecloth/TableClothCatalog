@@ -1436,6 +1436,12 @@
 				<Package Name="iSASService" Url="https://www.gbuspb.kr/userResource/file/NXiSAS.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
+		<Service Id="ECar" DisplayName="자동차민원 대국민포털" Category="Government" Url="https://www.ecar.go.kr/Index.jsp">
+			<Packages>
+				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
+				<Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.2.7/AnySign_Installer.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
 		<!-- 공공기관 끝 -->
 
 		<!-- 일반 서비스 시작 -->
