@@ -9,6 +9,10 @@
     <compat-mode>Default</compat-mode>
     <open-in>IE11</open-in>
   </site>
+  <site url="kbstar.com">
+    <compat-mode>Default</compat-mode>
+    <open-in>IE11</open-in>
+  </site>
   <site url="kebhana.com">
     <compat-mode>Default</compat-mode>
     <open-in>IE11</open-in>
