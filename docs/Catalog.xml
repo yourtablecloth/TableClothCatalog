@@ -1462,6 +1462,11 @@
 				<Package Name="iLogen" Url="https://www.ilogen.com/static/download/setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
+		<Service Id="ContInsure" DisplayName="나의 숨은 보험금 찾기" Category="Other" Url="https://cont.insure.or.kr/">
+			<Packages>
+				<Package Name="VertCert" Url="https://cert.niceid.co.kr/vestsignCertWeb/VestCertSetup.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
 		<!-- 일반 서비스 끝 -->
 
 		<!-- 교육기관 시작 - Category: Education -->
