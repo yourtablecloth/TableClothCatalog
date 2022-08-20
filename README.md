@@ -14,7 +14,6 @@
 - [docs/Compatibility.xml](docs/Compatibility.xml): Internet Explorer Mode로 띄우려는 웹 사이트들의 목록을 저장하고 관리하는 XML 파일입니다. (식탁보 0.5.3 버전부터 사용)
 - [docs/sites.xml](docs/sites.xml): Internet Explorer Mode로 띄우려는 웹 사이트들의 목록을 저장하고 관리하는 XML 파일입니다. (식탁보 0.5.5 버전부터 사용)
   - Microsoft Edge 그룹 정책에서 https://yourtablecloth.app/TableClothCatalog/sites.xml 주소를 직접 지정하여 설정을 적용할 수 있습니다.
-
-[docs/images/&lt;Category&gt;/&lt;Id&gt;.png](docs/images/): `<Category>`와 `<Id>`에 해당하는 식별자를 넣어 고해상도 투명 PNG 로고 이미지 파일을 등록하여 관리합니다. (예: [docs/images/Banking/WooriBank.png](docs/images/Banking/WooriBank.png))
+- [docs/images/&lt;Category&gt;/&lt;Id&gt;.png](docs/images/): `<Category>`와 `<Id>`에 해당하는 식별자를 넣어 고해상도 투명 PNG 로고 이미지 파일을 등록하여 관리합니다. (예: [docs/images/Banking/WooriBank.png](docs/images/Banking/WooriBank.png))
 
 위의 두 개의 파일에 새로운 항목을 추가하고 Pull Request를 보내주시면, 검토 후에 반영하도록 하겠습니다.
