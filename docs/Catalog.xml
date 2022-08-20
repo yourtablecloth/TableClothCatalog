@@ -1444,6 +1444,13 @@
 				<Package Name="TouchEnKey32" Url="https://www.cultureland.co.kr/resources/web/js/raonnx/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
+		<Service Id="ILogenEnterprise" DisplayName="로젠택배 기업용" Category="Other" Url="https://www.ilogen.com/web/enterprise/system">
+			<CompatNotes>로젠택배 기업용 소프트웨어는 .NET Framework 2.0이 필요하며, 해당 구성 요소는 윈도우 샌드박스 내부가 아닌 시스템에 미리 설치되어있어야 사용할 수 있습니다. 사용 중인 컴퓨터의 프로그램 추가/제거 화면에서 .NET Framework 3.5가 설치되어있는지 확인하고, 먼저 설치해주세요.</CompatNotes>
+			<Packages>
+				<Package Name="wLogenLauncher" Url="http://cust.ilogen.com/install/newlauncher/TPLSvc_Setup.exe" Arguments="/silent" />
+				<Package Name="iLogen" Url="https://www.ilogen.com/static/download/setup.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
 		<!-- 일반 서비스 끝 -->
 
 		<!-- 교육기관 시작 - Category: Education -->
