@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <site-list version="1">
   <created-by>
-    <tool>EMIESiteListManager</tool>
-    <version>10.0.14357.1004</version>
-    <date-created>08/20/2022 15:57:00</date-created>
-  </created-by>
+		<tool>EnterpriseSiteListManager</tool>
+		<version>10586</version>
+		<date-created>20150728.135021</date-created>
+	</created-by>
   <site url="wooribank.com">
     <compat-mode>Default</compat-mode>
     <open-in>IE11</open-in>
