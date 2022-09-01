@@ -1473,6 +1473,11 @@
 				<Package Name="MobiSign" Url="https://download.raonsecure.com/MobiSign/v5.0.5.0/xccr.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
+		<Service Id="TMoney" DisplayName="티머니카드" Category="Other" Url="https://pay.tmoney.co.kr/">
+			<Packages>
+				<Package Name="TouchEnKey32" Url="http://download.raonsecure.com/TouchEnnxKey/current/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
 		<!-- 일반 서비스 끝 -->
 
 		<!-- 교육기관 시작 - Category: Education -->
