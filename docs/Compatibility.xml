@@ -588,6 +588,9 @@
 
 		<!-- 서비스 - 로젠택배 기업용 -->
 		<Site Domain="cust.ilogen.com" Mode="Default" OpenIn="IE11" />
+
+		<!-- 서비스 - 티머니카드 -->
+		<Site Domain="pay.tmoney.co.kr" Mode="Default" OpenIn="IE11" />
 		
 		<!-- 교육 - 나이스 대국민 서비스 -->
 		<Site Domain="neis.go.kr" Mode="Default" OpenIn="IE11" />
