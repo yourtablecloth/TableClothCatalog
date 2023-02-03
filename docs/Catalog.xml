@@ -170,8 +170,8 @@
 		<Service Id="MGSaemaeul" DisplayName="MG새마을금고" Category="Banking" Url="https://ibs.kfcc.co.kr/">
 			<CompatNotes>MG새마을금고의 경우 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<Packages>
-				<Package Name="WizInDelfino" Url="https://ibs.kfcc.co.kr/common/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
+				<Package Name="WizInDelfino" Url="https://ibs.kfcc.co.kr/common/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
 		<Service Id="Shinhyub" DisplayName="신협" Category="Banking" Url="https://openbank.cu.co.kr/">
@@ -980,8 +980,8 @@
 			<CompatNotes>KB국민카드의 경우 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://download.kbcard.com/security/wizvera/veraport-g3/veraport-g3-x64.exe" Arguments="/silent" />
-				<Package Name="WizInDelfino" Url="https://download.kbcard.com/security/wizvera/delfino-g3/delfino-g3.exe" Arguments="/silent" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
+				<Package Name="WizInDelfino" Url="https://download.kbcard.com/security/wizvera/delfino-g3/delfino-g3.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
 		<Service Id="Hanacard" DisplayName="하나카드" Category="CreditCard" Url="https://www.hanacard.co.kr/">
