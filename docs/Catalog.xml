@@ -1360,8 +1360,12 @@
 <![CDATA[
 takeown.exe /f "$env:WINDIR\winsxs" /a /r /d Y
 icacls.exe "$env:WINDIR\winsxs" /grant "Administrators:(OI)(CI)F" /T
+mkdir "$env:WINDIR\winsxs\Backup" | Out-Null
+mkdir "$env:WINDIR\winsxs\Catalogs" | Out-Null
+mkdir "$env:WINDIR\winsxs\FileMaps" | Out-Null
 mkdir "$env:WINDIR\winsxs\Fusion" | Out-Null
-mkdir "$env:WINDIR\winsxs\winsxs\InstallTemp" | Out-Null
+mkdir "$env:WINDIR\winsxs\InstallTemp" | Out-Null
+mkdir "$env:WINDIR\winsxs\Manifests" | Out-Null
 
 Set-Service -StartupType Automatic -ServiceName TrustedInstaller
 Start-Service -ServiceName TrustedInstaller
