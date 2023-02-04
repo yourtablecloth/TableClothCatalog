@@ -1365,10 +1365,13 @@ mkdir "$env:WINDIR\winsxs\Catalogs" | Out-Null
 mkdir "$env:WINDIR\winsxs\FileMaps" | Out-Null
 mkdir "$env:WINDIR\winsxs\Fusion" | Out-Null
 mkdir "$env:WINDIR\winsxs\InstallTemp" | Out-Null
-mkdir "$env:WINDIR\winsxs\Manifests" | Out-Null
 
 Set-Service -StartupType Automatic -ServiceName TrustedInstaller
 Start-Service -ServiceName TrustedInstaller
+
+[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true} ;
+(New-Object Net.WebClient).DownloadFile('http://www.iros.go.kr/iris/VCRedist_sudong.exe',"$env:USERPROFILE\VCRedistManual.exe")
+. "$env:USERPROFILE\VCRedistManual.exe"
 ]]>
 			</CustomBootstrap>
 		</Service>
