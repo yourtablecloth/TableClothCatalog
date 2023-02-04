@@ -1356,6 +1356,17 @@
 				<Package Name="AnySign" Url="http://download.softforum.com/Published/AnySign/v1.1.2.0/AnySign_Installer.exe" Arguments="/silent" />
 				<Package Name="TouchEnKey32" Url="http://www.iros.go.kr/XecureObject/raonsecure/TouchEn/nxKey/module/10047/TouchEn_nxKey_Installer_32bit.exe?ver=1.0.0.48" Arguments="/silent" />
 			</Packages>
+			<CustomBootstrap>
+<![CDATA[
+takeown.exe /f "$env:WINDIR\winsxs" /a /r /d Y
+icacls.exe "$env:WINDIR\winsxs" /grant "Administrators:(OI)(CI)F" /T
+mkdir "$env:WINDIR\winsxs\Fusion" | Out-Null
+mkdir "$env:WINDIR\winsxs\winsxs\InstallTemp" | Out-Null
+
+Set-Service -StartupType Automatic -ServiceName TrustedInstaller
+Start-Service -ServiceName TrustedInstaller
+]]>
+			</CustomBootstrap>
 		</Service>
 		<Service Id="Ecfs" DisplayName="대한민국 법원 전자소송" Category="Government" Url="https://ecfs.scourt.go.kr/">
 			<Packages>
