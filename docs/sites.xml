@@ -713,10 +713,6 @@
     <compat-mode>Default</compat-mode>
     <open-in>IE11</open-in>
   </site>
-  <site url="iros.go.kr">
-    <compat-mode>Default</compat-mode>
-    <open-in>IE11</open-in>
-  </site>
   <site url="ecfs.scourt.go.kr">
     <compat-mode>Default</compat-mode>
     <open-in>IE11</open-in>
