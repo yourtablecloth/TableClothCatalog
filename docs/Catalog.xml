@@ -1023,7 +1023,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 		<Service Id="NHCard" DisplayName="NH농협카드" Category="CreditCard" Url="https://card.nonghyup.com/">
 			<Packages>
 				<Package Name="Veraport" Url="https://card.nonghyup.com/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
-				<Package Name="WizInDelfino" Url="https://card.nonghyup.com/thirdparty/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
+				<Package Name="WizInDelfino" Url="https://card.nonghyup.com/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 			</Packages>
