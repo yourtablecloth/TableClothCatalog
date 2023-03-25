@@ -1366,6 +1366,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 			</Packages>
 		</Service>
 		<Service Id="Iros" DisplayName="대한민국 법원 인터넷등기소" Category="Government" Url="http://www.iros.go.kr/">
+			<CompatNotes>대한민국 법원 인터넷등기소의 경우 오래된 Windows 10 또는 Windows 11에서 지원하지 않는 오래된 Visual C++ 런타임 패키지를 설치하려다가 실패하는 문제로 인하여 샌드박스 내에서 제대로 사용할 수 없을 수 있습니다.</CompatNotes>
 			<Packages>
 				<Package Name="EnableTrustedSite" Url="http://www.iros.go.kr/iris/TrustedSiteSetup.exe" Arguments="/silent" />
 				<Package Name="AnySign" Url="http://download.softforum.com/Published/AnySign/v1.1.2.0/AnySign_Installer.exe" Arguments="/silent" />
