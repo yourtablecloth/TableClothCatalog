@@ -1657,6 +1657,7 @@ foreach ($EachMsi in $MsiList) {
 			<Packages>
 				<Package Name="OZReportLauncher" Url="https://www.knou.ac.kr/bbs/knou/56/74346/download.do" Arguments="" />
 				<Package Name="OZReportPrinter" Url="https://www.knou.ac.kr/bbs/knou/56/6389/download.do" Arguments="" />
+				<Package Name="OZWebLauncher" Url="https://util.knou.ac.kr/ozweblauncher/OnLine_Install_Dialog_UI_SSL.exe" Arguments="" />
 			</Packages>
 		</Service>
 		<!-- 교육기관 끝 -->
