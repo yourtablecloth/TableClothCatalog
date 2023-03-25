@@ -1493,6 +1493,32 @@ Start-Service -ServiceName TrustedInstaller
 				<Package Name="UniSign" Url="https://kgeop.go.kr/myland/plugins/crosscert/CC_WSTD_home/install/UniSignCRSV3Setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
+		<Service Id="W4C" DisplayName="사회복지시설정보시스템" Category="Government" Url="http://www.w4c.go.kr/">
+			<CompatNotes>이 웹 사이트는 오래된 Windows 10 또는 Windows 11에서 지원하지 않는 오래된 Visual C++ 런타임 패키지를 설치하려다가 실패하는 문제로 인하여 샌드박스 내에서 제대로 사용할 수 없을 수 있습니다. 사회복지시설정보시스템은 로그인 후 XChart 가 설치,시작되지 않는경우 http://www.w4c.go.kr/apinstall.jsp?isPage=Y 의 5번 항목을 수동 설치후 사용해야 합니다.</CompatNotes>
+			<Packages>
+				<Package Name="XPlatform" Url="http://www.w4c.go.kr/userimg/img/notice/XPLATFORM9.2_SetupEngine.exe" Arguments="" />
+				<Package Name="NamoWecClient" Url="http://www.w4c.go.kr/mipf/img/mi_setup/NamoWecClient.exe" Arguments="" />
+				<Package Name="MagicLine" Url="http://www.w4c.go.kr/mipf/img/mi_setup/MagicLineMBXSetup.exe" Arguments="/silent" />
+				<Package Name="Rexpert" Url="http://www.w4c.go.kr/userimg/img/notice/rexpert30viewer.exe" Arguments="" />
+				<Package Name="EWS" Url="http://download.signgate.com/download/2048/ews/ewsinstaller_full.exe" Arguments="" />
+				<Package Name="MWSW" Url="http://www.w4c.go.kr/mipf/img/mi_setup/Setup_MWSWRex.exe" Arguments="" />
+				<Package Name="ClientSetup" Url="http://www.w4c.go.kr/userimg/img/notice/SetupClientDirect.exe" Arguments="" />
+			</Packages>
+			<CustomBootstrap>
+<![CDATA[
+takeown.exe /f "$env:WINDIR\winsxs" /a /r /d Y
+icacls.exe "$env:WINDIR\winsxs" /grant "Administrators:(OI)(CI)F" /T
+mkdir "$env:WINDIR\winsxs\Backup" | Out-Null
+mkdir "$env:WINDIR\winsxs\Catalogs" | Out-Null
+mkdir "$env:WINDIR\winsxs\FileMaps" | Out-Null
+mkdir "$env:WINDIR\winsxs\Fusion" | Out-Null
+mkdir "$env:WINDIR\winsxs\InstallTemp" | Out-Null
+
+Set-Service -StartupType Automatic -ServiceName TrustedInstaller
+Start-Service -ServiceName TrustedInstaller
+]]>
+			</CustomBootstrap>
+		</Service>
 		<!-- 공공기관 끝 -->
 
 		<!-- 일반 서비스 시작 -->

@@ -583,6 +583,9 @@
 		<!-- 공공 - 경기도 청소년 교통비 지원 포털 -->
 		<Site Domain="www.gbuspb.kr" Mode="Default" OpenIn="IE11" />
 
+		<!-- 공공 - 사회복지시설정보시스템 -->
+		<Site Domain="www.w4c.go.kr" Mode="Default" OpenIn="IE11" />
+
 		<!-- 서비스 - 컬처랜드 -->
 		<Site Domain="www.cultureland.co.kr" Mode="Default" OpenIn="IE11" />
 
