@@ -545,7 +545,7 @@
 		<Site Domain="ecfs.scourt.go.kr" Mode="Default" OpenIn="IE11" />
 
 		<!-- 공공 - 국세청 홈택스 -->
-		<Site Domain="hometax.go.kr" Mode="Default" OpenIn="IE11" />
+		<!-- <Site Domain="hometax.go.kr" Mode="Default" OpenIn="IE11" /> -->
 
 		<!-- 공공 - 기술보증기금 디지털지점 -->
 		<Site Domain="kibo.or.kr" Mode="Default" OpenIn="IE11" />
