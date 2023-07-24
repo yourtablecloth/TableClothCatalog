@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 이 파일은 오래된 식탁보 버전을 위해서 유지하는 파일입니다. sites.xml 파일을 수정해주세요. -->
 <IEModeList>
 	<Sites>
 		<!-- 인터넷 뱅킹 - 우리은행 -->
