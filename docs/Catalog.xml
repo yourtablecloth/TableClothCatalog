@@ -1446,8 +1446,12 @@ Start-Service -ServiceName TrustedInstaller
 		</Service>
 		<Service Id="Hometax" DisplayName="국세청 홈택스" Category="Government" Url="https://hometax.go.kr/">
 			<Packages>
-				<Package Name="MagicLine4NX" Url="https://sesw.hometax.go.kr/dn_dir/veraport/magic-pki/magicline4nx_setup.exe" Arguments="/silent" />
-				<Package Name="Veraport" Url="https://sesw.hometax.go.kr/secs/veraportNX/down/veraport-g3-x64.exe" Arguments="/silent" />
+				<Package Name="MAGIC-PKI" Url="https://hometax.speedycdn.net/dn_dir/veraport/magic-pki/magicline4nx_setup.exe" Arguments="/silent" />
+				<Package Name="REXPERT" Url="https://hometax.speedycdn.net/dn_dir/veraport/rexpert/rexpert30printservice.exe" Arguments="/silent" />
+				<Package Name="KUPLOAD" Url="https://hometax.speedycdn.net/dn_dir/veraport/kupload/raonkSetup.exe" Arguments="/silent" />
+				<Package Name="MAGIC-XML" Url="https://hometax.speedycdn.net/dn_dir/veraport/magic-xml/ntsmagicxmlnp_setup.exe" Arguments="/silent" />
+				<Package Name="IPINSIDE" Url="https://hometax.speedycdn.net/dn_dir/veraport/ipinside/I3GSvcManager.exe" Arguments="/silent" />
+				<Package Name="ESAFER" Url="https://hometax.speedycdn.net/dn_dir/veraport/e-safer/MarkAny_NTS_NOAXRp.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
 		<Service Id="Kibo" DisplayName="기술보증기금 디지털지점" Category="Government" Url="https://www.kibo.or.kr/dbranch/">
