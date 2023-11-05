@@ -1601,6 +1601,20 @@ Start-Service -ServiceName TrustedInstaller
 				<Package Name="TouchEnKey32" Url="http://download.raonsecure.com/TouchEnnxKey/current/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
 			</Packages>
 		</Service>
+				<Service Id="KTCU" DisplayName="한국교직원공제회" Category="Other" Url="https://www.ktcu.or.kr/">
+			<Packages>
+				<Package Name="CrossWarpEX" Url="https://www.ktcu.or.kr/resources/pc/crosswarpex/extension/down/CrossWarpEX.exe?ver=1.0.0.737" />
+				<Package Name="Crosscert" Url="https://www.ktcu.or.kr/resources/pc/CrossCert/CC_WSTD_home/install/UniSignCRSV3Setup.exe" />
+				<Package Name="ASTx" Url="http://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silence" />
+				<Package Name="KSCertRelay_nx" Url="https://www.ktcu.or.kr/resources/pc/raonnx/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" />
+				<Package Name="iSASService" Url="https://www.ktcu.or.kr/resources/pc/Coocon/iSASService_v2.4.9.exe" />
+			</Packages>
+		</Service>
+		<Service Id="TeachersPension" DisplayName="사학연금공단" Category="Other" Url="https://www.tp.or.kr/">
+			<Packages>
+				<Package Name="KSignCASE" Url="https://www.tp.or.kr/gpki-setup/window/KSignCASE_For_HTML5_Windows_v1.3.28.exe" />
+			</Packages>
+		</Service>
 		<!-- 일반 서비스 끝 -->
 
 		<!-- 교육기관 시작 - Category: Education -->
