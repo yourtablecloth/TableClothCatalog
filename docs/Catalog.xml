@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableClothCatalog>
+<TableClothCatalog
+	Fallback="ko-KR"
+	xmlns:en-US="https://yourtablecloth.app/translations/en-US">
 	<!--
 	식탁보 카탈로그: 등록하려는 웹 사이트에 대한 정보를 XML 파일 문법에 맞게 넣어주세요.
 	Category 속성에는 Other, Banking, Financing, CreditCard, Government 등의 값을 넣을 수 있어요.
@@ -7,12 +9,15 @@
 	-->
 	<Companions>
 		<!-- 모두의 프린터 -->
-		<Companion Id="EveryonesPrinter" DisplayName="모두의 프린터" Url="https://mop.pirodown.win/ebp325_x64.exe" Arguments="" />
+		<Companion Id="EveryonesPrinter" DisplayName="모두의 프린터" Url="https://mop.pirodown.win/ebp325_x64.exe" Arguments=""
+			en-US:DisplayName="Everyone's Printer" />
 	</Companions>
 	<InternetServices>
 		<!-- 인터넷 뱅킹 시작 (https://www.kfb.or.kr/member/list_regular.php 참고함) -->
-		<Service Id="WooriBank" DisplayName="우리은행" Category="Banking" Url="https://www.wooribank.com/">
+		<Service Id="WooriBank" DisplayName="우리은행" Category="Banking" Url="https://www.wooribank.com/"
+			en-US:DisplayName="WOORI BANK">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://www.wooribank.com/download/veraportG3/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="AnySign" Url="https://www.wooribank.com/download/AnySign_Installer/AnySign_Installer.exe" Arguments="/S" />
@@ -21,14 +26,17 @@
 				<Package Name="IPInside" Url="https://www.wooribank.com/download/IPinside/I3GSvcManager_3.0.0.7.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="KookminBank" DisplayName="KB국민은행" Category="Banking" Url="https://www.kbstar.com/">
+		<Service Id="KookminBank" DisplayName="KB국민은행" Category="Banking" Url="https://www.kbstar.com/"
+			en-US:DisplayName="KB KOOKMIN BANK">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" />
 				<Package Name="WizInDelfino" Url="https://download.kbstar.com/security/wizvera/delfino/g3/delfino-g3.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="KEBHanaBank" DisplayName="KEB하나은행" Category="Banking" Url="https://www.kebhana.com/">
+		<Service Id="KEBHanaBank" DisplayName="하나은행" Category="Banking" Url="https://www.kebhana.com/"
+			en-US:DisplayName="KEB Hana Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.kebhana.com/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="TouchEnKey32" Url="https://www.kebhana.com/TouchEn/nxKey/module/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
@@ -37,8 +45,10 @@
 				<Package Name="IPInside" Url="https://www.kebhana.com/interezen/agent/np_v6/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="ShinhanBank" DisplayName="신한은행" Category="Banking" Url="https://www.shinhan.com/">
+		<Service Id="ShinhanBank" DisplayName="신한은행" Category="Banking" Url="https://www.shinhan.com/"
+			en-US:DisplayName="SHINHAN BANK">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="ASTX" Url="https://bank.shinhan.com/sw/astx/astxdn.exe" Arguments="/silent" />
 				<Package Name="INISAFECrossWeb" Url="https://bank.shinhan.com/sw/initech/extension/down/INIS_EX_SHA2.exe?ver=1.0.1.961" Arguments="/S" />
@@ -46,8 +56,10 @@
 				<Package Name="Printmade3" Url="https://bank.shinhan.com/sw/printmade/download_files/Windows/Printmade3_setup.exe" />
 			</Packages>
 		</Service>
-		<Service Id="NHInternetBank" DisplayName="NH농협은행" Category="Banking" Url="https://banking.nonghyup.com/">
+		<Service Id="NHInternetBank" DisplayName="NH농협은행" Category="Banking" Url="https://banking.nonghyup.com/"
+			en-US:DisplaynName="NONGHYUP BANK">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://veraport.nonghyup.com/download/20230210/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
@@ -71,8 +83,10 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 ]]>
 			</CustomBootstrap>
 		</Service>
-		<Service Id="SHInternetBank" DisplayName="SH수협은행" Category="Banking" Url="https://www.suhyup-bank.com/">
+		<Service Id="SHInternetBank" DisplayName="SH수협은행" Category="Banking" Url="https://www.suhyup-bank.com/"
+			en-US:DisplayName="Suhyup Bank">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://www.suhyup-bank.com/wizvera/veraport/down/veraport-g3-x64.exe" />
 				<Package Name="INISAFECrossWeb" Url="https://www.suhyup-bank.com/initech/crossweb/extension/down/INIS_EX.exe" Arguments="/S" />
@@ -81,7 +95,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="ASTX" Url="https://safetx.ahnlab.com/master/win/default/common/astxdn.exe" />
 			</Packages>
 		</Service>
-		<Service Id="IBKBank" DisplayName="IBK기업은행" Category="Banking" Url="https://www.ibk.co.kr/">
+		<Service Id="IBKBank" DisplayName="IBK기업은행" Category="Banking" Url="https://www.ibk.co.kr/"
+			en-US:DisplayName="Industrial Bank of Korea">
 			<Packages>
 				<Package Name="Veraport" Url="https://mybank.ibk.co.kr/IBK/uib/sw/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://mybank.ibk.co.kr/IBK/uib/sw/wizvera/delfino/down/delfino-g3-sha2.exe" Arguments="/silent" />
@@ -91,15 +106,19 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="APSEngine" Url="https://mybank.ibk.co.kr/IBK/uib/sw/yettiesoft/APS/APS_Engine.exe" />
 			</Packages>
 		</Service>
-		<Service Id="KDBBank" DisplayName="KDB산업은행" Category="Banking" Url="https://www.kdb.co.kr/">
+		<Service Id="KDBBank" DisplayName="KDB산업은행" Category="Banking" Url="https://www.kdb.co.kr/"
+			en-US:DisplayName="Korea Development Bank">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" />
 				<Package Name="AnySign" Url="https://banking.kdb.co.kr//bp/3rd-party-web/hsecure/anysign/AnySign_Installer.exe" Arguments="/S" />
 			</Packages>
 		</Service>
-		<Service Id="StandardCharteredBank" DisplayName="한국스탠다드차타드은행" Category="Banking" Url="https://www.standardchartered.co.kr/">
+		<Service Id="StandardCharteredBank" DisplayName="한국스탠다드차타드은행" Category="Banking" Url="https://www.standardchartered.co.kr/"
+			en-US:DisplayName="Standard Chartered Bank Korea Limited.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://open.standardchartered.co.kr/wizvera/veraport20/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="INISAFECrossWeb" Url="https://open.standardchartered.co.kr/initech/extension/down/INIS_EX.exe" Arguments="/S" />
@@ -107,8 +126,10 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="IPInside" Url="https://open.standardchartered.co.kr/interezen/install/Non/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="CitiBankKorea" DisplayName="한국씨티은행" Category="Banking" Url="https://www.citibank.co.kr/">
+		<Service Id="CitiBankKorea" DisplayName="한국씨티은행" Category="Banking" Url="https://www.citibank.co.kr/"
+			en-US:DisplayName="Citibank Korea Inc.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://www.citibank.co.kr/3rdParty/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://www.citibank.co.kr/3rdParty/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
@@ -117,8 +138,10 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="IPInside" Url="https://www.citibank.co.kr/3rdParty/interezen/ipinside/agent/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="KBank" DisplayName="케이뱅크" Category="Banking" Url="https://www.kbanknow.com/">
+		<Service Id="KBank" DisplayName="케이뱅크" Category="Banking" Url="https://www.kbanknow.com/"
+			en-US:DisplayName="Kbank">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="SmartManagerEx" Url="https://www.kbanknow.com/product/initech/smartmanagerex/extension/down/SmartManagerEX.exe?ver=1.0.1.1392" />
 				<Package Name="VCPP2008_Redist_x86" Url="https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x86.exe" Arguments="/q" />
@@ -130,15 +153,19 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="KISSCAP" Url="https://download.kbanknow.com/product/scraping/KISSCAP.exe" Arguments="/s /v/qn" />
 			</Packages>
 		</Service>
-		<Service Id="KakaoBank" DisplayName="카카오뱅크" Category="Banking" Url="https://www.kakaobank.com/">
+		<Service Id="KakaoBank" DisplayName="카카오뱅크" Category="Banking" Url="https://www.kakaobank.com/"
+			en-US:DisplayName="KakaoBank Corp.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" />
 				<Package Name="CertTool" Url="https://og.kakaobank.io/download/517591e5-9040-4393-b946-4de3ce14c886" />
 			</Packages>
 		</Service>
-		<Service Id="DGBDaeguBank" DisplayName="DGB대구은행" Category="Banking" Url="https://www.dgb.co.kr/">
+		<Service Id="DGBDaeguBank" DisplayName="DGB대구은행" Category="Banking" Url="https://www.dgb.co.kr/"
+			en-US:DisplayName="DGB DAEGU BANK">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="http://varaportg3.dl.cdn.cloudn.co.kr/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="TouchEnKey32" Url="http://touchennxkey.dl.cdn.cloudn.co.kr/ebz_TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
@@ -147,8 +174,10 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="ePageSafer" Url="http://epagesaferrt.dl.cdn.cloudn.co.kr/ebz_MAWS_DaeguBankRex_Setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="BusanBank" DisplayName="BNK부산은행" Category="Banking" Url="https://www.busanbank.co.kr/">
+		<Service Id="BusanBank" DisplayName="BNK부산은행" Category="Banking" Url="https://www.busanbank.co.kr/"
+			en-US:DisplayName="BNK BUSAN BANK">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://ibank.busanbank.co.kr/product/install/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="INISAFECrossWeb" Url="https://ibank.busanbank.co.kr/product/install/INISAFE/extension/down/INIS_EX_SHA2.exe" Arguments="/S" />
@@ -159,8 +188,10 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="BusanPFMS" Url="https://ibank.busanbank.co.kr/product/install/pfms/Windows/2.0.2.2/BusanPFMS_Setup.exe" />
 			</Packages>
 		</Service>
-		<Service Id="GwangjuBank" DisplayName="광주은행" Category="Banking" Url="https://pjb.kjbank.com/">
+		<Service Id="GwangjuBank" DisplayName="광주은행" Category="Banking" Url="https://pjb.kjbank.com/"
+			en-US:DisplayName="KWANGJU BANK">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://imgs.kjbank.com/resource/product/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="INISAFECrossWeb" Url="https://imgs.kjbank.com/resource/product/initech/extension/down/INIS_EX.exe" Arguments="/S" />
@@ -170,14 +201,17 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="TDClientAgent" Url="https://imgs.kjbank.com/resource/product/clipsoft/trustDoc/Install/TDClientforWindowsAgentNX_4.9.0.5.exe" />
 			</Packages>
 		</Service>
-		<Service Id="JejuBank" DisplayName="제주은행" Category="Banking" Url="https://www.e-jejubank.com/">
+		<Service Id="JejuBank" DisplayName="제주은행" Category="Banking" Url="https://www.e-jejubank.com/"
+			en-US:DisplayName="JEJU BANK">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="UniquePC" Url="https://open.e-jejubank.com/ib20_com/besoft/uniPc/UniquePC_Setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="JbBank" DisplayName="전북은행" Category="Banking" Url="https://www.jbbank.co.kr/">
+		<Service Id="JbBank" DisplayName="전북은행" Category="Banking" Url="https://www.jbbank.co.kr/"
+			en-US:DisplayName="JEONBUK BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://ibs.jbbank.co.kr/wizvera/veraportG3/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.2.6/AnySign_Installer.exe" Arguments="/silent" />
@@ -186,19 +220,23 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="IPInside" Url="https://ibs.jbbank.co.kr/pcInside/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="BnkKyungNamBank" DisplayName="BNK경남은행" Category="Banking" Url="https://www.knbank.co.kr/">
+		<Service Id="BnkKyungNamBank" DisplayName="BNK경남은행" Category="Banking" Url="https://www.knbank.co.kr/"
+			en-US:DisplayName="BNK KYONGNAM BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://ibank.knbank.co.kr/product/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="MGSaemaeul" DisplayName="MG새마을금고" Category="Banking" Url="https://ibs.kfcc.co.kr/">
+		<Service Id="MGSaemaeul" DisplayName="MG새마을금고" Category="Banking" Url="https://ibs.kfcc.co.kr/"
+			en-US:DisplayName="Korean Federation of Community Credit Cooperatives">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://ibs.kfcc.co.kr/common/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="Shinhyub" DisplayName="신협" Category="Banking" Url="https://openbank.cu.co.kr/">
+		<Service Id="Shinhyub" DisplayName="신협" Category="Banking" Url="https://openbank.cu.co.kr/"
+			en-US:DisplayName="National Credit Union Federation of Korea">
 			<Packages>
 				<Package Name="Veraport" Url="https://openbank.cu.co.kr/nonsw/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://openbank.cu.co.kr/nonsw/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
@@ -208,7 +246,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="ePageSafer" Url="https://openbank.cu.co.kr/nonsw/markany/eps/exe/Setup_ePageSaferRT.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="ePostBank" DisplayName="우체국" Category="Banking" Url="https://www.epostbank.go.kr/">
+		<Service Id="ePostBank" DisplayName="우체국" Category="Banking" Url="https://www.epostbank.go.kr/"
+			en-US:DisplayName="Korea Post Deposit Service Division">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.epostbank.go.kr/wizvera/veraportG3/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="AnySign" Url="https://www.epostbank.go.kr/Published/AnySign/AnySign_Installer.exe" Arguments="/silent" />
@@ -216,7 +255,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="NOS" Url="https://www.epostbank.go.kr/nonActiveX/inca/pluginfree/setup/nos_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="SanrimJohab" DisplayName="SJ산림조합" Category="Banking" Url="https://banking.nfcf.or.kr/">
+		<Service Id="SanrimJohab" DisplayName="SJ산림조합" Category="Banking" Url="https://banking.nfcf.or.kr/"
+			en-US:DisplayName="National Forestry Cooperative Federation">
 			<Packages>
 				<Package Name="Veraport" Url="https://banking.nfcf.or.kr/3rdParty/pib/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="INISAFECrossWeb" Url="https://banking.nfcf.or.kr/3rdParty/pib/initech/SW/initech/extension/down/INIS_EX_SHA2.exe" Arguments="/S" />
@@ -228,22 +268,26 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 		<!-- 인터넷 뱅킹 끝 -->
 
 		<!-- 저축은행 시작 (https://www.fsb.or.kr/sabintr_0100.act 참고함) -->
-		<Service Id="BNKSavingsBank" DisplayName="BNK저축은행" Category="Financing" Url="https://www.bnksb.com/">
+		<Service Id="BNKSavingsBank" DisplayName="BNK저축은행" Category="Financing" Url="https://www.bnksb.com/"
+			en-US:DisplayName="BNK SAVINGS BANK">
 			<CompatNotes>BNK저축은행은 윈도우 샌드박스를 포함한 가상 컴퓨터 환경에서 사이트 접속을 할 수 없도록 차단하고 있습니다.</CompatNotes>
+			<en-US:CompatNotes>BNK Savings Bank blocks access to the site from virtual computer environments, including Windows Sandbox.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="SignKoreaCert" Url="https://www.bnksb.com/SKCertServiceSetup_v2.5.18_152.exe" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="RealIp" Url="https://www.bnksb.com/BNKKTBRealipInst.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="CKSavingsBank" DisplayName="CK저축은행" Category="Financing" Url="https://www.cksavingsbank.co.kr/">
+		<Service Id="CKSavingsBank" DisplayName="CK저축은행" Category="Financing" Url="https://www.cksavingsbank.co.kr/"
+			en-US:DisplayName="CK SAVINGS BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.cksavingsbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.cksavingsbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="DBSavingsBank" DisplayName="DB저축은행" Category="Financing" Url="https://www.idbsb.com/">
+		<Service Id="DBSavingsBank" DisplayName="DB저축은행" Category="Financing" Url="https://www.idbsb.com/"
+			en-US:DisplayName="Dongbu Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.idbsb.com/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="AnySign" Url="https://www.idbsb.com/installer/AnySign4PC_v1.1.0.11/AnySign4PC_v1.1.3.3_Windows_Installer.exe" Arguments="/S" />
@@ -254,42 +298,48 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="TDClientAgent" Url="https://www.idbsb.com/installer/SGA/TDClientforWindowsAgentNX_4.5.1.1.exe" />
 			</Packages>
 		</Service>
-		<Service Id="DHSavingsBank" DisplayName="DH저축은행" Category="Financing" Url="https://www.dhsavingsbank.co.kr/">
+		<Service Id="DHSavingsBank" DisplayName="DH저축은행" Category="Financing" Url="https://www.dhsavingsbank.co.kr/"
+			en-US:DisplayName="DH SAVINGS BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.dhsavingsbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.dhsavingsbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="ESSavingsBank" DisplayName="ES저축은행" Category="Financing" Url="https://essb.ibs.fsb.or.kr/">
+		<Service Id="ESSavingsBank" DisplayName="ES저축은행" Category="Financing" Url="https://essb.ibs.fsb.or.kr/"
+			en-US:DisplayName="ES SAVINGS BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://essb.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://essb.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="IBKSavingsBank" DisplayName="IBK저축은행" Category="Financing" Url="https://ibksb.ibs.fsb.or.kr/">
+		<Service Id="IBKSavingsBank" DisplayName="IBK저축은행" Category="Financing" Url="https://ibksb.ibs.fsb.or.kr/"
+			en-US:DisplayName="IBK Savings Bank Co., Ltd.">
 			<Packages>
 				<Package Name="Veraport" Url="https://ibksb.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://ibksb.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="JTSavingsBank" DisplayName="JT저축은행" Category="Financing" Url="https://jt.ibs.fsb.or.kr/">
+		<Service Id="JTSavingsBank" DisplayName="JT저축은행" Category="Financing" Url="https://jt.ibs.fsb.or.kr/"
+			en-US:DisplayName="JT SAVINGS BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://jt.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://jt.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="JTChinaeSavingsBank" DisplayName="JT친애저축은행" Category="Financing" Url="https://jtchinae.ibs.fsb.or.kr/">
+		<Service Id="JTChinaeSavingsBank" DisplayName="JT친애저축은행" Category="Financing" Url="https://jtchinae.ibs.fsb.or.kr/"
+			en-US:DisplayName="JT Chinae Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://jtchinae.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://jtchinae.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="KBSavingsBank" DisplayName="KB저축은행" Category="Financing" Url="https://www.kbsavings.com/">
+		<Service Id="KBSavingsBank" DisplayName="KB저축은행" Category="Financing" Url="https://www.kbsavings.com/"
+			en-US:DisplayName="KB SAVINGS BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.kbsavings.com/pluginfree/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://www.kbsavings.com/pluginfree/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
@@ -297,47 +347,54 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="IPInside" Url="https://www.kbsavings.com/pluginfree/interezen/IPinsideLWS.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="MSSavingsBank" DisplayName="MS저축은행" Category="Financing" Url="https://www.mssb.co.kr/">
+		<Service Id="MSSavingsBank" DisplayName="MS저축은행" Category="Financing" Url="https://www.mssb.co.kr/"
+			en-US:DisplayName="MS SAVINGS BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.mssb.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.mssb.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="NHSavingsBank" DisplayName="NH저축은행" Category="Financing" Url="https://www.nhsavingsbank.co.kr/">
+		<Service Id="NHSavingsBank" DisplayName="NH저축은행" Category="Financing" Url="https://www.nhsavingsbank.co.kr/"
+			en-US:DisplayName="NH SAVINGS BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.nhsavingsbank.co.kr/vender/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="O2SavingsBank" DisplayName="O2저축은행" Category="Financing" Url="https://www.o2banking.com/">
+		<Service Id="O2SavingsBank" DisplayName="O2저축은행" Category="Financing" Url="https://www.o2banking.com/"
+			en-US:DisplayName="O2 SAVINGS BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.o2banking.com/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.o2banking.com/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="OKSavingsBank" DisplayName="OK저축은행" Category="Financing" Url="https://ok.ibs.fsb.or.kr/">
+		<Service Id="OKSavingsBank" DisplayName="OK저축은행" Category="Financing" Url="https://ok.ibs.fsb.or.kr/"
+			en-US:DisplayName="OK SAVINGS BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://ok.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://ok.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="OSBSavingsBank" DisplayName="OSB저축은행" Category="Financing" Url="https://ibs.osb.co.kr/">
+		<Service Id="OSBSavingsBank" DisplayName="OSB저축은행" Category="Financing" Url="https://ibs.osb.co.kr/"
+			en-US:DisplayName="OSB SAVINGS BANK">
 			<Packages>
 				<Package Name="INISAFECrossWeb" Url="https://ibs.osb.co.kr/bank/module/initech/extension/down/INIS_EX.exe?ver=1.0.1.961" Arguments="/S" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="IPInside" Url="https://ibs.osb.co.kr/bank/module/interezen/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="SNTSavingsBank" DisplayName="SNT저축은행" Category="Financing" Url="https://hisntm.ibs.fsb.or.kr/">
+		<Service Id="SNTSavingsBank" DisplayName="SNT저축은행" Category="Financing" Url="https://hisntm.ibs.fsb.or.kr/"
+			en-US:DisplayName="SNT SAVINGS BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://hisntm.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://hisntm.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="SBISavingsBank" DisplayName="SBI저축은행" Category="Financing" Url="https://www.sbisb.co.kr/">
+		<Service Id="SBISavingsBank" DisplayName="SBI저축은행" Category="Financing" Url="https://www.sbisb.co.kr/"
+			en-US:DisplayName="SBI SAVINGS BANK">
 			<Packages>
 				<Package Name="XecureWeb" Url="https://www.sbisb.co.kr/XecureObject/xw_install.exe" Arguments="/silent" />
 				<Package Name="TouchEnKey" Url="https://www.sbisb.co.kr/TouchEnKey/TouchEnKey_Installer.exe" Arguments="/silence" />
@@ -345,21 +402,24 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="RealIp" Url="https://www.sbisb.co.kr/SBISBankKTBRealipInst/SBISBankKTBRealipInst.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="CKSavingsBank" DisplayName="강원저축은행" Category="Financing" Url="https://www.cksavingsbank.co.kr/">
+		<Service Id="CKSavingsBank" DisplayName="CK저축은행" Category="Financing" Url="https://www.cksavingsbank.co.kr/"
+			en-US:DisplayName="CK SAVINGS BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.cksavingsbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.cksavingsbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="GoryoSavingsBank" DisplayName="고려저축은행" Category="Financing" Url="https://www.goryosb.co.kr/">
+		<Service Id="GoryoSavingsBank" DisplayName="고려저축은행" Category="Financing" Url="https://www.goryosb.co.kr/"
+			en-US:DisplayName="Goryo Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.goryosb.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.goryosb.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="KukjeSavingsBank" DisplayName="국제저축은행" Category="Financing" Url="https://kukje.ibs.fsb.or.kr/">
+		<Service Id="KukjeSavingsBank" DisplayName="국제저축은행" Category="Financing" Url="https://kukje.ibs.fsb.or.kr/"
+			en-US:DisplayName="Kukje Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://kukje.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
@@ -373,28 +433,32 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="SignKoreaCert" Url="https://www.kuemhwabank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="NamyangSavingsBank" DisplayName="남양저축은행" Category="Financing" Url="https://www.nybank.co.kr/">
+		<Service Id="NamyangSavingsBank" DisplayName="남양저축은행" Category="Financing" Url="https://www.nybank.co.kr/"
+			en-US:DisplayName="Namyang Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.nybank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.nybank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="DaemyungSavingsBank" DisplayName="대명저축은행" Category="Financing" Url="https://www.daemyungbank.co.kr/">
+		<Service Id="DaemyungSavingsBank" DisplayName="대명저축은행" Category="Financing" Url="https://www.daemyungbank.co.kr/"
+			en-US:DisplayName="Daemyung Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.daemyungbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.daemyungbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="DebecSavingsBank" DisplayName="대백저축은행" Category="Financing" Url="https://www.debecbank.co.kr/">
+		<Service Id="DebecSavingsBank" DisplayName="대백저축은행" Category="Financing" Url="https://www.debecbank.co.kr/"
+			en-US:DisplayName="DEBEC Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.debecbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.debecbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="DaishinSavingsBank" DisplayName="대신저축은행" Category="Financing" Url="https://bank.daishin.com/">
+		<Service Id="DaishinSavingsBank" DisplayName="대신저축은행" Category="Financing" Url="https://bank.daishin.com/"
+			en-US:DisplayName="Daishin Savings Bank">
 			<Packages>
 				<Package Name="WebCryptX" Url="https://bank.daishin.com/WebCryptX.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://bank.daishin.com/sk_ct2010New.exe" />
@@ -402,175 +466,200 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="IPInside" Url="https://bank.daishin.com/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="DaeaSavingsBank" DisplayName="대아저축은행" Category="Financing" Url="https://daeabank.com/">
+		<Service Id="DaeaSavingsBank" DisplayName="대아저축은행" Category="Financing" Url="https://daeabank.com/"
+			en-US:DisplayName="Daea Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://daeabank.com/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://daeabank.com/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="DSavingsBank" DisplayName="대원저축은행" Category="Financing" Url="https://d-banks.co.kr/">
+		<Service Id="DSavingsBank" DisplayName="대원저축은행" Category="Financing" Url="https://d-banks.co.kr/"
+			en-US:DisplayName="Daewon Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://d-banks.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://d-banks.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="DaehanSavingsBank" DisplayName="대한저축은행" Category="Financing" Url="https://www.daehanbank.co.kr/">
+		<Service Id="DaehanSavingsBank" DisplayName="대한저축은행" Category="Financing" Url="https://www.daehanbank.co.kr/"
+			en-US:DisplayName="Daehan Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.daehanbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.daehanbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="DoubleSavingsBank" DisplayName="더블저축은행" Category="Financing" Url="https://www.doublebank.co.kr/">
+		<Service Id="DoubleSavingsBank" DisplayName="더블저축은행" Category="Financing" Url="https://www.doublebank.co.kr/"
+			en-US:DisplayName="Double Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.doublebank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.doublebank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="TheKSavingsBank" DisplayName="더케이저축은행" Category="Financing" Url="https://thek.ibs.fsb.or.kr/">
+		<Service Id="TheKSavingsBank" DisplayName="더케이저축은행" Category="Financing" Url="https://thek.ibs.fsb.or.kr/"
+			en-US:DisplayName="The K Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://thek.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://thek.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="DongyangSavingsBank" DisplayName="동양저축은행" Category="Financing" Url="https://www.dysbank.com/">
+		<Service Id="DongyangSavingsBank" DisplayName="동양저축은행" Category="Financing" Url="https://www.dysbank.com/"
+			en-US:DisplayName="Dongyang Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.dysbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.dysbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="DongwonJeilSavingsBank" DisplayName="동원제일저축은행" Category="Financing" Url="https://dongwonjeil.ibs.fsb.or.kr/">
+		<Service Id="DongwonJeilSavingsBank" DisplayName="동원제일저축은행" Category="Financing" Url="https://dongwonjeil.ibs.fsb.or.kr/"
+			en-US:DisplayName="Dongwon Jeil Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://dongwonjeil.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://dongwonjeil.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="DreamSavingsBank" DisplayName="드림저축은행" Category="Financing" Url="https://www.dreamsb.com/">
+		<Service Id="DreamSavingsBank" DisplayName="드림저축은행" Category="Financing" Url="https://www.dreamsb.com/"
+			en-US:DisplayName="Dream Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.dreamsb.com/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.dreamsb.com/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="RaonSavingsBank" DisplayName="라온저축은행" Category="Financing" Url="https://www.raonsb.co.kr/">
+		<Service Id="RaonSavingsBank" DisplayName="라온저축은행" Category="Financing" Url="https://www.raonsb.co.kr/"
+			en-US:DisplayName="Raon Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.raonsb.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.raonsb.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="SamilSavingsBank" DisplayName="머스트삼일저축은행" Category="Financing" Url="https://www.samilbank.co.kr/">
+		<Service Id="SamilSavingsBank" DisplayName="머스트삼일저축은행" Category="Financing" Url="https://www.samilbank.co.kr/"
+			en-US:DisplayName="MUST SAMIL SAVINGS BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.samilbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.samilbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="MoaSavingsBank" DisplayName="모아저축은행" Category="Financing" Url="https://www.moasb.co.kr/">
+		<Service Id="MoaSavingsBank" DisplayName="모아저축은행" Category="Financing" Url="https://www.moasb.co.kr/"
+			en-US:DisplayName="Moa Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.moasb.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.moasb.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="MKSavingsBank" DisplayName="민국저축은행" Category="Financing" Url="https://www.mkb.co.kr/">
+		<Service Id="MKSavingsBank" DisplayName="민국저축은행" Category="Financing" Url="https://www.mkb.co.kr/"
+			en-US:DisplayName="MK SAVINGS BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.mkb.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.mkb.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="BaroSavingsBank" DisplayName="바로저축은행" Category="Financing" Url="https://www.barosavings.com/">
+		<Service Id="BaroSavingsBank" DisplayName="바로저축은행" Category="Financing" Url="https://www.barosavings.com/"
+			en-US:DisplayName="Baro Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.barosavings.com/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.barosavings.com/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="BulimSavingsBank" DisplayName="부림저축은행" Category="Financing" Url="https://www.bulimbank.co.kr/">
+		<Service Id="BulimSavingsBank" DisplayName="부림저축은행" Category="Financing" Url="https://www.bulimbank.co.kr/"
+			en-US:DisplayName="Bulim Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.bulimbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.bulimbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="SamjungSavingsBank" DisplayName="삼정저축은행" Category="Financing" Url="https://www.samjungsavingsbank.co.kr/">
+		<Service Id="SamjungSavingsBank" DisplayName="삼정저축은행" Category="Financing" Url="https://www.samjungsavingsbank.co.kr/"
+			en-US:DisplayName="Samjung Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.samjungsavingsbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.samjungsavingsbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="SamhoSavingsBank" DisplayName="삼호저축은행" Category="Financing" Url="https://www.samhosb.co.kr/">
+		<Service Id="SamhoSavingsBank" DisplayName="삼호저축은행" Category="Financing" Url="https://www.samhosb.co.kr/"
+			en-US:DisplayName="Samho Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.samhosb.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.samhosb.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="SangSangInSavingsBank" DisplayName="상상인저축은행" Category="Financing" Url="https://sangsanginsb.ibs.fsb.or.kr/">
+		<Service Id="SangSangInSavingsBank" DisplayName="상상인저축은행" Category="Financing" Url="https://sangsanginsb.ibs.fsb.or.kr/"
+			en-US:DisplayName="Sang Sang In Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://sangsanginsb.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://sangsanginsb.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="SangSangInPlusSavingsBank" DisplayName="상상인플러스저축은행" Category="Financing" Url="https://sangsanginplussb.ibs.fsb.or.kr/">
+		<Service Id="SangSangInPlusSavingsBank" DisplayName="상상인플러스저축은행" Category="Financing" Url="https://sangsanginplussb.ibs.fsb.or.kr/"
+			en-US:DisplayName="Sang Sang In Plus Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://sangsanginplussb.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://sangsanginplussb.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="SeramSavingsBank" DisplayName="세람저축은행" Category="Financing" Url="https://seram.ibs.fsb.or.kr/">
+		<Service Id="SeramSavingsBank" DisplayName="세람저축은행" Category="Financing" Url="https://seram.ibs.fsb.or.kr/"
+			en-US:DisplayName="Seram Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://seram.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://seram.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="CentralSavingsBank" DisplayName="센트럴저축은행" Category="Financing" Url="https://www.centralbank.co.kr/">
+		<Service Id="CentralSavingsBank" DisplayName="센트럴저축은행" Category="Financing" Url="https://www.centralbank.co.kr/"
+			en-US:DisplayName="Cetral Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.centralbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.centralbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="SoulBrainSavingsBank" DisplayName="솔브레인저축은행" Category="Financing" Url="https://sbbank.ibs.fsb.or.kr/">
+		<Service Id="SoulBrainSavingsBank" DisplayName="솔브레인저축은행" Category="Financing" Url="https://sbbank.ibs.fsb.or.kr/"
+			en-US:DisplayName="Soul Brain Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://sbbank.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://sbbank.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="SmartSavingsBank" DisplayName="스마트저축은행" Category="Financing" Url="https://bank.smartbank.co.kr/">
+		<Service Id="SmartSavingsBank" DisplayName="스마트저축은행" Category="Financing" Url="https://bank.smartbank.co.kr/"
+			en-US:DisplayName="Smart Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://bank.smartbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://bank.smartbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="SkySavingsBank" DisplayName="스카이저축은행" Category="Financing" Url="https://www.skysb.co.kr/">
+		<Service Id="SkySavingsBank" DisplayName="스카이저축은행" Category="Financing" Url="https://www.skysb.co.kr/"
+			en-US:DisplayName="Sky Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.skysb.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.skysb.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="StarSavingsBank" DisplayName="스타저축은행" Category="Financing" Url="https://www.estarbank.co.kr/">
+		<Service Id="StarSavingsBank" DisplayName="스타저축은행" Category="Financing" Url="https://www.estarbank.co.kr/"
+			en-US:DisplayName="Star Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.estarbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.estarbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="ShinhanSavingsBank" DisplayName="신한저축은행" Category="Financing" Url="https://www.shinhansavings.com/">
+		<Service Id="ShinhanSavingsBank" DisplayName="신한저축은행" Category="Financing" Url="https://www.shinhansavings.com/"
+			en-US:DisplayName="SHINHAN Savings Bank">
 			<Packages>
 				<Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.2.7/AnySign_Installer.exe" Arguments="/silent" />
 				<Package Name="TouchEnKey32" Url="https://www.shinhansavings.com/js/raonnx/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
@@ -578,29 +667,34 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="TouchEnFirewall" Url="https://www.shinhansavings.com/js/raonnx/nxFw/module/TEFW_Installer.exe?ver=1.0.0.26" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="AsanSavingsBank" DisplayName="아산저축은행" Category="Financing" Url="https://www.asanbank.co.kr/">
+		<Service Id="AsanSavingsBank" DisplayName="아산저축은행" Category="Financing" Url="https://www.asanbank.co.kr/"
+			en-US:DisplayName="ASAN Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.asanbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.asanbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="AngukSavingsBank" DisplayName="안국저축은행" Category="Financing" Url="https://www.angukbank.co.kr/">
+		<Service Id="AngukSavingsBank" DisplayName="안국저축은행" Category="Financing" Url="https://www.angukbank.co.kr/"
+			en-US:DisplayName="Anguk Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.angukbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.angukbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="AnyangSavingsBank" DisplayName="안양저축은행" Category="Financing" Url="https://www.anyangbank.co.kr/">
+		<Service Id="AnyangSavingsBank" DisplayName="안양저축은행" Category="Financing" Url="https://www.anyangbank.co.kr/"
+			en-US:DisplayName="Anyang Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.anyangbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.anyangbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="AccuonSavingsBank" DisplayName="애큐온저축은행" Category="Financing" Url="https://www.acuonsb.co.kr/">
+		<Service Id="AccuonSavingsBank" DisplayName="애큐온저축은행" Category="Financing" Url="https://www.acuonsb.co.kr/"
+			en-US:DisplayName="Accuon Savings Bank">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://www.acuonsb.co.kr/wizvera/web/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://www.acuonsb.co.kr/wizvera/web/delfino/down/delfino-g3.exe" Arguments="/silent" />
@@ -611,7 +705,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="SignKoreaCert" Url="https://www.acuonsb.co.kr/signkorea/web/SKCertServiceSetup_v2.0.11_r2325.exe" />
 			</Packages>
 		</Service>
-		<Service Id="YoungjinSavingsBank" DisplayName="영진저축은행" Category="Financing" Url="https://yjbank.ibs.fsb.or.kr/">
+		<Service Id="YoungjinSavingsBank" DisplayName="영진저축은행" Category="Financing" Url="https://yjbank.ibs.fsb.or.kr/"
+			en-US:DisplayName="Youngjin Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://yjbank.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
@@ -619,34 +714,39 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 			</Packages>
 		</Service>
 		<Service Id="YegaramSavingsBank" DisplayName="예가람저축은행" Category="Financing" Url="https://yegaram.ibs.fsb.or.kr/">
+			en-US:DisplayName="Yeegaram Savings Bank"
 			<Packages>
 				<Package Name="Veraport" Url="https://yegaram.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://yegaram.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="OsungSavingsBank" DisplayName="오성저축은행" Category="Financing" Url="https://www.osungbank.co.kr/">
+		<Service Id="OsungSavingsBank" DisplayName="오성저축은행" Category="Financing" Url="https://www.osungbank.co.kr/"
+			en-US:DisplayName="Osung Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.osungbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.osungbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="WooreeSavingsBank" DisplayName="우리저축은행" Category="Financing" Url="https://www.wooleebank.co.kr/">
+		<Service Id="WooreeSavingsBank" DisplayName="우리저축은행" Category="Financing" Url="https://www.wooleebank.co.kr/"
+			en-US:DisplayName="WOOLEE SAVINGS BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.wooleebank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.wooleebank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="WooriSavingsBank" DisplayName="우리금융저축은행" Category="Financing" Url="https://woori.ibs.fsb.or.kr/">
+		<Service Id="WooriSavingsBank" DisplayName="우리금융저축은행" Category="Financing" Url="https://woori.ibs.fsb.or.kr/"
+			en-US:DisplayName="WOORI SAVINGS BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://woori.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://woori.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="WelcomeSavingsBank" DisplayName="웰컴저축은행" Category="Financing" Url="https://www.welcomebank.co.kr/">
+		<Service Id="WelcomeSavingsBank" DisplayName="웰컴저축은행" Category="Financing" Url="https://www.welcomebank.co.kr/"
+			en-US:DisplayName="Welcome Savings Bank">
 			<Packages>
 				<Package Name="SmartManagerEx" Url="https://www.welcomebank.co.kr/3rdparty/initech/smartmanagerex/extension/down/SmartManagerEX.exe?ver=1.0.1.1378" />
 				<Package Name="KeySharpBiz" Url="https://www.welcomebank.co.kr/3rdparty/raon/nxbiz/download/keysharpnxbiz.exe" />
@@ -657,105 +757,120 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="IPInside" Url="https://www.welcomebank.co.kr/3rdparty/ipinside/module/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="UnionSavingsBank" DisplayName="유니온저축은행" Category="Financing" Url="https://unionsb.ibs.fsb.or.kr/">
+		<Service Id="UnionSavingsBank" DisplayName="유니온저축은행" Category="Financing" Url="https://unionsb.ibs.fsb.or.kr/"
+			en-US:DisplayName="Union Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://unionsb.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://unionsb.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="YuantaSavingsBank" DisplayName="유안타저축은행" Category="Financing" Url="https://www.yuantasavings.co.kr/">
+		<Service Id="YuantaSavingsBank" DisplayName="유안타저축은행" Category="Financing" Url="https://www.yuantasavings.co.kr/"
+			en-US:DisplayName="Yuanta Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.yuantasavings.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.yuantasavings.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="YCSavingsBank" DisplayName="융창저축은행" Category="Financing" Url="https://www.ycbank.co.kr/">
+		<Service Id="YCSavingsBank" DisplayName="융창저축은행" Category="Financing" Url="https://www.ycbank.co.kr/"
+			en-US:DisplayName="Yungchang Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.ycbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.ycbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="InsungSavingsBank" DisplayName="인성저축은행" Category="Financing" Url="https://www.insungsavingsbank.co.kr/">
+		<Service Id="InsungSavingsBank" DisplayName="인성저축은행" Category="Financing" Url="https://www.insungsavingsbank.co.kr/"
+			en-US:DisplayName="Insung Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.insungsavingsbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.insungsavingsbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="IncheonSavingsBank" DisplayName="인천저축은행" Category="Financing" Url="https://www.incheonbank.com/">
+		<Service Id="IncheonSavingsBank" DisplayName="인천저축은행" Category="Financing" Url="https://www.incheonbank.com/"
+			en-US:DisplayName="Inhcheon Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.incheonbank.com/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.incheonbank.com/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="ChoeunSavingsBank" DisplayName="조은저축은행" Category="Financing" Url="https://choeunbank.ibs.fsb.or.kr/">
+		<Service Id="ChoeunSavingsBank" DisplayName="조은저축은행" Category="Financing" Url="https://choeunbank.ibs.fsb.or.kr/"
+			en-US:DisplayName="Choeun Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://choeunbank.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://choeunbank.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="ChSavingsBank" DisplayName="조흥저축은행" Category="Financing" Url="https://chbank.ibs.fsb.or.kr/">
+		<Service Id="ChSavingsBank" DisplayName="조흥저축은행" Category="Financing" Url="https://chbank.ibs.fsb.or.kr/"
+			en-US:DisplayName="Choheung Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://chbank.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://chbank.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="JinjuSavingsBank" DisplayName="진주저축은행" Category="Financing" Url="https://www.jinjubank.net/">
+		<Service Id="JinjuSavingsBank" DisplayName="진주저축은행" Category="Financing" Url="https://www.jinjubank.net/"
+			en-US:DisplayName="Jinju Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.jinjubank.net/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.jinjubank.net/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="CharmSavingsBank" DisplayName="참저축은행" Category="Financing" Url="https://charm.ibs.fsb.or.kr/">
+		<Service Id="CharmSavingsBank" DisplayName="참저축은행" Category="Financing" Url="https://charm.ibs.fsb.or.kr/"
+			en-US:DisplayName="Charm Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://charm.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://charm.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="CheongjuSavingsBank" DisplayName="청주저축은행" Category="Financing" Url="https://www.cheongjubank.com/">
+		<Service Id="CheongjuSavingsBank" DisplayName="청주저축은행" Category="Financing" Url="https://www.cheongjubank.com/"
+			en-US:DisplayName="Cheongju Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.cheongjubank.com/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.cheongjubank.com/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="KiwoomYesSavingsBank" DisplayName="키움예스저축은행" Category="Financing" Url="https://www.kiwoomyesbank.com/">
+		<Service Id="KiwoomYesSavingsBank" DisplayName="키움예스저축은행" Category="Financing" Url="https://www.kiwoomyesbank.com/"
+			en-US:DisplayName="KIWOOM Yes Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.kiwoomyesbank.com/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.kiwoomyesbank.com/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="KiwoomSavingsBank" DisplayName="키움저축은행" Category="Financing" Url="https://kiwoom.ibs.fsb.or.kr/">
+		<Service Id="KiwoomSavingsBank" DisplayName="키움저축은행" Category="Financing" Url="https://kiwoom.ibs.fsb.or.kr/"
+			en-US:DisplayName="KIWOOM Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://kiwoom.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://kiwoom.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="PepperSavingsBank" DisplayName="페퍼저축은행" Category="Financing" Url="https://pepperbank.ibs.fsb.or.kr/">
+		<Service Id="PepperSavingsBank" DisplayName="페퍼저축은행" Category="Financing" Url="https://pepperbank.ibs.fsb.or.kr/"
+			en-US:DisplayName="Pepper Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://pepperbank.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://pepperbank.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="PtSavingsBank" DisplayName="평택저축은행" Category="Financing" Url="https://www.ptbank.co.kr/">
+		<Service Id="PtSavingsBank" DisplayName="평택저축은행" Category="Financing" Url="https://www.ptbank.co.kr/"
+			en-US:DisplayName="Pyeongtaek Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.ptbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.ptbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="PureunSavingsBank" DisplayName="푸른저축은행" Category="Financing" Url="https://www.prsb.co.kr/">
+		<Service Id="PureunSavingsBank" DisplayName="푸른저축은행" Category="Financing" Url="https://www.prsb.co.kr/"
+			en-US:DisplayName="Pureun Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.prsb.co.kr/installer/veraport/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://www.prsb.co.kr/installer/delfino/delfino-g3.exe" Arguments="/silent" />
@@ -763,7 +878,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="IPInside" Url="https://www.prsb.co.kr/installer/FDS/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="HanaSavingsBank" DisplayName="하나저축은행" Category="Financing" Url="https://www.kebhana.com/efamily/h/hanasavingsbank/main.jsp">
+		<Service Id="HanaSavingsBank" DisplayName="하나저축은행" Category="Financing" Url="https://www.kebhana.com/efamily/h/hanasavingsbank/main.jsp"
+			en-US:DisplayName="Hana Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.kebhana.com/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="TouchEnKey32" Url="https://www.kebhana.com/TouchEn/nxKey/module/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
@@ -772,35 +888,40 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="IPInside" Url="https://www.kebhana.com/interezen/agent/np_v6/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="TrueFriendSavingsBank" DisplayName="한국투자저축은행" Category="Financing" Url="https://kisb.ibs.fsb.or.kr/">
+		<Service Id="TrueFriendSavingsBank" DisplayName="한국투자저축은행" Category="Financing" Url="https://kisb.ibs.fsb.or.kr/"
+			en-US:DisplayName="Korea Investment Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://kisb.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://kisb.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="HsSavingsBank" DisplayName="한성저축은행" Category="Financing" Url="https://hs.ibs.fsb.or.kr/">
+		<Service Id="HsSavingsBank" DisplayName="한성저축은행" Category="Financing" Url="https://hs.ibs.fsb.or.kr/"
+			en-US:DisplayName="Hanseong Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://hs.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://hs.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="HanwhaSavingsBank" DisplayName="한화저축은행" Category="Financing" Url="https://www.hanwhasbank.com/">
+		<Service Id="HanwhaSavingsBank" DisplayName="한화저축은행" Category="Financing" Url="https://www.hanwhasbank.com/"
+			en-US:DisplayName="Hanwha Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.hanwhasbank.com/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.hanwhasbank.com/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="EugeneSavingsBank" DisplayName="유진저축은행" Category="Financing" Url="https://eugenebank.ibs.fsb.or.kr/">
+		<Service Id="EugeneSavingsBank" DisplayName="유진저축은행" Category="Financing" Url="https://eugenebank.ibs.fsb.or.kr/"
+			en-US:DisplayName="Eugene Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://eugenebank.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://eugenebank.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="HkSavingsBank" DisplayName="흥국저축은행" Category="Financing" Url="https://ehkbank.ibs.fsb.or.kr/">
+		<Service Id="HkSavingsBank" DisplayName="흥국저축은행" Category="Financing" Url="https://ehkbank.ibs.fsb.or.kr/"
+			en-US:DisplayName="Heungkuk Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://ehkbank.ibs.fsb.or.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
@@ -810,15 +931,19 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 		<!-- 저축은행 끝 -->
 
 		<!-- 증권사 시작 (https://ko.wikipedia.org/wiki/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD%EC%9D%98_%EA%B8%88%EC%9C%B5%EA%B8%B0%EA%B4%80_%EB%AA%A9%EB%A1%9D 참고함) -->
-		<Service Id="IBKSecurity" DisplayName="IBK투자증권" Category="Security" Url="https://www.ibks.com/">
+		<Service Id="IBKSecurity" DisplayName="IBK투자증권" Category="Security" Url="https://www.ibks.com/"
+			en-US:DisplayName="IBK Securities">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://download.ibks.com/install/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="MyAssetSecurity" DisplayName="유안타증권" Category="Security" Url="https://www.myasset.com/">
+		<Service Id="MyAssetSecurity" DisplayName="유안타증권" Category="Security" Url="https://www.myasset.com/"
+			en-US:DisplayName="Yuanta Securities Korea Co. Ltd.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/myasset/all/astx_setup_myasset.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.myasset.com/common/security/KOSInstaller/SKCertService/SKCertServiceSetup.exe" />
@@ -826,8 +951,10 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="KOS" Url="https://www.myasset.com/common/security/KOSInstaller/KOS/KOS_Setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="KBSecurity" DisplayName="KB증권" Category="Security" Url="https://www.kbsec.com/">
+		<Service Id="KBSecurity" DisplayName="KB증권" Category="Security" Url="https://www.kbsec.com/"
+			en-US:DisplayName="KB SECURITIES">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://www.kbsec.com/ndataweb/exe/prod/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.kbsec.com/ndataweb/exe/prod/skcert_setup.exe" />
@@ -835,8 +962,10 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="MiraeAssetSecurity" DisplayName="미래에셋증권" Category="Security" Url="https://securities.miraeasset.com/">
+		<Service Id="MiraeAssetSecurity" DisplayName="미래에셋증권" Category="Security" Url="https://securities.miraeasset.com/"
+			en-US:DisplayName="Mirae Asset Securities Co., Ltd.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://download.securities.miraeasset.com/w/veraport/veraport-g3-x64.exe?v=3.8.5.1" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
@@ -844,24 +973,30 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="SignKoreaCert" Url="https://download.securities.miraeasset.com/w//sign/SKCertServiceSetup.exe" />
 			</Packages>
 		</Service>
-		<Service Id="SamsungSecurity" DisplayName="삼성증권" Category="Security" Url="https://www.samsungpop.com/">
+		<Service Id="SamsungSecurity" DisplayName="삼성증권" Category="Security" Url="https://www.samsungpop.com/"
+			en-US:DisplayName="Samsung Securities">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/samsungpop/all/astx_setup_samsungpop.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.samsungpop.com/modules/koscom/file/SKCertServiceSetup_v2.5.18_152.exe" />
 				<Package Name="ePageSafer" Url="https://www.samsungpop.com/modules/report/file/MAWS_SamsungPopOz_Total_Setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="TrueFriendSecurity" DisplayName="한국투자증권" Category="Security" Url="https://www.truefriend.com/">
+		<Service Id="TrueFriendSecurity" DisplayName="한국투자증권" Category="Security" Url="https://www.truefriend.com/"
+			en-US:DisplayName="Korea Investment &amp; Securities Co.,Ltd.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="KOS" Url="https://new.real.download.dws.co.kr/download/hpage/KOS_Setup_3.exe" Arguments="/silent" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="IPInside" Url="https://file.truefriend.com/Storage/Download/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="NHSecurity" DisplayName="NH투자증권" Category="Security" Url="https://www.nhqv.com/">
+		<Service Id="NHSecurity" DisplayName="NH투자증권" Category="Security" Url="https://www.nhqv.com/"
+			en-US:DisplayName="NH INVESTMENT &amp; SECURITIES">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.nhqv.com/security/download/SKCertServiceSetup_v2.5.18_152.exe" />
@@ -869,14 +1004,17 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="ePageSafer" Url="https://www.nhqv.com/rptshop/Setup_ePageSaferH2O.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="KyoboSecurity" DisplayName="교보증권" Category="Security" Url="https://iprovest.com/">
+		<Service Id="KyoboSecurity" DisplayName="교보증권" Category="Security" Url="https://iprovest.com/"
+			en-US:DisplayName="Kyobo Securities Co., Ltd">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.iprovest.com/upload/customhelp/download/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="HiSecurity" DisplayName="하이투자증권" Category="Security" Url="https://www.hi-ib.com/">
+		<Service Id="HiSecurity" DisplayName="하이투자증권" Category="Security" Url="https://www.hi-ib.com/"
+			en-US:DisplayName="HI INVESTMENT &amp; SECURITIES">
 			<Packages>
 				<Package Name="SetupNx" Url="https://www.hi-ib.com/program/HI_setupNx.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.hi-ib.com/SKCertService/SKCertServiceSetup.exe" />
@@ -885,8 +1023,10 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="TouchEnWeb" Url="https://www.hi-ib.com/raon/e2e/TouchEnfw/nxWeb/module/TouchEn_nxWeb_Installer.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="HyundaiCarSecurity" DisplayName="현대차증권" Category="Security" Url="https://www.hmsec.com/">
+		<Service Id="HyundaiCarSecurity" DisplayName="현대차증권" Category="Security" Url="https://www.hmsec.com/"
+			en-US:DisplayName="HYUNDAI MOTOR SECURITIES">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="SignKoreaCert" Url="https://www.hmsec.com/cabs/SKCertServiceSetup_v2.5.18_152.exe" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
@@ -894,15 +1034,19 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="MarkAny" Url="https://www.hmsec.com/cabs/ReportShop520_Web_withMarkAny.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="KiwoomSecurity" DisplayName="키움증권" Category="Security" Url="https://www.kiwoom.com/">
+		<Service Id="KiwoomSecurity" DisplayName="키움증권" Category="Security" Url="https://www.kiwoom.com/"
+			en-US:DisplayName="KIWOOM Securities Co., Ltd.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default_nonstop/all/astx_setup_nonstop.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.kiwoom.com/h/kws/assets/down/SKCertServiceSetup_v2.5.20_156.exe" />
 			</Packages>
 		</Service>
-		<Service Id="EBestSecurity" DisplayName="이베스트투자증권" Category="Security" Url="https://www.ebestsec.co.kr/">
+		<Service Id="EBestSecurity" DisplayName="이베스트투자증권" Category="Security" Url="https://www.ebestsec.co.kr/"
+			en-US:DisplayName="eBEST Investment &amp; Securities Co., Ltd.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="INISAFECrossWeb" Url="https://www.ebestsec.co.kr/initech/extension/down/INIS_EX_SHA2.exe?ver=1.0.1.1021" Arguments="/S" />
@@ -910,21 +1054,25 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="SignKoreaCert" Url="https://www.ebestsec.co.kr/download/SKCertServiceSetup.exe" />
 			</Packages>
 		</Service>
-		<Service Id="SKSecurity" DisplayName="SK증권" Category="Security" Url="http://www.sks.co.kr/">
+		<Service Id="SKSecurity" DisplayName="SK증권" Category="Security" Url="http://www.sks.co.kr/"
+			en-US:DisplayName="SK Securities Co.,Ltd.">
 			<Packages>
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.sks.co.kr/main/common/security/signkorea/SKCertServiceSetup.exe" />
 			</Packages>
 		</Service>
-		<Service Id="DaishinSecurity" DisplayName="대신투자증권" Category="Security" Url="https://www.daishin.com/">
+		<Service Id="DaishinSecurity" DisplayName="대신증권" Category="Security" Url="https://www.daishin.com/"
+			en-US:DisplayName="DAISHIN Securities Co., Ltd.">
 			<Packages>
 				<Package Name="SignKoreaCert" Url="https://www.daishin.com/install/SKCertServiceSetup_v2.5.18_152.exe" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="TDClientAgent" Url="https://www.daishin.com/install/TDClientforWindowsAgentDS_4.3.0.1_20160727.exe" />
 			</Packages>
 		</Service>
-		<Service Id="HanwhaSecurity" DisplayName="한화투자증권" Category="Security" Url="https://www.hanwhawm.com/">
+		<Service Id="HanwhaSecurity" DisplayName="한화투자증권" Category="Security" Url="https://www.hanwhawm.com/"
+			en-US:DisplayName="Hanwha Investment &amp; Securities">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="http://safetx.ahnlab.com/master/win/hanwhastock/all/astx_setup_hanwhastock.exe" Arguments="/silent" />
 				<Package Name="ASTX" Url="http://safetx.ahnlab.com/master/win/default/common/astxdn.exe" Arguments="/silent" />
@@ -933,25 +1081,31 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="INISafeMail" Url="https://www.hanwhawm.com/download/down/INISAFEMailv4.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="HanaSecurity" DisplayName="하나금융투자" Category="Security" Url="https://www.hanaw.com/">
+		<Service Id="HanaSecurity" DisplayName="하나증권" Category="Security" Url="https://www.hanaw.com/"
+			en-US:DisplayName="Hana Securities Co.,Ltd.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.hanaw.com/common/security/SignKorea_NA/SKCertServiceSetup.exe" />
 			</Packages>
 		</Service>
-		<Service Id="ShinhanSecurity" DisplayName="신한금융투자" Category="Security" Url="https://www.shinhaninvest.com/">
+		<Service Id="ShinhanSecurity" DisplayName="신한투자증권" Category="Security" Url="https://www.shinhansec.com/"
+			en-US:DisplayName="SHINHAN SECURITIES">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
-				<Package Name="Veraport" Url="https://www.shinhaninvest.com/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
-				<Package Name="SignKoreaCert" Url="https://www.shinhaninvest.com/siw/solution/download/SKCertServiceSetup_v2.5.17_149.exe" />
+				<Package Name="Veraport" Url="https://www.shinhansec.com/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
+				<Package Name="SignKoreaCert" Url="https://www.shinhansec.com/siw/solution/download/SKCertServiceSetup_v2.5.17_149.exe" />
 				<Package Name="ASTX" Url="http://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
-				<Package Name="ePageSafer" Url="https://www.shinhaninvest.com/markany/bin/Setup_ePageSafer.exe" Arguments="/silent" />
+				<Package Name="ePageSafer" Url="https://www.shinhansec.com/markany/bin/Setup_ePageSafer.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="DBSecurity" DisplayName="DB금융투자" Category="Security" Url="https://www.db-fi.com/">
+		<Service Id="DBSecurity" DisplayName="DB금융투자" Category="Security" Url="https://www.db-fi.com/"
+			en-US:DisplayName="DB Financial Investment Co., Ltd.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://www.db-fi.com/common/plugin/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.db-fi.com/common/plugin/skcert/exe/SKCertServiceSetup_v2.5.9_113.exe" />
@@ -959,22 +1113,27 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="EugeneSecurity" DisplayName="유진투자증권" Category="Security" Url="https://www.eugenefn.com/">
+		<Service Id="EugeneSecurity" DisplayName="유진투자증권" Category="Security" Url="https://www.eugenefn.com/"
+			en-US:DisplayName="EUGENE INVESTMENT &amp; SECURITIES CO.,LTD.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="SignKoreaCert" Url="https://www.eugenefn.com/resources/download/SKCertServiceSetup.exe" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="MeritzSecurity" DisplayName="메리츠증권" Category="Security" Url="https://home.imeritz.com/">
+		<Service Id="MeritzSecurity" DisplayName="메리츠증권" Category="Security" Url="https://home.imeritz.com/"
+			en-US:DisplayName="MERITZ SECURITIES">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://home.imeritz.com/include/down/SKCertServiceSetup.exe" />
 			</Packages>
 		</Service>
-		<Service Id="BookookSecurity" DisplayName="부국증권" Category="Security" Url="http://www.bookook.co.kr/">
+		<Service Id="BookookSecurity" DisplayName="부국증권" Category="Security" Url="http://www.bookook.co.kr/"
+			en-US:DisplayName="BOOKOOK Securities Co., Ltd.">
 			<Packages>
 				<Package Name="SignKoreaCert" Url="https://wts.koscom.co.kr:8089/setup/file/SKCertServiceSetup_v2.5.18_152.exe" />
 				<Package Name="KOS" Url="https://wts.koscom.co.kr:8089/setup/file/KOS_Setup.exe" Arguments="/silent" />
@@ -982,19 +1141,23 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="RealIp" Url="https://wts.koscom.co.kr:8089/setup/file/KOSCOMKTBRealip_enc.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="ShinyoungSecurity" DisplayName="신영증권" Category="Security" Url="https://www.shinyoung.com/">
+		<Service Id="ShinyoungSecurity" DisplayName="신영증권" Category="Security" Url="https://www.shinyoung.com/"
+			en-US:DisplayName="SHINYOUNG Securities Co., Ltd.">
 			<Packages>
 				<Package Name="KOS" Url="http://w2.kings.co.kr/k/KOS_Setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="CapeSecurity" DisplayName="케이프투자증권" Category="Security" Url="https://www.capefn.com/">
+		<Service Id="CapeSecurity" DisplayName="케이프투자증권" Category="Security" Url="https://www.capefn.com/"
+			en-US:DisplayName="CAPE Investment &amp; Securities Co., Ltd.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.capefn.com/security/down/SKCertServiceSetup.exe" />
 			</Packages>
 		</Service>
-		<Service Id="WooriInvest" DisplayName="우리종합금융" Category="Security" Url="https://www.wooriib.com/">
+		<Service Id="WooriInvest" DisplayName="우리종합금융" Category="Security" Url="https://www.wooriib.com/"
+			en-US:DisplayName="WOORI INVESTMENT BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.wooriib.com/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="INISAFECrossWeb" Url="https://www.wooriib.com/SW/initech/extension/down/INIS_EX_SHA2_3.3.2.23.exe" Arguments="/S" />
@@ -1006,7 +1169,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 		<!-- 증권사 끝 -->
 
 		<!-- 신용 카드 회사 시작 (https://ko.wikipedia.org/wiki/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD%EC%9D%98_%EA%B8%88%EC%9C%B5%EA%B8%B0%EA%B4%80_%EB%AA%A9%EB%A1%9D#%EC%B9%B4%EB%93%9C%EC%82%AC 참고함) -->
-		<Service Id="Wooricard" DisplayName="우리카드" Category="CreditCard" Url="https://www.wooricard.com/">
+		<Service Id="Wooricard" DisplayName="우리카드" Category="CreditCard" Url="https://www.wooricard.com/"
+			en-US:DisplayName="WOORI CARD">
 			<Packages>
 				<Package Name="Veraport" Url="https://pc.wooricard.com/dcpc/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://pc.wooricard.com/dcpc/pluginfree/setup/nos_setup.exe" Arguments="/silent" />
@@ -1014,16 +1178,20 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="KeySharpBiz" Url="https://pc.wooricard.com/dcpc/raonx/ksbiz/module/KSbiz_Installer_32bit.exe" />
 			</Packages>
 		</Service>
-		<Service Id="KBKookminCard" DisplayName="KB국민카드" Category="CreditCard" Url="https://www.kbcard.com/">
+		<Service Id="KBKookminCard" DisplayName="KB국민카드" Category="CreditCard" Url="https://www.kbcard.com/"
+			en-US:DisplayName="KB KOOKMIN CARD">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://download.kbcard.com/security/wizvera/veraport-g3/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://download.kbcard.com/security/wizvera/delfino-g3/delfino-g3.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="Hanacard" DisplayName="하나카드" Category="CreditCard" Url="https://www.hanacard.co.kr/">
+		<Service Id="Hanacard" DisplayName="하나카드" Category="CreditCard" Url="https://www.hanacard.co.kr/"
+			en-US:DisplayName="Hana Card">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://www.hanacard.co.kr/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="http://dn.wizvera.com/svc/hanacard/delfino/delfino-g3.exe" Arguments="/silent" />
@@ -1031,21 +1199,25 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="IPInside" Url="https://www.hanacard.co.kr/sw/EFDS/agent/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="ShinhanCard" DisplayName="신한카드" Category="CreditCard" Url="https://www.shinhancard.com/">
+		<Service Id="ShinhanCard" DisplayName="신한카드" Category="CreditCard" Url="https://www.shinhancard.com/"
+			en-US:DisplayName="SHINHAN CARD">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.shinhancard.com/psolution/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://www.shinhancard.com/psolution/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="BCCard" DisplayName="BC카드" Category="CreditCard" Url="https://www.bccard.com/">
+		<Service Id="BCCard" DisplayName="BC카드" Category="CreditCard" Url="https://www.bccard.com/"
+			en-US:DisplayName="BC Card co., Ltd.">
 			<Packages>
 				<Package Name="INISAFECrossWeb" Url="https://www.bccard.com/initech/crossweb/extension/down/INIS_EX.exe" Arguments="/S" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="NHCard" DisplayName="NH농협카드" Category="CreditCard" Url="https://card.nonghyup.com/">
+		<Service Id="NHCard" DisplayName="NH농협카드" Category="CreditCard" Url="https://card.nonghyup.com/"
+			en-US:DisplayName="NH NONGHYUP CARD">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://card.nonghyup.com/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://card.nonghyup.com/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
@@ -1053,40 +1225,54 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="HyundaiCard" DisplayName="현대카드" Category="CreditCard" Url="https://www.hyundaicard.com/">
+		<Service Id="HyundaiCard" DisplayName="현대카드" Category="CreditCard" Url="https://www.hyundaicard.com/"
+			en-US:DisplayName="Hyundai Card">
 			<Packages>
 				<Package Name="Veraport" Url="https://img.hyundaicard.com/wizvera/veraport/down/veraport-g3s-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://img.hyundaicard.com/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="SamsungCard" DisplayName="삼성카드" Category="CreditCard" Url="https://www.samsungcard.com/">
+		<Service Id="SamsungCard" DisplayName="삼성카드" Category="CreditCard" Url="https://www.samsungcard.com/"
+			en-US:DisplayName="Samsung Card">
 			<Packages>
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="MagicLine4NX" Url="https://www.samsungcard.com/MagicLine4Web/ML4Web/install_bin/magicline4nx_setup.exe" Arguments="/silent" />
 				<Package Name="IPInside" Url="https://static12.samsungcard.com/stinstall/ipinsideLWS/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="LotteCard" DisplayName="롯데카드" Category="CreditCard" Url="https://www.lottecard.co.kr/">
+		<Service Id="LotteCard" DisplayName="롯데카드" Category="CreditCard" Url="https://www.lottecard.co.kr/"
+			en-US:DisplayName="LOTTE CARD">
 			<Packages>
 				<Package Name="NOSAll" Url="https://image.lottecard.co.kr/webapp/pluginfree/nos_down.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.2.0/AnySign_Installer.exe" Arguments="/S" />
 			</Packages>
 		</Service>
+		<Service Id="eHyundaiCard" DisplayName="현대백화점카드" Category="CreditCard" Url="https://www.ehyundai.com/newPortal/card/main.do"
+			en-US:DisplayName="Hyundai Department Store Credit Card">
+			<Packages>
+				<Package Name="AnySign" Url="https://www.ehyundai.com/AnySign4PC/win/AnySign_Installer.exe" Arguments="/S" />
+				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
 		<!-- 신용 카드 회사 끝 -->
 		
 		<!-- 보험 회사 시작 (https://namu.wiki/w/%ED%8B%80:%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD%EC%9D%98%20%EB%B3%B4%ED%97%98%ED%9A%8C%EC%82%AC 참고함) -->
-		<Service Id="KyoboLifePlanet" DisplayName="교보라이프플래닛생명" Category="Insurance" Url="https://www.lifeplanet.co.kr/">
+		<Service Id="KyoboLifePlanet" DisplayName="교보라이프플래닛생명" Category="Insurance" Url="https://www.lifeplanet.co.kr/"
+			en-US:DisplayName="KYOBO LIFEPLANET LIFE INSURANCE COMPANY">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://www.lifeplanet.co.kr/commons/3rd-party/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="PrintManager" Url="https://www.lifeplanet.co.kr/commons/3rd-party/redbc/NX_PRNMAN(x86).exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="KyoboLife" DisplayName="교보생명" Category="Insurance" Url="https://www.kyobo.co.kr/">
+		<Service Id="KyoboLife" DisplayName="교보생명" Category="Insurance" Url="https://www.kyobo.co.kr/"
+			en-US:DisplayName="Kyobo Life Insurance Co., Ltd.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://www.kyobo.co.kr/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="AhnLabSafeTx" Url="https://www.kyobo.co.kr/AST/Client/astx_setup.exe" Arguments="/silent" />
@@ -1094,7 +1280,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="TouchEnKey32" Url="https://www.kyobo.co.kr/TouchEn.v2/nxKey/module/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
 			</Packages>
 		</Service>
-		<Service Id="DongyangLife" DisplayName="동양생명" Category="Insurance" Url="https://www.myangel.co.kr/">
+		<Service Id="DongyangLife" DisplayName="동양생명" Category="Insurance" Url="https://www.myangel.co.kr/"
+			en-US:DisplayName="Tong Yang Life Insurance Company">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.myangel.co.kr/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://www.myangel.co.kr/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
@@ -1102,7 +1289,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="TouchEnFirewall" Url="https://www.myangel.co.kr/raonnx/nxFw/module/TEFW_Installer.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="CignaLife" DisplayName="라이나생명" Category="Insurance" Url="https://www.lina.co.kr/">
+		<Service Id="CignaLife" DisplayName="라이나생명" Category="Insurance" Url="https://www.lina.co.kr/"
+			en-US:DisplayName="LINA Korea, a Chubb Company">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.lina.co.kr/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://www.lina.co.kr/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
@@ -1110,13 +1298,15 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="TouchEnFirewall" Url="https://www.lina.co.kr/raonnx/nxFw/module/TEFW_Installer.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="Metlife" DisplayName="메트라이프생명" Category="Insurance" Url="https://cyber.metlife.co.kr/">
+		<Service Id="Metlife" DisplayName="메트라이프생명" Category="Insurance" Url="https://cyber.metlife.co.kr/"
+			en-US:DisplayName="MetLife Insurance Co. of Korea, Ltd.">
 			<Packages>
 				<Package Name="INISAFECrossWeb" Url="https://cyber.metlife.co.kr/initech/extension/down/INIS_EX.exe" Arguments="/S" />
 				<Package Name="KOS" Url="https://cyber.metlife.co.kr/kings/files/KOS_Setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="MiraeAssetLife" DisplayName="미래에셋생명" Category="Insurance" Url="https://life.miraeasset.com/">
+		<Service Id="MiraeAssetLife" DisplayName="미래에셋생명" Category="Insurance" Url="https://life.miraeasset.com/"
+			en-US:DisplayName="Mirae Asset Life Insuarance Co., Ltd.">
 			<Packages>
 				<Package Name="Veraport" Url="https://life.miraeasset.com/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="VestCert" Url="https://life.miraeasset.com/thirdparty/yettie/vestsign/VestCertSetup.exe" Arguments="/silent" />
@@ -1124,15 +1314,19 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="SamsungLife" DisplayName="삼성생명" Category="Insurance" Url="https://www.samsunglife.com/">
+		<Service Id="SamsungLife" DisplayName="삼성생명" Category="Insurance" Url="https://www.samsunglife.com/"
+			en-US:DisplayName="Samsung Life Insurance">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://www.samsunglife.com/lib/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="ShinhanLife" DisplayName="신한라이프" Category="Insurance" Url="https://www.shinhanlife.co.kr/">
+		<Service Id="ShinhanLife" DisplayName="신한라이프" Category="Insurance" Url="https://www.shinhanlife.co.kr/"
+			en-US:DisplayName="SHINHAN LIFE INSURANCE">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://cyber.shinhanlife.co.kr/third/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://cyber.shinhanlife.co.kr/third/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
@@ -1144,46 +1338,56 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="KSCertRelay32" Url="https://c.shinhanlife.co.kr/library/raonnx/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="ChubbLife" DisplayName="처브라이프" Category="Insurance" Url="https://customercenter.chubblife.co.kr/">
+		<Service Id="ChubbLife" DisplayName="처브라이프" Category="Insurance" Url="https://customercenter.chubblife.co.kr/"
+			en-US:DisplayName="Chubb Life Insurance Company Ltd.">
 			<Packages>
 				<Package Name="MoaSign" Url="https://customercenter.chubblife.co.kr/initech/moasign/down/MoaSignSetup_20161212_1.0.45_Card_T_.exe" Arguments="/silent" />
 				<Package Name="TouchEnKey32" Url="https://customercenter.chubblife.co.kr/raon/TouchEn/nxKey/module/TouchEn_nxKey_Installer_32bit.exe?ver=1.0.0.35" Arguments="/silence" />
 				<Package Name="TouchEnFirewall" Url="https://customercenter.chubblife.co.kr/raon/TouchEn/nxFw/module/TEFW_Installer.exe?ver=1.0.0.13" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="PrudentialLife" DisplayName="푸르덴셜생명" Category="Insurance" Url="https://cyber.prudential.co.kr/">
+		<Service Id="PrudentialLife" DisplayName="푸르덴셜생명" Category="Insurance" Url="https://cyber.prudential.co.kr/"
+			en-US:DisplayName="Prudential Life Insurance Company of Korea Ltd.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="ePageSafer" Url="https://cyber.prudential.co.kr/sw/MAWS_PrudentialOz_Setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="FubonHyundaiLife" DisplayName="푸본현대생명" Category="Insurance" Url="https://www.fubonhyundai.com/">
+		<Service Id="FubonHyundaiLife" DisplayName="푸본현대생명" Category="Insurance" Url="https://www.fubonhyundai.com/"
+			en-US:DisplayName="Fubon Hyundai Life Insurance Corp.">
 			<Packages>
 				<Package Name="VestCert" Url="https://www.fubonhyundai.com/yettie/VestCert/VestCertSetup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="HanaLife" DisplayName="하나생명" Category="Insurance" Url="https://www.hanalife.co.kr/">
+		<Service Id="HanaLife" DisplayName="하나생명" Category="Insurance" Url="https://www.hanalife.co.kr/"
+			en-US:DisplayName="HANA Life">
 			<Packages>
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://rencyber.hanalife.co.kr/wizvera/delfino/down/delfino-g3-sha2.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="HanwhaLife" DisplayName="한화생명" Category="Insurance" Url="https://www.hanwhalife.com/">
+		<Service Id="HanwhaLife" DisplayName="한화생명" Category="Insurance" Url="https://www.hanwhalife.com/"
+			en-US:DisplayName="Hanwha Life Insurance Co., Ltd.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://www.hanwhalife.com/security/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="AnySign" Url="http://download.softforum.com/Published/AnySign/v1.1.2.5/AnySign_Installer.exe" Arguments="/S" />
 				<Package Name="AhnLabSafeTx" Url="http://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="HeungkukLife" DisplayName="흥국생명" Category="Insurance" Url="https://www.heungkuklife.co.kr/">
+		<Service Id="HeungkukLife" DisplayName="흥국생명" Category="Insurance" Url="https://www.heungkuklife.co.kr/"
+			en-US:DisplayName="Heungkuk Life Insurance Co., Ltd.">
 			<Packages>
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="AblLife" DisplayName="ABL생명" Category="Insurance" Url="https://cyber.abllife.co.kr/">
+		<Service Id="AblLife" DisplayName="ABL생명" Category="Insurance" Url="https://cyber.abllife.co.kr/"
+			en-US:DisplayName="ABL LIFE INSURANCE">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://cyber.abllife.co.kr/resources/lib/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="ASTX" Url="https://cyber.abllife.co.kr/resources/lib/anlab/astxdn.exe" Arguments="/silent" />
@@ -1194,21 +1398,26 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="ePageSafer" Url="https://cyber.abllife.co.kr/resources/lib/markany/ePageSafer/madownloadrd.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="AiaLife" DisplayName="AIA생명" Category="Insurance" Url="https://www.aia.co.kr">
+		<Service Id="AiaLife" DisplayName="AIA생명" Category="Insurance" Url="https://www.aia.co.kr"
+			en-US:DisplayName="AIA Life Insurance">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://cyberservice.aia.co.kr/MYAIA/sol/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://cyberservice.aia.co.kr/MYAIA/sol/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="CardifLife" DisplayName="BNP파리바 카디프생명" Category="Insurance" Url="https://www.cardif.co.kr/">
+		<Service Id="CardifLife" DisplayName="BNP파리바 카디프생명" Category="Insurance" Url="https://www.cardif.co.kr/"
+			en-US:DisplayName="BNP PARIBAS CARDIF LIFE INSURANCE">
 			<Packages>
 				<Package Name="TouchEnKey32" Url="https://www.cardif.co.kr/b2c-portlet/js/touchen/nxkey/module/TouchEn_nxKey_Installer_32bit.exe?ver=1.0.0.75" Arguments="/silence" />
 			</Packages>
 		</Service>
-		<Service Id="DbLife" DisplayName="DB생명" Category="Insurance" Url="https://www.idblife.com/cyber/">
+		<Service Id="DbLife" DisplayName="DB생명" Category="Insurance" Url="https://www.idblife.com/cyber/"
+			en-US:DisplayName="DB Life Insuarance Co., Ltd.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://www.idblife.com/cyber/assets/vender/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://www.idblife.com/cyber/assets/vender/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
@@ -1218,13 +1427,16 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="KSCertRelay32" Url="https://www.idblife.com/cyber/assets/vender/raon/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="DgbLife" DisplayName="DGB생명" Category="Insurance" Url="https://www.dgbfnlife.com/cyber/">
+		<Service Id="DgbLife" DisplayName="DGB생명" Category="Insurance" Url="https://www.dgbfnlife.com/cyber/"
+			en-US:DisplayName="DGB LIFE INSURANCE">
 			<Packages>
 				<Package Name="SmartManagerEx" Url="https://www.dgbfnlife.com/icc/smartmanagerex/extension/down/SmartManagerEX.exe?ver=1.0.1.875" />
 			</Packages>
 		</Service>
-		<Service Id="KbLife" DisplayName="KB생명" Category="Insurance" Url="https://www.kblife.co.kr/">
+		<Service Id="KbLife" DisplayName="KB생명" Category="Insurance" Url="https://www.kblife.co.kr/"
+			en-US:DisplayName="KB Life Insurance Company">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://www.kblife.co.kr/res/3rd/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://www.kblife.co.kr/res/3rd/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
@@ -1233,14 +1445,17 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="ePageSafer" Url="https://rdr.kbli.co.kr/NOAX_RT/bin/Setup_ePageSaferRT.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="KdbLife" DisplayName="KDB생명" Category="Insurance" Url="https://www.kdblife.co.kr/">
+		<Service Id="KdbLife" DisplayName="KDB생명" Category="Insurance" Url="https://www.kdblife.co.kr/"
+			en-US:DisplayName="KDB LIFE INSURANCE">
 			<Packages>
 				<Package Name="NOS" Url="https://www.kdblife.co.kr/securepackage/nos_setup.exe" Arguments="/silent" />
 				<Package Name="KCaseAgent" Url="https://www.kdblife.co.kr/securepackage/KCaseAgent_Installer.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="NHLife" DisplayName="NH농협생명" Category="Insurance" Url="https://www.nhlife.co.kr/">
+		<Service Id="NHLife" DisplayName="NH농협생명" Category="Insurance" Url="https://www.nhlife.co.kr/"
+			en-US:DisplayName="NONGHYUP LIFE INSURANCE">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://www.nhlife.co.kr/sol/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
@@ -1250,7 +1465,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="KISSCAP" Url="https://www.nhlife.co.kr/sol/KWIC/scraping/down/KISSCAP.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="IbkAnnuityInsurance" DisplayName="IBK연금보험" Category="Insurance" Url="https://www.ibki.co.kr/">
+		<Service Id="IbkAnnuityInsurance" DisplayName="IBK연금보험" Category="Insurance" Url="https://www.ibki.co.kr/"
+			en-US:DisplayName="IBK Insurance">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.ibki.co.kr/client_install_file/wizvera/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://www.ibki.co.kr/client_install_file/wizvera/delfino-g3.exe" Arguments="/silent" />
@@ -1259,7 +1475,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="ePageSafer" Url="https://www.ibki.co.kr/client_install_file/markany/Setup_ePageSaferRT.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="MeritzFire" DisplayName="메리츠화재보험" Category="Insurance" Url="https://www.meritzfire.com/">
+		<Service Id="MeritzFire" DisplayName="메리츠화재보험" Category="Insurance" Url="https://www.meritzfire.com/"
+			en-US:DisplayName="Meritz Fire &amp; Marine Insurance Co., Ltd.">
 			<Packages>
 				<Package Name="Veraport" Url="https://cmdown.meritzfire.com/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="KeySharpBiz" Url="https://cmdown.meritzfire.com/nxbiz/download/keysharpnxbiz.exe" />
@@ -1267,29 +1484,34 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="TouchEnFirewall" Url="https://cmdown.meritzfire.com/TouchEn/nxFw/module/TEFW_Installer.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="SamsungFire" DisplayName="삼성화재" Category="Insurance" Url="https://www.samsungfire.com/">
+		<Service Id="SamsungFire" DisplayName="삼성화재" Category="Insurance" Url="https://www.samsungfire.com/"
+			en-US:DisplayName="Samsung Fire &amp; Marine Insuarance">
 			<Packages>
 				<Package Name="NOS" Url="https://www.samsungfire.com/pluginfree/nos_launcher.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="HeungkukFire" DisplayName="흥국화재" Category="Insurance" Url="https://www.heungkukfire.co.kr/">
+		<Service Id="HeungkukFire" DisplayName="흥국화재" Category="Insurance" Url="https://www.heungkukfire.co.kr/"
+			en-US:DisplayName="Heungkuk Fire &amp; Marine Insurance Co., Ltd.">
 			<Packages>
 				<Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.0.7/AnySign_Installer.exe" Arguments="/S" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/sha2/nos_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="LotteInsurance" DisplayName="롯데손해보험" Category="Insurance" Url="http://www.lotteins.co.kr/">
+		<Service Id="LotteInsurance" DisplayName="롯데손해보험" Category="Insurance" Url="http://www.lotteins.co.kr/"
+			en-US:DisplayName="Lotte Insurance Co., Ltd">
 			<Packages>
 				<Package Name="Veraport" Url="http://www.lottehowmuch.com/wizvera/veraportg3/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="AnySign" Url="http://download.softforum.com/Published/AnySign/v1.1.0.8/AnySign_Installer.exe" Arguments="/S" />
 				<Package Name="KOS" Url="http://kings.nefficient.co.kr/kings/lotteins/KOS_Setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="CarrotInsurance" DisplayName="캐롯손해보험" Category="Insurance" Url="https://www.carrotins.com/">
+		<Service Id="CarrotInsurance" DisplayName="캐롯손해보험" Category="Insurance" Url="https://www.carrotins.com/"
+			en-US:DisplayName="Carrot General Insurance Co., Ltd.">
 			<Packages>
 			</Packages>
 		</Service>
-		<Service Id="Educar" DisplayName="하나손해보험" Category="Insurance" Url="https://www.educar.co.kr/">
+		<Service Id="Educar" DisplayName="하나손해보험" Category="Insurance" Url="https://www.educar.co.kr/"
+			en-US:DisplayName="Hana Insurance Co., Ltd.">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.educar.co.kr/solution/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://www.educar.co.kr/solution/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
@@ -1298,8 +1520,10 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="KSignCASE" Url="https://www.educar.co.kr/solution/wizsign/down/KSignCASE_v1.3.14_190122.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="HanwhaInsurance" DisplayName="한화손해보험" Category="Insurance" Url="https://www.hwgeneralins.com/">
+		<Service Id="HanwhaInsurance" DisplayName="한화손해보험" Category="Insurance" Url="https://www.hwgeneralins.com/"
+			en-US:DisplayName="Hanwha General Insurance Co., Ltd.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="WizInDelfino" Url="https://www.hwgeneralins.com/wizvera/delfino/down/delfino-g3-sha2.exe" Arguments="/silent" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
@@ -1308,18 +1532,21 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="DextUploader" Url="https://www.hi.co.kr/dext5upload/plugin/dext5Setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="HyundaiInsurance" DisplayName="현대해상" Category="Insurance" Url="https://www.hi.co.kr/">
+		<Service Id="HyundaiInsurance" DisplayName="현대해상" Category="Insurance" Url="https://www.hi.co.kr/"
+			en-US:DisplayName="Hyundai Marine &amp; Fire Insurance Co., Ltd">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.hi.co.kr/wizvera/veraportG3/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://www.hi.co.kr/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="AceInsurance" DisplayName="ACE손해보험" Category="Insurance" Url="https://ec.aceinsurance.co.kr/jsp/acelimited/mainCert.jsp">
+		<Service Id="AceInsurance" DisplayName="ACE손해보험" Category="Insurance" Url="https://ec.aceinsurance.co.kr/jsp/acelimited/mainCert.jsp"
+			en-US:DisplayName="ACE Insurance Co., Ltd.">
 			<Packages>
 				<Package Name="VestCert" Url="https://ec.aceinsurance.co.kr/third/vestsign/VestCertSetup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="AigInsurance" DisplayName="AIG손해보험" Category="Insurance" Url="https://www.aig.co.kr/">
+		<Service Id="AigInsurance" DisplayName="AIG손해보험" Category="Insurance" Url="https://www.aig.co.kr/"
+			en-US:DisplayName="AIG KOREA CORPORATION">
 			<Packages>
 				<Package Name="AnySign" Url="https://www.aig.co.kr/common/anysign/AnySign4PC/download/AnySign_Installer.exe" Arguments="/S" />
 				<Package Name="NOS" Url="https://www.aig.co.kr/common/nos/download/nos_setup.exe" Arguments="/silent" />
@@ -1327,7 +1554,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="KSCertRelay" Url="https://www.aig.co.kr/common/keyICRS/install_file/KSCertRelay.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="AxaInsurance" DisplayName="AXA손해보험" Category="Insurance" Url="https://www.axa.co.kr/">
+		<Service Id="AxaInsurance" DisplayName="AXA손해보험" Category="Insurance" Url="https://www.axa.co.kr/"
+			en-US:DisplayName="AXA General Insurance Co., Ltd.">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.axa.co.kr/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://www.axa.co.kr/wizvera/delfino/down/delfino-g3-sha2.exe" Arguments="/silent" />
@@ -1335,33 +1563,40 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="ePageSafer" Url="https://www.axa.co.kr/markany/bin/Setup_ePageSafer.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="CardifInsurance" DisplayName="BNP파리바 카디프손해보험" Category="Insurance" Url="https://www.cardifcare.co.kr/">
+		<Service Id="CardifInsurance" DisplayName="신한EZ손해보험" Category="Insurance" Url="https://www.shinhanez.co.kr/"
+			en-US:DisplayName="SHINHAN EZ GENERAL INSURANCE">
 			<Packages>
-				<Package Name="AnySign" Url="https://www.cardifcare.co.kr/html/anySign4PC/test/AnySign_Installer.exe" Arguments="/S" />
-				<Package Name="TouchEnFirewall" Url="https://www.cardifcare.co.kr/raonnx/nxFw/module/TEFW_Installer.exe?ver=1.0.0.23" Arguments="/silent" />
-				<Package Name="TouchEnKey32" Url="https://www.cardifcare.co.kr/raonnx/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
+				<Package Name="AnySign" Url="https://www.shinhanez.co.kr/html/anySign4PC/AnySign_Installer.exe" Arguments="/S" />
+				<Package Name="TouchEnFirewall" Url="https://www.shinhanez.co.kr/raonnx/nxFw/module/TEFW_Installer.exe?ver=1.0.0.24" Arguments="/silent" />
+				<Package Name="TouchEnKey32" Url="https://www.shinhanez.co.kr/raonnx/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
 			</Packages>
 		</Service>
-		<Service Id="DbInsurance" DisplayName="DB손해보험" Category="Insurance" Url="https://www.idbins.com/">
+		<Service Id="DbInsurance" DisplayName="DB손해보험" Category="Insurance" Url="https://www.idbins.com/"
+			en-US:DisplayName="DB INSURANCE CO., LTD.">
 			<Packages>
 				<Package Name="CrossWarp" Url="https://www.idbins.com/nActX/crossWarpEX/extension/down/CrossWarpEX.exe?ver=1.0.1.1099" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="KbInsurance" DisplayName="KB손해보험" Category="Insurance" Url="https://kbinsure.co.kr/">
+		<Service Id="KbInsurance" DisplayName="KB손해보험" Category="Insurance" Url="https://kbinsure.co.kr/"
+			en-US:DisplayName="KB INSURANCE">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="WizInDelfino" Url="https://api-storage.cloud.toast.com/v1/AUTH_b3db616b9e614c23a9ffe3728564c8c2/mobile_task_storage_prod/secure/delfino-g3.exe" Arguments="/silent" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="MgInsurance" DisplayName="MG손해보험" Category="Insurance" Url="https://www.mggeneralins.com/">
+		<Service Id="MgInsurance" DisplayName="MG손해보험" Category="Insurance" Url="https://www.mggeneralins.com/"
+			en-US:DisplayName="MG Non-Life Insurance CO., LTD.">
 			<Packages>
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="AnySign" Url="https://www.mggeneralins.com/webdocs/resources/anySign4Pc/install/v1.1.0.7/AnySign_Installer.exe" Arguments="/S" />
 			</Packages>
 		</Service>
-		<Service Id="NhInsurance" DisplayName="NH농협손해보험" Category="Insurance" Url="https://www.nhfire.co.kr/">
+		<Service Id="NhInsurance" DisplayName="NH농협손해보험" Category="Insurance" Url="https://www.nhfire.co.kr/"
+			en-US:DisplayName="NONGHYUP PROPERTY &amp; CASUALTY INSURANCE">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="Veraport" Url="https://www.nhfire.co.kr/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="INISAFECrossWeb" Url="https://www.nhfire.co.kr/initech/extension/down/INIS_EX.exe" Arguments="/S" />
@@ -1369,7 +1604,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="ePageSafer" Url="https://www.nhfire.co.kr/markany/exe/Setup_ePageSaferRT.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="SeoulGuarantyInsurance" DisplayName="SGI서울보증" Category="Insurance" Url="https://www.sgic.co.kr/">
+		<Service Id="SeoulGuarantyInsurance" DisplayName="SGI서울보증" Category="Insurance" Url="https://www.sgic.co.kr/"
+			en-US:DisplayName="Seoul Guarantee Insurance Company">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.sgic.co.kr/chp/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.0.15/AnySign_Installer.exe" Arguments="/S" />
@@ -1405,6 +1641,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 		</Service>
 		<Service Id="Iros" DisplayName="대한민국 법원 인터넷등기소" Category="Government" Url="http://www.iros.go.kr/">
 			<CompatNotes>이 웹 사이트는 오래된 Windows 10 또는 Windows 11에서 지원하지 않는 오래된 Visual C++ 런타임 패키지를 설치하려다가 실패하는 문제로 인하여 샌드박스 내에서 제대로 사용할 수 없을 수 있습니다.</CompatNotes>
+			<en-US:CompatNotes>This website may not work properly within the sandbox due to an issue where an attempt to install an older Visual C++ runtime package that is not supported on older Windows 10 or Windows 11 fails.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="EnableTrustedSite" Url="http://www.iros.go.kr/iris/TrustedSiteSetup.exe" Arguments="/silent" />
 				<Package Name="AnySign" Url="http://download.softforum.com/Published/AnySign/v1.1.2.0/AnySign_Installer.exe" Arguments="/silent" />
@@ -1510,6 +1747,7 @@ Start-Service -ServiceName TrustedInstaller
 		</Service>
 		<Service Id="GHealth" DisplayName="G-health 공공보건포털" Category="Government" Url="https://www.g-health.kr/">
 			<CompatNotes>G-health 공공보건포털의 경우 해당 기관의 보안 정책에 따라 NOS가 설치된 상태에서 원격 데스크톱, Hyper-V 고급 세션, 그리고 윈도우 샌드박스를 이용하여 웹 사이트를 방문하면 자동으로 종료되는 문제가 발생합니다.</CompatNotes>
+			<en-US:CompatNotes>In the case of the G-health public health portal, if you visit the website using Remote Desktop, Hyper-V Advanced Session, or Windows Sandbox while NOS is installed according to the security policy of the institution, an issue occurs that automatically closes.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AnySign" Url="https://www.g-health.kr/UserFiles/AnySign_Installer.exe" Arguments="/S" />
 				<Package Name="NOS" Url="https://www.g-health.kr/UserFiles/nos_setup.exe" Arguments="/silent" />
@@ -1538,6 +1776,7 @@ Start-Service -ServiceName TrustedInstaller
 		</Service>
 		<Service Id="SSIS" DisplayName="희망이음 사회서비스 포털" Category="Government" Url="https://www.ssis.go.kr/">
 			<CompatNotes>희망이음 전용 메신저 사용은 로그인 페이지 내 다운로드 페이지를 통해 별도 다운로드 후 설치가 필요합니다.</CompatNotes>
+			<en-US:CompatNotes>To use the Hope Messenger, you must separately download and install it through the download page within the login page.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="NOSTypeA" Url="https://www.ssis.go.kr/sw/inca/nos_setup-type_a.exe" Arguments="/silent" />
@@ -1546,6 +1785,7 @@ Start-Service -ServiceName TrustedInstaller
 		</Service>
 		<Service Id="W4C" DisplayName="사회복지시설정보시스템" Category="Government" Url="http://www.w4c.go.kr/">
 			<CompatNotes>이 웹 사이트는 오래된 Windows 10 또는 Windows 11에서 지원하지 않는 오래된 Visual C++ 런타임 패키지를 설치하려다가 실패하는 문제로 인하여 샌드박스 내에서 제대로 사용할 수 없을 수 있습니다. 사회복지시설정보시스템은 로그인 후 XChart 가 설치,시작되지 않는경우 http://www.w4c.go.kr/apinstall.jsp?isPage=Y 의 5번 항목을 수동 설치후 사용해야 합니다.</CompatNotes>
+			<en-US:CompatNotes>This website may not work properly within the sandbox due to an issue where an attempt to install an older Visual C++ runtime package that is not supported on older Windows 10 or Windows 11 fails. For the social welfare facility information system, if XChart is not installed or started after logging in, item 5 of http://www.w4c.go.kr/apinstall.jsp?isPage=Y must be installed and used manually.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="XPlatform" Url="http://www.w4c.go.kr/userimg/img/notice/XPLATFORM9.2_SetupEngine.exe" Arguments="" />
 				<Package Name="NamoWecClient" Url="http://www.w4c.go.kr/mipf/img/mi_setup/NamoWecClient.exe" Arguments="" />
@@ -1580,6 +1820,7 @@ Start-Service -ServiceName TrustedInstaller
 		</Service>
 		<Service Id="ILogenEnterprise" DisplayName="로젠택배 기업용" Category="Other" Url="https://www.ilogen.com/web/enterprise/system">
 			<CompatNotes>로젠택배 기업용 소프트웨어는 .NET Framework 2.0이 필요하며, 해당 구성 요소는 윈도우 샌드박스 내부가 아닌 시스템에 미리 설치되어있어야 사용할 수 있습니다. 사용 중인 컴퓨터의 프로그램 추가/제거 화면에서 .NET Framework 3.5가 설치되어있는지 확인하고, 먼저 설치해주세요.</CompatNotes>
+			<en-US:CompatNotes>Logen Express corporate software requires .NET Framework 2.0, and its components must be pre-installed on the system and not inside the Windows Sandbox to be used. Check whether .NET Framework 3.5 is installed in the Add/Remove Programs screen of the computer you are using, and install it first.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="wLogenLauncher" Url="http://cust.ilogen.com/install/newlauncher/TPLSvc_Setup.exe" Arguments="/silent" />
 				<Package Name="iLogen" Url="https://www.ilogen.com/static/download/setup.exe" Arguments="/silent" />
@@ -1596,7 +1837,8 @@ Start-Service -ServiceName TrustedInstaller
 				<Package Name="MobiSign" Url="https://download.raonsecure.com/MobiSign/v5.0.5.0/xccr.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="TMoney" DisplayName="티머니카드" Category="Other" Url="https://pay.tmoney.co.kr/">
+		<Service Id="TMoney" DisplayName="티머니카드" Category="Other" Url="https://pay.tmoney.co.kr/"
+			en-US:DisplayName="T-Money">
 			<Packages>
 				<Package Name="TouchEnKey32" Url="http://download.raonsecure.com/TouchEnnxKey/current/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
 			</Packages>
@@ -1672,7 +1914,8 @@ foreach ($EachMsi in $MsiList) {
 				<Package Name="ICT_REPORTX" Url="https://uni.webminwon.com/wm1.0/activex/ICT_REPORTX_SETUP.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="Knou" DisplayName="한국방송통신대학교" Category="Education" Url="https://www.knou.ac.kr/">
+		<Service Id="Knou" DisplayName="한국방송통신대학교" Category="Education" Url="https://www.knou.ac.kr/"
+			en-US:DisplayName="Korea National Open University">
 			<Packages>
 				<Package Name="OZReportLauncher" Url="https://www.knou.ac.kr/bbs/knou/56/74346/download.do" Arguments="" />
 				<Package Name="OZReportPrinter" Url="https://www.knou.ac.kr/bbs/knou/56/6389/download.do" Arguments="" />
