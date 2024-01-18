@@ -1570,6 +1570,12 @@ Start-Service -ServiceName TrustedInstaller
 ]]>
 			</CustomBootstrap>
 		</Service>
+		<Service Id="Unipass" DisplayName="관세청 유니패스" Category="Government" Url="https://unipass.customs.go.kr/">
+			<Packages>
+				<Package Name="MagicLine4nx" Url="https://unipass.customs.go.kr/csp/MagicLine4Web/ML4Web/install_bin/magicline4nx_setup.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
+		
 		<!-- 공공기관 끝 -->
 
 		<!-- 일반 서비스 시작 -->
