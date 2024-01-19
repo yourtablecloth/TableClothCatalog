@@ -1527,16 +1527,17 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 			<Packages>
 				<Package Name="WizInDelfino" Url="https://www.hwgeneralins.com/wizvera/delfino/down/delfino-g3-sha2.exe" Arguments="/silent" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
-				<Package Name="NOS" Url="https://www.hi.co.kr/pluginfree/install/nos_setup.exe" Arguments="/silent" />
-				<Package Name="ePageSafer" Url="https://www.hi.co.kr/ReportingServer/markany/exe/Setup_ePageSaferRT.exe" Arguments="/silent" />
-				<Package Name="DextUploader" Url="https://www.hi.co.kr/dext5upload/plugin/dext5Setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
 		<Service Id="HyundaiInsurance" DisplayName="현대해상" Category="Insurance" Url="https://www.hi.co.kr/"
 			en-US:DisplayName="Hyundai Marine &amp; Fire Insurance Co., Ltd">
 			<Packages>
-				<Package Name="Veraport" Url="https://www.hi.co.kr/wizvera/veraportG3/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
-				<Package Name="WizInDelfino" Url="https://www.hi.co.kr/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
+				<Package Name="Veraport" Url="https://download.hi.co.kr/distribution/HC/wizvera/veraportG3/down/veraport-g3-x64.exe" Arguments="/silent" />
+				<Package Name="WizInDelfino" Url="https://www.hi.co.kr/product/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
+				<Package Name="NOS" Url="https://www.hi.co.kr/product/pluginfree/install/nos_setup.exe" Arguments="/silent" />
+				<Package Name="ePageSafer" Url="https://www.hi.co.kr/product/ReportingDown/Setup_ePageSaferRT.exe" Arguments="/silent" />
+				<Package Name="NXiSAS" Url="https://www.hi.co.kr/product/Coocon/file/NXiSAS.exe" Arguments="" />
+				<Package Name="KSCertRelayNX" Url="https://www.hi.co.kr/product/raonnx/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" Arguments="" />
 			</Packages>
 		</Service>
 		<Service Id="AceInsurance" DisplayName="ACE손해보험" Category="Insurance" Url="https://ec.aceinsurance.co.kr/jsp/acelimited/mainCert.jsp"
