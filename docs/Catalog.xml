@@ -1933,8 +1933,8 @@ foreach ($EachMsi in $MsiList) {
 				<Package Name="ViewerApp" Url="https://www.certpia.com/upfile/ocx/Plugin/viewerSetup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="Knou" DisplayName="한국방송통신대학교" Category="Education" Url="https://www.knou.ac.kr/"
-			en-US:DisplayName="Korea National Open University">
+		<Service Id="Knou" DisplayName="한국방송통신대학교 증명서발급" Category="Education" Url="https://certi.knou.ac.kr/haksa/ass/cint/ASSInetCrtiWebLinkPage.do"
+			en-US:DisplayName="Korea National Open University Certificate Issuance">
 			<Packages>
 				<Package Name="OZReportLauncher" Url="https://www.knou.ac.kr/bbs/knou/56/74346/download.do" Arguments="" />
 				<Package Name="OZReportPrinter" Url="https://www.knou.ac.kr/bbs/knou/56/6389/download.do" Arguments="" />
