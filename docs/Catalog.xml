@@ -1833,6 +1833,11 @@ Start-Service -ServiceName TrustedInstaller
 				<Package Name="NOS" Url="https://next.share.go.kr/static/js/vendor/pluginfree/nos_setup_.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
+		<Service Id="NHIS" DisplayName="국민건강보험" Category="Government" Url="https://www.nhis.or.kr/">
+			<Packages>
+				<Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.3.3/AnySign_Installer.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
 		<!-- 공공기관 끝 -->
 
 		<!-- 일반 서비스 시작 -->
