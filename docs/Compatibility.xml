@@ -17,9 +17,6 @@
 		<!-- 공공 - 대한민국 법원 인터넷등기소 -->
 		<Site Domain="iros.go.kr" Mode="Default" OpenIn="IE11" />
 		
-		<!-- 공공 - 대한민국 법원 전자소송 -->
-		<Site Domain="ecfs.scourt.go.kr" Mode="Default" OpenIn="IE11" />
-
 		<!-- 공공 - 기술보증기금 디지털지점 -->
 		<Site Domain="kibo.or.kr" Mode="Default" OpenIn="IE11" />
 
