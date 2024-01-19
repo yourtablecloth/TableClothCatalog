@@ -2011,7 +2011,7 @@ foreach ($EachMsi in $MsiList) {
 				<Package Name="OZWebLauncher" Url="https://util.knou.ac.kr/ozweblauncher/OnLine_Install_Dialog_UI_SSL.exe" Arguments="" />
 			</Packages>
 		</Service>
-		<Service Id="InhaUniv" Display="인하대학교 증명서발급" Category="Education" Url="https://cert.inha.ac.kr/"
+		<Service Id="InhaUniv" DisplayName="인하대학교 증명서발급" Category="Education" Url="https://cert.inha.ac.kr/"
 			en-US:DisplayName="INHA University Certificate Issuance">
 			<Packages>
 				<Package Name="iCertPrintClient" Url="https://cert.inha.ac.kr/icerti/certInstall/install/iCertPrintClientSetup.exe" Arguments="" />
