@@ -1828,6 +1828,11 @@ Start-Service -ServiceName TrustedInstaller
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
+		<Service Id="NextShare" DisplayName="행정정보공동이용시스템" Category="Government" Url="https://next.share.go.kr/">
+			<Packages>
+				<Package Name="NOS" Url="https://next.share.go.kr/static/js/vendor/pluginfree/nos_setup_.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
 		<!-- 공공기관 끝 -->
 
 		<!-- 일반 서비스 시작 -->
