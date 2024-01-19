@@ -238,7 +238,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 		<Service Id="Shinhyub" DisplayName="신협" Category="Banking" Url="https://openbank.cu.co.kr/"
 			en-US:DisplayName="National Credit Union Federation of Korea">
 			<Packages>
-				<Package Name="Veraport" Url="https://openbank.cu.co.kr/nonsw/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
+				<Package Name="Veraport" Url="https://openbank.cu.co.kr/nonsw/wizvera/veraport/down/veraport-g3-sha2.exe" Arguments="/silent" />
 				<Package Name="WizInDelfino" Url="https://openbank.cu.co.kr/nonsw/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
 				<Package Name="TouchEnKey32" Url="https://download.raonsecure.com/TouchEnnxkey/shinhyup/nxkey_x86_v1.0.0.64.exe" Arguments="/silence" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
