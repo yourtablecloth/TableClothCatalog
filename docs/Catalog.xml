@@ -1860,10 +1860,9 @@ Start-Service -ServiceName TrustedInstaller
 		</Service>
 		<Service Id="4Insure" DisplayName="4대사회보험정보연계센터" Category="Government" Url="https://www.4insure.or.kr/">
 			<Packages>
-				<!--
-				<Package Name="KeySharNXBiz" Url="https://down.wetax.go.kr/ext/raonnx/ksbiz/module/KSbiz_Installer_32bit.exe" Arguments="/silent" />
-				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
-				-->
+				<Package Name="Veraport" Url="https://www.4insure.or.kr/solution/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
+				<Package Name="AnySign" Url="https://www.4insure.or.kr/solution/AnySign_19/AnySign4PC/download/AnySign_Installer.exe" Arguments="/silent" />
+				<Package Name="ASTxFor4Insure" Url="https://www.4insure.or.kr/solution/Ahnlab/AOS2/astx_setup_4insure.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
 		<!-- 공공기관 끝 -->
