@@ -20,3 +20,13 @@
 - [docs/Compatibility.xml](docs/Compatibility.xml): Internet Explorer Mode로 띄우려는 웹 사이트들의 목록을 저장하고 관리하는 XML 파일입니다. (식탁보 0.5.3, 0.5.4 버전에서 사용)
 
 위의 두 개의 파일에 새로운 항목을 추가하고 Pull Request를 보내주시면, 검토 후에 반영하도록 하겠습니다.
+
+### 자동 응답 설치 옵션을 찾는 방법
+
+일반적으로 무인 설치 옵션은 설치 프로그램 명령줄 뒤에 `/?`나 `/help`, `/h`, `--help` 등 도움말을 표시하는 것과 관련된 스위치를 대입하여 실행하면 도움말과 함께 자세한 자동 응답 설치 옵션을 사용하는 방법을 표시합니다.
+
+만약 위의 방법을 통하여 옵션을 찾기 어려울 때에는 Universal Silent Switch Finder (USSF) 도구를 이용하여 찾는 것을 시도할 수 있습니다. 이 도구는 Windows에서 실행할 수 있으며, EXE 파일을 열면 콘텐츠를 분석하여 예상되는 자동 응답 설치 옵션 방법이나 스위치를 표시합니다.
+
+[Universal Silent Switch Finder 홈페이지]([USSF](https://www.capstanservices.com/tools-blog/2018/4/4/the-ultimate-silent-switch-finder-ussf)https://www.capstanservices.com/tools-blog/2018/4/4/the-ultimate-silent-switch-finder-ussf)
+
+자동 설치 옵션이 잘 작동하는지 확인하기 위해, Windows Sandbox, 또는 디스크 이미지 수준의 복원 스냅샷 포인트를 확보한 가상 컴퓨터 인스턴스를 활용하여 반복 테스트를 실행해볼 수 있습니다.
