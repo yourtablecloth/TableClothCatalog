@@ -53,8 +53,8 @@
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="ASTX" Url="https://bank.shinhan.com/sw/astx/astxdn.exe" Arguments="/silent" />
-				<Package Name="INISAFECrossWeb" Url="https://bank.shinhan.com/sw/initech/extension/down/INIS_EX_SHA2.exe?ver=1.0.1.961" Arguments="/S" />
-				<Package Name="TouchEnKey32" Url="https://bank.shinhan.com/sw/raon/TouchEn/nxKey/module/TouchEn_nxKey_32bit.exe?ver=1.0.0.50" Arguments="/silence" />
+				<Package Name="INISAFECrossWeb" Url="https://bank.shinhan.com/sw/initech/extension/down/INIS_EX_SHA2.exe" Arguments="/S" />
+				<Package Name="TouchEnKey32" Url="https://bank.shinhan.com/sw/raon/TouchEn/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
 				<Package Name="Printmade3" Url="https://bank.shinhan.com/sw/printmade/download_files/Windows/Printmade3_setup.exe" />
 			</Packages>
 		</Service>
@@ -65,7 +65,7 @@
 			<Packages>
 				<Package Name="Veraport" Url="https://veraport.nonghyup.com/download/20230210/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
-				<Package Name="INISAFECrossWebEx" Url="https://veraport.nonghyup.com/download/20230210/INIS_EX_SHA2.exe?ver=1.0.1.1021" Arguments="/S" />
+				<Package Name="INISAFECrossWebEx" Url="https://veraport.nonghyup.com/download/20230210/INIS_EX_SHA2.exe" Arguments="/S" />
 				<Package Name="TouchEnKey64" Url="https://img.nonghyup.com/install/so/raon/TouchEnNxKey/TouchEn_nxKey_Installer_64bit_new.exe" Arguments="/silence" />
 				<Package Name="TouchEnKey32" Url="https://veraport.nonghyup.com/download/20230210/TouchEn_nxKey_Installer_32bit_new.exe" Arguments="/silence" />
 			</Packages>
@@ -151,12 +151,12 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
-				<Package Name="SmartManagerEx" Url="https://www.kbanknow.com/product/initech/smartmanagerex/extension/down/SmartManagerEX.exe?ver=1.0.1.1392" />
+				<Package Name="SmartManagerEx" Url="https://www.kbanknow.com/product/initech/smartmanagerex/extension/down/SmartManagerEX.exe" />
 				<Package Name="VCPP2008_Redist_x86" Url="https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x86.exe" Arguments="/q" />
 				<Package Name="MoaSign" Url="https://download.kbanknow.com/product/initech/moasign/down/MoaSignEXSetup.exe" Arguments="/silent" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" />
 				<Package Name="IPInside" Url="https://download.kbanknow.com/product/interezen/I3GSvcManager.exe" Arguments="/nodlg" />
-				<Package Name="KSCertRelay32" Url="https://download.kbanknow.com/product/qrcertrelay/nxCR/module/KSCertRelay_nx_Installer_32bit.exe?ver=2.1.0.5" Arguments="/silent" />
+				<Package Name="KSCertRelay32" Url="https://download.kbanknow.com/product/qrcertrelay/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" Arguments="/silent" />
 				<Package Name="ePageSafer" Url="https://download.kbanknow.com/product/markany/exe/Setup_ePageSaferRT.exe" Arguments="/silent" />
 				<Package Name="KISSCAP" Url="https://download.kbanknow.com/product/scraping/KISSCAP.exe" Arguments="/s /v/qn" />
 			</Packages>
@@ -205,7 +205,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="INISAFECrossWeb" Url="https://imgs.kjbank.com/resource/product/initech/extension/down/INIS_EX.exe" Arguments="/S" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="IPInside" Url="https://imgs.kjbank.com/resource/product/interezen/windows/I3GSvcManager.exe" Arguments="/nodlg" />
-				<Package Name="KSCertRelay32" Url="https://imgs.kjbank.com/resource/product/nxwqr/nxCR/module/KSCertRelay_nx_Installer_32bit.exe?v=1627740024625" Arguments="/silent" />
+				<Package Name="KSCertRelay32" Url="https://imgs.kjbank.com/resource/product/nxwqr/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" Arguments="/silent" />
 				<Package Name="TDClientAgent" Url="https://imgs.kjbank.com/resource/product/clipsoft/trustDoc/Install/TDClientforWindowsAgentNX_4.9.0.5.exe" />
 			</Packages>
 		</Service>
@@ -223,7 +223,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 			<Packages>
 				<Package Name="Veraport" Url="https://ibs.jbbank.co.kr/wizvera/veraportG3/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.2.6/AnySign_Installer.exe" Arguments="/S" />
-				<Package Name="TouchEnKey32" Url="https://ibs.jbbank.co.kr/TouchEnNxKey/nxKey/module/TouchEn_nxKey_Installer_32bit.exe?ver=1.0.0.75" Arguments="/silence" />
+				<Package Name="TouchEnKey32" Url="https://ibs.jbbank.co.kr/TouchEnNxKey/nxKey/module/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="IPInside" Url="https://ibs.jbbank.co.kr/pcInside/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
@@ -331,7 +331,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="astx_setup" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
-				<Package Name="INIS_EX_SHA2" Url="https://veraport.nonghyup.com/download/20230515/INIS_EX_SHA2.exe?ver=1.0.1.1021" Arguments="/S" />
+				<Package Name="INIS_EX_SHA2" Url="https://veraport.nonghyup.com/download/20230515/INIS_EX_SHA2.exe" Arguments="/S" />
 				<Package Name="TouchEn_nxKey_Installer_32bit_new" Url="https://veraport.nonghyup.com/download/20230421/TouchEn_nxKey_Installer_32bit_new.exe" Arguments="/silence" />
 				<Package Name="veraport-g3-x64" Url="https://veraport.nonghyup.com/download/20230303/veraport-g3-x64.exe" Arguments="/silent" />
 			</Packages>
@@ -472,7 +472,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
 				<Package Name="INIS_EX_SHA2" Url="https://imgs.kjbank.com/resource/product/initech/extension/down/INIS_EX_SHA2.exe" Arguments="/S" />
 				<Package Name="astx_setup" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="I3GSvcManager" Url="https://imgs.kjbank.com/resource/product/interezen/windows/I3GSvcManager.exe" Arguments="/silent" />
-				<Package Name="KSCertRelay_nx_Installer_32bit" Url="https://imgs.kjbank.com/resource/product/nxwqr/nxCR/module/KSCertRelay_nx_Installer_32bit.exe?v=1705920531641" Arguments="/silent" />
+				<Package Name="KSCertRelay_nx_Installer_32bit" Url="https://imgs.kjbank.com/resource/product/nxwqr/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" Arguments="/silent" />
 				<Package Name="TDClientforWindowsAgentNX_4.9.0.5" Url="https://imgs.kjbank.com/resource/product/clipsoft/trustDoc/Install/TDClientforWindowsAgentNX_4.9.0.5.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
@@ -634,7 +634,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
 		<Service Id="OSBSavingsBank" DisplayName="OSB저축은행" Category="Financing" Url="https://ibs.osb.co.kr/"
 			en-US:DisplayName="OSB SAVINGS BANK">
 			<Packages>
-				<Package Name="INISAFE" Url="https://ibs.osb.co.kr/bank/module/initech/extension/down/INIS_EX_SHA2.exe?ver=1.0.1.961" Arguments="/S" />
+				<Package Name="INISAFE" Url="https://ibs.osb.co.kr/bank/module/initech/extension/down/INIS_EX_SHA2.exe" Arguments="/S" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="IPInside" Url="https://ibs.osb.co.kr/bank/module/interezen/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
@@ -910,7 +910,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
 				<Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.2.7/AnySign_Installer.exe" Arguments="/S" />
 				<Package Name="TouchEnKey32" Url="https://www.shinhansavings.com/js/raonnx/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
 				<Package Name="IPInside" Url="https://www.shinhansavings.com/common/cab/I3GSvcManager.3.0.0.11.exe" Arguments="/nodlg" />
-				<Package Name="TouchEnFirewall" Url="https://www.shinhansavings.com/js/raonnx/nxFw/module/TEFW_Installer.exe?ver=1.0.0.26" Arguments="/silence" />
+				<Package Name="TouchEnFirewall" Url="https://www.shinhansavings.com/js/raonnx/nxFw/module/TEFW_Installer.exe" Arguments="/silence" />
 			</Packages>
 		</Service>
 		<Service Id="AsanSavingsBank" DisplayName="아산저축은행" Category="Financing" Url="https://www.asanbank.co.kr/"
@@ -994,7 +994,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
 		<Service Id="WelcomeSavingsBank" DisplayName="웰컴저축은행" Category="Financing" Url="https://www.welcomebank.co.kr/"
 			en-US:DisplayName="Welcome Savings Bank">
 			<Packages>
-				<Package Name="SmartManagerEx" Url="https://www.welcomebank.co.kr/3rdparty/initech/smartmanagerex/extension/down/SmartManagerEX.exe?ver=1.0.1.1378" />
+				<Package Name="SmartManagerEx" Url="https://www.welcomebank.co.kr/3rdparty/initech/smartmanagerex/extension/down/SmartManagerEX.exe" />
 				<Package Name="KeySharpBiz" Url="https://www.welcomebank.co.kr/3rdparty/raon/nxbiz/download/keysharpnxbiz.exe" />
 				<Package Name="SignKoreaCert" Url="https://www.welcomebank.co.kr/3rdparty/signkorea/SKCertServiceSetup.exe" />
 				<Package Name="KSCertRelay32" Url="https://www.welcomebank.co.kr/3rdparty/raon/TouchEn/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" Arguments="/silence" />
@@ -1213,7 +1213,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
-				<Package Name="Veraport" Url="https://download.securities.miraeasset.com/w/veraport/veraport-g3-x64.exe?v=3.8.5.1" Arguments="/silent" />
+				<Package Name="Veraport" Url="https://download.securities.miraeasset.com/w/veraport/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="ASTX" Url="https://download.securities.miraeasset.com/w//astx/astxdn.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://download.securities.miraeasset.com/w//sign/SKCertServiceSetup.exe" />
@@ -1295,7 +1295,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
-				<Package Name="INISAFECrossWeb" Url="https://www.ebestsec.co.kr/initech/extension/down/INIS_EX_SHA2.exe?ver=1.0.1.1021" Arguments="/S" />
+				<Package Name="INISAFECrossWeb" Url="https://www.ebestsec.co.kr/initech/extension/down/INIS_EX_SHA2.exe" Arguments="/S" />
 				<Package Name="KOS" Url="https://www.ebestsec.co.kr/download/KOS_Setup.exe" Arguments="/silent" />
 				<Package Name="SignKoreaCert" Url="https://www.ebestsec.co.kr/download/SKCertServiceSetup.exe" />
 			</Packages>
@@ -1588,8 +1588,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
 			en-US:DisplayName="Chubb Life Insurance Company Ltd.">
 			<Packages>
 				<Package Name="MoaSign" Url="https://customercenter.chubblife.co.kr/initech/moasign/down/MoaSignSetup_20161212_1.0.45_Card_T_.exe" Arguments="/silent" />
-				<Package Name="TouchEnKey32" Url="https://customercenter.chubblife.co.kr/raon/TouchEn/nxKey/module/TouchEn_nxKey_Installer_32bit.exe?ver=1.0.0.35" Arguments="/silence" />
-				<Package Name="TouchEnFirewall" Url="https://customercenter.chubblife.co.kr/raon/TouchEn/nxFw/module/TEFW_Installer.exe?ver=1.0.0.13" Arguments="/silence" />
+				<Package Name="TouchEnKey32" Url="https://customercenter.chubblife.co.kr/raon/TouchEn/nxKey/module/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
+				<Package Name="TouchEnFirewall" Url="https://customercenter.chubblife.co.kr/raon/TouchEn/nxFw/module/TEFW_Installer.exe" Arguments="/silence" />
 			</Packages>
 		</Service>
 		<Service Id="PrudentialLife" DisplayName="푸르덴셜생명" Category="Insurance" Url="https://cyber.prudential.co.kr/"
@@ -1657,7 +1657,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
 		<Service Id="CardifLife" DisplayName="BNP파리바 카디프생명" Category="Insurance" Url="https://www.cardif.co.kr/"
 			en-US:DisplayName="BNP PARIBAS CARDIF LIFE INSURANCE">
 			<Packages>
-				<Package Name="TouchEnKey32" Url="https://www.cardif.co.kr/b2c-portlet/js/touchen/nxkey/module/TouchEn_nxKey_Installer_32bit.exe?ver=1.0.0.75" Arguments="/silence" />
+				<Package Name="TouchEnKey32" Url="https://www.cardif.co.kr/b2c-portlet/js/touchen/nxkey/module/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
 			</Packages>
 		</Service>
 		<Service Id="DbLife" DisplayName="DB생명" Category="Insurance" Url="https://www.idblife.com/cyber/"
@@ -1676,7 +1676,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
 		<Service Id="DgbLife" DisplayName="DGB생명" Category="Insurance" Url="https://www.dgbfnlife.com/cyber/"
 			en-US:DisplayName="DGB LIFE INSURANCE">
 			<Packages>
-				<Package Name="SmartManagerEx" Url="https://www.dgbfnlife.com/icc/smartmanagerex/extension/down/SmartManagerEX.exe?ver=1.0.1.875" />
+				<Package Name="SmartManagerEx" Url="https://www.dgbfnlife.com/icc/smartmanagerex/extension/down/SmartManagerEX.exe" />
 			</Packages>
 		</Service>
 		<Service Id="KbLife" DisplayName="KB생명" Category="Insurance" Url="https://www.kblife.co.kr/"
@@ -1814,14 +1814,14 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
 			en-US:DisplayName="SHINHAN EZ GENERAL INSURANCE">
 			<Packages>
 				<Package Name="AnySign" Url="https://www.shinhanez.co.kr/html/anySign4PC/AnySign_Installer.exe" Arguments="/S" />
-				<Package Name="TouchEnFirewall" Url="https://www.shinhanez.co.kr/raonnx/nxFw/module/TEFW_Installer.exe?ver=1.0.0.24" Arguments="/silence" />
+				<Package Name="TouchEnFirewall" Url="https://www.shinhanez.co.kr/raonnx/nxFw/module/TEFW_Installer.exe" Arguments="/silence" />
 				<Package Name="TouchEnKey32" Url="https://www.shinhanez.co.kr/raonnx/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
 			</Packages>
 		</Service>
 		<Service Id="DbInsurance" DisplayName="DB손해보험" Category="Insurance" Url="https://www.idbins.com/"
 			en-US:DisplayName="DB INSURANCE CO., LTD.">
 			<Packages>
-				<Package Name="CrossWarp" Url="https://www.idbins.com/nActX/crossWarpEX/extension/down/CrossWarpEX.exe?ver=1.0.1.1099" Arguments="/silent" />
+				<Package Name="CrossWarp" Url="https://www.idbins.com/nActX/crossWarpEX/extension/down/CrossWarpEX.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
 		<Service Id="KbInsurance" DisplayName="KB손해보험" Category="Insurance" Url="https://kbinsure.co.kr/"
@@ -1856,7 +1856,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
 			<Packages>
 				<Package Name="Veraport" Url="https://www.sgic.co.kr/chp/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.0.15/AnySign_Installer.exe" Arguments="/S" />
-				<Package Name="TouchEnFirewall" Url="https://www.sgic.co.kr/chp/TouchEn/nxFw/module/TEFW_Installer.exe?ver=1.0.0.17" Arguments="/silence" />
+				<Package Name="TouchEnFirewall" Url="https://www.sgic.co.kr/chp/TouchEn/nxFw/module/TEFW_Installer.exe" Arguments="/silence" />
 				<Package Name="TouchEnKey32" Url="https://www.sgic.co.kr/chp/TouchEn/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
 				<Package Name="KSCertRelay32" Url="https://www.sgic.co.kr/chp/TouchEn/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" Arguments="/silence" />
 			</Packages>
@@ -1874,7 +1874,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
 		<Service Id="Gov24" DisplayName="정부24" Category="Government" Url="https://www.gov.kr/">
 			<Packages>
 				<Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.0.7/AnySign_Installer.exe" Arguments="/S" />
-				<Package Name="TouchEnKey32" Url="https://download.raonsecure.com/TouchEnnxKey/minwon/TouchEn_nxKey_Installer_32bit_1.0.0.47.exe?ver=1.0.0.47" Arguments="/silence" />
+				<Package Name="TouchEnKey32" Url="https://download.raonsecure.com/TouchEnnxKey/minwon/TouchEn_nxKey_Installer_32bit_1.0.0.47.exe" Arguments="/silence" />
 			</Packages>
 		</Service>
 		<Service Id="ReserveForces" DisplayName="예비군" Category="Government" Url="https://yebigun1.mil.kr/">
@@ -1899,7 +1899,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
 			<Packages>
 				<Package Name="EnableTrustedSite" Url="http://www.iros.go.kr/iris/TrustedSiteSetup.exe" Arguments="/silent" />
 				<Package Name="AnySign" Url="http://download.softforum.com/Published/AnySign/v1.1.2.0/AnySign_Installer.exe" Arguments="/S" />
-				<Package Name="TouchEnKey32" Url="http://www.iros.go.kr/XecureObject/raonsecure/TouchEn/nxKey/module/10047/TouchEn_nxKey_Installer_32bit.exe?ver=1.0.0.48" Arguments="/silence" />
+				<Package Name="TouchEnKey32" Url="http://www.iros.go.kr/XecureObject/raonsecure/TouchEn/nxKey/module/10047/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
 			</Packages>
 			<CustomBootstrap>
 <![CDATA[
@@ -1922,7 +1922,7 @@ Start-Service -ServiceName TrustedInstaller
 		</Service>
 		<Service Id="Ecfs" DisplayName="대한민국 법원 전자소송" Category="Government" Url="https://ecfs.scourt.go.kr/">
 			<Packages>
-				<Package Name="TouchEnKey32" Url="https://ecfs.scourt.go.kr/raonsecure/TouchEn/nxKey/module/TouchEn_nxKey_Installer_32bit.exe?ver=%201.0.0.75" Arguments="/silence" />
+				<Package Name="TouchEnKey32" Url="https://ecfs.scourt.go.kr/raonsecure/TouchEn/nxKey/module/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
 				<Package Name="AnySign" Url="https://ecfs.scourt.go.kr/AnySign/AnySign4PC/AnySign_Installer.exe" Arguments="/S" />
 				<Package Name="Markany" Url="https://ecfs.scourt.go.kr/markany/bin/installer.exe" Arguments="/silent" />
 				<Package Name="INNORIX" Url="https://ecfs.scourt.go.kr/innorix/install/INNORIX-Agent.exe" Arguments="/silent" />
@@ -1996,7 +1996,7 @@ Start-Service -ServiceName TrustedInstaller
 		<Service Id="Kmrs" DisplayName="착오송금반환지원정보시스템" Category="Government" Url="https://kmrs.kdic.or.kr/">
 			<Packages>
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
-				<Package Name="INISAFECrossWebEx" Url="https://kmrs.kdic.or.kr/initech/SW/initech/extension/down/INIS_EX_SHA2.exe?ver=1.0.1.1021" Arguments="/S" />
+				<Package Name="INISAFECrossWebEx" Url="https://kmrs.kdic.or.kr/initech/SW/initech/extension/down/INIS_EX_SHA2.exe" Arguments="/S" />
 			</Packages>
 		</Service>
 		<Service Id="GHealth" DisplayName="G-health 공공보건포털" Category="Government" Url="https://www.g-health.kr/">
@@ -2153,7 +2153,7 @@ Start-Service -ServiceName TrustedInstaller
 		</Service>
 		<Service Id="KTCU" DisplayName="한국교직원공제회" Category="Other" Url="https://www.ktcu.or.kr/">
 			<Packages>
-				<Package Name="CrossWarpEX" Url="https://www.ktcu.or.kr/resources/pc/crosswarpex/extension/down/CrossWarpEX.exe?ver=1.0.0.737" />
+				<Package Name="CrossWarpEX" Url="https://www.ktcu.or.kr/resources/pc/crosswarpex/extension/down/CrossWarpEX.exe" />
 				<Package Name="Crosscert" Url="https://www.ktcu.or.kr/resources/pc/CrossCert/CC_WSTD_home/install/UniSignCRSV3Setup.exe" />
 				<Package Name="ASTx" Url="http://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silence" />
 				<Package Name="KSCertRelay_nx" Url="https://www.ktcu.or.kr/resources/pc/raonnx/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" />
