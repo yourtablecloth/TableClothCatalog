@@ -380,7 +380,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 		<Service Id="OSBSavingsBank" DisplayName="OSB저축은행" Category="Financing" Url="https://ibs.osb.co.kr/"
 			en-US:DisplayName="OSB SAVINGS BANK">
 			<Packages>
-				<Package Name="INISAFECrossWeb" Url="https://ibs.osb.co.kr/bank/module/initech/extension/down/INIS_EX.exe?ver=1.0.1.961" Arguments="/S" />
+				<Package Name="INISAFE" Url="https://ibs.osb.co.kr/bank/module/initech/extension/down/INIS_EX_SHA2.exe?ver=1.0.1.961" Arguments="/S" />
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 				<Package Name="IPInside" Url="https://ibs.osb.co.kr/bank/module/interezen/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
@@ -400,14 +400,6 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="TouchEnKey" Url="https://www.sbisb.co.kr/TouchEnKey/TouchEnKey_Installer.exe" Arguments="/silence" />
 				<Package Name="TouchEnFirewall" Url="https://www.sbisb.co.kr/TouchEnFw/TEFW_Installer.exe" Arguments="/silent" />
 				<Package Name="RealIp" Url="https://www.sbisb.co.kr/SBISBankKTBRealipInst/SBISBankKTBRealipInst.exe" Arguments="/silent" />
-			</Packages>
-		</Service>
-		<Service Id="CKSavingsBank" DisplayName="CK저축은행" Category="Financing" Url="https://www.cksavingsbank.co.kr/"
-			en-US:DisplayName="CK SAVINGS BANK">
-			<Packages>
-				<Package Name="Veraport" Url="https://www.cksavingsbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
-				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
-				<Package Name="SignKoreaCert" Url="https://www.cksavingsbank.co.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
 		<Service Id="GoryoSavingsBank" DisplayName="고려저축은행" Category="Financing" Url="https://www.goryosb.co.kr/"
@@ -634,7 +626,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="SignKoreaCert" Url="https://sbbank.ibs.fsb.or.kr/3rdparty/signkorea/SKCertServiceSetup_v2.5.18_152.exe" />
 			</Packages>
 		</Service>
-		<Service Id="SmartSavingsBank" DisplayName="스마트저축은행" Category="Financing" Url="https://bank.smartbank.co.kr/"
+		<Service Id="SmartSavingsBank" DisplayName="스마트저축은행" Category="Financing" Url="https://www.smartbank.co.kr/"
 			en-US:DisplayName="Smart Savings Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://bank.smartbank.co.kr/3rdparty/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
