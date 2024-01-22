@@ -14,7 +14,7 @@
 	</Companions>
 	<InternetServices>
 		<!-- 인터넷 뱅킹 시작 (https://www.kfb.or.kr/member/list_regular.php 참고함) -->
-		<Service Id="WooriBank" DisplayName="우리은행" Category="Banking" Url="https://www.wooribank.com/"
+		<Service Id="WooriBank" DisplayName="우리은행 개인뱅킹" Category="Banking" Url="https://www.wooribank.com/"
 			en-US:DisplayName="WOORI BANK">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
@@ -26,7 +26,7 @@
 				<Package Name="IPInside" Url="https://www.wooribank.com/download/IPinside/I3GSvcManager_3.0.0.7.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="KookminBank" DisplayName="KB국민은행" Category="Banking" Url="https://www.kbstar.com/"
+		<Service Id="KookminBank" DisplayName="KB국민은행 개인뱅킹" Category="Banking" Url="https://www.kbstar.com/"
 			en-US:DisplayName="KB KOOKMIN BANK">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
@@ -35,7 +35,7 @@
 				<Package Name="WizInDelfino" Url="https://download.kbstar.com/security/wizvera/delfino/g3/delfino-g3.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="KEBHanaBank" DisplayName="하나은행" Category="Banking" Url="https://www.kebhana.com/"
+		<Service Id="KEBHanaBank" DisplayName="하나은행 개인뱅킹" Category="Banking" Url="https://www.kebhana.com/"
 			en-US:DisplayName="KEB Hana Bank">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.kebhana.com/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
@@ -45,7 +45,7 @@
 				<Package Name="IPInside" Url="https://www.kebhana.com/interezen/agent/np_v6/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="ShinhanBank" DisplayName="신한은행" Category="Banking" Url="https://www.shinhan.com/"
+		<Service Id="ShinhanBank" DisplayName="신한은행 개인뱅킹" Category="Banking" Url="https://www.shinhan.com/"
 			en-US:DisplayName="SHINHAN BANK">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
@@ -56,7 +56,7 @@
 				<Package Name="Printmade3" Url="https://bank.shinhan.com/sw/printmade/download_files/Windows/Printmade3_setup.exe" />
 			</Packages>
 		</Service>
-		<Service Id="NHInternetBank" DisplayName="NH농협은행" Category="Banking" Url="https://banking.nonghyup.com/"
+		<Service Id="NHInternetBank" DisplayName="NH농협은행 개인뱅킹" Category="Banking" Url="https://banking.nonghyup.com/"
 			en-US:DisplaynName="NONGHYUP BANK">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
@@ -83,7 +83,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 ]]>
 			</CustomBootstrap>
 		</Service>
-		<Service Id="SHInternetBank" DisplayName="SH수협은행" Category="Banking" Url="https://www.suhyup-bank.com/"
+		<Service Id="SHInternetBank" DisplayName="SH수협은행 개인뱅킹" Category="Banking" Url="https://www.suhyup-bank.com/"
 			en-US:DisplayName="Suhyup Bank">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
@@ -95,7 +95,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="ASTX" Url="https://safetx.ahnlab.com/master/win/default/common/astxdn.exe" />
 			</Packages>
 		</Service>
-		<Service Id="IBKBank" DisplayName="IBK기업은행" Category="Banking" Url="https://www.ibk.co.kr/"
+		<Service Id="IBKBank" DisplayName="IBK기업은행 개인뱅킹" Category="Banking" Url="https://www.ibk.co.kr/"
 			en-US:DisplayName="Industrial Bank of Korea">
 			<Packages>
 				<Package Name="Veraport" Url="https://mybank.ibk.co.kr/IBK/uib/sw/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
@@ -106,7 +106,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="APSEngine" Url="https://mybank.ibk.co.kr/IBK/uib/sw/yettiesoft/APS/APS_Engine.exe" />
 			</Packages>
 		</Service>
-		<Service Id="KDBBank" DisplayName="KDB산업은행" Category="Banking" Url="https://www.kdb.co.kr/"
+		<Service Id="KDBBank" DisplayName="KDB산업은행 개인뱅킹" Category="Banking" Url="https://www.kdb.co.kr/"
 			en-US:DisplayName="Korea Development Bank">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
@@ -115,8 +115,11 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="AnySign" Url="https://banking.kdb.co.kr//bp/3rd-party-web/hsecure/anysign/AnySign_Installer.exe" Arguments="/S" />
 			</Packages>
 		</Service>
-		<Service Id="StandardCharteredBank" DisplayName="한국스탠다드차타드은행" Category="Banking" Url="https://www.standardchartered.co.kr/"
+		<Service Id="StandardCharteredBank" DisplayName="SC제일은행 개인뱅킹" Category="Banking" Url="https://www.standardchartered.co.kr/"
 			en-US:DisplayName="Standard Chartered Bank Korea Limited.">
+			<SearchKeywords>
+				스탠다드차타드
+			</SearchKeywords>
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
@@ -126,7 +129,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="IPInside" Url="https://open.standardchartered.co.kr/interezen/install/Non/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="CitiBankKorea" DisplayName="한국씨티은행" Category="Banking" Url="https://www.citibank.co.kr/"
+		<Service Id="CitiBankKorea" DisplayName="한국씨티은행 개인뱅킹" Category="Banking" Url="https://www.citibank.co.kr/"
 			en-US:DisplayName="Citibank Korea Inc.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
@@ -138,8 +141,11 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="IPInside" Url="https://www.citibank.co.kr/3rdParty/interezen/ipinside/agent/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="KBank" DisplayName="케이뱅크" Category="Banking" Url="https://www.kbanknow.com/"
+		<Service Id="KBank" DisplayName="케이뱅크 개인뱅킹" Category="Banking" Url="https://www.kbanknow.com/"
 			en-US:DisplayName="Kbank">
+			<SearchKeywords>
+				K뱅크
+			</SearchKeywords>
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
 			<Packages>
@@ -153,7 +159,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="KISSCAP" Url="https://download.kbanknow.com/product/scraping/KISSCAP.exe" Arguments="/s /v/qn" />
 			</Packages>
 		</Service>
-		<Service Id="KakaoBank" DisplayName="카카오뱅크" Category="Banking" Url="https://www.kakaobank.com/"
+		<Service Id="KakaoBank" DisplayName="카카오뱅크 개인뱅킹" Category="Banking" Url="https://www.kakaobank.com/"
 			en-US:DisplayName="KakaoBank Corp.">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
@@ -162,7 +168,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="CertTool" Url="https://og.kakaobank.io/download/517591e5-9040-4393-b946-4de3ce14c886" />
 			</Packages>
 		</Service>
-		<Service Id="DGBDaeguBank" DisplayName="DGB대구은행" Category="Banking" Url="https://www.dgb.co.kr/"
+		<Service Id="DGBDaeguBank" DisplayName="DGB대구은행 개인뱅킹" Category="Banking" Url="https://www.dgb.co.kr/"
 			en-US:DisplayName="DGB DAEGU BANK">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
@@ -174,7 +180,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="ePageSafer" Url="http://epagesaferrt.dl.cdn.cloudn.co.kr/ebz_MAWS_DaeguBankRex_Setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="BusanBank" DisplayName="BNK부산은행" Category="Banking" Url="https://www.busanbank.co.kr/"
+		<Service Id="BusanBank" DisplayName="BNK부산은행 개인뱅킹" Category="Banking" Url="https://www.busanbank.co.kr/"
 			en-US:DisplayName="BNK BUSAN BANK">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
@@ -188,7 +194,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="BusanPFMS" Url="https://ibank.busanbank.co.kr/product/install/pfms/Windows/2.0.2.2/BusanPFMS_Setup.exe" />
 			</Packages>
 		</Service>
-		<Service Id="GwangjuBank" DisplayName="광주은행" Category="Banking" Url="https://pib.kjbank.com/"
+		<Service Id="GwangjuBank" DisplayName="광주은행 개인뱅킹" Category="Banking" Url="https://pib.kjbank.com/"
 			en-US:DisplayName="KWANGJU BANK">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
@@ -210,7 +216,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="UniquePC" Url="https://open.e-jejubank.com/ib20_com/besoft/uniPc/UniquePC_Setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="JbBank" DisplayName="전북은행" Category="Banking" Url="https://www.jbbank.co.kr/"
+		<Service Id="JbBank" DisplayName="전북은행 개인뱅킹" Category="Banking" Url="https://www.jbbank.co.kr/"
 			en-US:DisplayName="JEONBUK BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://ibs.jbbank.co.kr/wizvera/veraportG3/down/veraport-g3-x64.exe" Arguments="/silent" />
@@ -220,13 +226,13 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="IPInside" Url="https://ibs.jbbank.co.kr/pcInside/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
-		<Service Id="BnkKyungNamBank" DisplayName="BNK경남은행" Category="Banking" Url="https://www.knbank.co.kr/"
+		<Service Id="BnkKyungNamBank" DisplayName="BNK경남은행 개인뱅킹" Category="Banking" Url="https://www.knbank.co.kr/"
 			en-US:DisplayName="BNK KYONGNAM BANK">
 			<Packages>
 				<Package Name="Veraport" Url="https://ibank.knbank.co.kr/product/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="MGSaemaeul" DisplayName="MG새마을금고" Category="Banking" Url="https://ibs.kfcc.co.kr/"
+		<Service Id="MGSaemaeul" DisplayName="MG새마을금고 개인뱅킹" Category="Banking" Url="https://ibs.kfcc.co.kr/"
 			en-US:DisplayName="Korean Federation of Community Credit Cooperatives">
 			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
 			<en-US:CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US:CompatNotes>
@@ -235,7 +241,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="WizInDelfino" Url="https://ibs.kfcc.co.kr/common/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="Shinhyub" DisplayName="신협" Category="Banking" Url="https://openbank.cu.co.kr/"
+		<Service Id="Shinhyub" DisplayName="신협 개인뱅킹" Category="Banking" Url="https://openbank.cu.co.kr/"
 			en-US:DisplayName="National Credit Union Federation of Korea">
 			<Packages>
 				<Package Name="Veraport" Url="https://openbank.cu.co.kr/nonsw/wizvera/veraport/down/veraport-g3-sha2.exe" Arguments="/silent" />
@@ -246,7 +252,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="ePageSafer" Url="https://openbank.cu.co.kr/nonsw/markany/eps/exe/Setup_ePageSaferRT.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
-		<Service Id="ePostBank" DisplayName="우체국" Category="Banking" Url="https://www.epostbank.go.kr/"
+		<Service Id="ePostBank" DisplayName="우체국예금 개인뱅킹" Category="Banking" Url="https://www.epostbank.go.kr/"
 			en-US:DisplayName="Korea Post Deposit Service Division">
 			<Packages>
 				<Package Name="Veraport" Url="https://www.epostbank.go.kr/wizvera/veraportG3/down/veraport-g3-x64.exe" Arguments="/silent" />
