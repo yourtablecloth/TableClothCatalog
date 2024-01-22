@@ -344,7 +344,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="veraport-g3-x64" Url="https://biz.suhyup-bank.com/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="INIS_EX_SHA2" Url="https://biz.suhyup-bank.com/initech/extension/down/INIS_EX_SHA2.exe" Arguments="/S" />
 				<Package Name="TouchEn_nxKey_32bit" Url="https://biz.suhyup-bank.com/TouchEn/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
-				<Package Name="I3GSvcManager" Url="https://biz.suhyup-bank.com/ipinside/Windows/I3GSvcManager.exe" Arguments="/silent" />
+				<Package Name="I3GSvcManager" Url="https://biz.suhyup-bank.com/ipinside/Windows/I3GSvcManager.exe" Arguments="/nodlg" />
 				<Package Name="astxdn" Url="https://safetx.ahnlab.com/master/win/default/common/astxdn.exe" Arguments="/silent" />
 				<Package Name="ASSetup" Url="https://biz.suhyup-bank.com/ZeroKeeper/down/ASSetup.exe" Arguments="/silent" />
 			</Packages>
@@ -458,7 +458,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
 				<Package Name="INIS_EX_SHA2" Url="https://ebank.busanbank.co.kr/product/install/INISAFE/extension/down/INIS_EX_SHA2.exe" Arguments="/S" />
 				<Package Name="astxdn" Url="https://safetx.ahnlab.com/master/win/default/common/astxdn.exe" Arguments="/silent" />
 				<Package Name="TouchEn_nxKey_Installer_32bit" Url="https://ebank.busanbank.co.kr/product/install/TouchEn_NX/nxKey/module/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
-				<Package Name="I3GSvcManager" Url="https://ebank.busanbank.co.kr/product/install/IPinside/Windows/I3GSvcManager.exe" Arguments="/silent" />
+				<Package Name="I3GSvcManager" Url="https://ebank.busanbank.co.kr/product/install/IPinside/Windows/I3GSvcManager.exe" Arguments="/nodlg" />
 				<Package Name="KSCertRelay_nx_Installer_32bit" Url="https://ebank.busanbank.co.kr/product/install/TouchEn_NX/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" Arguments="/silence" />
 				<Package Name="BusanPFMS_Setup" Url="https://ebank.busanbank.co.kr/product/install/pfms/Windows/2.0.2.2/BusanPFMS_Setup.exe" Arguments="/silent" />
 			</Packages>
@@ -492,7 +492,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
 				<Package Name="veraport-g3-x64" Url="https://ebank.knbank.co.kr/product/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
 				<Package Name="delfino-g3" Url="https://ebank.knbank.co.kr/product/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
 				<Package Name="nos_setup" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
-				<Package Name="I3GSvcManager" Url="https://ebank.knbank.co.kr/product/ipinside/agent/I3GSvcManager.exe" Arguments="/silent" />
+				<Package Name="I3GSvcManager" Url="https://ebank.knbank.co.kr/product/ipinside/agent/I3GSvcManager.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
 		<Service Id="MGSaemaeulBiz" DisplayName="MG새마을금고 기업뱅킹" Category="Banking" Url="https://biz.kfcc.co.kr/"
@@ -1941,7 +1941,7 @@ Start-Service -ServiceName TrustedInstaller
 				<Package Name="REXPERT" Url="https://hometax.speedycdn.net/dn_dir/veraport/rexpert/rexpert30printservice.exe" Arguments="/silent" />
 				<Package Name="KUPLOAD" Url="https://hometax.speedycdn.net/dn_dir/veraport/kupload/raonkSetup.exe" Arguments="/silent" />
 				<Package Name="MAGIC-XML" Url="https://hometax.speedycdn.net/dn_dir/veraport/magic-xml/ntsmagicxmlnp_setup.exe" Arguments="/silent" />
-				<Package Name="IPINSIDE" Url="https://hometax.speedycdn.net/dn_dir/veraport/ipinside/I3GSvcManager.exe" Arguments="/silent" />
+				<Package Name="IPINSIDE" Url="https://hometax.speedycdn.net/dn_dir/veraport/ipinside/I3GSvcManager.exe" Arguments="/nodlg" />
 				<Package Name="ESAFER" Url="https://hometax.speedycdn.net/dn_dir/veraport/e-safer/MarkAny_NTS_NOAXRp.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
