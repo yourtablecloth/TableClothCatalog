@@ -33,6 +33,7 @@
 			<Packages>
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" />
 				<Package Name="WizInDelfino" Url="https://download.kbstar.com/security/wizvera/delfino/g3/delfino-g3.exe" Arguments="/silent" />
+				<Package Name="Veraport" Url="https://download.kbstar.com/security/wizvera/veraport/g3/veraport-g3-x64.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
 		<Service Id="KEBHanaBank" DisplayName="하나은행 개인뱅킹" Category="Banking" Url="https://www.kebhana.com/"
