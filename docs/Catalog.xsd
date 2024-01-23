@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	attributeFormDefault="qualified"
+	elementFormDefault="qualified"
+>
+	<xs:complexType name="CatalogCompanion">
+		<xs:attribute name="Id" type="xs:string" use="required" />
+		<xs:attribute name="DisplayName" type="xs:string" use="required" />
+		<xs:attribute name="Url" type="xs:string" use="required" />
+		<xs:attribute name="Arguments" type="xs:string" use="optional" />
+
+		<xs:attribute name="en-US-DisplayName" type="xs:string" use="optional" />
+	</xs:complexType>
+	
+	<xs:complexType name="CatalogCompanionList">
+		<xs:sequence>
+			<xs:element name="Companion" type="CatalogCompanion" minOccurs="0" maxOccurs="unbounded">
+				<xs:unique name="CompanionIdUniqueness">
+					<xs:selector xpath="./*" />
+					<xs:field xpath="@Id" />
+				</xs:unique>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CatalogPackageInformation">
+		<xs:attribute name="Name" type="xs:string" use="required" />
+		<xs:attribute name="Url" type="xs:string" use="required" />
+		<xs:attribute name="Arguments" type="xs:string" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="CatalogPackageInformationList">
+		<xs:sequence>
+			<xs:element name="Package" type="CatalogPackageInformation" minOccurs="0" maxOccurs="unbounded">
+				<xs:unique name="PackageNameUniqueness">
+					<xs:selector xpath="./*" />
+					<xs:field xpath="@Name" />
+				</xs:unique>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="CatalogInternetServiceCategory">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Other" />
+			<xs:enumeration value="Banking" />
+			<xs:enumeration value="Financing" />
+			<xs:enumeration value="Security" />
+			<xs:enumeration value="Insurance" />
+			<xs:enumeration value="CreditCard" />
+			<xs:enumeration value="Government" />
+			<xs:enumeration value="Education" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="CatalogInternetService">
+		<xs:all>
+			<xs:element name="CompatNotes" type="xs:string" minOccurs="0" />
+			<xs:element name="SearchKeywords" type="xs:string" minOccurs="0" />
+			<xs:element name="CustomBootstrap" type="xs:string" minOccurs="0" />
+			<xs:element name="Packages" type="CatalogPackageInformationList" minOccurs="0" />
+
+			<xs:element name="en-US-CompatNotes" type="xs:string" minOccurs="0" />
+		</xs:all>
+
+		<xs:attribute name="Id" type="xs:string" use="required" />
+		<xs:attribute name="DisplayName" type="xs:string" use="required" />
+		<xs:attribute name="Category" type="CatalogInternetServiceCategory" use="required" />
+		<xs:attribute name="Url" type="xs:string" use="required" />
+
+		<xs:attribute name="en-US-DisplayName" type="xs:string" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="CatalogInternetServiceList">
+		<xs:sequence>
+			<xs:element name="Service" type="CatalogInternetService" maxOccurs="unbounded">
+				<xs:unique name="ServiceIdUniqueness">
+					<xs:selector xpath="./*" />
+					<xs:field xpath="@Id" />
+				</xs:unique>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CatalogDocument">
+		<xs:all>
+			<xs:element name="Companions" type="CatalogCompanionList" minOccurs="0" />
+			<xs:element name="InternetServices" type="CatalogInternetServiceList" minOccurs="0" />
+		</xs:all>
+
+		<xs:attribute name="Fallback" type="xs:string" use="optional" />
+	</xs:complexType>
+
+	<xs:element name="TableClothCatalog" type="CatalogDocument" />
+</xs:schema>
