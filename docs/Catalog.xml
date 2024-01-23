@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableClothCatalog
-	Fallback="ko-KR"
-	xmlns:en-US="https://yourtablecloth.app/translations/en-US">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://yourtablecloth.app/TableClothCatalog/Catalog.xsd"
+	Fallback="ko-KR">
 	<!--
 	식탁보 카탈로그: 등록하려는 웹 사이트에 대한 정보를 XML 파일 문법에 맞게 넣어주세요.
 	Category 속성에는 Other, Banking, Financing, CreditCard, Government 등의 값을 넣을 수 있어요.

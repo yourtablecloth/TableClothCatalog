@@ -21,6 +21,16 @@
 
 위의 두 개의 파일에 새로운 항목을 추가하고 Pull Request를 보내주시면, 검토 후에 반영하도록 하겠습니다.
 
+### Catalog.xml 스키마 유효성 검사
+
+Catalog.xml이 규격에 맞도록 XML 마크업을 잘 기술했는지 `xmlstarlet` CLI 유틸리티를 이용하여 확인할 수 있습니다.
+
+```bash
+xmlstarlet val --xsd http://yourtablecloth.app/TableClothCatalog/Catalog.xsd --net --err ./Catalog.xml
+```
+
+Catalog.xml 파일을 수정하여 제출하기 전, `xmlstarlet` CLI를 사용하여 유효성 검사를 진행해보는 것을 권장합니다.
+
 ### 자동 응답 설치 옵션을 찾는 방법
 
 일반적으로 무인 설치 옵션은 설치 프로그램 명령줄 뒤에 `/?`나 `/help`, `/h`, `--help` 등 도움말을 표시하는 것과 관련된 스위치를 대입하여 실행하면 도움말과 함께 자세한 자동 응답 설치 옵션을 사용하는 방법을 표시합니다.
