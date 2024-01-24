@@ -23,13 +23,16 @@
 
 ### Catalog.xml 스키마 유효성 검사
 
-Catalog.xml이 규격에 맞도록 XML 마크업을 잘 기술했는지 `xmlstarlet` CLI 유틸리티를 이용하여 확인할 수 있습니다.
+Catalog.xml이 규격에 맞도록 XML 마크업을 잘 기술했는지 C# 스크립트를 `dotnet script` CLI 유틸리티를 통해 실행하여 확인할 수 있습니다.
+
+`dotnet-script` CLI 도구는 [github.com/dotnet-script/dotnet-script]](https://github.com/dotnet-script/dotnet-script) 리포지터리를 참고하여 설치할 수 있습니다. 이 도구는 Windows 뿐 아니라 Linux, macOS에서도 사용할 수 있도록 설계되었습니다.
 
 ```bash
-xmlstarlet val --xsd http://yourtablecloth.app/TableClothCatalog/Catalog.xsd --net --err ./Catalog.xml
+# 현재 디렉터리가 TableClothCatalog라고 가정합니다.
+dotnet script --no-cache ./src/CatalogValidation.csx -- ./docs/Catalog.xml
 ```
 
-Catalog.xml 파일을 수정하여 제출하기 전, `xmlstarlet` CLI를 사용하여 유효성 검사를 진행해보는 것을 권장합니다.
+Catalog.xml 파일을 수정하여 제출하기 전에 검사를 진행하는 것을 권장합니다.
 
 ### 자동 응답 설치 옵션을 찾는 방법
 
