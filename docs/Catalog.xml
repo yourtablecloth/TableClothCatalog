@@ -262,6 +262,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 			en-US-DisplayName="Korea Post Deposit Service Division">
 			<Packages>
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
+				<Package Name="TouchEnNxKey" Url="https://www.epostbank.go.kr/sw/raonnx/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
 			</Packages>
 		</Service>
 		<Service Id="SanrimJohab" DisplayName="SJ산림조합" Category="Banking" Url="https://banking.nfcf.or.kr/"
