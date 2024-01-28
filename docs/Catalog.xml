@@ -70,6 +70,9 @@
 				<Package Name="TouchEnKey64" Url="https://img.nonghyup.com/install/so/raon/TouchEnNxKey/TouchEn_nxKey_Installer_64bit_new.exe" Arguments="/silence" />
 				<Package Name="TouchEnKey32" Url="https://veraport.nonghyup.com/download/20230210/TouchEn_nxKey_Installer_32bit_new.exe" Arguments="/silence" />
 			</Packages>
+			<EdgeExtensions>
+				<EdgeExtension Name="TouchEnExtension" CrxUrl="https://clients2.google.com/service/update2/crx" ExtensionId="dncepekefegjiljlfbihljgogephdhph" />
+			</EdgeExtensions>
 			<CustomBootstrap>
 <![CDATA[
 ##### Fake MDM Provider For Microsoft Edge #####
@@ -349,6 +352,10 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="astxdn" Url="https://safetx.ahnlab.com/master/win/default/common/astxdn.exe" Arguments="/silent" />
 				<Package Name="ASSetup" Url="https://biz.suhyup-bank.com/ZeroKeeper/down/ASSetup.exe" Arguments="/silent" />
 			</Packages>
+			<EdgeExtensions>
+				<EdgeExtension Name="INISAFECrossWebEx" CrxUrl="https://clients2.google.com/service/update2/crx" ExtensionId="dheimbmpmkbepjjcobigjacfepohombn" />
+				<EdgeExtension Name="TouchEnExtension" CrxUrl="https://clients2.google.com/service/update2/crx" ExtensionId="dncepekefegjiljlfbihljgogephdhph" />
+			</EdgeExtensions>
 			<CustomBootstrap>
 <![CDATA[
 ##### Fake MDM Provider For Microsoft Edge #####
