@@ -25,7 +25,7 @@
 				<Package Name="AnySign" Url="https://www.wooribank.com/download/AnySign_Installer/AnySign_Installer.exe" Arguments="/S" />
 				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 				<Package Name="NOS" Url="https://www.wooribank.com/download/NOS/nos_setup.exe" Arguments="/silent" />
-				<Package Name="IPInside" Url="https://www.wooribank.com/download/IPinside/I3GSvcManager_3.0.0.7.exe" Arguments="/nodlg" />
+				<Package Name="IPInside" Url="https://www.wooribank.com/download/IPinside/I3GSvcManager_3.0.0.24.exe" Arguments="/nodlg" />
 			</Packages>
 		</Service>
 		<Service Id="KookminBank" DisplayName="KB국민은행 개인뱅킹" Category="Banking" Url="https://www.kbstar.com/"
