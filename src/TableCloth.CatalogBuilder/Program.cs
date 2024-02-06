@@ -1,11 +1,7 @@
 ﻿using SixLabors.ImageSharp.Formats.Png;
 using System.IO.Compression;
-using System.Xml.Schema;
 using System.Xml;
-using BitMiracle.LibTiff.Classic;
-using System.Data.SqlTypes;
-using System.Reflection.PortableExecutable;
-using System.Net.Http;
+using System.Xml.Schema;
 
 AppMain(args);
 
