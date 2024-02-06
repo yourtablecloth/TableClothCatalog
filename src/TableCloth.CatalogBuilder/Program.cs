@@ -5,6 +5,7 @@ using System.Xml;
 using BitMiracle.LibTiff.Classic;
 using System.Data.SqlTypes;
 using System.Reflection.PortableExecutable;
+using System.Net.Http;
 
 AppMain(args);
 
@@ -36,7 +37,7 @@ static void AppMain(string[] args)
         PrepareOutputDirectory(sourceDirectory, targetDirectory);
         ConvertSiteLogoImagesIntoIconFiles(targetDirectory);
         CreateImageResourceZipFile(targetDirectory);
-        ValidatingCatalogSchemaFile(targetDirectory);
+        ValidatingCatalogSchemaFile(targetDirectory, true);
 
         Console.Out.WriteLine("Catalog builder runs with succeed result.");
         Environment.Exit(0);
@@ -60,7 +61,35 @@ static string? GetPositionInfo(IXmlLineInfo? lineInfo)
 
 const string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.3";
 
-static void ValidatingCatalogSchemaFile(string targetDirectory)
+static async Task<bool> TestUrlAsync(HttpClient httpClient, string urlString, string element, int lineNumber)
+{
+    try
+    {
+        var response = await httpClient.GetAsync(urlString, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+
+        if (response == null || !response.IsSuccessStatusCode)
+        {
+            await Console.Out.WriteLineAsync($"Warning: Cannot fetch the URI `{urlString}` (Remote response code: {(int?)response?.StatusCode}) - (Line: `{lineNumber}`)").ConfigureAwait(false);
+            return false;
+        }
+    }
+    catch (AggregateException aex)
+    {
+        var ex = aex.InnerException ?? aex;
+        await Console.Out.WriteLineAsync($"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} throwed. {ex.InnerException?.Message ?? ex.Message}) - (Line: `{lineNumber}`)").ConfigureAwait(false);
+        return false;
+    }
+    catch (Exception ex)
+    {
+        await Console.Out.WriteLineAsync($"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} throwed. {ex.InnerException?.Message ?? ex.Message}) - (Line: `{lineNumber}`)").ConfigureAwait(false);
+        return false;
+    }
+
+    await Console.Out.WriteLineAsync($"Test succeed on `{urlString}`.").ConfigureAwait(false);
+    return true;
+}
+
+static void ValidatingCatalogSchemaFile(string targetDirectory, bool evaluateUrls)
 {
     var catalogXmlPath = Path.Combine(targetDirectory, "Catalog.xml");
     var schemaXsdPath = Path.Combine(targetDirectory, "Catalog.xsd");
@@ -92,10 +121,7 @@ static void ValidatingCatalogSchemaFile(string targetDirectory)
         }
     });
 
-    var httpClient = new HttpClient()
-    {
-        Timeout = TimeSpan.FromSeconds(5d),
-    };
+    var httpClient = new HttpClient();
 
     if (!string.IsNullOrWhiteSpace(userAgent))
     {
@@ -140,10 +166,7 @@ static void ValidatingCatalogSchemaFile(string targetDirectory)
                         }
 
                         if (testTargets.ContainsKey(urlString))
-                        {
-                            Console.Out.WriteLine($"Skipping visited `{reader.Name}` URL `{urlString}`...");
                             continue;
-                        }
 
                         var lineInfo = reader as IXmlLineInfo;
                         testTargets[urlString] = new Tuple<string, int>(reader.Name, lineInfo?.LineNumber ?? 0);
@@ -166,33 +189,22 @@ static void ValidatingCatalogSchemaFile(string targetDirectory)
         }
     }
 
-    foreach (var eachTestTarget in testTargets.AsParallel())
+    if (evaluateUrls)
     {
-        var urlString = eachTestTarget.Key;
+        var tasks = new List<Task<bool>>(testTargets.Count);
 
-        try
-        {
-            var response = httpClient.GetAsync(urlString, HttpCompletionOption.ResponseHeadersRead).Result;
+        foreach (var eachTestTarget in testTargets.AsParallel())
+            tasks.Add(TestUrlAsync(httpClient, eachTestTarget.Key, eachTestTarget.Value.Item1, eachTestTarget.Value.Item2));
 
-            if (response == null || !response.IsSuccessStatusCode)
-            {
-                errorCount++;
-                Console.Out.WriteLine($"Warning: Cannot fetch the URI `{urlString}` (Remote response code: {(int?)response?.StatusCode}) - (Line: `{eachTestTarget.Value.Item2}`)");
-            }
-        }
-        catch (AggregateException aex)
-        {
-            errorCount++;
-            var ex = aex.InnerException ?? aex;
-            Console.Out.WriteLine($"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} throwed. {ex.InnerException?.Message ?? ex.Message}) - (Line: `{eachTestTarget.Value.Item2}`)");
-            continue;
-        }
-        catch (Exception ex)
-        {
-            errorCount++;
-            Console.Out.WriteLine($"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} throwed. {ex.InnerException?.Message ?? ex.Message}) - (Line: `{eachTestTarget.Value.Item2}`)");
-            continue;
-        }
+        var results = Task.WhenAll(tasks).Result;
+        var succeedCount = results.Count(x => x == true);
+        var failedCount = results.Count(x => x == false);
+        errorCount += failedCount;
+
+        Console.Out.WriteLine($"Test runner completed. (Scheduled: {testTargets.Count} / Returned: {results.Length} / Succed: {succeedCount} / Failed: {failedCount})");
+
+        if (testTargets.Count != results.Length)
+            Console.Out.WriteLine($"Warning: Some test targets skipped due to task cancellation.");
     }
 
     if (errorCount + warningCount < 1)

@@ -21,12 +21,12 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    # Build catalog builder tool
-    - name: Build .NET Tool
+    # Build Catalog Builder tool
+    - name: Build Catalog Builder Tool
       run: dotnet build src/TableCloth.CatalogBuilder/TableCloth.CatalogBuilder.csproj --configuration Release
 
-    # Run catalog builder tool
-    - name: Run .NET Tool
+    # Run Catalog Builder tool
+    - name: Run Catalog Builder Tool
       run: dotnet run --project src/TableCloth.CatalogBuilder/TableCloth.CatalogBuilder.csproj --configuration Release -- ./docs/ ./outputs/
 
     # Deploy to GitHub Pages
