@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 이 파일은 오래된 식탁보 버전을 위해서 유지하는 파일입니다. sites.xml 파일을 수정해주세요. -->
+<IEModeList>
+	<Sites>
+		<!-- 공공 - 정부24 -->
+		<Site Domain="gov.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 예비군 -->
+		<Site Domain="yebigun1.mil.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 대한민국 법원 대국민서비스 -->
+		<Site Domain="scourt.go.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 대한민국 법원 전자가족관계등록시스템 -->
+		<Site Domain="efamily.scourt.go.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 대한민국 법원 인터넷등기소 -->
+		<Site Domain="iros.go.kr" Mode="Default" OpenIn="IE11" />
+		
+		<!-- 공공 - 기술보증기금 디지털지점 -->
+		<Site Domain="kibo.or.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 주택금융공사 -->
+		<Site Domain="bank.hf.go.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 금융결제원 KFTCVAN -->
+		<Site Domain="kftcvan.or.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 금융결제원 CMS/EDI -->
+		<Site Domain="cmsedi.or.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 금융결제원 빌링원플러스 -->
+		<Site Domain="billingone.or.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 금융결제원 나라빌 -->
+		<Site Domain="narabill.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 금융결제원 트러스빌 -->
+		<Site Domain="trusbill.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 한국무역보험공사 사이버영업점 -->
+		<Site Domain="cyber.ksure.or.kr" Mode="Default" OpenIn="IE11" />
+		
+		<!-- 공공 - 착오송금반환지원정보시스템 -->
+		<Site Domain="kmrs.kdic.or.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - G-health 공공보건포털 -->
+		<Site Domain="g-health.kr" Mode="Default" OpenIn="IE11" />
+		
+		<!-- 공공 - 질병관리청 예방접종도우미 -->
+		<Site Domain="nip.kdca.go.kr" Mode="Default" OpenIn="IE11" />
+		
+		<!-- 공공 - 경기도 청소년 교통비 지원 포털 -->
+		<Site Domain="www.gbuspb.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 공공 - 사회복지시설정보시스템 -->
+		<Site Domain="www.w4c.go.kr" Mode="Default" OpenIn="IE11" />
+
+		<!-- 교육 - 나이스 대국민 서비스 -->
+		<Site Domain="neis.go.kr" Mode="Default" OpenIn="IE11" />
+		
+		<!-- 교육 - 동국대학교 UDRIMS -->
+		<Site Domain="udrims.dongguk.edu" Mode="Default" OpenIn="IE11" />
+
+		<!-- 교육 - 대학 증명 발급 -->
+		<Site Domain="www.webminwon.com" Mode="Default" OpenIn="IE11" />
+
+		<!-- 교육 - Certpia -->
+		<Site Domain="www.certpia.com" Mode="Default" OpenIn="IE11" />
+	</Sites>
+</IEModeList>
