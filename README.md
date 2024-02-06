@@ -21,18 +21,21 @@
 
 위의 두 개의 파일에 새로운 항목을 추가하고 Pull Request를 보내주시면, 검토 후에 반영하도록 하겠습니다.
 
-### Catalog.xml 스키마 유효성 검사
+### 카탈로그 빌더 실행하기
 
-Catalog.xml이 규격에 맞도록 XML 마크업을 잘 기술했는지 C# 스크립트를 `dotnet script` CLI 유틸리티를 통해 실행하여 확인할 수 있습니다.
-
-`dotnet-script` CLI 도구는 [github.com/dotnet-script/dotnet-script]](https://github.com/dotnet-script/dotnet-script) 리포지터리를 참고하여 설치할 수 있습니다. 이 도구는 Windows 뿐 아니라 Linux, macOS에서도 사용할 수 있도록 설계되었습니다.
+각종 유효성 검사 및 리소스 자동 생성을 위하여 CatalogBuilder를 새롭게 추가하였습니다. 새로운 커밋이 브랜치에 푸시되면, CatalogBuilder가 `outputs` 디렉터리에 `gh-pages` 브랜치에 내보낼 파일들을 복사하면서 추가 리소스 생성이나 유효성 검사를 진행하게 됩니다.
 
 ```bash
-# 현재 디렉터리가 TableClothCatalog라고 가정합니다.
-dotnet script --no-cache ./src/CatalogValidation.csx -- ./docs/Catalog.xml
+# 리포지터리 루트 디렉터리에서 아래 명령어를 실행한다고 가정합니다.
+
+# 빌드
+dotnet build src/TableCloth.CatalogBuilder/TableCloth.CatalogBuilder.csproj --configuration Release
+
+# 실행
+dotnet run --project src/TableCloth.CatalogBuilder/TableCloth.CatalogBuilder.csproj --configuration Release -- ./docs/ ./outputs/
 ```
 
-Catalog.xml 파일을 수정하여 제출하기 전에 검사를 진행하는 것을 권장합니다.
+도구를 실행하여 나타나는 Error나 Warning을 최대한 제거하는 것이 좋습니다. Catalog.xml 파일을 수정하여 제출하기 전에 검사를 진행하는 것을 권장합니다.
 
 ### 자동 응답 설치 옵션을 찾는 방법
 
