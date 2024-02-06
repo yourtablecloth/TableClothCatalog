@@ -2,6 +2,9 @@
 using System.IO.Compression;
 using System.Xml.Schema;
 using System.Xml;
+using BitMiracle.LibTiff.Classic;
+using System.Data.SqlTypes;
+using System.Reflection.PortableExecutable;
 
 AppMain(args);
 
@@ -55,9 +58,10 @@ static string? GetPositionInfo(IXmlLineInfo? lineInfo)
     return positionText;
 }
 
+const string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.3";
+
 static void ValidatingCatalogSchemaFile(string targetDirectory)
 {
-    const string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36";
     var catalogXmlPath = Path.Combine(targetDirectory, "Catalog.xml");
     var schemaXsdPath = Path.Combine(targetDirectory, "Catalog.xsd");
 
@@ -100,7 +104,7 @@ static void ValidatingCatalogSchemaFile(string targetDirectory)
     }
 
     Console.Out.WriteLine($"Info: Validating `{catalogXmlPath}` file.");
-    var testedUrl = new Dictionary<string, bool>();
+    var testTargets = new Dictionary<string, Tuple<string, int>>();
 
     // Get the XmlReader object with the configured settings.
     using (XmlReader reader = XmlReader.Create(catalogXmlPath, config))
@@ -135,28 +139,23 @@ static void ValidatingCatalogSchemaFile(string targetDirectory)
                             continue;
                         }
 
-                        if (testedUrl.ContainsKey(urlString))
+                        if (testTargets.ContainsKey(urlString))
                         {
                             Console.Out.WriteLine($"Skipping visited `{reader.Name}` URL `{urlString}`...");
                             continue;
                         }
 
-                        var response = httpClient.GetAsync(result, HttpCompletionOption.ResponseHeadersRead).Result;
-
-                        if (response == null || !response.IsSuccessStatusCode)
-                        {
-                            testedUrl[urlString] = false;
-                            errorCount++;
-                            Console.Out.WriteLine($"Warning: Cannot fetch the URI `{urlString}` (Remote response code: {(int?)response?.StatusCode}) - {GetPositionInfo(reader as IXmlLineInfo)}");
-                            continue;
-                        }
-                        else
-                        {
-                            Console.Out.WriteLine($"Test succeed on `{reader.Name}` URL `{urlString}`...");
-                            testedUrl[urlString] = true;
-                        }
+                        var lineInfo = reader as IXmlLineInfo;
+                        testTargets[urlString] = new Tuple<string, int>(reader.Name, lineInfo?.LineNumber ?? 0);
                         break;
                 }
+            }
+            catch (AggregateException aex)
+            {
+                errorCount++;
+                var ex = aex.InnerException ?? aex;
+                Console.Error.WriteLine($"Error: {ex.GetType().Name} / {ex.InnerException?.GetType().Name} throwed. ({ex.InnerException?.Message ?? ex.Message}) - {GetPositionInfo(reader as IXmlLineInfo)}");
+                continue;
             }
             catch (Exception ex)
             {
@@ -164,6 +163,35 @@ static void ValidatingCatalogSchemaFile(string targetDirectory)
                 Console.Error.WriteLine($"Error: {ex.GetType().Name} / {ex.InnerException?.GetType().Name} throwed. ({ex.InnerException?.Message ?? ex.Message}) - {GetPositionInfo(reader as IXmlLineInfo)}");
                 continue;
             }
+        }
+    }
+
+    foreach (var eachTestTarget in testTargets.AsParallel())
+    {
+        var urlString = eachTestTarget.Key;
+
+        try
+        {
+            var response = httpClient.GetAsync(urlString, HttpCompletionOption.ResponseHeadersRead).Result;
+
+            if (response == null || !response.IsSuccessStatusCode)
+            {
+                errorCount++;
+                Console.Out.WriteLine($"Warning: Cannot fetch the URI `{urlString}` (Remote response code: {(int?)response?.StatusCode}) - (Line: `{eachTestTarget.Value.Item2}`)");
+            }
+        }
+        catch (AggregateException aex)
+        {
+            errorCount++;
+            var ex = aex.InnerException ?? aex;
+            Console.Out.WriteLine($"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} throwed. {ex.InnerException?.Message ?? ex.Message}) - (Line: `{eachTestTarget.Value.Item2}`)");
+            continue;
+        }
+        catch (Exception ex)
+        {
+            errorCount++;
+            Console.Out.WriteLine($"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} throwed. {ex.InnerException?.Message ?? ex.Message}) - (Line: `{eachTestTarget.Value.Item2}`)");
+            continue;
         }
     }
 
