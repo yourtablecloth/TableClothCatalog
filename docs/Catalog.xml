@@ -2122,6 +2122,13 @@ Start-Service -ServiceName TrustedInstaller
 				<Package Name="ASTxFor4Insure" Url="https://www.4insure.or.kr/solution/Ahnlab/AOS2/astx_setup_4insure.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
+		<Service Id="CCRS" DisplayName="신용회복위원회 사이버상담부" Category="Government" Url="https://cyber.ccrs.or.kr/">
+			<Packages>
+				<Package Name="Delfino" Url="https://dn.ccrs.or.kr/win/delfino-g3.exe" Arguments="/silent" />
+				<Package Name="NXiSAS" Url="https://dn.ccrs.or.kr/win/NXiSAS.exe" Arguments="/silent" />
+				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
 		<!-- 공공기관 끝 -->
 
 		<!-- 일반 서비스 시작 -->
