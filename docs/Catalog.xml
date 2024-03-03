@@ -10,7 +10,7 @@
 	-->
 	<Companions>
 		<!-- 모두의 프린터 -->
-		<Companion Id="EveryonesPrinter" DisplayName="모두의 프린터" Url="https://mop.pirodown.win/ebp325_x64.exe" Arguments=""
+		<Companion Id="EveryonesPrinter" DisplayName="모두의 프린터" Url="https://mop.pirodown.win/ebp331_x64.exe" Arguments=""
 			en-US-DisplayName="Everyone's Printer" />
 	</Companions>
 	<InternetServices>
