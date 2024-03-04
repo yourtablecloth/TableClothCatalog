@@ -14,7 +14,7 @@
 			en-US-DisplayName="Everyone's Printer" />
 	</Companions>
 	<InternetServices>
-		<!-- 인터넷 뱅킹 시작 -->		
+		<!-- 인터넷 뱅킹 시작 -->
 		<!-- 개인 인터넷 뱅킹 시작 (https://www.kfb.or.kr/member/list_regular.php 참고함) -->
 		<Service Id="WooriBank" DisplayName="우리은행 개인뱅킹" Category="Banking" Url="https://www.wooribank.com/"
 			en-US-DisplayName="WOORI BANK">
@@ -276,6 +276,14 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
 				<Package Name="TouchEnKey32" Url="https://banking.nfcf.or.kr/3rdParty/pib/raonnx/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
 				<Package Name="TouchEnFirewall" Url="https://banking.nfcf.or.kr/3rdParty/pib/raonnx/nxFw/module/TEFW_Installer.exe" Arguments="/silence" />
 				<Package Name="IPInside" Url="https://banking.nfcf.or.kr/3rdParty/pib/interezen/install/I3GSvcManager.exe" Arguments="/nodlg" />
+			</Packages>
+		</Service>
+		<Service Id="SMBCSeoul" DisplayName="미쓰이스미토모은행 서울지점" Category="Banking" Url="https://www.e-smbc.co.kr/"
+			en-US-DisplayName="Smitomo Mitsui Banking Corp. Seoul Branch">
+			<CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+			<en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
+			<Packages>
+				<Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
 		<!-- 개인 인터넷 뱅킹 끝 -->
