@@ -2170,7 +2170,7 @@ Start-Service -ServiceName TrustedInstaller
 				<Package Name="TouchEnKey32" Url="http://download.raonsecure.com/TouchEnnxKey/current/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
 			</Packages>
 		</Service>
-		<Service Id="TMoney" DisplayName="캐시비카드" Category="Other" Url="https://www.cashbee.co.kr"
+		<Service Id="Cashbee" DisplayName="캐시비카드" Category="Other" Url="https://www.cashbee.co.kr"
 			en-US-DisplayName="CashBee">
 			<Packages>
 				<Package Name="TouchEnKey32" Url="http://download.raonsecure.com/TouchEnnxKey/current/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
