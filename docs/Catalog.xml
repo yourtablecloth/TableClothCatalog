@@ -2137,6 +2137,11 @@ Start-Service -ServiceName TrustedInstaller
 				<Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
 			</Packages>
 		</Service>
+		<Service Id="RpsKEnergy" DisplayName="한국에너지공단 신재생에너지 RPS 포털" Category="Government" Url="">
+			<Packages>
+				<Package Name="SecuKitNXS" Url="https://kcert.energy.or.kr/SecuKitNXS/Install/SecuKitNXS.exe" Arguments="/silent" />
+			</Packages>
+		</Service>
 		<!-- 공공기관 끝 -->
 
 		<!-- 일반 서비스 시작 -->
