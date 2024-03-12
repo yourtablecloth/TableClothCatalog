@@ -2145,6 +2145,10 @@ Start-Service -ServiceName TrustedInstaller
 				<Package Name="TouchEnKey32" Url="https://www.cultureland.co.kr/resources/web/js/raonnx/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
 			</Packages>
 		</Service>
+		<Service Id="HappyMoney" DisplayName="해피머니" Category="Other" Url="https://www.happymoney.co.kr/">
+			<Packages>
+				<Package Name="TouchEnKey32" Url="https://www.happymoney.co.kr/svc/resources/TouchEn/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
+			</Packages>
 		<Service Id="ILogenEnterprise" DisplayName="로젠택배 기업용" Category="Other" Url="https://www.ilogen.com/web/enterprise/system">
 			<CompatNotes>로젠택배 기업용 소프트웨어는 .NET Framework 2.0이 필요하며, 해당 구성 요소는 윈도우 샌드박스 내부가 아닌 시스템에 미리 설치되어있어야 사용할 수 있습니다. 사용 중인 컴퓨터의 프로그램 추가/제거 화면에서 .NET Framework 3.5가 설치되어있는지 확인하고, 먼저 설치해주세요.</CompatNotes>
 			<en-US-CompatNotes>Logen Express corporate software requires .NET Framework 2.0, and its components must be pre-installed on the system and not inside the Windows Sandbox to be used. Check whether .NET Framework 3.5 is installed in the Add/Remove Programs screen of the computer you are using, and install it first.</en-US-CompatNotes>
