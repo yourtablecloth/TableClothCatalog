@@ -1,4 +1,5 @@
 ﻿using SixLabors.ImageSharp.Formats.Png;
+using System.Collections.Concurrent;
 using System.IO.Compression;
 using System.Text;
 using System.Xml;
@@ -59,31 +60,40 @@ static string? GetPositionInfo(IXmlLineInfo? lineInfo)
 
 const string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.3";
 
-static async Task<bool> TestUrlAsync(TextWriter logWriter, HttpClient httpClient, string urlString, string element, int lineNumber, CancellationToken cancellationToken = default)
+static async Task<bool> TestUrlAsync(ConcurrentQueue<string> errorLogBuffer, HttpClient httpClient, string urlString, string element, int lineNumber, CancellationToken cancellationToken = default)
 {
+    var message = string.Empty;
+
     try
     {
         var response = await httpClient.GetAsync(urlString, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
 
         if (response == null || !response.IsSuccessStatusCode)
         {
-            await logWriter.WriteLineAsync(Console.Out, $"Warning: Cannot fetch the URI `{urlString}` (Remote response code: {(int?)response?.StatusCode}) - (Line: `{lineNumber}`)", cancellationToken).ConfigureAwait(false);
+            message = $"Warning: Cannot fetch the URI `{urlString}` (Remote response code: {(int?)response?.StatusCode}) - (Line: `{lineNumber}`)";
+            await Console.Out.WriteLineAsync(message.AsMemory(), cancellationToken).ConfigureAwait(false);
+            errorLogBuffer.Enqueue(message);
             return false;
         }
     }
     catch (AggregateException aex)
     {
         var ex = aex.InnerException ?? aex;
-        await logWriter.WriteLineAsync(Console.Out, $"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} throwed. {ex.InnerException?.Message ?? ex.Message}) - (Line: `{lineNumber}`)", cancellationToken).ConfigureAwait(false);
+        message = $"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} throwed. {ex.InnerException?.Message ?? ex.Message}) - (Line: `{lineNumber}`)";
+        await Console.Out.WriteLineAsync(message.AsMemory(), cancellationToken).ConfigureAwait(false);
+        errorLogBuffer.Enqueue(message);
         return false;
     }
     catch (Exception ex)
     {
-        await logWriter.WriteLineAsync(Console.Out, $"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} throwed. {ex.InnerException?.Message ?? ex.Message}) - (Line: `{lineNumber}`)", cancellationToken).ConfigureAwait(false);
+        message = $"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} throwed. {ex.InnerException?.Message ?? ex.Message}) - (Line: `{lineNumber}`)";
+        await Console.Out.WriteLineAsync(message.AsMemory(), cancellationToken).ConfigureAwait(false);
+        errorLogBuffer.Enqueue(message);
         return false;
     }
 
-    await logWriter.WriteLineAsync(Console.Out, $"Test succeed on `{urlString}`.", cancellationToken).ConfigureAwait(false);
+    message = $"Test succeed on `{urlString}`.";
+    await Console.Out.WriteLineAsync(message.AsMemory(), cancellationToken).ConfigureAwait(false);
     return true;
 }
 
@@ -189,15 +199,19 @@ static void ValidatingCatalogSchemaFile(TextWriter logWriter, string targetDirec
 
     if (evaluateUrls)
     {
+        var errorLogBuffer = new ConcurrentQueue<string>();
         var tasks = new List<Task<bool>>(testTargets.Count);
 
         foreach (var eachTestTarget in testTargets.AsParallel())
-            tasks.Add(TestUrlAsync(logWriter, httpClient, eachTestTarget.Key, eachTestTarget.Value.Item1, eachTestTarget.Value.Item2));
+            tasks.Add(TestUrlAsync(errorLogBuffer, httpClient, eachTestTarget.Key, eachTestTarget.Value.Item1, eachTestTarget.Value.Item2));
 
         var results = Task.WhenAll(tasks).Result;
         var succeedCount = results.Count(x => x == true);
         var failedCount = results.Count(x => x == false);
         errorCount += failedCount;
+
+        foreach (var eachErrorLog in errorLogBuffer.ToList())
+            logWriter.WriteLine(Console.Error, eachErrorLog);
 
         logWriter.WriteLine(Console.Out, $"Test runner completed. (Scheduled: {testTargets.Count} / Returned: {results.Length} / Succed: {succeedCount} / Failed: {failedCount})");
 
