@@ -50,7 +50,7 @@
 	<xs:complexType name="CatalogEdgeExtensionInformationList">
 		<xs:sequence>
 			<xs:element name="EdgeExtension" type="CatalogEdgeExtensionInformation" minOccurs="0" maxOccurs="unbounded">
-				<xs:unique name="PackageNameUniqueness">
+				<xs:unique name="EdgeExtensionNameUniqueness">
 					<xs:selector xpath="./*" />
 					<xs:field xpath="@Name" />
 				</xs:unique>
