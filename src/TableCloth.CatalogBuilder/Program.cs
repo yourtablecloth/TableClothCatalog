@@ -15,22 +15,22 @@ static void AppMain(string[] args)
     if (string.IsNullOrWhiteSpace(sourceDirectory) ||
         !Directory.Exists(sourceDirectory))
     {
-        Console.Error.WriteLine("Please specify source directory to run this tool.");
+        Console.Error.WriteLine("Error: Please specify source directory to run this tool.");
         Environment.Exit(1);
         return;
     }
 
     if (string.IsNullOrWhiteSpace(targetDirectory))
     {
-        Console.Error.WriteLine("Please specify target directory to run this tool.");
+        Console.Error.WriteLine("Error: Please specify target directory to run this tool.");
         Environment.Exit(1);
         return;
     }
 
     try
     {
-        Console.Out.WriteLine($"Source directory path: `{sourceDirectory}`");
-        Console.Out.WriteLine($"Target directory path: `{targetDirectory}`");
+        Console.Out.WriteLine($"Info: Source directory path: `{sourceDirectory}`");
+        Console.Out.WriteLine($"Info: Target directory path: `{targetDirectory}`");
 
         using var logWriter = PrepareOutputDirectory(sourceDirectory, targetDirectory);
 
@@ -38,7 +38,7 @@ static void AppMain(string[] args)
         CreateImageResourceZipFile(logWriter, targetDirectory);
         ValidatingCatalogSchemaFile(logWriter, targetDirectory, true);
 
-        logWriter.WriteLine(Console.Out, "Catalog builder runs with succeed result.");
+        logWriter.WriteLine(Console.Out, "Info: Catalog builder runs with succeed result.");
         Environment.Exit(0);
     }
     catch (Exception thrownException)
@@ -92,7 +92,7 @@ static async Task<bool> TestUrlAsync(ConcurrentQueue<string> errorLogBuffer, Htt
         return false;
     }
 
-    message = $"Test succeed on `{urlString}`.";
+    message = $"Info: Test succeed on `{urlString}`.";
     await Console.Out.WriteLineAsync(message.AsMemory(), cancellationToken).ConfigureAwait(false);
     return true;
 }
@@ -213,7 +213,7 @@ static void ValidatingCatalogSchemaFile(TextWriter logWriter, string targetDirec
         foreach (var eachErrorLog in errorLogBuffer.ToList())
             logWriter.WriteLine(Console.Error, eachErrorLog);
 
-        logWriter.WriteLine(Console.Out, $"Test runner completed. (Scheduled: {testTargets.Count} / Returned: {results.Length} / Succed: {succeedCount} / Failed: {failedCount})");
+        logWriter.WriteLine(Console.Out, $"Info: Test runner completed. (Scheduled: {testTargets.Count} / Returned: {results.Length} / Succed: {succeedCount} / Failed: {failedCount})");
 
         if (testTargets.Count != results.Length)
             logWriter.WriteLine(Console.Out, $"Warning: Some test targets skipped due to task cancellation.");
@@ -230,17 +230,17 @@ static void ValidatingCatalogSchemaFile(TextWriter logWriter, string targetDirec
 static void CreateImageResourceZipFile(TextWriter logWriter, string targetDirectory)
 {
     var imageDirectory = Path.Combine(targetDirectory, "images");
-    logWriter.WriteLine(Console.Out, $"Investigating directory `{imageDirectory}`...");
+    logWriter.WriteLine(Console.Out, $"Info: Investigating directory `{imageDirectory}`...");
 
     var pngFiles = Directory.GetFiles(imageDirectory, "*.png", SearchOption.AllDirectories);
     var icoFiles = Directory.GetFiles(imageDirectory, "*.ico", SearchOption.AllDirectories);
     var sourceFiles = Enumerable.Concat(pngFiles, icoFiles).ToArray();
-    logWriter.WriteLine(Console.Out, $"Found total {sourceFiles.Length} source files.");
+    logWriter.WriteLine(Console.Out, $"Info: Found total {sourceFiles.Length} source files.");
 
     var workingDirectory = Path.Combine(targetDirectory, "working");
     if (!Directory.Exists(workingDirectory))
     {
-        logWriter.WriteLine(Console.Out, $"Creating working directory `{workingDirectory}`...");
+        logWriter.WriteLine(Console.Out, $"Info: Creating working directory `{workingDirectory}`...");
         Directory.CreateDirectory(workingDirectory);
     }
 
@@ -251,25 +251,25 @@ static void CreateImageResourceZipFile(TextWriter logWriter, string targetDirect
         if (File.Exists(destFilePath))
             logWriter.WriteLine(Console.Out, $"Warning: Duplicated file found. Source: `{eachResourceFile}`.");
 
-        logWriter.WriteLine(Console.Out, $"Copying `{eachResourceFile}` file to `{destFilePath}` file...");
+        logWriter.WriteLine(Console.Out, $"Info: Copying `{eachResourceFile}` file to `{destFilePath}` file...");
         File.Copy(eachResourceFile, destFilePath, true);
     }
 
     var zipFilePath = Path.Combine(targetDirectory, "Images.zip");
-    logWriter.WriteLine(Console.Out, $"Creating `{zipFilePath}` zip file...");
+    logWriter.WriteLine(Console.Out, $"Info: Creating `{zipFilePath}` zip file...");
     ZipFile.CreateFromDirectory(workingDirectory, zipFilePath, CompressionLevel.Optimal, false);
 
-    logWriter.WriteLine(Console.Out, $"Removing working directory `{workingDirectory}`...");
+    logWriter.WriteLine(Console.Out, $"Info: Removing working directory `{workingDirectory}`...");
     Directory.Delete(workingDirectory, true);
 }
 
 static void ConvertSiteLogoImagesIntoIconFiles(TextWriter logWriter, string targetDirectory)
 {
     var imageDirectory = Path.Combine(targetDirectory, "images");
-    logWriter.WriteLine(Console.Out, $"Investigating directory `{imageDirectory}`...");
+    logWriter.WriteLine(Console.Out, $"Info: Investigating directory `{imageDirectory}`...");
 
     var pngFiles = Directory.GetFiles(imageDirectory, "*.png", SearchOption.AllDirectories);
-    logWriter.WriteLine(Console.Out, $"Found {pngFiles.Length} png files in `{imageDirectory}` directory.");
+    logWriter.WriteLine(Console.Out, $"Info: Found {pngFiles.Length} png files in `{imageDirectory}` directory.");
 
     foreach (var eachPngFile in pngFiles)
     {
@@ -277,14 +277,14 @@ static void ConvertSiteLogoImagesIntoIconFiles(TextWriter logWriter, string targ
 
         if (string.IsNullOrEmpty(directoryPath))
         {
-            logWriter.WriteLine(Console.Error, $"Cannot obtain directory path of `{eachPngFile}` file.");
+            logWriter.WriteLine(Console.Error, $"Info: Cannot obtain directory path of `{eachPngFile}` file.");
             continue;
         }    
 
         var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(eachPngFile);
         var iconFilePath = Path.Combine(directoryPath, $"{fileNameWithoutExtension}.ico");
 
-        logWriter.WriteLine(Console.Out, $"Converting `{eachPngFile}` image file into `{iconFilePath}` Win32 icon file.");
+        logWriter.WriteLine(Console.Out, $"Info: Converting `{eachPngFile}` image file into `{iconFilePath}` Win32 icon file.");
         ConvertImageToIcon(eachPngFile, iconFilePath);
     }
 }
@@ -335,7 +335,7 @@ static TextWriter PrepareOutputDirectory(string sourceDirectory, string targetDi
 {
     if (Directory.Exists(targetDirectory))
     {
-        Console.Out.WriteLine($"Removing output directory `{targetDirectory}`...");
+        Console.Out.WriteLine($"Info: Removing output directory `{targetDirectory}`...");
         Directory.Delete(targetDirectory, true);
     }
 
@@ -343,7 +343,7 @@ static TextWriter PrepareOutputDirectory(string sourceDirectory, string targetDi
         Directory.CreateDirectory(targetDirectory);
 
     var logWriter = new StreamWriter(File.OpenWrite(Path.Combine(targetDirectory, "log.txt")), new UTF8Encoding(false)); ;
-    logWriter.WriteLine(Console.Out, $"Copying all sub-items in `{sourceDirectory}` directory to `{targetDirectory}` directory...");
+    logWriter.WriteLine(Console.Out, $"Info: Copying all sub-items in `{sourceDirectory}` directory to `{targetDirectory}` directory...");
     CopyAll(logWriter, sourceDirectory, targetDirectory, true);
     return logWriter;
 }
@@ -355,7 +355,7 @@ static void CopyAll(TextWriter logWriter, string sourceDirectory, string targetD
 
     if (!Directory.Exists(targetDirectory))
     {
-        logWriter.WriteLine(Console.Out, $"Creating `{targetDirectory}` directory...");
+        logWriter.WriteLine(Console.Out, $"Info: Creating `{targetDirectory}` directory...");
         Directory.CreateDirectory(targetDirectory);
     }
 
@@ -363,7 +363,7 @@ static void CopyAll(TextWriter logWriter, string sourceDirectory, string targetD
     {
         var fileName = Path.GetFileName(filePath);
         var destFile = Path.Combine(targetDirectory, fileName);
-        logWriter.WriteLine(Console.Out, $"Copying `{filePath}` file into `{destFile}` file...");
+        logWriter.WriteLine(Console.Out, $"Info: Copying `{filePath}` file into `{destFile}` file...");
         File.Copy(filePath, destFile, overwrite);
     }
 
@@ -371,7 +371,7 @@ static void CopyAll(TextWriter logWriter, string sourceDirectory, string targetD
     {
         var directoryName = Path.GetFileName(directoryPath);
         var destDirectory = Path.Combine(targetDirectory, directoryName);
-        logWriter.WriteLine(Console.Out, $"Copying `{directoryName}` directories into `{destDirectory}` directory...");
+        logWriter.WriteLine(Console.Out, $"Info: Copying `{directoryName}` directories into `{destDirectory}` directory...");
         CopyAll(logWriter, directoryPath, destDirectory, overwrite);
     }
 }
