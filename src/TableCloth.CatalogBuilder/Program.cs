@@ -343,6 +343,9 @@ static TextWriter PrepareOutputDirectory(string sourceDirectory, string targetDi
         Directory.CreateDirectory(targetDirectory);
 
     var logWriter = new StreamWriter(File.OpenWrite(Path.Combine(targetDirectory, "log.txt")), new UTF8Encoding(false)); ;
+    var utcNow = DateTimeOffset.UtcNow;
+
+    logWriter.WriteLine(Console.Out, $"Info: UTC Date, time and timezone - {utcNow.ToUniversalTime()}");
     logWriter.WriteLine(Console.Out, $"Info: Copying all sub-items in `{sourceDirectory}` directory to `{targetDirectory}` directory...");
     CopyAll(logWriter, sourceDirectory, targetDirectory, true);
     return logWriter;
