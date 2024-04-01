@@ -1,5 +1,6 @@
 ﻿using SixLabors.ImageSharp.Formats.Png;
 using System.IO.Compression;
+using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 
@@ -30,12 +31,13 @@ static void AppMain(string[] args)
         Console.Out.WriteLine($"Source directory path: `{sourceDirectory}`");
         Console.Out.WriteLine($"Target directory path: `{targetDirectory}`");
 
-        PrepareOutputDirectory(sourceDirectory, targetDirectory);
-        ConvertSiteLogoImagesIntoIconFiles(targetDirectory);
-        CreateImageResourceZipFile(targetDirectory);
-        ValidatingCatalogSchemaFile(targetDirectory, true);
+        using var logWriter = PrepareOutputDirectory(sourceDirectory, targetDirectory);
 
-        Console.Out.WriteLine("Catalog builder runs with succeed result.");
+        ConvertSiteLogoImagesIntoIconFiles(logWriter, targetDirectory);
+        CreateImageResourceZipFile(logWriter, targetDirectory);
+        ValidatingCatalogSchemaFile(logWriter, targetDirectory, true);
+
+        logWriter.WriteLine(Console.Out, "Catalog builder runs with succeed result.");
         Environment.Exit(0);
     }
     catch (Exception thrownException)
@@ -57,35 +59,35 @@ static string? GetPositionInfo(IXmlLineInfo? lineInfo)
 
 const string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.3";
 
-static async Task<bool> TestUrlAsync(HttpClient httpClient, string urlString, string element, int lineNumber)
+static async Task<bool> TestUrlAsync(TextWriter logWriter, HttpClient httpClient, string urlString, string element, int lineNumber, CancellationToken cancellationToken = default)
 {
     try
     {
-        var response = await httpClient.GetAsync(urlString, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+        var response = await httpClient.GetAsync(urlString, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
 
         if (response == null || !response.IsSuccessStatusCode)
         {
-            await Console.Out.WriteLineAsync($"Warning: Cannot fetch the URI `{urlString}` (Remote response code: {(int?)response?.StatusCode}) - (Line: `{lineNumber}`)").ConfigureAwait(false);
+            await logWriter.WriteLineAsync(Console.Out, $"Warning: Cannot fetch the URI `{urlString}` (Remote response code: {(int?)response?.StatusCode}) - (Line: `{lineNumber}`)", cancellationToken).ConfigureAwait(false);
             return false;
         }
     }
     catch (AggregateException aex)
     {
         var ex = aex.InnerException ?? aex;
-        await Console.Out.WriteLineAsync($"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} throwed. {ex.InnerException?.Message ?? ex.Message}) - (Line: `{lineNumber}`)").ConfigureAwait(false);
+        await logWriter.WriteLineAsync(Console.Out, $"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} throwed. {ex.InnerException?.Message ?? ex.Message}) - (Line: `{lineNumber}`)", cancellationToken).ConfigureAwait(false);
         return false;
     }
     catch (Exception ex)
     {
-        await Console.Out.WriteLineAsync($"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} throwed. {ex.InnerException?.Message ?? ex.Message}) - (Line: `{lineNumber}`)").ConfigureAwait(false);
+        await logWriter.WriteLineAsync(Console.Out, $"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} throwed. {ex.InnerException?.Message ?? ex.Message}) - (Line: `{lineNumber}`)", cancellationToken).ConfigureAwait(false);
         return false;
     }
 
-    await Console.Out.WriteLineAsync($"Test succeed on `{urlString}`.").ConfigureAwait(false);
+    await logWriter.WriteLineAsync(Console.Out, $"Test succeed on `{urlString}`.", cancellationToken).ConfigureAwait(false);
     return true;
 }
 
-static void ValidatingCatalogSchemaFile(string targetDirectory, bool evaluateUrls)
+static void ValidatingCatalogSchemaFile(TextWriter logWriter, string targetDirectory, bool evaluateUrls)
 {
     var catalogXmlPath = Path.Combine(targetDirectory, "Catalog.xml");
     var schemaXsdPath = Path.Combine(targetDirectory, "Catalog.xsd");
@@ -95,7 +97,7 @@ static void ValidatingCatalogSchemaFile(string targetDirectory, bool evaluateUrl
         ValidationFlags = XmlSchemaValidationFlags.ReportValidationWarnings,
     };
 
-    Console.Out.WriteLine($"Info: Using schema `{schemaXsdPath}`.");
+    logWriter.WriteLine(Console.Out, $"Info: Using schema `{schemaXsdPath}`.");
     config.ValidationFlags |= XmlSchemaValidationFlags.ProcessSchemaLocation;
     config.ValidationType = ValidationType.Schema;
     config.Schemas.Add(null, schemaXsdPath);
@@ -108,12 +110,12 @@ static void ValidatingCatalogSchemaFile(string targetDirectory, bool evaluateUrl
         if (_e.Severity == XmlSeverityType.Warning)
         {
             warningCount++;
-            Console.Out.WriteLine($"Warning: {_e.Message} - {GetPositionInfo(_sender as IXmlLineInfo)}");
+            logWriter.WriteLine(Console.Out, $"Warning: {_e.Message} - {GetPositionInfo(_sender as IXmlLineInfo)}");
         }
         else if (_e.Severity == XmlSeverityType.Error)
         {
             errorCount++;
-            Console.Error.WriteLine($"Error: {_e.Message} - {GetPositionInfo(_sender as IXmlLineInfo)}");
+            logWriter.WriteLine(Console.Error, $"Error: {_e.Message} - {GetPositionInfo(_sender as IXmlLineInfo)}");
         }
     });
 
@@ -121,11 +123,11 @@ static void ValidatingCatalogSchemaFile(string targetDirectory, bool evaluateUrl
 
     if (!string.IsNullOrWhiteSpace(userAgent))
     {
-        Console.Out.WriteLine($"Info: Using User Agent String `{userAgent}`.");
+        logWriter.WriteLine(Console.Out, $"Info: Using User Agent String `{userAgent}`.");
         httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", userAgent);
     }
 
-    Console.Out.WriteLine($"Info: Validating `{catalogXmlPath}` file.");
+    logWriter.WriteLine(Console.Out, $"Info: Validating `{catalogXmlPath}` file.");
     var testTargets = new Dictionary<string, Tuple<string, int>>();
 
     // Get the XmlReader object with the configured settings.
@@ -149,7 +151,7 @@ static void ValidatingCatalogSchemaFile(string targetDirectory, bool evaluateUrl
                         if (string.IsNullOrWhiteSpace(urlString))
                         {
                             errorCount++;
-                            Console.Error.WriteLine($"Error: [{reader.Name}] URL string cannot be empty - {GetPositionInfo(reader as IXmlLineInfo)}");
+                            logWriter.WriteLine(Console.Error, $"Error: [{reader.Name}] URL string cannot be empty - {GetPositionInfo(reader as IXmlLineInfo)}");
                             continue;
                         }
 
@@ -157,7 +159,7 @@ static void ValidatingCatalogSchemaFile(string targetDirectory, bool evaluateUrl
                             result == null)
                         {
                             errorCount++;
-                            Console.Error.WriteLine($"Error: Cannot parse the URI `{urlString}` - {GetPositionInfo(reader as IXmlLineInfo)}");
+                            logWriter.WriteLine(Console.Error, $"Error: Cannot parse the URI `{urlString}` - {GetPositionInfo(reader as IXmlLineInfo)}");
                             continue;
                         }
 
@@ -173,13 +175,13 @@ static void ValidatingCatalogSchemaFile(string targetDirectory, bool evaluateUrl
             {
                 errorCount++;
                 var ex = aex.InnerException ?? aex;
-                Console.Error.WriteLine($"Error: {ex.GetType().Name} / {ex.InnerException?.GetType().Name} throwed. ({ex.InnerException?.Message ?? ex.Message}) - {GetPositionInfo(reader as IXmlLineInfo)}");
+                logWriter.WriteLine(Console.Error, $"Error: {ex.GetType().Name} / {ex.InnerException?.GetType().Name} throwed. ({ex.InnerException?.Message ?? ex.Message}) - {GetPositionInfo(reader as IXmlLineInfo)}");
                 continue;
             }
             catch (Exception ex)
             {
                 errorCount++;
-                Console.Error.WriteLine($"Error: {ex.GetType().Name} / {ex.InnerException?.GetType().Name} throwed. ({ex.InnerException?.Message ?? ex.Message}) - {GetPositionInfo(reader as IXmlLineInfo)}");
+                logWriter.WriteLine(Console.Error, $"Error: {ex.GetType().Name} / {ex.InnerException?.GetType().Name} throwed. ({ex.InnerException?.Message ?? ex.Message}) - {GetPositionInfo(reader as IXmlLineInfo)}");
                 continue;
             }
         }
@@ -190,41 +192,41 @@ static void ValidatingCatalogSchemaFile(string targetDirectory, bool evaluateUrl
         var tasks = new List<Task<bool>>(testTargets.Count);
 
         foreach (var eachTestTarget in testTargets.AsParallel())
-            tasks.Add(TestUrlAsync(httpClient, eachTestTarget.Key, eachTestTarget.Value.Item1, eachTestTarget.Value.Item2));
+            tasks.Add(TestUrlAsync(logWriter, httpClient, eachTestTarget.Key, eachTestTarget.Value.Item1, eachTestTarget.Value.Item2));
 
         var results = Task.WhenAll(tasks).Result;
         var succeedCount = results.Count(x => x == true);
         var failedCount = results.Count(x => x == false);
         errorCount += failedCount;
 
-        Console.Out.WriteLine($"Test runner completed. (Scheduled: {testTargets.Count} / Returned: {results.Length} / Succed: {succeedCount} / Failed: {failedCount})");
+        logWriter.WriteLine(Console.Out, $"Test runner completed. (Scheduled: {testTargets.Count} / Returned: {results.Length} / Succed: {succeedCount} / Failed: {failedCount})");
 
         if (testTargets.Count != results.Length)
-            Console.Out.WriteLine($"Warning: Some test targets skipped due to task cancellation.");
+            logWriter.WriteLine(Console.Out, $"Warning: Some test targets skipped due to task cancellation.");
     }
 
     if (errorCount + warningCount < 1)
-        Console.Out.WriteLine("Success: No XML warnings or errors found.");
+        logWriter.WriteLine(Console.Out, "Success: No XML warnings or errors found.");
     else if (errorCount < 1 && warningCount > 0)
-        Console.Out.WriteLine("Warning: Some XML warnings found.");
+        logWriter.WriteLine(Console.Out, "Warning: Some XML warnings found.");
     else
-        Console.Error.WriteLine("Error: One or more XML errors or warnings found.");
+        logWriter.WriteLine(Console.Error, "Error: One or more XML errors or warnings found.");
 }
 
-static void CreateImageResourceZipFile(string targetDirectory)
+static void CreateImageResourceZipFile(TextWriter logWriter, string targetDirectory)
 {
     var imageDirectory = Path.Combine(targetDirectory, "images");
-    Console.Out.WriteLine($"Investigating directory `{imageDirectory}`...");
+    logWriter.WriteLine(Console.Out, $"Investigating directory `{imageDirectory}`...");
 
     var pngFiles = Directory.GetFiles(imageDirectory, "*.png", SearchOption.AllDirectories);
     var icoFiles = Directory.GetFiles(imageDirectory, "*.ico", SearchOption.AllDirectories);
     var sourceFiles = Enumerable.Concat(pngFiles, icoFiles).ToArray();
-    Console.Out.WriteLine($"Found total {sourceFiles.Length} source files.");
+    logWriter.WriteLine(Console.Out, $"Found total {sourceFiles.Length} source files.");
 
     var workingDirectory = Path.Combine(targetDirectory, "working");
     if (!Directory.Exists(workingDirectory))
     {
-        Console.Out.WriteLine($"Creating working directory `{workingDirectory}`...");
+        logWriter.WriteLine(Console.Out, $"Creating working directory `{workingDirectory}`...");
         Directory.CreateDirectory(workingDirectory);
     }
 
@@ -233,27 +235,27 @@ static void CreateImageResourceZipFile(string targetDirectory)
         var destFilePath = Path.Combine(workingDirectory, Path.GetFileName(eachResourceFile));
         
         if (File.Exists(destFilePath))
-            Console.Out.WriteLine($"Warning: Duplicated file found. Source: `{eachResourceFile}`.");
+            logWriter.WriteLine(Console.Out, $"Warning: Duplicated file found. Source: `{eachResourceFile}`.");
 
-        Console.Out.WriteLine($"Copying `{eachResourceFile}` file to `{destFilePath}` file...");
+        logWriter.WriteLine(Console.Out, $"Copying `{eachResourceFile}` file to `{destFilePath}` file...");
         File.Copy(eachResourceFile, destFilePath, true);
     }
 
     var zipFilePath = Path.Combine(targetDirectory, "Images.zip");
-    Console.Out.WriteLine($"Creating `{zipFilePath}` zip file...");
+    logWriter.WriteLine(Console.Out, $"Creating `{zipFilePath}` zip file...");
     ZipFile.CreateFromDirectory(workingDirectory, zipFilePath, CompressionLevel.Optimal, false);
 
-    Console.Out.WriteLine($"Removing working directory `{workingDirectory}`...");
+    logWriter.WriteLine(Console.Out, $"Removing working directory `{workingDirectory}`...");
     Directory.Delete(workingDirectory, true);
 }
 
-static void ConvertSiteLogoImagesIntoIconFiles(string targetDirectory)
+static void ConvertSiteLogoImagesIntoIconFiles(TextWriter logWriter, string targetDirectory)
 {
     var imageDirectory = Path.Combine(targetDirectory, "images");
-    Console.Out.WriteLine($"Investigating directory `{imageDirectory}`...");
+    logWriter.WriteLine(Console.Out, $"Investigating directory `{imageDirectory}`...");
 
     var pngFiles = Directory.GetFiles(imageDirectory, "*.png", SearchOption.AllDirectories);
-    Console.Out.WriteLine($"Found {pngFiles.Length} png files in `{imageDirectory}` directory.");
+    logWriter.WriteLine(Console.Out, $"Found {pngFiles.Length} png files in `{imageDirectory}` directory.");
 
     foreach (var eachPngFile in pngFiles)
     {
@@ -261,14 +263,14 @@ static void ConvertSiteLogoImagesIntoIconFiles(string targetDirectory)
 
         if (string.IsNullOrEmpty(directoryPath))
         {
-            Console.Error.WriteLine($"Cannot obtain directory path of `{eachPngFile}` file.");
+            logWriter.WriteLine(Console.Error, $"Cannot obtain directory path of `{eachPngFile}` file.");
             continue;
         }    
 
         var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(eachPngFile);
         var iconFilePath = Path.Combine(directoryPath, $"{fileNameWithoutExtension}.ico");
 
-        Console.Out.WriteLine($"Converting `{eachPngFile}` image file into `{iconFilePath}` Win32 icon file.");
+        logWriter.WriteLine(Console.Out, $"Converting `{eachPngFile}` image file into `{iconFilePath}` Win32 icon file.");
         ConvertImageToIcon(eachPngFile, iconFilePath);
     }
 }
@@ -315,7 +317,7 @@ static void ConvertImageToIcon(string sourceImageFilePath, string targetIconFile
     }
 }
 
-static void PrepareOutputDirectory(string sourceDirectory, string targetDirectory)
+static TextWriter PrepareOutputDirectory(string sourceDirectory, string targetDirectory)
 {
     if (Directory.Exists(targetDirectory))
     {
@@ -323,18 +325,23 @@ static void PrepareOutputDirectory(string sourceDirectory, string targetDirector
         Directory.Delete(targetDirectory, true);
     }
 
-    Console.Out.WriteLine($"Copying all sub-items in `{sourceDirectory}` directory to `{targetDirectory}` directory...");
-    CopyAll(sourceDirectory, targetDirectory, true);
+    if (!Directory.Exists(targetDirectory))
+        Directory.CreateDirectory(targetDirectory);
+
+    var logWriter = new StreamWriter(File.OpenWrite(Path.Combine(targetDirectory, "log.txt")), new UTF8Encoding(false)); ;
+    logWriter.WriteLine(Console.Out, $"Copying all sub-items in `{sourceDirectory}` directory to `{targetDirectory}` directory...");
+    CopyAll(logWriter, sourceDirectory, targetDirectory, true);
+    return logWriter;
 }
 
-static void CopyAll(string sourceDirectory, string targetDirectory, bool overwrite)
+static void CopyAll(TextWriter logWriter, string sourceDirectory, string targetDirectory, bool overwrite)
 {
     if (!Directory.Exists(sourceDirectory))
         return;
 
     if (!Directory.Exists(targetDirectory))
     {
-        Console.Out.WriteLine($"Creating `{targetDirectory}` directory...");
+        logWriter.WriteLine(Console.Out, $"Creating `{targetDirectory}` directory...");
         Directory.CreateDirectory(targetDirectory);
     }
 
@@ -342,7 +349,7 @@ static void CopyAll(string sourceDirectory, string targetDirectory, bool overwri
     {
         var fileName = Path.GetFileName(filePath);
         var destFile = Path.Combine(targetDirectory, fileName);
-        Console.Out.WriteLine($"Copying `{filePath}` file into `{destFile}` file...");
+        logWriter.WriteLine(Console.Out, $"Copying `{filePath}` file into `{destFile}` file...");
         File.Copy(filePath, destFile, overwrite);
     }
 
@@ -350,7 +357,27 @@ static void CopyAll(string sourceDirectory, string targetDirectory, bool overwri
     {
         var directoryName = Path.GetFileName(directoryPath);
         var destDirectory = Path.Combine(targetDirectory, directoryName);
-        Console.Out.WriteLine($"Copying `{directoryName}` directories into `{destDirectory}` directory...");
-        CopyAll(directoryPath, destDirectory, overwrite);
+        logWriter.WriteLine(Console.Out, $"Copying `{directoryName}` directories into `{destDirectory}` directory...");
+        CopyAll(logWriter, directoryPath, destDirectory, overwrite);
+    }
+}
+
+static class Extensions
+{
+    public static void WriteLine(this TextWriter logWriter, TextWriter secondaryLogWriter, string message)
+    {
+        logWriter.WriteLine(message);
+
+        if (secondaryLogWriter != null)
+            secondaryLogWriter.WriteLine(message);
+    }
+
+    public static async Task WriteLineAsync(this TextWriter logWriter, TextWriter secondaryLogWriter, string message, CancellationToken cancellationToken = default)
+    {
+        var memory = message.AsMemory();
+        await logWriter.WriteLineAsync(memory, cancellationToken).ConfigureAwait(false);
+
+        if (secondaryLogWriter != null)
+            await secondaryLogWriter.WriteLineAsync(memory, cancellationToken).ConfigureAwait(false);
     }
 }
