@@ -1930,6 +1930,12 @@ Start-Service -ServiceName TrustedInstaller
         <Package Name="SecuKitNXS" Url="https://kcert.energy.or.kr/SecuKitNXS/Install/SecuKitNXS.exe" Arguments="/silent" />
       </Packages>
     </Service>
+    <Service Id="MyDataPortal" DisplayName="마이데이터 종합포털" Category="Government" Url="https://www.mydatacenter.or.kr:3441/">
+      <Packages>
+        <Package Name="NOS" Url="https://www.mydatacenter.or.kr:3441/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
+        <Package Name="MagicLine4NX" Url="https://www.mydatacenter.or.kr:3441/MagicLine4Web/ML4Web/install_bin/magicline4nx_setup.exe" Arguments="/silent" />
+      </Packages>
+    </Service>
     <!-- 공공기관 끝 -->
     <!-- 일반 서비스 시작 -->
     <Service Id="CultureLand" DisplayName="컬처랜드" Category="Other" Url="https://www.cultureland.co.kr/">
