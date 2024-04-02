@@ -2027,6 +2027,14 @@ Start-Service -ServiceName TrustedInstaller
         <EdgeExtension Name="WehagoRTC" CrxUrl="https://clients2.google.com/service/update2/crx" ExtensionId="eljddogfdgnndbemlmjgmocgjpniamie" />
       </EdgeExtensions>
     </Service>
+    <Service Id="MedCerti" DisplayName="병원증명발급포털 메드서티 (medcerti.com)" Category="Other" Url="https://www.medcerti.com/" en-US-DisplayName="Medcerti Hospital Certificate Issuance">
+      <SearchKeywords>
+				가천대학교길병원;강남세브란스병원;강릉아산병원;강릉의료원;강북삼성병원;강원대학교병원;건국대학교병원;건양대학교병원;경상국립대학교병원;경희대학교병원;경희대학교치과병원;경희대학교한방병원;경희의료원;계명대학교병원;고신대학교복음병원;광명성애병원;구미차병원;국민건강보험공단 일산병원;군산의료원;국립중앙의료원;김안과병원;고도일병원;경산세명병원;경기도의료원 수원병원;경기도의료원 안성병원;경기도의료원 의정부병원;경기도의료원 이천병원;경기도의료원 파주병원;경기도의료원 포천병원;나은병원;노원을지대학교병원;대구파티마병원;대전선병원;동아대학교병원;대구가톨릭대학교병원;대전을지대학교병원;명지병원;미즈메디병원;강서;강남;부산대학교병원;분당제생병원;부산의료원;서귀포의료원;삼육서울병원;삼성창원병원;삼척의료원;서산의료원;서울성애병원;서울의료원;서울적십자병원;세종충남대학교병원;순천향대학교구미병원;순천향대학교부천병원;순천향대학교서울병원;순천향대학교천안병원;신촌세브란스병원;신촌세브란스치과병원;아인병원;안동의료원;안산튼튼병원;양산부산대학교병원;영월의료원;예수병원;용인세브란스병원;우리들병원;동래;부산;포항;청담;울산대학교병원;원광대학교병원;원자력병원;원주의료원;원주세브란스기독병원;유성선병원;이랜드 클리닉;이대목동병원;이대서울병원;인구보건복지협회;인제대학교 서울백병원;인제대학교 백병원;인제대학교 부산백병원;인제대학교 상계백병원;인제대학교 일산백병원;인제대학교 해운대백병원;인천광역시의료원;인천사랑병원;인하대학교병원;전남대학교병원;전남대학교치과병원;전북대학교병원;제일병원;제주대학교병원;제주한라병원;중앙보훈병원;조선대학교병원;창원파티마병원;창원경상국립대학교병원;천안의료원;청주의료원;청주효성병원;충남대학교병원;충북대학교병원;충주의료원;포항의료원;하나성심병원;한림대학교강남성심병원;한림대학교춘천성심병원;한림대학교동탄성심병원;한림대학교성심병원;한양대학교 구리병원;한양대학교병원;한일;구한전;병원;한전병원;화순전남대학교병원;21세기병원;서초;HM병원;구한전병원
+			</SearchKeywords>
+      <Packages>
+        <Package Name="ICT_REPORTX" Url="https://www.medcerti.com/hp1.0/activex/ICT_REPORTX_SETUP.exe" Arguments="/silent" />
+      </Packages>
+    </Service>
     <!-- 일반 서비스 끝 -->
     <!-- 교육기관 시작 - Category: Education -->
     <Service Id="Neis" DisplayName="나이스 대국민 서비스" Category="Education" Url="https://neis.go.kr/" en-US-DisplayName="National Education Information System">
