@@ -30,8 +30,8 @@ jobs:
       uses: oHTGo/setup-cloudflare-warp-action@master
       with:
         organization: rkttu
-        auth_client_id: ${{ secrets.CLOUDFLARE_AUTH_CLIENT_ID }}
-        auth_client_secret: ${{ secrets.CLOUDFLARE_AUTH_CLIENT_SECRET }}
+        auth-client-id: ${{ secrets.CLOUDFLARE_AUTH_CLIENT_ID }}
+        auth-client-secret: ${{ secrets.CLOUDFLARE_AUTH_CLIENT_SECRET }}
     
     # Run Catalog Builder tool
     - name: Run Catalog Builder Tool
