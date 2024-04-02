@@ -61,7 +61,7 @@ static string? GetPositionInfo(IXmlLineInfo? lineInfo)
     return positionText;
 }
 
-const string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.3";
+const string userAgent = "curl/8.4.0";
 
 static async Task<bool> TestUrlAsync(ConcurrentQueue<string> errorLogBuffer, HttpClient httpClient, string urlString, string element, int lineNumber, CancellationToken cancellationToken = default)
 {
@@ -138,8 +138,7 @@ static void ValidatingCatalogSchemaFile(TextWriter logWriter, string targetDirec
     {
         logWriter.WriteLine(Console.Out, $"Info: Using User Agent String `{userAgent}`.");
         httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", userAgent);
-        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Language", "ko-kr,ko;q=0.5");
+        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept", "*/*");
     }
 
     logWriter.WriteLine(Console.Out, $"Info: Validating `{catalogXmlPath}` file.");
