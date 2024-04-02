@@ -1701,10 +1701,24 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
         <Package Name="EnableTrustedSite" Url="http://www.iros.go.kr/iris/TrustedSiteSetup.exe" Arguments="/silent" />
         <Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.3.3/AnySign_Installer.exe" Arguments="/S" />
         <Package Name="TouchEnKey32" Url="http://www.iros.go.kr/XecureObject/raonsecure/TouchEn/nxKey/module/10047/TouchEn_nxKey_Installer_32bit.exe?ver=1.0.0.83" Arguments="/silence" />
+        <Package Name="Veraport" Url="https://www.iros.go.kr/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
+        <Package Name="InstallSafer" Url="https://www.iros.go.kr/iris/InstallSafer.exe" Arguments="/silent" />
       </Packages>
       <EdgeExtensions>
         <EdgeExtension Name="TouchEnExtension" CrxUrl="https://clients2.google.com/service/update2/crx" ExtensionId="dncepekefegjiljlfbihljgogephdhph" />
       </EdgeExtensions>
+      <CustomBootstrap><![CDATA[takeown.exe /f "$env:WINDIR\winsxs" /a /r /d Y
+icacls.exe "$env:WINDIR\winsxs" /grant "Administrators:(OI)(CI)F" /T
+mkdir "$env:WINDIR\winsxs\Backup" | Out-Null
+mkdir "$env:WINDIR\winsxs\Catalogs" | Out-Null
+mkdir "$env:WINDIR\winsxs\FileMaps" | Out-Null
+mkdir "$env:WINDIR\winsxs\Fusion" | Out-Null
+mkdir "$env:WINDIR\winsxs\InstallTemp" | Out-Null
+Set-Service -StartupType Automatic -ServiceName TrustedInstaller
+Start-Service -ServiceName TrustedInstaller
+[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true} ;
+(New-Object Net.WebClient).DownloadFile('http://www.iros.go.kr/iris/VCRedist_sudong.exe',"$env:USERPROFILE\VCRedistManual.exe")
+. "$env:USERPROFILE\VCRedistManual.exe"]]></CustomBootstrap>
     </Service>
     <Service Id="Ecfs" DisplayName="대한민국 법원 전자소송" Category="Government" Url="https://ecfs.scourt.go.kr/">
       <Packages>
