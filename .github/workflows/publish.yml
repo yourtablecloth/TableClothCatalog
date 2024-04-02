@@ -25,14 +25,6 @@ jobs:
     - name: Build Catalog Builder Tool
       run: dotnet build src/TableCloth.CatalogBuilder/TableCloth.CatalogBuilder.csproj --configuration Release
 
-    # Setup Cloudflare Zero Trust
-    - name: Establish Cloudflare Zero Trust
-      uses: oHTGo/setup-cloudflare-warp-action@master
-      with:
-        organization: rkttu
-        auth-client-id: ${{ secrets.CLOUDFLARE_AUTH_CLIENT_ID }}
-        auth-client-secret: ${{ secrets.CLOUDFLARE_AUTH_CLIENT_SECRET }}
-    
     # Run Catalog Builder tool
     - name: Run Catalog Builder Tool
       run: dotnet run --project src/TableCloth.CatalogBuilder/TableCloth.CatalogBuilder.csproj --configuration Release -- ./docs/ ./outputs/
