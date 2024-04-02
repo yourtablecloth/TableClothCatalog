@@ -1118,7 +1118,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
       <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
       <Packages>
         <Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
-        <Package Name="SignKoreaCert" Url="https://www.nhqv.com/security/download/SKCertServiceSetup_v2.5.18_152.exe" />
+        <Package Name="SignKoreaCert" Url="https://www.nhqv.com/security/download/SKCertServiceSetup_v2.5.32_207.exe" Arguments="/silent"></Package>
+        <Package Name="WebPri20" Url="http://download.wooriwm.com/download/www/print/webpri20.exe" Arguments="/silent"></Package>
         <Package Name="MarkAny" Url="https://www.nhqv.com/rptshop/ReportShop520_Web_withMarkAny.exe" Arguments="/silent" />
         <Package Name="ePageSafer" Url="https://www.nhqv.com/rptshop/Setup_ePageSaferH2O.exe" Arguments="/silent" />
       </Packages>
