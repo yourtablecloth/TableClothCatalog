@@ -1,6 +1,8 @@
 ﻿using SixLabors.ImageSharp.Formats.Png;
 using System.Collections.Concurrent;
 using System.IO.Compression;
+using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
@@ -39,6 +41,7 @@ static void AppMain(string[] args)
         ValidatingCatalogSchemaFile(logWriter, targetDirectory, true);
 
         logWriter.WriteLine(Console.Out, "Info: Catalog builder runs with succeed result.");
+        logWriter.Flush();
         Environment.Exit(0);
     }
     catch (Exception thrownException)
@@ -135,6 +138,8 @@ static void ValidatingCatalogSchemaFile(TextWriter logWriter, string targetDirec
     {
         logWriter.WriteLine(Console.Out, $"Info: Using User Agent String `{userAgent}`.");
         httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", userAgent);
+        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Language", "ko-kr,ko;q=0.5");
     }
 
     logWriter.WriteLine(Console.Out, $"Info: Validating `{catalogXmlPath}` file.");
