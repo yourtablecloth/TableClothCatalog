@@ -1986,6 +1986,12 @@ Start-Service -ServiceName TrustedInstaller
         <Package Name="iSASService" Url="https://www.ktcu.or.kr/resources/pc/Coocon/iSASService_v2.4.9.exe" />
       </Packages>
     </Service>
+    <Service Id="SEMA" DisplayName="과학기술인공제회" Category="Other" Url="https://www.sema.or.kr/">
+      <Packages>
+        <Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.0.11/AnySign_Installer.exe" />
+        <Package Name="nos_setup" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/sha2/nos_setup.exe" />
+      </Packages>
+    </Service>
     <Service Id="TeachersPension" DisplayName="사학연금공단" Category="Other" Url="https://www.tp.or.kr/">
       <Packages>
         <Package Name="KSignCASE" Url="https://www.tp.or.kr/gpki-setup/window/KSignCASE_For_HTML5_Windows_v1.3.28.exe" Arguments="/silent" />
