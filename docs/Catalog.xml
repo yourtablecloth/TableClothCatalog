@@ -2117,6 +2117,11 @@ foreach ($EachMsi in $MsiList) {
         <Package Name="SecuwaySSLSUV1.0" Url="https://vpn.cnu.ac.kr/cabfiles/SecuwaySSLUV1.0-Client.exe" Arguments="" />
       </Packages>
     </Service>
+    <Service Id="SCU" DisplayName="서울사이버대학교 포탈" Category="Education" Url="https://sso.iscu.ac.kr/ptl/sso/SsoLoginForm.scu" en-US-DisplayName="Seoul Cyber University">
+      <Packages>
+        <Package Name="SecuKitNXS" Url="https://kcert.energy.or.kr/SecuKitNXS/Install/SecuKitNXS.exe" Arguments="/silent" />
+      </Packages>
+    </Service>
     <!-- 교육기관 끝 -->
   </InternetServices>
 </TableClothCatalog>
