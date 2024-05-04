@@ -2117,6 +2117,13 @@ foreach ($EachMsi in $MsiList) {
         <Package Name="SecuwaySSLSUV1.0" Url="https://vpn.cnu.ac.kr/cabfiles/SecuwaySSLUV1.0-Client.exe" Arguments="" />
       </Packages>
     </Service>
+	<Service Id="GTEC" DisplayName="경기과학기술대학교 종합정보시스템" Category="Education" Url="https://gctis.gtec.ac.kr/index2022.jsp" en-US-DisplayName="Gyeonggi University of Science and Technology Online Services">
+      <Packages>
+        <Package Name="TPLSvc" Url="https://gctis.gtec.ac.kr/xui/install/download/TPLSvc_Setup.exe" Arguments="" />
+        <Package Name="XPlatform" Url="https://gctis.gtec.ac.kr/xui/install/download/XPLATFORM9.2_SetupEngine.exe" Arguments="" />
+	    <Package Name="CX60_OCX" Url="https://gctis.gtec.ac.kr/xui/install/download/CX60_OCX_setup.exe" Arguments="" />
+      </Packages>
+    </Service>
     <!-- 교육기관 끝 -->
   </InternetServices>
 </TableClothCatalog>
