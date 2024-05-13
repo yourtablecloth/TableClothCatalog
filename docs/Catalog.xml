@@ -1986,6 +1986,12 @@ Start-Service -ServiceName TrustedInstaller
         <Package Name="iSASService" Url="https://www.ktcu.or.kr/resources/pc/Coocon/iSASService_v2.4.9.exe" />
       </Packages>
     </Service>
+    <Service Id="Sema" DisplayName="과학기술인공제회" Category="Other" Url="https://www.sema.or.kr/">
+      <Packages>
+        <Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.0.11/AnySign_Installer.exe" />
+        <Package Name="nos_setup" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/sha2/nos_setup.exe" />
+      </Packages>
+    </Service>
     <Service Id="TeachersPension" DisplayName="사학연금공단" Category="Other" Url="https://www.tp.or.kr/">
       <Packages>
         <Package Name="KSignCASE" Url="https://www.tp.or.kr/gpki-setup/window/KSignCASE_For_HTML5_Windows_v1.3.28.exe" Arguments="/silent" />
@@ -2117,11 +2123,16 @@ foreach ($EachMsi in $MsiList) {
         <Package Name="SecuwaySSLSUV1.0" Url="https://vpn.cnu.ac.kr/cabfiles/SecuwaySSLUV1.0-Client.exe" Arguments="" />
       </Packages>
     </Service>
-	<Service Id="GTEC" DisplayName="경기과학기술대학교 종합정보시스템" Category="Education" Url="https://gctis.gtec.ac.kr/index2022.jsp" en-US-DisplayName="Gyeonggi University of Science and Technology Online Services">
+    <Service Id="GTEC" DisplayName="경기과학기술대학교 종합정보시스템" Category="Education" Url="https://gctis.gtec.ac.kr/index2022.jsp" en-US-DisplayName="Gyeonggi University of Science and Technology Online Services">
       <Packages>
         <Package Name="TPLSvc" Url="https://gctis.gtec.ac.kr/xui/install/download/TPLSvc_Setup.exe" Arguments="" />
         <Package Name="XPlatform" Url="https://gctis.gtec.ac.kr/xui/install/download/XPLATFORM9.2_SetupEngine.exe" Arguments="" />
-	    <Package Name="CX60_OCX" Url="https://gctis.gtec.ac.kr/xui/install/download/CX60_OCX_setup.exe" Arguments="" />
+	      <Package Name="CX60_OCX" Url="https://gctis.gtec.ac.kr/xui/install/download/CX60_OCX_setup.exe" Arguments="" />
+      </Packages>
+    </Service>
+    <Service Id="SCU" DisplayName="서울사이버대학교" Category="Education" Url="https://sso.iscu.ac.kr/ptl/sso/SsoLoginForm.scu" en-US-DisplayName="Seoul Cyber University">
+      <Packages>
+        <Package Name="SecuKitNXS" Url="https://kcert.energy.or.kr/SecuKitNXS/Install/SecuKitNXS.exe" Arguments="/silent" />
       </Packages>
     </Service>
     <!-- 교육기관 끝 -->
