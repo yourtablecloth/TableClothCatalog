@@ -2133,7 +2133,7 @@ foreach ($EachMsi in $MsiList) {
       <Packages>
         <Package Name="TPLSvc" Url="https://gctis.gtec.ac.kr/xui/install/download/TPLSvc_Setup.exe" Arguments="/silent" />
         <Package Name="XPlatform" Url="https://gctis.gtec.ac.kr/xui/install/download/XPLATFORM9.2_SetupEngine.exe" Arguments="" />
-	      <Package Name="CX60_OCX" Url="https://gctis.gtec.ac.kr/xui/install/download/CX60_OCX_setup.exe" Arguments="/s" />
+	<Package Name="CX60_OCX" Url="https://gctis.gtec.ac.kr/xui/install/download/CX60_OCX_setup.exe" Arguments="" />
       </Packages>
     </Service>
     <Service Id="SCU" DisplayName="서울사이버대학교" Category="Education" Url="https://sso.iscu.ac.kr/ptl/sso/SsoLoginForm.scu" en-US-DisplayName="Seoul Cyber University">
