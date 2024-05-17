@@ -1936,6 +1936,12 @@ Start-Service -ServiceName TrustedInstaller
         <Package Name="MagicLine4NX" Url="https://www.mydatacenter.or.kr:3441/MagicLine4Web/ML4Web/install_bin/magicline4nx_setup.exe" Arguments="/silent" />
       </Packages>
     </Service>
+    <Service Id="Q-net" DisplayName="Q-net" Category="Government" Url="https://www.q-net.or.kr/">
+      <Packages>
+        <Package Name="KSignCASE" Url="https://www.q-net.or.kr/kcase/lib/download/KSignCASE_For_HTML5_v1.3.28.exe" Arguments="/silent" />
+        <Package Name="eISP2.0" Url="https://www.vpay.co.kr/eISP/install/VPWSSetup_V2112.exe" Arguments="" />
+      </Packages>
+    </Service>
     <!-- 공공기관 끝 -->
     <!-- 일반 서비스 시작 -->
     <Service Id="CultureLand" DisplayName="컬처랜드" Category="Other" Url="https://www.cultureland.co.kr/">
