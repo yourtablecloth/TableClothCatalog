@@ -1936,6 +1936,12 @@ Start-Service -ServiceName TrustedInstaller
         <Package Name="MagicLine4NX" Url="https://www.mydatacenter.or.kr:3441/MagicLine4Web/ML4Web/install_bin/magicline4nx_setup.exe" Arguments="/silent" />
       </Packages>
     </Service>
+    <Service Id="Q-net" DisplayName="Q-net" Category="Government" Url="https://www.q-net.or.kr/">
+      <Packages>
+        <Package Name="KSignCASE" Url="https://www.q-net.or.kr/kcase/lib/download/KSignCASE_For_HTML5_v1.3.28.exe" Arguments="/S" />
+        <Package Name="eISP2.0" Url="https://www.vpay.co.kr/eISP/install/VPWSSetup_V2112.exe" Arguments="" />
+      </Packages>
+    </Service>
     <!-- 공공기관 끝 -->
     <!-- 일반 서비스 시작 -->
     <Service Id="CultureLand" DisplayName="컬처랜드" Category="Other" Url="https://www.cultureland.co.kr/">
@@ -2125,9 +2131,9 @@ foreach ($EachMsi in $MsiList) {
     </Service>
     <Service Id="GTEC" DisplayName="경기과학기술대학교 종합정보시스템" Category="Education" Url="https://gctis.gtec.ac.kr/index2022.jsp" en-US-DisplayName="Gyeonggi University of Science and Technology Online Services">
       <Packages>
-        <Package Name="TPLSvc" Url="https://gctis.gtec.ac.kr/xui/install/download/TPLSvc_Setup.exe" Arguments="" />
+        <Package Name="TPLSvc" Url="https://gctis.gtec.ac.kr/xui/install/download/TPLSvc_Setup.exe" Arguments="/silent" />
         <Package Name="XPlatform" Url="https://gctis.gtec.ac.kr/xui/install/download/XPLATFORM9.2_SetupEngine.exe" Arguments="" />
-	      <Package Name="CX60_OCX" Url="https://gctis.gtec.ac.kr/xui/install/download/CX60_OCX_setup.exe" Arguments="" />
+	<Package Name="CX60_OCX" Url="https://gctis.gtec.ac.kr/xui/install/download/CX60_OCX_setup.exe" Arguments="" />
       </Packages>
     </Service>
     <Service Id="SCU" DisplayName="서울사이버대학교" Category="Education" Url="https://sso.iscu.ac.kr/ptl/sso/SsoLoginForm.scu" en-US-DisplayName="Seoul Cyber University">
