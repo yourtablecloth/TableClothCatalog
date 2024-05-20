@@ -1630,7 +1630,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
     </Service>
     <Service Id="DbInsurance" DisplayName="DB손해보험" Category="Insurance" Url="https://www.idbins.com/" en-US-DisplayName="DB INSURANCE CO., LTD.">
       <Packages>
-        <Package Name="CrossWarp" Url="https://www.idbins.com/nActX/crossWarpEX/extension/down/CrossWarpEX.exe" Arguments="/silent" />
+        <Package Name="NOS" Url="https://idbins.com/nActX/nosdown/prod/nos_down.exe" Arguments="" />
       </Packages>
     </Service>
     <Service Id="KbInsurance" DisplayName="KB손해보험" Category="Insurance" Url="https://kbinsure.co.kr/" en-US-DisplayName="KB INSURANCE">
