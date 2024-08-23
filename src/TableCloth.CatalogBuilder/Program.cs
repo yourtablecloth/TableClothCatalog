@@ -1,8 +1,6 @@
 ﻿using SixLabors.ImageSharp.Formats.Png;
 using System.Collections.Concurrent;
 using System.IO.Compression;
-using System.Net;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
@@ -38,6 +36,7 @@ static void AppMain(string[] args)
 
         ConvertSiteLogoImagesIntoIconFiles(logWriter, targetDirectory);
         CreateImageResourceZipFile(logWriter, targetDirectory);
+        GenerateWin32RCFile(logWriter, targetDirectory);
         ValidatingCatalogSchemaFile(logWriter, targetDirectory, true);
 
         logWriter.WriteLine(Console.Out, "Info: Catalog builder runs with succeed result.");
@@ -290,6 +289,79 @@ static void ConvertSiteLogoImagesIntoIconFiles(TextWriter logWriter, string targ
 
         logWriter.WriteLine(Console.Out, $"Info: Converting `{eachPngFile}` image file into `{iconFilePath}` Win32 icon file.");
         ConvertImageToIcon(eachPngFile, iconFilePath);
+    }
+}
+
+static void GenerateWin32RCFile(TextWriter logWriter, string targetDirectory)
+{
+    var imageDirectory = Path.Combine(targetDirectory, "images");
+    logWriter.WriteLine(Console.Out, $"Info: Investigating directory `{imageDirectory}`...");
+
+    var icoFiles = Directory.GetFiles(imageDirectory, "*.ico", SearchOption.AllDirectories);
+    logWriter.WriteLine(Console.Out, $"Info: Found {icoFiles.Length} ico files in `{imageDirectory}` directory.");
+
+    var rcFilePath = Path.Combine(targetDirectory, "Catalog.rc");
+    logWriter.WriteLine(Console.Out, $"Info: Creating `{rcFilePath}` Win32 resource file...");
+
+    using (var rcWriter = new StreamWriter(File.OpenWrite(rcFilePath), Encoding.ASCII))
+    {
+        rcWriter.WriteLine(
+            """
+            #include <winver.h>
+
+            """);
+
+        for (int i = 0; i < icoFiles.Length; i++)
+        {
+            var eachIcoFile = icoFiles[i];
+            var identifier = Path.GetFileNameWithoutExtension(eachIcoFile)!.ToUpperInvariant();
+            var relativePath = Path.GetRelativePath(targetDirectory, eachIcoFile);
+            rcWriter.WriteLine($"{(i + 1)} ICON \"{relativePath}\"");
+        }
+
+        rcWriter.WriteLine(
+            """
+
+            VS_VERSION_INFO VERSIONINFO
+            FILEVERSION 1,0,0,0
+            PRODUCTVERSION 1,0,0,0
+            FILEFLAGSMASK 0x3fL
+            FILEFLAGS 0x0L
+            FILEOS 0x4L
+            FILETYPE 0x2L
+            FILESUBTYPE 0x0L
+            BEGIN
+                BLOCK "StringFileInfo"
+                BEGIN
+                    BLOCK "040904b0"
+                    BEGIN
+                        VALUE "CompanyName", "rkttu.com\0"
+                        VALUE "FileDescription", "Catalog Icon Library for Win32 applications\0"
+                        VALUE "FileVersion", "1.0.0.0\0"
+                        VALUE "InternalName", "Catalog.dll\0"
+                        VALUE "LegalCopyright", "(c) rkttu.com, All rights reserved.\0"
+                        VALUE "OriginalFilename", "Catalog.dll\0"
+                        VALUE "ProductName", "TableCloth\0"
+                        VALUE "ProductVersion", "1.0.0.0\0"
+                    END
+                END
+                BLOCK "VarFileInfo"
+                BEGIN
+                    VALUE "Translation", 0x409, 1200
+                END
+            END
+
+            """);
+
+        rcWriter.WriteLine("STRINGTABLE");
+        rcWriter.WriteLine("BEGIN");
+        for (int i = 0; i < icoFiles.Length; i++)
+        {
+            var eachIcoFile = icoFiles[i];
+            var identifier = Path.GetFileNameWithoutExtension(eachIcoFile)!.ToUpperInvariant();
+            rcWriter.WriteLine($"    {(i + 1)}, \"{identifier}\"");
+        }
+        rcWriter.WriteLine("END");
     }
 }
 
