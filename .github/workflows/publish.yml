@@ -14,10 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-  
-    # Setup MingW32 cross compiler
-    - name: Setup MingW32 cross compiler
-      run: sudo apt update && sudo apt-get -y install mingw-w64
 
     # Setup .NET Core SDK
     - name: Setup .NET Core
@@ -32,14 +28,6 @@ jobs:
     # Run Catalog Builder tool
     - name: Run Catalog Builder Tool
       run: dotnet run --project src/TableCloth.CatalogBuilder/TableCloth.CatalogBuilder.csproj --configuration Release -- ./docs/ ./outputs/
-
-    # Build Win32 Icon Library DLL
-    - name: Build Win32 Icon Library DLL
-      run: |
-        /usr/bin/x86_64-w64-mingw32-windres -i ./outputs/Catalog.rc -o ./outputs/Catalog.o
-        /usr/bin/x86_64-w64-mingw32-gcc -shared -mwindows -L -lcreate -o ./outputs/Catalog.dll ./outputs/Catalog.o
-        rm ./outputs/Catalog.rc
-        rm ./outputs/Catalog.o
 
     # Deploy to GitHub Pages
     - name: Deploy to GitHub Pages

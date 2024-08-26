@@ -5,7 +5,6 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
-using System.Xml.XPath;
 
 await AppMainAsync(args, default);
 
@@ -39,7 +38,6 @@ static async Task AppMainAsync(string[] args, CancellationToken cancellationToke
 
         ConvertSiteLogoImagesIntoIconFiles(catalog, logWriter, targetDirectory);
         CreateImageResourceZipFile(catalog, logWriter, targetDirectory);
-        GenerateWin32RCFile(catalog, logWriter, targetDirectory);
         ValidatingCatalogSchemaFile(logWriter, targetDirectory, true);
 
         logWriter.WriteLine(Console.Out, "Info: Catalog builder runs with succeed result.");
@@ -301,101 +299,6 @@ static void ConvertSiteLogoImagesIntoIconFiles(XDocument catalog, TextWriter log
 
         logWriter.WriteLine(Console.Out, $"Info: Converting `{eachPngFile}` image file into `{iconFilePath}` Win32 icon file.");
         ConvertImageToIcon(eachPngFile, iconFilePath);
-    }
-}
-
-static void GenerateWin32RCFile(XDocument catalog, TextWriter logWriter, string targetDirectory)
-{
-    var imageDirectory = Path.Combine(targetDirectory, "images");
-    logWriter.WriteLine(Console.Out, $"Info: Investigating directory `{imageDirectory}`...");
-
-    var icoFiles = Directory.GetFiles(imageDirectory, "*.ico", SearchOption.AllDirectories);
-    logWriter.WriteLine(Console.Out, $"Info: Found {icoFiles.Length} ico files in `{imageDirectory}` directory.");
-
-    var rcFilePath = Path.Combine(targetDirectory, "Catalog.rc");
-    logWriter.WriteLine(Console.Out, $"Info: Creating `{rcFilePath}` Win32 resource file...");
-
-    using (var rcWriter = new StreamWriter(File.OpenWrite(rcFilePath), Encoding.ASCII))
-    {
-        rcWriter.WriteLine(
-            """
-            #include <winver.h>
-
-            """);
-
-        for (int i = 0, count = 0; i < icoFiles.Length; i++)
-        {
-            rcWriter.WriteLine($"#define ICON_{(i + 1)} {++count}");
-            rcWriter.WriteLine($"#define ID_{(i + 1)} {++count}");
-            rcWriter.WriteLine($"#define URL_{(i + 1)} {++count}");
-        }
-
-        for (int i = 0; i < icoFiles.Length; i++)
-        {
-            var eachIcoFile = icoFiles[i];
-            var identifier = Path.GetFileNameWithoutExtension(eachIcoFile)!.ToUpperInvariant();
-            var relativePath = Path.GetRelativePath(targetDirectory, eachIcoFile).Replace('\\', '/');
-            rcWriter.WriteLine($"ICON_{(i + 1)} ICON \"{relativePath}\"");
-        }
-
-        var now = DateTime.UtcNow;
-        var major = now.Year;
-        var minor = now.Month;
-        var build = now.Day;
-        var rev = now.Hour * 60 + now.Minute;
-
-        rcWriter.WriteLine(
-            $$"""
-
-            VS_VERSION_INFO VERSIONINFO
-            FILEVERSION {{major}},{{minor}},{{build}},{{rev}}
-            PRODUCTVERSION {{major}},{{minor}},{{build}},{{rev}}
-            FILEFLAGSMASK 0x3fL
-            FILEFLAGS 0x0L
-            FILEOS 0x4L
-            FILETYPE 0x2L
-            FILESUBTYPE 0x0L
-            BEGIN
-                BLOCK "StringFileInfo"
-                BEGIN
-                    BLOCK "040904b0"
-                    BEGIN
-                        VALUE "CompanyName", "rkttu.com\0"
-                        VALUE "FileDescription", "Catalog Icon Library for Win32 applications\0"
-                        VALUE "FileVersion", "{{major}},{{minor}},{{build}},{{rev}}\0"
-                        VALUE "InternalName", "Catalog.dll\0"
-                        VALUE "LegalCopyright", "(c) rkttu.com, All rights reserved.\0"
-                        VALUE "OriginalFilename", "Catalog.dll\0"
-                        VALUE "ProductName", "TableCloth\0"
-                        VALUE "ProductVersion", "{{major}},{{minor}},{{build}},{{rev}}\0"
-                    END
-                END
-                BLOCK "VarFileInfo"
-                BEGIN
-                    VALUE "Translation", 0x409, 1200
-                END
-            END
-
-            """);
-
-        rcWriter.WriteLine("STRINGTABLE");
-        rcWriter.WriteLine("BEGIN");
-        for (int i = 0; i < icoFiles.Length; i++)
-        {
-            var eachIcoFile = icoFiles[i];
-            var identifier = Path.GetFileNameWithoutExtension(eachIcoFile)!.ToUpperInvariant();
-
-            rcWriter.WriteLine($"    ID_{(i + 1)} \"{identifier}\"");
-
-            var targetElement = catalog.XPathSelectElement($"/TableClothCatalog/InternetServices/Service[translate(@Id, 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') = '{identifier}']");
-            var url = targetElement?.Attribute("Url")?.Value;
-
-            if (string.IsNullOrWhiteSpace(url))
-                url = "https://yourtablecloth.app/";
-
-            rcWriter.WriteLine($"    URL_{(i + 1)} \"{url}\"");
-        }
-        rcWriter.WriteLine("END");
     }
 }
 
