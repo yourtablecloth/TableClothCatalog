@@ -3,11 +3,13 @@ using System.Collections.Concurrent;
 using System.IO.Compression;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Schema;
+using System.Xml.XPath;
 
-AppMain(args);
+await AppMainAsync(args, default);
 
-static void AppMain(string[] args)
+static async Task AppMainAsync(string[] args, CancellationToken cancellationToken = default)
 {
     var sourceDirectory = args.ElementAtOrDefault(0);
     var targetDirectory = args.ElementAtOrDefault(1);
@@ -33,10 +35,11 @@ static void AppMain(string[] args)
         Console.Out.WriteLine($"Info: Target directory path: `{targetDirectory}`");
 
         using var logWriter = PrepareOutputDirectory(sourceDirectory, targetDirectory);
+        var catalog = await LoadCatalogXmlFile(targetDirectory, cancellationToken).ConfigureAwait(false);
 
-        ConvertSiteLogoImagesIntoIconFiles(logWriter, targetDirectory);
-        CreateImageResourceZipFile(logWriter, targetDirectory);
-        GenerateWin32RCFile(logWriter, targetDirectory);
+        ConvertSiteLogoImagesIntoIconFiles(catalog, logWriter, targetDirectory);
+        CreateImageResourceZipFile(catalog, logWriter, targetDirectory);
+        GenerateWin32RCFile(catalog, logWriter, targetDirectory);
         ValidatingCatalogSchemaFile(logWriter, targetDirectory, true);
 
         logWriter.WriteLine(Console.Out, "Info: Catalog builder runs with succeed result.");
@@ -230,7 +233,7 @@ static void ValidatingCatalogSchemaFile(TextWriter logWriter, string targetDirec
         logWriter.WriteLine(Console.Error, "Error: One or more XML errors or warnings found.");
 }
 
-static void CreateImageResourceZipFile(TextWriter logWriter, string targetDirectory)
+static void CreateImageResourceZipFile(XDocument catalog, TextWriter logWriter, string targetDirectory)
 {
     var imageDirectory = Path.Combine(targetDirectory, "images");
     logWriter.WriteLine(Console.Out, $"Info: Investigating directory `{imageDirectory}`...");
@@ -266,7 +269,16 @@ static void CreateImageResourceZipFile(TextWriter logWriter, string targetDirect
     Directory.Delete(workingDirectory, true);
 }
 
-static void ConvertSiteLogoImagesIntoIconFiles(TextWriter logWriter, string targetDirectory)
+static async Task<XDocument> LoadCatalogXmlFile(string targetDirectory, CancellationToken cancellationToken = default)
+{
+    var catalogXmlPath = Path.Combine(targetDirectory, "Catalog.xml");
+    using var fileStream = File.OpenRead(catalogXmlPath);
+    var catalogXml = await XDocument.LoadAsync(
+        fileStream, LoadOptions.PreserveWhitespace | LoadOptions.SetLineInfo, cancellationToken).ConfigureAwait(false);
+    return catalogXml;
+}
+
+static void ConvertSiteLogoImagesIntoIconFiles(XDocument catalog, TextWriter logWriter, string targetDirectory)
 {
     var imageDirectory = Path.Combine(targetDirectory, "images");
     logWriter.WriteLine(Console.Out, $"Info: Investigating directory `{imageDirectory}`...");
@@ -292,7 +304,7 @@ static void ConvertSiteLogoImagesIntoIconFiles(TextWriter logWriter, string targ
     }
 }
 
-static void GenerateWin32RCFile(TextWriter logWriter, string targetDirectory)
+static void GenerateWin32RCFile(XDocument catalog, TextWriter logWriter, string targetDirectory)
 {
     var imageDirectory = Path.Combine(targetDirectory, "images");
     logWriter.WriteLine(Console.Out, $"Info: Investigating directory `{imageDirectory}`...");
@@ -316,7 +328,7 @@ static void GenerateWin32RCFile(TextWriter logWriter, string targetDirectory)
             var eachIcoFile = icoFiles[i];
             var identifier = Path.GetFileNameWithoutExtension(eachIcoFile)!.ToUpperInvariant();
             var relativePath = Path.GetRelativePath(targetDirectory, eachIcoFile);
-            rcWriter.WriteLine($"{(i + 1)} ICON \"{relativePath}\"");
+            rcWriter.WriteLine($"ICON_{(i + 1)} ICON \"{relativePath}\"");
         }
 
         rcWriter.WriteLine(
@@ -359,7 +371,16 @@ static void GenerateWin32RCFile(TextWriter logWriter, string targetDirectory)
         {
             var eachIcoFile = icoFiles[i];
             var identifier = Path.GetFileNameWithoutExtension(eachIcoFile)!.ToUpperInvariant();
-            rcWriter.WriteLine($"    {(i + 1)}, \"{identifier}\"");
+
+            rcWriter.WriteLine($"    ID_{(i + 1)}, \"{identifier}\"");
+
+            var targetElement = catalog.XPathSelectElement($"/TableClothCatalog/InternetServices/Service[translate(@Id, 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') = '{identifier}']");
+            var url = targetElement?.Attribute("Url")?.Value;
+
+            if (string.IsNullOrEmpty(url))
+                url = "https://yourtablecloth.app/";
+
+            rcWriter.WriteLine($"    URL_{(i + 1)}, \"{url}\"");
         }
         rcWriter.WriteLine("END");
     }
