@@ -1938,8 +1938,8 @@ Start-Service -ServiceName TrustedInstaller
     </Service>
     <Service Id="Q-net" DisplayName="Q-net" Category="Government" Url="https://www.q-net.or.kr/">
       <Packages>
-        <Package Name="KSignCASE" Url="https://www.q-net.or.kr/kcase/lib/download/KSignCASE_For_HTML5_v1.3.28.exe" Arguments="/S" />
-        <Package Name="eISP2.0" Url="https://www.vpay.co.kr/eISP/install/VPWSSetup_V2112.exe" Arguments="" />
+        <Package Name="KSignCASE" Url="https://www.q-net.or.kr/ksign/kcase/lib/download/KSignCASE_For_HTML5_Windows_v1.3.29.exe" Arguments="/S" />
+        <Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
       </Packages>
     </Service>
     <!-- 공공기관 끝 -->
