@@ -29,6 +29,14 @@ jobs:
     - name: Run Catalog Builder Tool
       run: dotnet run --project src/TableCloth.CatalogBuilder/TableCloth.CatalogBuilder.csproj --configuration Release -- ./docs/ ./outputs/
 
+    # Setup XSLT tools
+    - name: Setup XSLT tool
+      run: sudo apt-get update && sudo apt-get install -y xsltproc
+
+    # Transform XML to HTML with XSL
+    - name: Transform XML to HTML
+      run: xsltproc docs/Catalog.xsl docs/Catalog.xml > ./outputs/index.html
+
     # Deploy to GitHub Pages
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
