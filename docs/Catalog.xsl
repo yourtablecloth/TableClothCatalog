@@ -52,7 +52,7 @@
                         </xsl:for-each>
                     </tbody>
                 </table>
-                <p>&copy; 2024 rkttu.com, All rights reserved.</p>
+                <p>(c) 2024 rkttu.com, All rights reserved.</p>
             </body>
         </html>
     </xsl:template>
