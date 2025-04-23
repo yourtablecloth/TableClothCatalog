@@ -16,6 +16,8 @@
   - XML 파일 편집은 [Microsoft XML Notepad](https://microsoft.github.io/XmlNotepad/)를 사용하시는 것을 권장합니다.
   - Microsoft Edge 그룹 정책에서 https://yourtablecloth.app/TableClothCatalog/sites.xml 주소를 직접 지정하여 설정을 적용할 수 있습니다.
 - [docs/images/&lt;Category&gt;/&lt;Id&gt;.png](docs/images/): `<Category>`와 `<Id>`에 해당하는 식별자를 넣어 고해상도 투명 PNG 로고 이미지 파일을 등록하여 관리합니다. (예: [docs/images/Banking/WooriBank.png](docs/images/Banking/WooriBank.png))
+- [docs/instruction.md](docs/instruction.md): 식탁보 AI 서비스에서 사용할 시스템 프롬프트를 담는 마크다운 형식의 파일입니다. 이 파일에 금융/공공 서비스에 관한 지식, 주요 금융/공공 서비스 업무 별 웹 페이지 주소 (바로 가기)를 기재할 수 있습니다.
+  - 마크다운 형식의 파일이므로, [마크다운 린터 플러그인](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)를 사용하여 커밋/PR 제출 전 확인하는 것을 권장합니다.
 
 아래 파일은 구 버전의 식탁보 프로그램에서 사용했던 파일로, 현재는 사용되지 않습니다.
 
