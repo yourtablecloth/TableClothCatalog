@@ -2078,6 +2078,11 @@ Start-Service -ServiceName TrustedInstaller
         <Package Name="ezPDFPrint" Url="https://unidocs.lemonhc.com/webviewer/ezpdf/print/ezPDFPrintEx_SETUP_1.0.0.19.exe" Arguments="/S" />
       </Packages>
     </Service>
+    <Service Id="KoreaUnivAnamCert" DisplayName="고려대학교 안암병원 증명서 발급" Category="Other" Url="https://anam.kumc.or.kr/kr/reservation-issue/service/issued.do">
+      <Packages>
+        <Package Name="WebCubeAgent" Url="https://medicopy.lemonhc.com/lct/medicopy/WebCube/components/WebCubeAgentSetup.exe" Arguments="/S" />
+      </Packages>
+    </Service>
     <!-- 일반 서비스 끝 -->
     <!-- 교육기관 시작 - Category: Education -->
     <Service Id="Neis" DisplayName="나이스 대국민 서비스" Category="Education" Url="https://neis.go.kr/" en-US-DisplayName="National Education Information System">
