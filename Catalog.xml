@@ -2063,6 +2063,11 @@ Start-Service -ServiceName TrustedInstaller
         <Package Name="ICT_REPORTX" Url="https://www.medcerti.com/hp1.0/activex/ICT_REPORTX_SETUP.exe" Arguments="/silent" />
       </Packages>
     </Service>
+    <Service Id="LemonCare" DisplayName="레몬케어 병원제증명서발급포털" Category="Other" Url="https://lemoncare.lemonhc.com/" en-US-DisplayName="Lemon Care">
+      <Packages>
+        <Package Name="ezPDFPrint" Url="https://unidocs.lemonhc.com/webviewer/ezpdf/print/ezPDFPrintEx_SETUP_1.0.0.19.exe" Arguments="/S" />
+      </Packages>
+    </Service>
     <!-- 일반 서비스 끝 -->
     <!-- 교육기관 시작 - Category: Education -->
     <Service Id="Neis" DisplayName="나이스 대국민 서비스" Category="Education" Url="https://neis.go.kr/" en-US-DisplayName="National Education Information System">
