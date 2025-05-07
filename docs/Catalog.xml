@@ -1160,14 +1160,13 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
         <Package Name="SignKoreaCert" Url="https://www.kiwoom.com/h/kws/assets/down/SKCertServiceSetup_v2.5.20_156.exe" />
       </Packages>
     </Service>
-    <Service Id="EBestSecurity" DisplayName="이베스트투자증권" Category="Security" Url="https://www.ebestsec.co.kr/" en-US-DisplayName="eBEST Investment &amp; Securities Co., Ltd.">
+    <Service Id="EBestSecurity" DisplayName="LS증권" Category="Security" Url="https://www.ls-sec.co.kr" en-US-DisplayName="LS Securities Co., Ltd.">
       <CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
       <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
       <Packages>
         <Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
-        <Package Name="INISAFECrossWeb" Url="https://www.ebestsec.co.kr/initech/extension/down/INIS_EX_SHA2.exe" Arguments="/S" />
-        <Package Name="KOS" Url="https://www.ebestsec.co.kr/download/KOS_Setup.exe" Arguments="/silent" />
-        <Package Name="SignKoreaCert" Url="https://www.ebestsec.co.kr/download/SKCertServiceSetup.exe" />
+        <Package Name="KOS" Url="https://www.ls-sec.co.kr/download/KOS_Setup.exe" Arguments="/silent" />
+        <Package Name="SignKoreaCert" Url="https://www.ls-sec.co.kr/download/SKCertServiceSetup.exe" Arguments="/S" />
       </Packages>
     </Service>
     <Service Id="SKSecurity" DisplayName="SK증권" Category="Security" Url="http://www.sks.co.kr/" en-US-DisplayName="SK Securities Co.,Ltd.">
