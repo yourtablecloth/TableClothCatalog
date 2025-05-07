@@ -1160,14 +1160,13 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
         <Package Name="SignKoreaCert" Url="https://www.kiwoom.com/h/kws/assets/down/SKCertServiceSetup_v2.5.20_156.exe" />
       </Packages>
     </Service>
-    <Service Id="EBestSecurity" DisplayName="이베스트투자증권" Category="Security" Url="https://www.ebestsec.co.kr/" en-US-DisplayName="eBEST Investment &amp; Securities Co., Ltd.">
+    <Service Id="EBestSecurity" DisplayName="LS증권" Category="Security" Url="https://www.ls-sec.co.kr" en-US-DisplayName="LS Securities Co., Ltd.">
       <CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
       <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
       <Packages>
         <Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
-        <Package Name="INISAFECrossWeb" Url="https://www.ebestsec.co.kr/initech/extension/down/INIS_EX_SHA2.exe" Arguments="/S" />
-        <Package Name="KOS" Url="https://www.ebestsec.co.kr/download/KOS_Setup.exe" Arguments="/silent" />
-        <Package Name="SignKoreaCert" Url="https://www.ebestsec.co.kr/download/SKCertServiceSetup.exe" />
+        <Package Name="KOS" Url="https://www.ls-sec.co.kr/download/KOS_Setup.exe" Arguments="/silent" />
+        <Package Name="SignKoreaCert" Url="https://www.ls-sec.co.kr/download/SKCertServiceSetup.exe" Arguments="/S" />
       </Packages>
     </Service>
     <Service Id="SKSecurity" DisplayName="SK증권" Category="Security" Url="http://www.sks.co.kr/" en-US-DisplayName="SK Securities Co.,Ltd.">
@@ -1261,13 +1260,14 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
         <Package Name="SignKoreaCert" Url="https://www.capefn.com/security/down/SKCertServiceSetup.exe" />
       </Packages>
     </Service>
-    <Service Id="WooriInvest" DisplayName="우리종합금융" Category="Security" Url="https://www.wooriib.com/" en-US-DisplayName="WOORI INVESTMENT BANK">
+    <Service Id="WooriInvest" DisplayName="우리투자증권" Category="Security" Url="https://securities.wooriib.com/" en-US-DisplayName="WOORI INVESTMENT SECURITIES">
+      <CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+      <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
       <Packages>
-        <Package Name="Veraport" Url="https://www.wooriib.com/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
-        <Package Name="INISAFECrossWeb" Url="https://www.wooriib.com/SW/initech/extension/down/INIS_EX_SHA2_3.3.2.23.exe" Arguments="/S" />
-        <Package Name="NOS" Url="https://www.wooriib.com/pluginfree/install/nos_setup.exe" Arguments="/silent" />
-        <Package Name="IPInside" Url="https://www.wooriib.com/ipinside/install/I3GSvcManager.3.0.0.10.exe" Arguments="/nodlg" />
-        <Package Name="ePageSafer" Url="https://www.wooriib.com/ClipReport4/markany/bin/Setup_ePageSaferRT.exe" Arguments="/silent" />
+        <Package Name="SignKoreaCert" Url="https://fundsupermarket.wooriib.com/plugin/signKorea2/SKCertServiceSetup_v2.5.40_281.exe" Arguments="/S" />
+        <Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
+        <Package Name="FDSDetector" Url="https://fundsupermarket.wooriib.com/plugin/KTBRealip/KOSCOMKTBRealip_enc.exe" Arguments="/S" />
+        <Package Name="IPInside" Url="https://fundsupermarket.wooriib.com/plugin/I3GSvcManager/I3GSvcManager.3.0.0.25.exe" Arguments="/nodlg" />
       </Packages>
     </Service>
     <!-- 증권사 끝 -->
@@ -1738,6 +1738,8 @@ Start-Service -ServiceName TrustedInstaller
       </Packages>
     </Service>
     <Service Id="Ekt" DisplayName="대한민국 법원 전자공탁" Category="Government" Url="https://ekt.scourt.go.kr/">
+      <CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+      <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
       <Packages>
         <Package Name="AnySign" Url="https://ekt.scourt.go.kr/pjg/install/AnySign_Installer.exe" Arguments="/S" />
         <Package Name="AhnLabSafeTx" Url="https://ekt.scourt.go.kr/pjg/install/astx_setup_ekt.exe" Arguments="/silent" />
@@ -1883,6 +1885,8 @@ Start-Service -ServiceName TrustedInstaller
       </Packages>
     </Service>
     <Service Id="KoreaGovMail" DisplayName="공직자통합메일" Category="Government" Url="https://mail.korea.kr">
+      <CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+      <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
       <Packages>
         <Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.3.3/AnySign_Installer.exe" Arguments="/S" />
         <Package Name="ASTx" Url="https://safetx.ahnlab.com/master/win/default/common/astxdn.exe" Arguments="/silent" />
@@ -1912,6 +1916,8 @@ Start-Service -ServiceName TrustedInstaller
       </Packages>
     </Service>
     <Service Id="ETaxSeoul" DisplayName="서울시ETAX" Category="Government" Url="https://etax.seoul.go.kr/">
+      <CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+      <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
       <Packages>
         <Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.0.7/AnySign_Installer.exe" Arguments="/S" />
         <Package Name="NOS" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
@@ -1925,6 +1931,8 @@ Start-Service -ServiceName TrustedInstaller
       </Packages>
     </Service>
     <Service Id="4Insure" DisplayName="4대사회보험정보연계센터" Category="Government" Url="https://www.4insure.or.kr/">
+      <CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+      <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
       <Packages>
         <Package Name="Veraport" Url="https://www.4insure.or.kr/solution/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
         <Package Name="AnySign" Url="https://www.4insure.or.kr/solution/AnySign_19/AnySign4PC/download/AnySign_Installer.exe" Arguments="/S" />
@@ -2000,6 +2008,8 @@ Start-Service -ServiceName TrustedInstaller
       </Packages>
     </Service>
     <Service Id="KTCU" DisplayName="한국교직원공제회" Category="Other" Url="https://www.ktcu.or.kr/">
+      <CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+      <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
       <Packages>
         <Package Name="CrossWarpEX" Url="https://www.ktcu.or.kr/resources/pc/crosswarpex/extension/down/CrossWarpEX.exe" />
         <Package Name="Crosscert" Url="https://www.ktcu.or.kr/resources/pc/CrossCert/CC_WSTD_home/install/UniSignCRSV3Setup.exe" />
