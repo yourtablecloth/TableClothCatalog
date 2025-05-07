@@ -1737,6 +1737,19 @@ Start-Service -ServiceName TrustedInstaller
         <Package Name="ezPDF" Url="https://ecfs.scourt.go.kr/ecfdocs/install/ezPDF%20WorkBoard2.0/ezPDF_WorkBoard_setup.exe" Arguments="/silent" />
       </Packages>
     </Service>
+    <Service Id="Ekt" DisplayName="대한민국 법원 전자공탁" Category="Government" Url="https://ekt.scourt.go.kr/">
+      <Packages>
+        <Package Name="AnySign" Url="https://ekt.scourt.go.kr/pjg/install/AnySign_Installer.exe" Arguments="/S" />
+        <Package Name="AhnLabSafeTx" Url="https://ekt.scourt.go.kr/pjg/install/astx_setup_ekt.exe" Arguments="/silent" />
+        <Package Name="ezPDFReader" Url="https://ekt.scourt.go.kr/pjg/install/ezPDFReaderScourtEx_SETUP_3.0.0.1.exe" Arguments="/S" />
+        <Package Name="Markany" Url="https://ekt.scourt.go.kr/pjg/install/MarkAny_e_pageSafer_2.5.0.44_installer_20241224.exe" Arguments="/S" />
+        <Package Name="INNORIX" Url="https://ekt.scourt.go.kr/pjg/install/INNORIX-Agent.exe" Arguments="/S" />
+        <Package Name="NOS" Url="https://ekt.scourt.go.kr/pjg/install/nos_setup(2025.1.20.2).exe" Arguments="/S" />
+        <Package Name="HSMUSBDriver" Url="https://ekt.scourt.go.kr/pjg/install/XHSMMng_Installer.exe" Arguments="/S" />
+        <Package Name="DocumentDetector" Url="https://ekt.scourt.go.kr/pjg/install/DetectorX_Advscourt_250117.exe" Arguments="/S" />
+        <Package Name="MarkAnyImageSafer" Url="https://ekt.scourt.go.kr/pjg/install/markany_ImageSafer.exe" Arguments="/S" />
+      </Packages>
+    </Service>
     <Service Id="Hometax" DisplayName="국세청 홈택스" Category="Government" Url="https://hometax.go.kr/">
       <Packages>
         <Package Name="MAGIC-PKI" Url="https://hometax.speedycdn.net/dn_dir/veraport/magic-pki/magicline4nx_setup.exe" Arguments="/silent" />
