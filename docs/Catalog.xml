@@ -1740,7 +1740,7 @@ Start-Service -ServiceName TrustedInstaller
     <Service Id="Ekt" DisplayName="대한민국 법원 전자공탁" Category="Government" Url="https://ekt.scourt.go.kr/">
       <Packages>
         <Package Name="AnySign" Url="https://ekt.scourt.go.kr/pjg/install/AnySign_Installer.exe" Arguments="/S" />
-        <Package Name="AhnLabSafeTx" Url="https://ekt.scourt.go.kr/pjg/install/astx_setup_ekt.exe" Arguments="/silent" /
+        <Package Name="AhnLabSafeTx" Url="https://ekt.scourt.go.kr/pjg/install/astx_setup_ekt.exe" Arguments="/silent" />
         <Package Name="ezPDFReader" Url="https://ekt.scourt.go.kr/pjg/install/ezPDFReaderScourtEx_SETUP_3.0.0.1.exe" Arguments="/S" />
         <Package Name="Markany" Url="https://ekt.scourt.go.kr/pjg/install/MarkAny_e_pageSafer_2.5.0.44_installer_20241224.exe" Arguments="/S" />
         <Package Name="INNORIX" Url="https://ekt.scourt.go.kr/pjg/install/INNORIX-Agent.exe" Arguments="/S" />
