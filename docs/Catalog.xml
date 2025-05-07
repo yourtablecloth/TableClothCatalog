@@ -1260,13 +1260,14 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
         <Package Name="SignKoreaCert" Url="https://www.capefn.com/security/down/SKCertServiceSetup.exe" />
       </Packages>
     </Service>
-    <Service Id="WooriInvest" DisplayName="우리종합금융" Category="Security" Url="https://www.wooriib.com/" en-US-DisplayName="WOORI INVESTMENT BANK">
+    <Service Id="WooriInvest" DisplayName="우리투자증권" Category="Security" Url="https://securities.wooriib.com/" en-US-DisplayName="WOORI INVESTMENT SECURITIES">
+      <CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
+      <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
       <Packages>
-        <Package Name="Veraport" Url="https://www.wooriib.com/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
-        <Package Name="INISAFECrossWeb" Url="https://www.wooriib.com/SW/initech/extension/down/INIS_EX_SHA2_3.3.2.23.exe" Arguments="/S" />
-        <Package Name="NOS" Url="https://www.wooriib.com/pluginfree/install/nos_setup.exe" Arguments="/silent" />
-        <Package Name="IPInside" Url="https://www.wooriib.com/ipinside/install/I3GSvcManager.3.0.0.10.exe" Arguments="/nodlg" />
-        <Package Name="ePageSafer" Url="https://www.wooriib.com/ClipReport4/markany/bin/Setup_ePageSaferRT.exe" Arguments="/silent" />
+        <Package Name="SignKoreaCert" Url="https://fundsupermarket.wooriib.com/plugin/signKorea2/SKCertServiceSetup_v2.5.40_281.exe" Arguments="/S" />
+        <Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
+        <Package Name="FDSDetector" Url="https://fundsupermarket.wooriib.com/plugin/KTBRealip/KOSCOMKTBRealip_enc.exe" Arguments="/S" />
+        <Package Name="IPInside" Url="https://fundsupermarket.wooriib.com/plugin/I3GSvcManager/I3GSvcManager.3.0.0.25.exe" Arguments="/nodlg" />
       </Packages>
     </Service>
     <!-- 증권사 끝 -->
