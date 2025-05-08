@@ -1293,10 +1293,10 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
       <CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
       <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
       <Packages>
-        <Package Name="Veraport" Url="https://www.hanacard.co.kr/wizvera/veraport/down/veraport-g3-x64-sha2.exe" Arguments="/silent" />
+        <Package Name="Veraport" Url="https://www.hanacard.co.kr/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
         <Package Name="WizInDelfino" Url="https://www.hanacard.co.kr/wizvera/delfino/down/delfino-g3.exe" Arguments="/silent" />
-        <Package Name="AhnLabSafeTx" Url="http://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
-        <Package Name="IPInside" Url="https://www.hanacard.co.kr/sw/EFDS/agent/I3GSvcManager.exe" Arguments="/nodlg" />
+        <Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
+        <Package Name="IPInside" Url="https://www.hanacard.co.kr/sw/EFDS/agent/I3GSvcManager.3.0.0.25.exe" Arguments="/nodlg" />
       </Packages>
     </Service>
     <Service Id="ShinhanCard" DisplayName="신한카드" Category="CreditCard" Url="https://www.shinhancard.com/" en-US-DisplayName="SHINHAN CARD">
