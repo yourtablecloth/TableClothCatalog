@@ -1966,6 +1966,11 @@ Start-Service -ServiceName TrustedInstaller
     <Service Id="BucheonWaterPay" DisplayName="부천시 수도요금 납부 사이트" Category="Government" Url="https://waterpay.bucheon.go.kr/">
       <Packages />
     </Service>
+    <Service Id="LHApply" DisplayName="LH청약플러스" Category="Government" Url="https://apply.lh.or.kr/">
+      <Packages>
+        <Package Name="KeySharp Biz" Url="https://apply.lh.or.kr/raonnx/ksbiz/module/KSbiz_Installer_32bit.exe" Arguments="/silence" />
+      </Packages>
+    </Service>
     <!-- 공공기관 끝 -->
     <!-- 일반 서비스 시작 -->
     <Service Id="CultureLand" DisplayName="컬처랜드" Category="Other" Url="https://www.cultureland.co.kr/">
