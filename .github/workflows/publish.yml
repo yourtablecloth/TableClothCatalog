@@ -29,6 +29,21 @@ jobs:
     - name: Run Catalog Builder Tool
       run: dotnet run --project src/TableCloth.CatalogBuilder/TableCloth.CatalogBuilder.csproj --configuration Release -- ./docs/ ./outputs/
 
+    # Create build info file
+    - name: Create Build Info
+      run: |
+        mkdir -p ./outputs/
+        cat > ./outputs/build-info.json << EOF
+        {
+          "commit_id": "${{ github.sha }}",
+          "short_commit_id": "${GITHUB_SHA:0:7}",
+          "build_timestamp": "$(date -u '+%Y-%m-%dT%H:%M:%SZ')",
+          "repository": "${{ github.repository }}",
+          "branch": "${{ github.ref_name }}",
+          "workflow_run_id": "${{ github.run_id }}"
+        }
+        EOF
+
     # Setup XSLT tools
     - name: Setup XSLT tool
       run: sudo apt-get update && sudo apt-get install -y xsltproc
