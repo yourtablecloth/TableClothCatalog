@@ -6,8 +6,10 @@
 	자세한 속성은 Models/TableClothCatalog 디렉터리 안의 소스 파일들을 참고하세요.
 	-->
   <Companions>
-    <!-- 모두의 프린터 -->
-    <Companion Id="EveryonesPrinter" DisplayName="모두의 프린터" Url="https://mop.pirodown.win/ebp331_x64.exe" Arguments="" en-US-DisplayName="Everyone's Printer" />
+    <Companion Id="EveryonesPrinter" DisplayName="모두의 프린터" Url="https://modu-print.com/모두의-프린터-다운로드" Arguments="" en-US-DisplayName="Everyone's Printer" />
+    <Companion Id="HancomOfficeViewer" DisplayName="한컴오피스 뷰어" Url="https://www.hancom.com/product/office/officeViewer" Arguments="" en-US-DisplayName="Hancom Office Viewer" />
+    <Companion Id="AdobeAcrobatReader" DisplayName="Adobe Acrobat Reader" Url="https://get.adobe.com/kr/reader" Arguments="" en-US-DisplayName="Adobe Acrobat Reader" />
+    <Companion Id="RaiDrive " DisplayName="RaiDrive" Url="https://www.raidrive.com/download" Arguments="" en-US-DisplayName="RaiDrive" />
   </Companions>
   <InternetServices>
     <!-- 인터넷 뱅킹 시작 -->
