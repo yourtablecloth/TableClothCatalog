@@ -1,0 +1,178 @@
+{
+  "sites": [
+    {
+      "displayName": "KB국민은행",
+      "domain": "kbstar.com",
+      "url": "https://www.kbstar.com",
+      "category": "금융",
+      "subpages": [
+        {
+          "name": "개인뱅킹 로그인",
+          "url": "https://obank.kbstar.com/quics?page=C025255",
+          "description": "개인 인터넷뱅킹 서비스 로그인"
+        },
+        {
+          "name": "기업뱅킹",
+          "url": "https://obank.kbstar.com/quics?page=C025256",
+          "description": "기업 고객용 뱅킹 서비스"
+        },
+        {
+          "name": "공인인증센터",
+          "url": "https://obank.kbstar.com/quics?page=C021744",
+          "description": "공동인증서 발급/재발급"
+        },
+        {
+          "name": "보안프로그램 설치",
+          "url": "https://obank.kbstar.com/quics?page=C021745",
+          "description": "보안프로그램 설치 및 관리"
+        }
+      ]
+    },
+    {
+      "displayName": "신한은행",
+      "domain": "shinhan.com",
+      "url": "https://www.shinhan.com",
+      "category": "금융",
+      "subpages": [
+        {
+          "name": "개인뱅킹 로그인",
+          "url": "https://bank.shinhan.com/index.jsp",
+          "description": "개인 인터넷뱅킹 로그인"
+        },
+        {
+          "name": "기업뱅킹",
+          "url": "https://bank.shinhan.com/index.jsp#020000000000",
+          "description": "기업 인터넷뱅킹 서비스"
+        },
+        {
+          "name": "공동인증서 발급",
+          "url": "https://bank.shinhan.com/rib/easy/index.jsp#020301010000",
+          "description": "공동인증서 신규발급 및 재발급"
+        }
+      ]
+    },
+    {
+      "displayName": "국세청 홈택스",
+      "domain": "hometax.go.kr",
+      "url": "https://www.hometax.go.kr",
+      "category": "공공기관",
+      "subpages": [
+        {
+          "name": "종합소득세 신고",
+          "url": "https://www.hometax.go.kr/ui/pp/index_pp.html",
+          "description": "개인 종합소득세 신고 서비스"
+        },
+        {
+          "name": "부가가치세 신고",
+          "url": "https://www.hometax.go.kr/ui/pp/ypa_index.html",
+          "description": "부가세 신고 및 납부"
+        },
+        {
+          "name": "현금영수증 조회",
+          "url": "https://www.hometax.go.kr/ui/pp/cash_receipt.html",
+          "description": "현금영수증 발급 및 조회"
+        },
+        {
+          "name": "전자세금계산서",
+          "url": "https://www.hometax.go.kr/ui/pp/etaxbill_index.html",
+          "description": "전자세금계산서 발급 및 조회"
+        }
+      ]
+    },
+    {
+      "displayName": "정부24",
+      "domain": "gov.kr",
+      "url": "https://www.gov.kr",
+      "category": "공공기관",
+      "subpages": [
+        {
+          "name": "민원서비스",
+          "url": "https://www.gov.kr/portal/service/serviceList",
+          "description": "각종 민원 서비스 신청"
+        },
+        {
+          "name": "주민등록등본 발급",
+          "url": "https://www.gov.kr/portal/service/serviceInfo/PTR000050500",
+          "description": "주민등록등본 인터넷 발급"
+        },
+        {
+          "name": "지방세 납부",
+          "url": "https://www.gov.kr/portal/service/serviceInfo/PTR000050145",
+          "description": "지방세 조회 및 납부"
+        }
+      ]
+    },
+    {
+      "displayName": "우리은행",
+      "domain": "wooribank.com",
+      "url": "https://www.wooribank.com",
+      "category": "금융",
+      "subpages": [
+        {
+          "name": "개인뱅킹",
+          "url": "https://spib.wooribank.com/pib/Dream",
+          "description": "개인 인터넷뱅킹 서비스"
+        },
+        {
+          "name": "인증센터",
+          "url": "https://spib.wooribank.com/pib/Dream?withyou=PSCEO0001",
+          "description": "공동인증서 발급/재발급"
+        }
+      ]
+    },
+    {
+      "displayName": "하나은행",
+      "domain": "hanabank.com",
+      "url": "https://www.hanabank.com",
+      "category": "금융",
+      "subpages": [
+        {
+          "name": "개인뱅킹 로그인",
+          "url": "https://www.hanabank.com/cms/cont/index.do",
+          "description": "개인 인터넷뱅킹 로그인"
+        },
+        {
+          "name": "인증센터",
+          "url": "https://www.hanabank.com/cms/cont/cert_main.do",
+          "description": "공동인증서 관리"
+        }
+      ]
+    },
+    {
+      "displayName": "건강보험공단",
+      "domain": "nhis.or.kr",
+      "url": "https://www.nhis.or.kr",
+      "category": "공공기관",
+      "subpages": [
+        {
+          "name": "민원여기요",
+          "url": "https://minwon.nhis.or.kr/",
+          "description": "건강보험 각종 민원 서비스"
+        },
+        {
+          "name": "보험료 조회",
+          "url": "https://minwon.nhis.or.kr/menu/retrivePaymentInfo.xx",
+          "description": "건강보험료 조회 및 납부"
+        }
+      ]
+    },
+    {
+      "displayName": "국민연금공단",
+      "domain": "nps.or.kr",
+      "url": "https://www.nps.or.kr",
+      "category": "공공기관",
+      "subpages": [
+        {
+          "name": "전자민원",
+          "url": "https://minwon.nps.or.kr/",
+          "description": "국민연금 전자민원 서비스"
+        },
+        {
+          "name": "납부내역 조회",
+          "url": "https://minwon.nps.or.kr/jsppage/app/ptc/ptca001_001.jsp",
+          "description": "국민연금 납부내역 조회"
+        }
+      ]
+    }
+  ]
+}
