@@ -1,13 +1,19 @@
 #!/usr/bin/env dotnet
 #:property PublishAot=false
+#:package IronSoftware.System.Drawing@2025.9.3
+#:package SixLabors.ImageSharp@3.1.11
 
 using System.Collections.Concurrent;
+using System.IO.Compression;
 using System.Text;
 using System.Collections.ObjectModel;
 using System.Text.Encodings.Web;
 using System.Xml.Linq;
 using System.Text.Json;
 using System.Xml;
+using System.Xml.Schema;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Png;
 
 /*
 // 브라우저 개발 도구에서 아래 스크립트를 사용하여 내용을 수집합니다.
@@ -1865,7 +1871,7 @@ using (var catalogXmlStream = File.Open(catalogXmlFilePath, FileMode.Create, Fil
                          new XAttribute("DisplayName", c.DisplayName),
                          new XAttribute("Url", c.Url),
                          new XAttribute("Arguments", c.Arguments),
-                         new XAttribute("EnglishDisplayName", c.EnglishDisplayName)
+                         new XAttribute("en-US-DisplayName", c.EnglishDisplayName)
                     )
                )
           ),
@@ -1876,7 +1882,7 @@ using (var catalogXmlStream = File.Open(catalogXmlFilePath, FileMode.Create, Fil
                          new XAttribute("DisplayName", s.DisplayName),
                          new XAttribute("Category", s.Category.ToString()),
                          new XAttribute("Url", s.Url),
-                         new XAttribute("EnglishDisplayName", s.EnglishDisplayName),
+                         new XAttribute("en-US-DisplayName", s.EnglishDisplayName),
                          s.CompatNotes.Any() ?
                               new XElement("CompatNotes", string.Join(Environment.NewLine, s.CompatNotes)) :
                               default,
@@ -2008,6 +2014,15 @@ using (var siteInfoCatalogJsonStream = File.Open(siteInfoCatalogJsonFilePath, Fi
 
 // URL 유효성 검증
 await ValidateUrlsAsync(catalog, sites, cancellationToken).ConfigureAwait(false);
+
+// PNG -> ICO 변환
+ConvertSiteLogoImagesIntoIconFiles();
+
+// 이미지 리소스 ZIP 생성
+CreateImageResourceZipFile();
+
+// XML 스키마 검증
+ValidateCatalogXml();
 
 static async Task ValidateUrlsAsync(TableClothCatalog catalog, SiteCollection sites, CancellationToken cancellationToken = default)
 {
@@ -2141,6 +2156,205 @@ static async Task<bool> TestUrlAsync(
     message = $"Info: Test succeed on `{urlString}`.";
     await Console.Out.WriteLineAsync(message.AsMemory(), cancellationToken).ConfigureAwait(false);
     return true;
+}
+
+static void ConvertSiteLogoImagesIntoIconFiles()
+{
+    var imageDirectory = Path.GetFullPath("images");
+    Console.WriteLine($"Info: Investigating directory `{imageDirectory}`...");
+
+    if (!Directory.Exists(imageDirectory))
+    {
+        Console.WriteLine($"Warning: Directory `{imageDirectory}` does not exist. Skipping PNG to ICO conversion.");
+        return;
+    }
+
+    var pngFiles = Directory.GetFiles(imageDirectory, "*.png", SearchOption.AllDirectories);
+    Console.WriteLine($"Info: Found {pngFiles.Length} png files in `{imageDirectory}` directory.");
+
+    foreach (var eachPngFile in pngFiles)
+    {
+        var directoryPath = Path.GetDirectoryName(eachPngFile);
+
+        if (string.IsNullOrEmpty(directoryPath))
+        {
+            Console.Error.WriteLine($"Error: Cannot obtain directory path of `{eachPngFile}` file.");
+            continue;
+        }
+
+        var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(eachPngFile);
+        var iconFilePath = Path.Combine(directoryPath, $"{fileNameWithoutExtension}.ico");
+
+        Console.WriteLine($"Info: Converting `{eachPngFile}` image file into `{iconFilePath}` Win32 icon file.");
+        ConvertImageToIcon(eachPngFile, iconFilePath);
+    }
+
+    Console.WriteLine("Info: PNG to ICO conversion completed.");
+}
+
+// https://stackoverflow.com/questions/21387391/how-to-convert-an-image-to-an-icon-without-losing-transparency
+static void ConvertImageToIcon(string sourceImageFilePath, string targetIconFilePath)
+{
+    using (var outputFile = File.OpenWrite(targetIconFilePath))
+    using (var outputWriter = new BinaryWriter(outputFile))
+    using (var inputFile = File.OpenRead(sourceImageFilePath))
+    using (var inputImage = Image.Load(inputFile))
+    {
+        // Header
+        outputWriter.Write((short)0);   // 0 : reserved
+        outputWriter.Write((short)1);   // 2 : 1=ico, 2=cur
+        outputWriter.Write((short)1);   // 4 : number of images
+
+        // Image directory
+        var w = inputImage.Width;
+        if (w >= 256) w = 0;
+        outputWriter.Write((byte)w);    // 0 : width of image
+
+        var h = inputImage.Height;
+        if (h >= 256) h = 0;
+        outputWriter.Write((byte)h);    // 1 : height of image
+
+        outputWriter.Write((byte)0);    // 2 : number of colors in palette
+        outputWriter.Write((byte)0);    // 3 : reserved
+        outputWriter.Write((short)0);   // 4 : number of color planes
+        outputWriter.Write((short)0);   // 6 : bits per pixel
+
+        var sizeHere = outputFile.Position;
+        outputWriter.Write(0);     // 8 : image size
+
+        var start = (int)outputFile.Position + 4;
+        outputWriter.Write(start);      // 12: offset of image data
+
+        // Image data
+        inputImage.Save(outputFile, PngFormat.Instance);
+        var imageSize = (int)outputFile.Position - start;
+        outputFile.Seek(sizeHere, SeekOrigin.Begin);
+        outputWriter.Write(imageSize);
+        outputFile.Seek(0L, SeekOrigin.Begin);
+    }
+}
+
+static void CreateImageResourceZipFile()
+{
+    var imageDirectory = Path.GetFullPath("images");
+    Console.WriteLine($"Info: Investigating directory `{imageDirectory}`...");
+
+    if (!Directory.Exists(imageDirectory))
+    {
+        Console.WriteLine($"Warning: Directory `{imageDirectory}` does not exist. Skipping ZIP file creation.");
+        return;
+    }
+
+    var pngFiles = Directory.GetFiles(imageDirectory, "*.png", SearchOption.AllDirectories);
+    var icoFiles = Directory.GetFiles(imageDirectory, "*.ico", SearchOption.AllDirectories);
+    var sourceFiles = Enumerable.Concat(pngFiles, icoFiles).ToArray();
+    Console.WriteLine($"Info: Found total {sourceFiles.Length} source files.");
+
+    var workingDirectory = Path.GetFullPath("working");
+    if (!Directory.Exists(workingDirectory))
+    {
+        Console.WriteLine($"Info: Creating working directory `{workingDirectory}`...");
+        Directory.CreateDirectory(workingDirectory);
+    }
+
+    foreach (var eachResourceFile in sourceFiles)
+    {
+        var destFilePath = Path.Combine(workingDirectory, Path.GetFileName(eachResourceFile));
+        
+        if (File.Exists(destFilePath))
+            Console.WriteLine($"Warning: Duplicated file found. Source: `{eachResourceFile}`.");
+
+        Console.WriteLine($"Info: Copying `{eachResourceFile}` file to `{destFilePath}` file...");
+        File.Copy(eachResourceFile, destFilePath, true);
+    }
+
+    var zipFilePath = Path.GetFullPath("Images.zip");
+    
+    if (File.Exists(zipFilePath))
+    {
+        Console.WriteLine($"Info: Removing existing `{zipFilePath}` zip file...");
+        File.Delete(zipFilePath);
+    }
+    
+    Console.WriteLine($"Info: Creating `{zipFilePath}` zip file...");
+    ZipFile.CreateFromDirectory(workingDirectory, zipFilePath, CompressionLevel.Optimal, false);
+
+    Console.WriteLine($"Info: Removing working directory `{workingDirectory}`...");
+    Directory.Delete(workingDirectory, true);
+
+    Console.WriteLine("Info: Image resource ZIP file created successfully.");
+}
+
+static void ValidateCatalogXml()
+{
+    var catalogXmlPath = Path.GetFullPath("Catalog.xml");
+    var schemaXsdPath = Path.GetFullPath("Catalog.xsd");
+
+    if (!File.Exists(catalogXmlPath))
+    {
+        Console.Error.WriteLine($"Error: Catalog XML file not found at `{catalogXmlPath}`.");
+        return;
+    }
+
+    if (!File.Exists(schemaXsdPath))
+    {
+        Console.WriteLine($"Warning: Schema XSD file not found at `{schemaXsdPath}`. Skipping schema validation.");
+        return;
+    }
+
+    var config = new XmlReaderSettings
+    {
+        ValidationType = ValidationType.Schema,
+        ValidationFlags = XmlSchemaValidationFlags.ReportValidationWarnings | 
+                         XmlSchemaValidationFlags.ProcessSchemaLocation,
+    };
+
+    Console.WriteLine($"Info: Using schema `{schemaXsdPath}`.");
+    config.Schemas.Add(null, schemaXsdPath);
+
+    var warningCount = 0;
+    var errorCount = 0;
+
+    config.ValidationEventHandler += (_sender, _e) =>
+    {
+        var lineInfo = _sender as IXmlLineInfo;
+        var positionText = "Unknown Position";
+        
+        if (lineInfo != null && lineInfo.HasLineInfo())
+            positionText = $"Line: {lineInfo.LineNumber}, Position: {lineInfo.LinePosition}";
+
+        if (_e.Severity == XmlSeverityType.Warning)
+        {
+            Console.WriteLine($"Warning: {_e.Message} - {positionText}");
+            warningCount++;
+        }
+        else if (_e.Severity == XmlSeverityType.Error)
+        {
+            Console.Error.WriteLine($"Error: {_e.Message} - {positionText}");
+            errorCount++;
+        }
+    };
+
+    Console.WriteLine($"Info: Validating `{catalogXmlPath}` file.");
+    
+    try
+    {
+        using (var reader = XmlReader.Create(catalogXmlPath, config))
+        {
+            while (reader.Read()) { }
+        }
+
+        if (errorCount + warningCount < 1)
+            Console.WriteLine("Success: No XML warnings or errors found.");
+        else if (errorCount < 1 && warningCount > 0)
+            Console.WriteLine($"Warning: {warningCount} XML warning(s) found.");
+        else
+            Console.Error.WriteLine($"Error: {errorCount} XML error(s) and {warningCount} warning(s) found.");
+    }
+    catch (Exception ex)
+    {
+        Console.Error.WriteLine($"Error: Exception during XML validation - {ex.Message}");
+    }
 }
 
 public sealed record class Companion(
