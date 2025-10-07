@@ -1,12 +1,19 @@
 #!/usr/bin/env dotnet
 #:property PublishAot=false
+#:package IronSoftware.System.Drawing@2025.9.3
+#:package SixLabors.ImageSharp@3.1.11
 
+using System.Collections.Concurrent;
+using System.IO.Compression;
 using System.Text;
 using System.Collections.ObjectModel;
 using System.Text.Encodings.Web;
 using System.Xml.Linq;
 using System.Text.Json;
 using System.Xml;
+using System.Xml.Schema;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Png;
 
 /*
 // 브라우저 개발 도구에서 아래 스크립트를 사용하여 내용을 수집합니다.
@@ -41,253 +48,330 @@ copy(
         .replace(/\n/g, '\\n')   // LF
         .replace(/\t/g, '\\t');  // 탭
 
-      return `new("${text}", "${a.href}"),`;
+      return `new("${text}", "${a.href}", "${text}"),`;
     })
     .join('\n')
 );
 */
 
 SiteCollection sites = [
-     new("wooribank.com", "우리은행", [
-          new("개인", "https://spib.wooribank.com/pib/Dream?withyou=ps"),
-          new("개인뱅킹", "https://spib.wooribank.com/pib/Dream?withyou=ps"),
-          new("개인 조회", "https://spib.wooribank.com/pib/Dream?withyou=PSINQ0001"),
-          new("개인 이체", "https://spib.wooribank.com/pib/Dream?withyou=PSTRS0001"),
-          new("개인 오픈뱅킹", "https://spib.wooribank.com/pib/Dream?withyou=PSINQ0187"),
-          new("개인 공과금", "https://svc.wooribank.com/svc/Dream?withyou=PSTAX0001"),
-          new("개인 예금/신탁", "https://spib.wooribank.com/pib/Dream?withyou=PSDEP0010"),
-          new("개인 펀드", "https://spot.wooribank.com/pot/Dream?withyou=OWFDM0003"),
-          new("개인 보험", "https://spot.wooribank.com/pot/Dream?withyou=is"),
-          new("개인 대출", "https://spib.wooribank.com/pib/Dream?withyou=PSLON0001"),
-          new("개인 외환/골드", "https://spib.wooribank.com/pib/Dream?withyou=PSFXD0002"),
-          new("개인 퇴직연금", "https://spib.wooribank.com/pib/Dream?withyou=PSTRT0086"),
-          new("개인 뱅킹관리", "https://spib.wooribank.com/pib/Dream?withyou=PSBKM0001"),
-          new("개인 ISA", "https://spib.wooribank.com/pib/Dream?withyou=PSISA0004"),
-          new("기업", "https://nbi.wooribank.com/nbi/Dream?withyou=bi"),
-          new("기업뱅킹", "https://nbi.wooribank.com/nbi/Dream?withyou=bi"),
-          new("기업 조회", "https://nbi.wooribank.com/nbi/Dream?withyou=BIINQ0096"),
-          new("기업 이체", "https://nbi.wooribank.com/nbi/Dream?withyou=BITRS0028"),
-          new("기업 공과금", "https://nbi.wooribank.com/nbi/Dream?withyou=BIBNK0125"),
-          new("기업 전자결제", "https://nbi.wooribank.com/nbi/Dream?withyou=BISTL0253"),
-          new("기업 수표어음", "https://nbi.wooribank.com/nbi/Dream?withyou=BIINQ0033"),
-          new("기업 자금관리", "https://nbi.wooribank.com/nbi/Dream?withyou=BIBNK0080"),
-          new("기업 예금/신탁", "https://nbi.wooribank.com/nbi/Dream?withyou=BIBNK0045"),
-          new("기업 대출", "https://nbi.wooribank.com/nbi/Dream?withyou=BIBNK0073"),
-          new("기업 펀드/보험", "https://nbi.wooribank.com/nbi/Dream?withyou=BIBNK0012"),
-          new("기업 외환", "https://nbi.wooribank.com/nbi/Dream?withyou=BIFXD0031"),
-          new("기업 퇴직연금", "https://svc.wooribank.com/svc/Dream?withyou=rp"),
-          new("기업 뱅킹관리", "https://nbi.wooribank.com/nbi/Dream?withyou=BIBKM0004"),
-          new("은행소개", "https://spot.wooribank.com/pot/Dream?withyou=bp"),
-          new("자산관리", "https://spot.wooribank.com/pot/Dream?withyou=wa"),
-          new("MY자산 진단", "https://spot.wooribank.com/pot/Dream?withyou=WAASM0006"),
-          new("펀드 포트폴리오", "https://spot.wooribank.com/pot/Dream?withyou=WAFND0001"),
-          new("퇴직연금 포트폴리오", "https://spot.wooribank.com/pot/Dream?withyou=WARPS0001"),
-          new("WON챌린지", "https://spot.wooribank.com/pot/Dream?withyou=WACLG0001"),
-          new("미래설계", "https://spot.wooribank.com/pot/Dream?withyou=WAAPL0001"),
-          new("금융상품", "https://spot.wooribank.com/pot/Dream?withyou=po"),
-          new("금융상품", "https://spot.wooribank.com/pot/Dream?withyou=po"),
-          new("추천상품", "https://spot.wooribank.com/pot/Dream?withyou=PORMG0002"),
-          new("예금", "https://spot.wooribank.com/pot/Dream?withyou=PODEP0001"),
-          new("펀드", "https://spot.wooribank.com/pot/Dream?withyou=OWFDM0003"),
-          new("대출", "https://spot.wooribank.com/pot/Dream?withyou=ln"),
-          new("외환", "https://spot.wooribank.com/pot/Dream?withyou=fx"),
-          new("골드", "https://spot.wooribank.com/pot/Dream?withyou=POGLD0001"),
-          new("신탁", "https://spot.wooribank.com/pot/Dream?withyou=POTRT0001"),
-          new("보험", "https://spot.wooribank.com/pot/Dream?withyou=POBAC0001"),
-          new("퇴직연금", "https://svc.wooribank.com/svc/Dream?withyou=rp"),
-          new("ISA", "https://spot.wooribank.com/pot/Dream?withyou=IMISA0044"),
-          new("제휴제안", "https://nbi.wooribank.com/nbi/Dream?withyou=BISVC0104"),
-          new("전체메뉴", "https://spib.wooribank.com/pib/jcc?withyou=CMCOM0408&__ID=c027277"),
-          new("은행권 소상공인 금융지원 방안 안내", "https://spib.wooribank.com/pib/Dream?withyou=BPPCT0013&tabNo=4"),
-          new("비정상거처 이주지원 버팀목대출 안내 주거취약계층의 이주를 지원하여 희망을 밝혀드립니다!", "https://spot.wooribank.com/pot/Dream?withyou=BPPBC0009&bbsMode=view&BOARD_ID=B00070&ARTICLE_ID=53503"),
-          new("비대면 계좌개설 안심차단 시스템", "https://spot.wooribank.com/pot/Dream?withyou=BPPBC0009&bbsMode=view&BOARD_ID=B00070&ARTICLE_ID=60738"),
-          new("우리WON뱅킹 기업 기업금융을 스마트폰으로 언제 어디서나 편리하게~", "https://spot.wooribank.com/pot/Dream?withyou=BPPBC0009&bbsMode=view&BOARD_ID=B00070&ARTICLE_ID=42918"),
-          new("다른금융정보조회", "https://spib.wooribank.com/pib/Dream?withyou=PSINQ0180"),
-          new("조회", "https://spib.wooribank.com/pib/Dream?withyou=PSINQ0001"),
-          new("이체", "https://spib.wooribank.com/pib/Dream?withyou=PSTRS0001"),
-          new("환율", "https://spot.wooribank.com/pot/Dream?withyou=FXXRT0011"),
-          new("공과금", "https://svc.wooribank.com/svc/Dream?withyou=PSTAX0001"),
-          new("뱅킹관리", "https://spib.wooribank.com/pib/Dream?withyou=PSBKM0001"),
-          new("고객광장", "https://spot.wooribank.com/pot/Dream?withyou=cq"),
-          new("금융 소비자 보호", "https://spot.wooribank.com/pot/Dream?withyou=CQCSD0006"),
-          new("보안뉴스", "https://spot.wooribank.com/pot/Dream?withyou=CQSCT0116"),
-          new("상품/약관 공시", "https://spot.wooribank.com/pot/Dream?withyou=BPPBC0012"),
-          new("금융상품", "https://spot.wooribank.com/pot/Dream?withyou=po"),
-          new("예금", "https://spot.wooribank.com/pot/Dream?withyou=PODEP0001"),
-          new("대출", "https://spot.wooribank.com/pot/Dream?withyou=ln"),
-          new("펀드", "https://spot.wooribank.com/pot/Dream?withyou=OWFDM0003"),
-          new("외환", "https://spot.wooribank.com/pot/Dream?withyou=fx"),
-          new("신탁", "https://spot.wooribank.com/pot/Dream?withyou=POTRT0001"),
-          new("퇴직연금", "https://svc.wooribank.com/svc/Dream?withyou=rp"),
-          new("보험", "https://spot.wooribank.com/pot/Dream?withyou=POBAC0001"),
-          new("ISA", "https://spot.wooribank.com/pot/Dream?withyou=IMISA0044"),
-          new("카드", "https://spib.wooribank.com/pib/Dream?withyou=CMCOM0126"),
-          new("우리 아이 통장 만들고 최대 2만원 받으세요!", "https://spot.wooribank.com/pot/Dream?withyou=EVEVT0001&cc=c001308:c001386&NO=2588"),
-          new("우리은행 첫 적금 만들고 1만원 받으세요!", "https://spot.wooribank.com/pot/Dream?withyou=EVEVT0001&cc=c001308:c001386&NO=2565"),
-          new("청소년 통장 만들고 최대 2만원 받으세요!", "https://spot.wooribank.com/pot/Dream?withyou=EVEVT0001&cc=c001308:c001386&NO=3724"),
-          new("우리금융지주", "https://www.woorifg.com/"),
-          new("우리신용정보", "https://www.wooricredit.com/"),
-          new("우리카드", "https://www.wooricard.com/"),
-          new("우리펀드서비스", "http://www.woorifs.co.kr/"),
-          new("우리금융캐피탈", "https://www.woorifcapital.com/"),
-          new("우리PE", "http://www.wooripe.com/"),
-          new("우리투자증권", "https://www.wooriib.com/"),
-          new("우리FIS", "http://www.woorifis.com/"),
-          new("우리자산신탁", "http://www.wooriat.com/"),
-          new("우리금융경영연구소", "http://www.wfri.re.kr/"),
-          new("우리자산운용", "http://www.wooriam.kr/"),
-          new("우리다문화장학재단", "https://www.woorifoundation.or.kr/"),
-          new("우리금융저축은행", "https://www.woorisavingsbank.com/"),
-          new("우리미소금융재단", "http://www.woorimiso.or.kr/"),
-          new("동양생명", "https://www.myangel.co.kr/"),
-          new("ABL생명", "http://www.abllife.co.kr/"),
-          new("우리은행 facebook(페이스북) 이동", "https://www.facebook.com/wooribank"),
-          new("우리은행 instagram(인스타그램) 이동", "https://www.instagram.com/wooribank_kr/"),
-          new("우리은행 네이버 블로그 이동", "https://blog.naver.com/woori_official"),
-          new("우리은행 youtube(유튜브) 이동", "https://www.youtube.com/user/wooribank"),
-          new("우리은행 네이버TV 이동", "http://tv.naver.com/wooribanktv"),
-          new("우리은행", "https://www.wooribank.com/"),
-          new("은행소개", "https://spot.wooribank.com/pot/Dream?withyou=bp"),
-          new("고객광장", "https://spot.wooribank.com/pot/Dream?withyou=cq"),
-          new("개인정보처리방침", "https://spot.wooribank.com/pot/Dream?withyou=CQSCT0048"),
-          new("신용정보활용체제", "https://spot.wooribank.com/pot/Dream?withyou=CQSCT0132"),
-          new("개인신용정보관리보호", "https://spot.wooribank.com/pot/Dream?withyou=CQSCT0049"),
-          new("사고신고", "https://spot.wooribank.com/pot/Dream?withyou=CQACR0001"),
-          new("전자민원접수", "https://spot.wooribank.com/pot/Dream?withyou=CQCSD0001"),
-          new("보호금융상품등록부", "https://spot.wooribank.com/pot/Dream?withyou=POTRT0033"),
-          new("상품공시실", "https://spot.wooribank.com/pot/Dream?withyou=CQPNC0002"),
-          new("보안센터", "https://spot.wooribank.com/pot/Dream?withyou=CQSCT0001"),
-          new("웹접근성 이용안내", "https://spot.wooribank.com/pot/Dream?withyou=CQIBG0050"),
+     new("wooribank.com", "https://www.wooribank.com", "은행", "우리은행", [
+          new("웹접근성 이용안내 바로가기", "https://spot.wooribank.com/pot/Dream?withyou=CQIBG0050", "웹접근성 이용안내 바로가기"),
+          new("개인", "https://spib.wooribank.com/pib/Dream?withyou=CMLGN0001", "개인"),
+          new("기업", "https://sbiz.wooribank.com/biz/Dream?withyou=BILGN0008", "기업"),
+          new("개인", "https://spib.wooribank.com/pib/Dream?withyou=ct&fromSite=pib", "개인"),
+          new("기업", "https://sbiz.wooribank.com/biz/Dream?withyou=ct&fromSite=biz", "기업"),
+          new("개인", "https://spib.wooribank.com/pib/Dream?withyou=ps", "개인"),
+          new("조회", "https://spib.wooribank.com/pib/Dream?withyou=PSINQ0001", "조회"),
+          new("이체", "https://spib.wooribank.com/pib/Dream?withyou=PSTRS0001", "이체"),
+          new("오픈뱅킹", "https://spib.wooribank.com/pib/Dream?withyou=PSINQ0187", "오픈뱅킹"),
+          new("공과금", "https://svc.wooribank.com/svc/Dream?withyou=PSTAX0001", "공과금"),
+          new("예금/신탁", "https://spib.wooribank.com/pib/Dream?withyou=PSDEP0010", "예금/신탁"),
+          new("펀드", "https://spot.wooribank.com/pot/Dream?withyou=OWFDM0003", "펀드"),
+          new("보험", "https://spot.wooribank.com/pot/Dream?withyou=is", "보험"),
+          new("대출", "https://spib.wooribank.com/pib/Dream?withyou=PSLON0001", "대출"),
+          new("외환/골드", "https://spib.wooribank.com/pib/Dream?withyou=PSFXD0002", "외환/골드"),
+          new("퇴직연금", "https://spib.wooribank.com/pib/Dream?withyou=PSTRT0086", "퇴직연금"),
+          new("뱅킹관리", "https://spib.wooribank.com/pib/Dream?withyou=PSBKM0001", "뱅킹관리"),
+          new("ISA", "https://spib.wooribank.com/pib/Dream?withyou=PSISA0004", "ISA"),
+          new("기업", "https://nbi.wooribank.com/nbi/Dream?withyou=bi", "기업"),
+          new("조회", "https://nbi.wooribank.com/nbi/Dream?withyou=BIINQ0096", "조회"),
+          new("이체", "https://nbi.wooribank.com/nbi/Dream?withyou=BITRS0028", "이체"),
+          new("공과금", "https://nbi.wooribank.com/nbi/Dream?withyou=BIBNK0125", "공과금"),
+          new("전자결제", "https://nbi.wooribank.com/nbi/Dream?withyou=BISTL0253", "전자결제"),
+          new("수표어음", "https://nbi.wooribank.com/nbi/Dream?withyou=BIINQ0033", "수표어음"),
+          new("자금관리", "https://nbi.wooribank.com/nbi/Dream?withyou=BIBNK0080", "자금관리"),
+          new("예금/신탁", "https://nbi.wooribank.com/nbi/Dream?withyou=BIBNK0045", "예금/신탁"),
+          new("대출", "https://nbi.wooribank.com/nbi/Dream?withyou=BIBNK0073", "대출"),
+          new("펀드/보험", "https://nbi.wooribank.com/nbi/Dream?withyou=BIBNK0012", "펀드/보험"),
+          new("외환", "https://nbi.wooribank.com/nbi/Dream?withyou=BIFXD0031", "외환"),
+          new("퇴직연금", "https://svc.wooribank.com/svc/Dream?withyou=rp", "퇴직연금"),
+          new("뱅킹관리", "https://nbi.wooribank.com/nbi/Dream?withyou=BIBKM0004", "뱅킹관리"),
+          new("은행소개", "https://spot.wooribank.com/pot/Dream?withyou=bp", "은행소개"),
+          new("자산관리", "https://spot.wooribank.com/pot/Dream?withyou=wa", "자산관리"),
+          new("MY자산 진단", "https://spot.wooribank.com/pot/Dream?withyou=WAASM0006", "MY자산 진단"),
+          new("펀드 포트폴리오", "https://spot.wooribank.com/pot/Dream?withyou=WAFND0001", "펀드 포트폴리오"),
+          new("퇴직연금 포트폴리오", "https://spot.wooribank.com/pot/Dream?withyou=WARPS0001", "퇴직연금 포트폴리오"),
+          new("WON챌린지", "https://spot.wooribank.com/pot/Dream?withyou=WACLG0001", "WON챌린지"),
+          new("미래설계", "https://spot.wooribank.com/pot/Dream?withyou=WAAPL0001", "미래설계"),
+          new("금융상품", "https://spot.wooribank.com/pot/Dream?withyou=po", "금융상품"),
+          new("추천상품", "https://spot.wooribank.com/pot/Dream?withyou=PORMG0002", "추천상품"),
+          new("예금", "https://spot.wooribank.com/pot/Dream?withyou=PODEP0001", "예금"),
+          new("대출", "https://spot.wooribank.com/pot/Dream?withyou=ln", "대출"),
+          new("외환", "https://spot.wooribank.com/pot/Dream?withyou=fx", "외환"),
+          new("골드", "https://spot.wooribank.com/pot/Dream?withyou=POGLD0001", "골드"),
+          new("신탁", "https://spot.wooribank.com/pot/Dream?withyou=POTRT0001", "신탁"),
+          new("보험", "https://spot.wooribank.com/pot/Dream?withyou=POBAC0001", "보험"),
+          new("ISA", "https://spot.wooribank.com/pot/Dream?withyou=IMISA0044", "ISA"),
+          new("제휴제안", "https://nbi.wooribank.com/nbi/Dream?withyou=BISVC0104", "제휴제안"),
+          new("전체메뉴", "https://spib.wooribank.com/pib/jcc?withyou=CMCOM0408&__ID=c027277", "전체메뉴"),
+          new("English", "https://spot.wooribank.com/pot/Dream?withyou=en", "English"),
+          new("Chinese (中國語 )", "https://svc.wooribank.com/svc/Dream?withyou=ml&LCL=ZH-CHS", "Chinese (中國語 )"),
+          new("Japanese (日本語)", "https://svc.wooribank.com/svc/Dream?withyou=ml&LCL=JA", "Japanese (日本語)"),
+          new("Filipino (Tagalog)", "https://svc.wooribank.com/svc/Dream?withyou=ml&LCL=TL", "Filipino (Tagalog)"),
+          new("Vietnamese (tiếng Việt)", "https://svc.wooribank.com/svc/Dream?withyou=ml&LCL=VI", "Vietnamese (tiếng Việt)"),
+          new("Mongolian (Монгол хэл)", "https://svc.wooribank.com/svc/Dream?withyou=ml&LCL=MN", "Mongolian (Монгол хэл)"),
+          new("은행권 소상공인 금융지원 방안 안내", "https://spib.wooribank.com/pib/Dream?withyou=BPPCT0013&tabNo=4", "은행권 소상공인 금융지원 방안 안내"),
+          new("비정상거처 이주지원 버팀목대출 안내 주거취약계층의 이주를 지원하여 희망을 밝혀드립니다!", "https://spot.wooribank.com/pot/Dream?withyou=BPPBC0009&bbsMode=view&BOARD_ID=B00070&ARTICLE_ID=53503", "비정상거처 이주지원 버팀목대출 안내 주거취약계층의 이주를 지원하여 희망을 밝혀드립니다!"),
+          new("비대면 계좌개설 안심차단 시스템", "https://spot.wooribank.com/pot/Dream?withyou=BPPBC0009&bbsMode=view&BOARD_ID=B00070&ARTICLE_ID=60738", "비대면 계좌개설 안심차단 시스템"),
+          new("우리WON뱅킹 기업 기업금융을 스마트폰으로 언제 어디서나 편리하게~", "https://spot.wooribank.com/pot/Dream?withyou=BPPBC0009&bbsMode=view&BOARD_ID=B00070&ARTICLE_ID=42918", "우리WON뱅킹 기업 기업금융을 스마트폰으로 언제 어디서나 편리하게~"),
+          new("다른금융정보조회", "https://spib.wooribank.com/pib/Dream?withyou=PSINQ0180", "다른금융정보조회"),
+          new("환율", "https://spot.wooribank.com/pot/Dream?withyou=FXXRT0011", "환율"),
+          new("고객광장", "https://spot.wooribank.com/pot/Dream?withyou=cq", "고객광장"),
+          new("금융 소비자 보호", "https://spot.wooribank.com/pot/Dream?withyou=CQCSD0006", "금융 소비자 보호"),
+          new("보안뉴스", "https://spot.wooribank.com/pot/Dream?withyou=CQSCT0116", "보안뉴스"),
+          new("상품/약관 공시", "https://spot.wooribank.com/pot/Dream?withyou=BPPBC0012", "상품/약관 공시"),
+          new("카드", "https://spib.wooribank.com/pib/Dream?withyou=CMCOM0126", "카드"),
+          new("우리WON뱅킹\n\t\t\t\t\t\t금융과 내가 만나 우리가 되다우리은행 대표 모바일 뱅킹", "https://svc.wooribank.com/svc/Dream?withyou=SFSBK0002", "우리WON뱅킹\n\t\t\t\t\t\t금융과 내가 만나 우리가 되다우리은행 대표 모바일 뱅킹"),
+          new("우리WON기업\n\t\t\t\t\t\t개인/법인사업자 특화 서비스로 채운기업 전용 모바일 뱅킹", "https://svc.wooribank.com/svc/Dream?withyou=SFSBK0003", "우리WON기업\n\t\t\t\t\t\t개인/법인사업자 특화 서비스로 채운기업 전용 모바일 뱅킹"),
+          new("우리WON모바일\n\t\t\t\t\t\t금융과 통신을 한 번에우리은행이 만든 알뜰한 통신", "https://www.wooriwonmobile.com/", "우리WON모바일\n\t\t\t\t\t\t금융과 통신을 한 번에우리은행이 만든 알뜰한 통신"),
+          new("더보기", "https://spot.wooribank.com/pot/Dream?withyou=BPPBC0009", "더보기"),
+          new("더보기", "https://spot.wooribank.com/pot/Dream?withyou=EVEVT0001", "더보기"),
+          new("우리 아이 통장 만들고 최대 2만원 받으세요!", "https://spot.wooribank.com/pot/Dream?withyou=EVEVT0001&cc=c001308:c001386&NO=2588", "우리 아이 통장 만들고 최대 2만원 받으세요!"),
+          new("우리은행 첫 적금 만들고 1만원 받으세요!", "https://spot.wooribank.com/pot/Dream?withyou=EVEVT0001&cc=c001308:c001386&NO=2565", "우리은행 첫 적금 만들고 1만원 받으세요!"),
+          new("청소년 통장 만들고 최대 2만원 받으세요!", "https://spot.wooribank.com/pot/Dream?withyou=EVEVT0001&cc=c001308:c001386&NO=3724", "청소년 통장 만들고 최대 2만원 받으세요!"),
+          new("English", "https://spot.wooribank.com/pot/Dream?withyou=en&LCL=EN", "English"),
+          new("우리금융지주", "https://www.woorifg.com/", "우리금융지주"),
+          new("우리신용정보", "https://www.wooricredit.com/", "우리신용정보"),
+          new("우리카드", "https://www.wooricard.com/", "우리카드"),
+          new("우리펀드서비스", "http://www.woorifs.co.kr/", "우리펀드서비스"),
+          new("우리금융캐피탈", "https://www.woorifcapital.com/", "우리금융캐피탈"),
+          new("우리PE", "http://www.wooripe.com/", "우리PE"),
+          new("우리투자증권", "https://www.wooriib.com/", "우리투자증권"),
+          new("우리FIS", "http://www.woorifis.com/", "우리FIS"),
+          new("우리자산신탁", "http://www.wooriat.com/", "우리자산신탁"),
+          new("우리금융경영연구소", "http://www.wfri.re.kr/", "우리금융경영연구소"),
+          new("우리자산운용", "http://www.wooriam.kr/", "우리자산운용"),
+          new("우리다문화장학재단", "https://www.woorifoundation.or.kr/", "우리다문화장학재단"),
+          new("우리금융저축은행", "https://www.woorisavingsbank.com/", "우리금융저축은행"),
+          new("우리미소금융재단", "http://www.woorimiso.or.kr/", "우리미소금융재단"),
+          new("동양생명", "https://www.myangel.co.kr/", "동양생명"),
+          new("ABL생명", "http://www.abllife.co.kr/", "ABL생명"),
+          new("우리은행 facebook(페이스북) 이동", "https://www.facebook.com/wooribank", "우리은행 facebook(페이스북) 이동"),
+          new("우리은행 instagram(인스타그램) 이동", "https://www.instagram.com/wooribank_kr/", "우리은행 instagram(인스타그램) 이동"),
+          new("우리은행 네이버 블로그 이동", "https://blog.naver.com/woori_official", "우리은행 네이버 블로그 이동"),
+          new("우리은행 youtube(유튜브) 이동", "https://www.youtube.com/user/wooribank", "우리은행 youtube(유튜브) 이동"),
+          new("우리은행 네이버TV 이동", "http://tv.naver.com/wooribanktv", "우리은행 네이버TV 이동"),
+          new("우리은행", "https://www.wooribank.com/", "우리은행"),
+          new("개인정보처리방침", "https://spot.wooribank.com/pot/Dream?withyou=CQSCT0048", "개인정보처리방침"),
+          new("신용정보활용체제", "https://spot.wooribank.com/pot/Dream?withyou=CQSCT0132", "신용정보활용체제"),
+          new("개인신용정보관리보호", "https://spot.wooribank.com/pot/Dream?withyou=CQSCT0049", "개인신용정보관리보호"),
+          new("사고신고", "https://spot.wooribank.com/pot/Dream?withyou=CQACR0001", "사고신고"),
+          new("전자민원접수", "https://spot.wooribank.com/pot/Dream?withyou=CQCSD0001", "전자민원접수"),
+          new("보호금융상품등록부", "https://spot.wooribank.com/pot/Dream?withyou=POTRT0033", "보호금융상품등록부"),
+          new("상품공시실", "https://spot.wooribank.com/pot/Dream?withyou=CQPNC0002", "상품공시실"),
+          new("보안센터", "https://spot.wooribank.com/pot/Dream?withyou=CQSCT0001", "보안센터"),
      ]),
-     new("kbstar.com", "KB국민은행", [
-          new("KB국민은행", "https://www.kbstar.com/"),
-          new("개인", "https://obank.kbstar.com/quics?page=obank&QSL=F"),
-          new("개인 조회", "https://obank.kbstar.com/quics?page=C055068&QSL=F"),
-          new("개인 이체", "https://obank.kbstar.com/quics?page=C016524&QSL=F"),
-          new("개인 공과금", "https://obank.kbstar.com/quics?page=C016526&QSL=F"),
-          new("개인 금융상품", "https://obank.kbstar.com/quics?page=C030037&QSL=F"),
-          new("개인 외환", "https://obank.kbstar.com/quics?page=C102239&QSL=F"),
-          new("개인 뱅킹관리", "https://obank.kbstar.com/quics?page=C016535&QSL=F"),
-          new("기업", "https://obiz.kbstar.com/quics?page=obiz&QSL=F"),
-          new("기업 조회", "https://obiz.kbstar.com/quics?page=C015661&QSL=F"),
-          new("기업 이체", "https://obiz.kbstar.com/quics?page=C064502&QSL=F"),
-          new("기업 Star CMS", "https://obiz.kbstar.com/quics?page=C057030&QSL=F"),
-          new("기업 외환", "https://obiz.kbstar.com/quics?page=C101540&QSL=F"),
-          new("기업 금융상품", "https://obiz.kbstar.com/quics?page=C105749&QSL=F"),
-          new("기업 자산관리", "https://omoney.kbstar.com/quics?page=onmoney&QSL=F"),
-          new("부동산", "https://kbland.kr/"),
-          new("퇴직연금", "https://okbfex.kbstar.com/quics?page=opensn&QSL=F"),
-          new("카드", "https://www.kbcard.com/"),
-          new("에스크로이체", "https://okbfex.kbstar.com/quics?page=oescrow&QSL=F"),
-          new("보안센터", "https://obank.kbstar.com/quics?page=osecure&QSL=F"),
-          new("인증센터(개인)", "https://obank.kbstar.com/quics?page=C018872"),
-          new("인증센터(기업)", "https://obank.kbstar.com/quics?page=C100996"),
-          new("주택청약", "https://oland.kbstar.com/quics?page=ohsubs&QSL=F"),
-          new("국민주택채권", "https://okbfex.kbstar.com/quics?page=onhbond&QSL=F"),
-          new("주택도시기금", "https://okbfex.kbstar.com/quics?page=onhouse&QSL=F"),
-          new("스마트금융서비스", "https://omoney.kbstar.com/quics?page=omobile&QSL=F"),
-          new("Liiv M", "https://omoney.kbstar.com/quics?page=oliivm"),
-          new("KB골든라이프X", "https://www.kbgoldenlifex.com/"),
-          new("KB국민인증서", "https://cert.kbstar.com/quics?page=C112161"),
-          new("KB고객우대제도", "https://otalk.kbstar.com/quics?page=omember&QSL=F"),
-          new("GOLD&WISE", "https://omoney.kbstar.com/quics?page=ognw&QSL=F"),
-          new("은행소개", "https://omoney.kbstar.com/quics?page=oabout&QSL=F"),
-          new("지점안내", "https://omoney.kbstar.com/quics?page=C016505&QSL=F"),
-          new("고객센터", "https://obank.kbstar.com/quics?page=osupp&QSL=F"),
-          new("KB정보광장", "https://otalk.kbstar.com/quics?page=oblog&QSL=F"),
-          new("이벤트", "https://omoney.kbstar.com/quics?page=oevent&QSL=F"),
-          new("희망금융클리닉", "https://omoney.kbstar.com/quics?page=ohope&QSL=F"),
-          new("KB굿잡", "https://kbgoodjob.kbstar.com/"),
-          new("KB의 생각", "https://kbthink.com/main.html"),
-          new("English", "https://omoney.kbstar.com/quics?page=oeng&QSL=F"),
-          new("Chinese", "https://omoney.kbstar.com/quics?page=ochn&QSL=F"),
-          new("Japanese", "https://omoney.kbstar.com/quics?page=ojpn&QSL=F"),
-          new("KB GLOBAL NETWORK", "https://kbglobal.kbstar.com/"),
-          new("Japan", "https://kbglobal.kbstar.com/tk/main"),
-          new("UK", "https://kbglobal.kbstar.com/ld/main"),
-          new("New Zealand", "https://kbglobal.kbstar.com/auc/main"),
-          new("Cambodia", "https://kbglobal.kbstar.com/cbd/main"),
-          new("China", "https://www.kbstarchina.com/"),
-          new("Vietnam", "https://kbglobal.kbstar.com/vtn/main"),
-          new("Hong Kong", "https://omoney.kbstar.com/quics?page=C021267"),
-          new("India", "https://kbglobal.kbstar.com/ind/main"),
-          new("Myanmar", "https://kbglobal.kbstar.com/mmr/main"),
-          new("Singapore", "https://kbglobal.kbstar.com/sg/main"),
-          new("로그인", "https://obank.kbstar.com/quics?page=C019088&QSL=F"),
-          new("개인", "https://obank.kbstar.com/quics?page=C018872&QSL=F"),
-          new("기업", "https://obank.kbstar.com/quics?page=C100996&QSL=F"),
-          new("바로가기", "https://otalk.kbstar.com/quics?page=C027979&bbsMode=view&articleId=138965&QSL=F"),
-          new("바로가기", "https://omoney.kbstar.com/quics?page=C027860"),
-          new("계좌이체", "https://obank.kbstar.com/quics?page=C055027&QSL=F"),
-          new("소비자보호", "https://obank.kbstar.com/quics?page=C036336&QSL=F"),
-          new("상담/예약", "https://obank.kbstar.com/quics?page=C029656&QSL=F"),
-          new("상품공시실", "https://obank.kbstar.com/quics?page=C022180&QSL=F"),
-          new("계좌종합관리(구.ID모아보기) 서비스 이용약관 개정 안내\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t09.16", "https://otalk.kbstar.com/quics?page=C019391&bbsMode=view&articleId=141025&QSL=F"),
-          new("2025년 전 금융권 「숨은 금융자산(예금) 찾아주기」 캠페인 실시 안내\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t09.15", "https://otalk.kbstar.com/quics?page=C019391&bbsMode=view&articleId=140939&QSL=F"),
-          new("KB GOLD&WISE 고객 대상「KB골든라이프 Plus+센터」신설 안내\n                            \n\t\t\t\t\t\t\t09.12", "https://otalk.kbstar.com/quics?page=C019391&bbsMode=view&articleId=140923&QSL=F"),
-          new("바로가기", "https://otalk.kbstar.com/quics?page=C019391&QSL=F"),
-          new("케이봇쌤 가입하면 역대급 경품이 와르르♥  투자 꿀잼 케이봇쌤과 함께하는 경품 페스타 이벤트!\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t09.16~ 11.30", "https://omoney.kbstar.com/quics?page=C016559&cc=b033091:b032977&%EC%9D%B4%EB%B2%A4%ED%8A%B8%EC%9D%BC%EB%A0%A8%EB%B2%88%ED%98%B8=348881&QSL=F"),
-          new("황금빛 노후생활을 위한 평생금융 파트너 KB골든라이프센터!\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t08.20 ~ 10.20", "https://omoney.kbstar.com/quics?page=C016559&cc=b033091:b032977&%EC%9D%B4%EB%B2%A4%ED%8A%B8%EC%9D%BC%EB%A0%A8%EB%B2%88%ED%98%B8=348632&QSL=F"),
-          new("당신의 연금에 금(金)을 더하다! 연속 수령으로 황금박스 오픈!\n                            \n\t\t\t\t\t\t\t07.21 ~ 12.31", "https://omoney.kbstar.com/quics?page=C016559&cc=b033091:b032977&%EC%9D%B4%EB%B2%A4%ED%8A%B8%EC%9D%BC%EB%A0%A8%EB%B2%88%ED%98%B8=348359&QSL=F"),
-          new("추천상품\n\t\t\t\t\t\t\t\tKB마이핏통장\n\t\t\t\t\t\t\t\t높은 이율! 수수료 혜택!목적별 자금관리를 통장 하나로!", "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=Y&prcode=DP01001243"),
-          new("서비스\n\t\t\t\t\t\t\t\t건강한 자산관리 KB마이데이터\n\t\t\t\t\t\t\t\t각 기관에 흩어진 나의 자산을 한 곳에 모아서 관리해보세요.", "https://omoney.kbstar.com/quics?page=C043279&QSL=F"),
-          new("서비스\n\t\t\t\t\t\t\t\tKB환전서비스\n\t\t\t\t\t\t\t\t최대 90%까지 환율우대 받고인터넷으로 편하게 환전 하세요", "https://obank.kbstar.com/quics?page=C101339"),
-          new("서비스\n\t\t\t\t\t\t\t\tKBot SAM (케이봇쌤)\n\t\t\t\t\t\t\t\t로봇과 인간이 함께 추천하는최적의 포트폴리오", "https://omoney.kbstar.com/quics?page=onmoney"),
-          new("추천상품\n\t\t\t\t\t\t\t\tKB Young Youth 적금\n\t\t\t\t\t\t\t\t나와 내아이를 위한 상품다양한 부가서비스까지 한가득", "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=Y&prcode=DP01000940"),
-          new("추천상품\n\t\t\t\t\t\t\t\tKB Star 정기예금\n\t\t\t\t\t\t\t\tDigital KB의 대표 정기예금알아서 자동재예치/자동해지", "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=Y&prcode=DP01000938"),
-          new("서비스\n\t\t\t\t\t\t\t\tKB에스크로 이체\n\t\t\t\t\t\t\t\t안전한 상거래를 위해 매매보호서비스를 이용하세요", "https://okbfex.kbstar.com/quics?page=oescrow"),
-          new("예금", "https://obank.kbstar.com/quics?page=C016528"),
-          new("펀드", "https://obank.kbstar.com/quics?page=C016529"),
-          new("대출", "https://obank.kbstar.com/quics?page=C016530"),
-          new("신탁", "https://obank.kbstar.com/quics?page=C016531"),
-          new("ISA", "https://obank.kbstar.com/quics?page=C040686"),
-          new("보험/공제", "https://obank.kbstar.com/quics?page=C016533"),
-          new("골드", "https://obank.kbstar.com/quics?page=C016622"),
-          new("외화예금", "https://obank.kbstar.com/quics?page=C101324"),
-          new("바로가기", "https://obank.kbstar.com/quics?page=C030037"),
-          new("전자금융사기예방 서비스\n\t\t\t\t\t\t\t각종 금융사기수법에 한층 강화된 다양한전자금융사기예방 서비스로 안전한인터넷뱅킹 사용이 가능합니다.", "https://obank.kbstar.com/quics?page=C034288&QSL=F"),
-          new("통장(카드) 매매·양도는 불법\n\t\t\t\t\t\t\t고객님의 자산을 보호하고 금융사기를예방하기 위한 최선의 방법은대포통장 근절입니다.", "https://obank.kbstar.com/quics?page=C047785&QSL=F"),
-          new("사진촬영·QR스캔 절대금지\n\t\t\t\t\t\t\t타인이 OTP/보안카드 번호를 요구(2개 초과) 하는 경우는 금융사기이니절대 응하지 마십시오.", "https://obank.kbstar.com/quics?page=C034305&boardId=722&compId=b035718&articleId=1489&bbsMode=view&viewPage=2&articleClass=&searchCondition=title&searchStr=&QSL=F"),
-          new("금융감독원 바로가기", "http://www.fss.or.kr/"),
-          new("미수령주식 찾기", "https://obiz.kbstar.com/quics?page=C039486&QSL=F"),
-          new("은행금리비교", "https://portal.kfb.or.kr/compare/receiving_deposit_3.php"),
-          new("금융상품한눈에", "http://finlife.fss.or.kr/"),
-          new("금융소비자정보포털 '파인'", "https://fine.fss.or.kr/fine/main/main.do?menuNo=900000"),
-          new("KB스타뱅킹", "https://omoney.kbstar.com/quics?page=C028156&QSL=F"),
-          new("KB기업뱅킹", "https://omoney.kbstar.com/quics?page=C030160&QSL=F"),
-          new("리브똑똑", "https://omoney.kbstar.com/quics?page=C056265&QSL=F"),
-          new("이용상담", "https://obank.kbstar.com/quics?page=C019763&QSL=F"),
-          new("보안프로그램", "https://obank.kbstar.com/quics?page=C040531&QSL=F"),
-          new("사고신고", "https://obank.kbstar.com/quics?page=C019933&QSL=F"),
-          new("보호금융상품등록부", "https://obank.kbstar.com/quics?page=C023000&QSL=F"),
-          new("전자민원접수", "https://obank.kbstar.com/quics?page=C036346&QSL=F"),
-          new("개인정보 처리방침", "https://obank.kbstar.com/quics?page=C108662&QSL=F"),
-          new("신용정보활용체제", "https://obank.kbstar.com/quics?page=C019924&QSL=F"),
-          new("위치기반서비스 이용약관", "https://obank.kbstar.com/quics?page=C110586&QSL=F"),
-          new("경영공시", "https://omoney.kbstar.com/quics?page=C017681&QSL=F"),
-          new("그룹 내 고객정보 제공안내", "https://obank.kbstar.com/quics?page=C040593&QSL=F"),
-          new("스튜어드십 코드", "https://obank.kbstar.com/quics?page=C057315&QSL=F"),
-          new("KB국민인증서 제휴문의", "https://cert.kbstar.com//quics?page=C112164"),
-          new("KB금융그룹", "https://www.kbfg.com/"),
-          new("KB증권", "http://www.kbsec.co.kr/"),
-          new("KB손해보험", "http://www.kbinsure.co.kr/"),
-          new("KB자산운용", "http://www.kbam.co.kr/"),
-          new("KB캐피탈", "http://www.kbcapital.co.kr/"),
-          new("KB라이프생명", "https://www.kblife.co.kr/"),
-          new("KB부동산신탁", "http://www.kbret.co.kr/"),
-          new("KB저축은행", "https://www.kbsavings.com/"),
-          new("KB인베스트먼트", "http://www.kbic.co.kr/"),
-          new("KB데이타시스템", "http://www.kds.co.kr/"),
-          new("KB신용정보", "http://www.kbci.co.kr/"),
-          new("KB경영연구소", "https://www.kbfg.com/kbresearch/main.do"),
-          new("챗봇/채팅/이메일상담(24시간)", "https://obank.kbstar.com/quics?page=C043954"),
-          new("KB국민은행은 KB국민카드의 판매대리·중개업자입니다.", "https://img2.kbstar.com/obj/ocommon/20230228_kbcard.pdf"),
-          new("페이스북", "https://www.facebook.com/kbkookminbank"),
-          new("인스타그램", "https://instagram.com/kbkookminbank"),
-          new("YouTube", "https://www.youtube.com/user/openkbstar"),
-          new("blog", "https://blog.naver.com/youngkbblog"),
-          new("과학기술정보통신부 WA(WEB접근성) 품질인증 마크, 웹와치(WebWatch) 2025.7.01 ~ 2026.6.30", "http://webwatch.or.kr/"),
-          new("ISMS-P 인증, Global CBPR 인증, ISO27701 인증", "https://obank.kbstar.com/quics?page=C034312"),
+     new("hanabank.com", "https://www.hanabank.com", "은행", "하나은행", [
+          new("네이버 블로그", "https://post.naver.com/kebhana_official", "네이버 블로그"),
+          new("페이스북 페이지", "https://www.facebook.com/hanabank", "페이스북 페이지"),
+          new("인스타그램", "https://www.instagram.com/hanabank_official", "인스타그램"),
+          new("유튜브", "https://www.youtube.com/user/HanabankNewBiz", "유튜브"),
+          new("안드로이드 앱", "https://play.google.com/store/apps/details?id=com.kebhana.hanapush", "안드로이드 앱"),
+          new("애플 앱스토어", "https://apps.apple.com/kr/app/id1362508015", "애플 앱스토어"),
+          new("기업뱅킹", "https://biz.kebhana.com/", "기업뱅킹"),
+          new("하나카드", "https://www.hanacard.co.kr/", "하나카드"),
+          new("은행소개", "http://pr.kebhana.com/contents/kor/index.jsp", "은행소개"),
+          new("채용안내", "https://hanabank.recruiter.co.kr/appsite/company/index", "채용안내"),
+          new("로그인", "https://www.hanabank.com/common/login.do", "로그인"),
+          new("한국어", "https://www.hanabank.com/index.html", "한국어"),
+          new("English", "https://www.hanabank.com/easyone_index_en.html", "English"),
+          new("日本語", "https://www.hanabank.com/easyone_index_ja.html", "日本語"),
+          new("中文", "https://www.hanabank.com/easyone_index_zh.html", "中文"),
+          new("Tieng Viet", "https://www.hanabank.com/easyone_index_vi.html", "Tieng Viet"),
+          new("하나더넥스트", "https://www.hana1qm.com/", "하나더넥스트"),
+          new("자세히보기", "https://www.hanabank.com/cont/news/news01/1512411_115430.jsp", "자세히보기"),
+          new("자세히보기", "https://www.hanabank.com/cont/news/news02/1510427_115431.jsp", "자세히보기"),
+          new("자세히보기", "https://www.hanabank.com/cont/basketballplay.jsp", "자세히보기"),
+          new("자세히보기", "https://www.hanabank.com/cont/news/news02/1512288_115431.jsp", "자세히보기"),
+          new("자세히보기", "https://www.hanabank.com/cont/news/news02/1510870_115431.jsp", "자세히보기"),
+          new("자세히보기", "https://www.hanabank.com/cont/news/news02/1509980_115431.jsp", "자세히보기"),
+          new("자세히보기", "https://www.hanabank.com/cont/news/news02/1510569_115431.jsp", "자세히보기"),
+          new("예적금\n부자되는 알짜정보", "https://www.hanabank.com/cont/mall/mall08/mall0805/index.jsp?_menuNo=62608", "예적금\n                                    부자되는 알짜정보"),
+          new("펀드\n한 눈에 보는 펀드랭킹", "https://www.hanabank.com/cont/mall/mall26/mall2603/index.jsp?_menuNo=62635", "펀드\n                                    한 눈에 보는 펀드랭킹"),
+          new("환전지갑\n알뜰하게 환전하기", "https://www.hanabank.com/cybrexh/index.do?contentUrl=/cybrexh/wpexh100i.do?_menuNo=101639", "환전지갑\n                                    알뜰하게 환전하기"),
+          new("대출\n3분이면 한도조회 OK!", "https://www.hanabank.com/cont/mall/mall08/mall0802/mall080204/1462446_115200.jsp?_menuNo=98786", "대출\n                                    3분이면 한도조회 OK!"),
+          new("계좌통합관리서비스 일시 중단 안내\n2025-10-02", "https://www.hanabank.com/cont/news/news01/1512552_115430.jsp", "계좌통합관리서비스 일시 중단 안내\n    2025-10-02"),
+          new("[이벤트] 보이스피싱 아이디어 대국민 공모전 안내\n2025-10-02", "https://www.hanabank.com/cont/news/news01/1512534_115430.jsp", "[이벤트] 보이스피싱 아이디어 대국민 공모전 안내\n    2025-10-02"),
+          new("‘지수플러스정기예금(ELD) 25-19호’ 판매 안내\n2025-10-02", "https://www.hanabank.com/cont/news/news01/1512437_115430.jsp", "‘지수플러스정기예금(ELD) 25-19호’ 판매 안내\n    2025-10-02"),
+          new("+ 더보기", "https://www.hanabank.com/cont/news/news01/index.jsp", "+ 더보기"),
+          new("상품공시실", "https://www.hanabank.com/cont/mall/mall09/mall0901/index.jsp", "상품공시실"),
+          new("서식·약관자료실", "https://www.hanabank.com/cont/customer/customer07/customer0701/index.jsp?_menuNo=98830", "서식·약관자료실"),
+          new("손님의소리\n(칭찬/불만/제안/신고 등)", "https://www.hanabank.com/cont/customer/customer03/index.jsp?_menuNo=98831", "손님의소리\n                                                (칭찬/불만/제안/신고 등)"),
+          new("영업점찾기", "https://www.hanabank.com/cont/util/util04/util0401/index.jsp", "영업점찾기"),
+          new("NEW 하나원큐로 이동", "https://www.hanabank.com/cont/smartapp/smartapp14/smartapp1401/index.jsp", "NEW 하나원큐로 이동"),
+          new("하나원큐 기업으로 이동", "https://www.hanabank.com/cont/smartapp/smartapp03/index.jsp?_menuNo=98911", "하나원큐 기업으로 이동"),
+          new("하나카드로 새창열림으로 이동", "https://hanacard.co.kr/", "하나카드로 새창열림으로 이동"),
+          new("하나멤버스 새창열림으로 이동", "https://www.hanamembership.com/mai/mAIM9100.do", "하나멤버스 새창열림으로 이동"),
+          new("아이부자로 이동", "https://m.kebhana.com/cont/ibooja/intro.html?utm_source=pcbank&utm_medium=main&utm_campaign=ibooja_btn", "아이부자로 이동"),
+          new("사고신고", "https://www.hanabank.com/cont/customer/customer05/customer0501/index.jsp", "사고신고"),
+          new("보호금융상품등록부", "https://www.hanabank.com/cont/mall/mall11/mall1101/index.jsp", "보호금융상품등록부"),
+          new("경영공시", "http://pr.kebhana.com/contents/kor/about/annual/management/index.jsp", "경영공시"),
+          new("퇴직연금공시", "https://pension.hanabank.com/rpc/hhom/kr/main.do", "퇴직연금공시"),
+          new("상담센터", "https://www.hanabank.com/cont/customer/customer02/customer0201/index.jsp", "상담센터"),
+          new("원큐 금융 상담서비스", "https://www.hanabank.com/loan/consult/index.do", "원큐 금융 상담서비스"),
+          new("과학기술정보통신부 WEB ACCESSIBILITY 마크(웹 접근성 품질인증 마크)", "http://www.webwatch.or.kr/Situation/WA_Situation.html?MenuCD=110", "과학기술정보통신부 WEB ACCESSIBILITY 마크(웹 접근성 품질인증 마크)"),
+          new("ISO 마크(정보 보호마크)", "https://www.bsigroup.com/ko-KR/iso27001/", "ISO 마크(정보 보호마크)"),
+          new("하나에스크로", "http://www.hanaescrow.com/new/index.jsp", "하나에스크로"),
+          new("퇴직연금", "http://pension.kebhana.com/", "퇴직연금"),
+          new("증권대행업무", "http://sab.hanabank.com/", "증권대행업무"),
+          new("하나금융그룹", "http://www.hanafn.com/", "하나금융그룹"),
+          new("하나은행", "https://www.hanabank.com/", "하나은행"),
+          new("하나증권", "http://www.hanaw.com/", "하나증권"),
+          new("하나카드", "http://www.hanacard.co.kr/", "하나카드"),
+          new("하나캐피탈", "http://www.hanacapital.co.kr/", "하나캐피탈"),
+          new("하나생명", "http://www.hanalife.co.kr/", "하나생명"),
+          new("하나손해보험", "https://www.educar.co.kr/", "하나손해보험"),
+          new("하나저축은행", "http://www.hanasavings.com/", "하나저축은행"),
+          new("하나자산신탁", "http://www.hanatrust.com/", "하나자산신탁"),
+          new("하나대체투자자산운용", "http://www.hana-aamc.com/", "하나대체투자자산운용"),
+          new("하나펀드서비스", "http://www.hanais.co.kr/", "하나펀드서비스"),
+          new("하나금융티아이", "http://www.hanati.co.kr/", "하나금융티아이"),
+          new("핀크", "http://www.finnq.com/", "핀크"),
+          new("하나금융나눔재단", "http://www.hana-nanum.com/", "하나금융나눔재단"),
+          new("하나금융공익재단", "http://www.hanafoundation.or.kr/", "하나금융공익재단"),
+          new("하나케어센터", "http://www.hanacarecenter.or.kr/", "하나케어센터"),
+          new("하나미소금융재단", "http://www.hanamiso.org/", "하나미소금융재단"),
+          new("하나고등학교", "http://www.hana.hs.kr/", "하나고등학교"),
+          new("하나금융파인드", "http://www.hanafind.com/", "하나금융파인드"),
+          new("글로벌네트워크", "https://global.1qbank.com/lounge/hub/et/main.html", "글로벌네트워크"),
+          new("페이스북", "http://www.facebook.com/hanabank", "페이스북"),
+          new("유투브", "http://youtube.com/user/HanabankNewBiz", "유투브"),
+          new("인스타그램", "http://www.instagram.com/hanabank_official", "인스타그램"),
+          new("블로그", "http://blog.hanabank.com/", "블로그"),
+          new("트위터", "http://twitter.com/HanaBank_KR", "트위터"),
+          new("카카오스토리", "http://story.kakao.com/ch/kebhana", "카카오스토리"),
+          new("자세히보기", "https://www.hanabank.com/cont/news/news01/1510565_115430.jsp", "자세히보기"),
+     ]),
+     new("kbstar.com", "https://www.kbstar.com", "은행", "KB국민은행", [
+          new("KB국민은행", "https://www.kbstar.com/", "KB국민은행"),
+          new("개인", "https://obank.kbstar.com/quics?page=obank&QSL=F", "개인"),
+          new("조회", "https://obank.kbstar.com/quics?page=C055068&QSL=F", "조회"),
+          new("이체", "https://obank.kbstar.com/quics?page=C016524&QSL=F", "이체"),
+          new("공과금", "https://obank.kbstar.com/quics?page=C016526&QSL=F", "공과금"),
+          new("금융상품", "https://obank.kbstar.com/quics?page=C030037&QSL=F", "금융상품"),
+          new("외환", "https://obank.kbstar.com/quics?page=C102239&QSL=F", "외환"),
+          new("뱅킹관리", "https://obank.kbstar.com/quics?page=C016535&QSL=F", "뱅킹관리"),
+          new("기업", "https://obiz.kbstar.com/quics?page=obiz&QSL=F", "기업"),
+          new("조회", "https://obiz.kbstar.com/quics?page=C015661&QSL=F", "조회"),
+          new("이체", "https://obiz.kbstar.com/quics?page=C064502&QSL=F", "이체"),
+          new("Star CMS", "https://obiz.kbstar.com/quics?page=C057030&QSL=F", "Star CMS"),
+          new("외환", "https://obiz.kbstar.com/quics?page=C101540&QSL=F", "외환"),
+          new("금융상품", "https://obiz.kbstar.com/quics?page=C105749&QSL=F", "금융상품"),
+          new("자산관리", "https://omoney.kbstar.com/quics?page=onmoney&QSL=F", "자산관리"),
+          new("부동산", "https://kbland.kr/", "부동산"),
+          new("퇴직연금", "https://okbfex.kbstar.com/quics?page=opensn&QSL=F", "퇴직연금"),
+          new("카드", "https://www.kbcard.com/", "카드"),
+          new("에스크로이체", "https://okbfex.kbstar.com/quics?page=oescrow&QSL=F", "에스크로이체"),
+          new("보안센터", "https://obank.kbstar.com/quics?page=osecure&QSL=F", "보안센터"),
+          new("인증센터(개인)", "https://obank.kbstar.com/quics?page=C018872", "인증센터(개인)"),
+          new("인증센터(기업)", "https://obank.kbstar.com/quics?page=C100996", "인증센터(기업)"),
+          new("주택청약", "https://oland.kbstar.com/quics?page=ohsubs&QSL=F", "주택청약"),
+          new("국민주택채권", "https://okbfex.kbstar.com/quics?page=onhbond&QSL=F", "국민주택채권"),
+          new("주택도시기금", "https://okbfex.kbstar.com/quics?page=onhouse&QSL=F", "주택도시기금"),
+          new("스마트금융서비스", "https://omoney.kbstar.com/quics?page=omobile&QSL=F", "스마트금융서비스"),
+          new("Liiv M", "https://omoney.kbstar.com/quics?page=oliivm", "Liiv M"),
+          new("KB골든라이프X", "https://www.kbgoldenlifex.com/", "KB골든라이프X"),
+          new("KB국민인증서", "https://cert.kbstar.com/quics?page=C112161", "KB국민인증서"),
+          new("KB고객우대제도", "https://otalk.kbstar.com/quics?page=omember&QSL=F", "KB고객우대제도"),
+          new("GOLD&WISE", "https://omoney.kbstar.com/quics?page=ognw&QSL=F", "GOLD&WISE"),
+          new("은행소개", "https://omoney.kbstar.com/quics?page=oabout&QSL=F", "은행소개"),
+          new("지점안내", "https://omoney.kbstar.com/quics?page=C016505&QSL=F", "지점안내"),
+          new("고객센터", "https://obank.kbstar.com/quics?page=osupp&QSL=F", "고객센터"),
+          new("KB정보광장", "https://otalk.kbstar.com/quics?page=oblog&QSL=F", "KB정보광장"),
+          new("이벤트", "https://omoney.kbstar.com/quics?page=oevent&QSL=F", "이벤트"),
+          new("희망금융클리닉", "https://omoney.kbstar.com/quics?page=ohope&QSL=F", "희망금융클리닉"),
+          new("KB굿잡", "https://kbgoodjob.kbstar.com/", "KB굿잡"),
+          new("KB의 생각", "https://kbthink.com/main.html", "KB의 생각"),
+          new("English", "https://omoney.kbstar.com/quics?page=oeng&QSL=F", "English"),
+          new("Chinese", "https://omoney.kbstar.com/quics?page=ochn&QSL=F", "Chinese"),
+          new("Japanese", "https://omoney.kbstar.com/quics?page=ojpn&QSL=F", "Japanese"),
+          new("KB GLOBAL NETWORK", "https://kbglobal.kbstar.com/", "KB GLOBAL NETWORK"),
+          new("Japan", "https://kbglobal.kbstar.com/tk/main", "Japan"),
+          new("UK", "https://kbglobal.kbstar.com/ld/main", "UK"),
+          new("New Zealand", "https://kbglobal.kbstar.com/auc/main", "New Zealand"),
+          new("Cambodia", "https://kbglobal.kbstar.com/cbd/main", "Cambodia"),
+          new("China", "https://www.kbstarchina.com/", "China"),
+          new("Vietnam", "https://kbglobal.kbstar.com/vtn/main", "Vietnam"),
+          new("Hong Kong", "https://omoney.kbstar.com/quics?page=C021267", "Hong Kong"),
+          new("India", "https://kbglobal.kbstar.com/ind/main", "India"),
+          new("Myanmar", "https://kbglobal.kbstar.com/mmr/main", "Myanmar"),
+          new("Singapore", "https://kbglobal.kbstar.com/sg/main", "Singapore"),
+          new("로그인", "https://obank.kbstar.com/quics?page=C019088&QSL=F", "로그인"),
+          new("개인", "https://obank.kbstar.com/quics?page=C018872&QSL=F", "개인"),
+          new("기업", "https://obank.kbstar.com/quics?page=C100996&QSL=F", "기업"),
+          new("바로가기", "https://otalk.kbstar.com/quics?page=C027979&bbsMode=view&articleId=138965&QSL=F", "바로가기"),
+          new("바로가기", "https://omoney.kbstar.com/quics?page=C027860", "바로가기"),
+          new("계좌이체", "https://obank.kbstar.com/quics?page=C055027&QSL=F", "계좌이체"),
+          new("소비자보호", "https://obank.kbstar.com/quics?page=C036336&QSL=F", "소비자보호"),
+          new("상담/예약", "https://obank.kbstar.com/quics?page=C029656&QSL=F", "상담/예약"),
+          new("상품공시실", "https://obank.kbstar.com/quics?page=C022180&QSL=F", "상품공시실"),
+          new("계좌종합관리(구.ID모아보기) 서비스 이용약관 개정 안내\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t09.16", "https://otalk.kbstar.com/quics?page=C019391&bbsMode=view&articleId=141025&QSL=F", "계좌종합관리(구.ID모아보기) 서비스 이용약관 개정 안내\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t09.16"),
+          new("2025년 전 금융권 「숨은 금융자산(예금) 찾아주기」 캠페인 실시 안내\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t09.15", "https://otalk.kbstar.com/quics?page=C019391&bbsMode=view&articleId=140939&QSL=F", "2025년 전 금융권 「숨은 금융자산(예금) 찾아주기」 캠페인 실시 안내\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t09.15"),
+          new("KB GOLD&WISE 고객 대상「KB골든라이프 Plus+센터」신설 안내\n                            \n\t\t\t\t\t\t\t09.12", "https://otalk.kbstar.com/quics?page=C019391&bbsMode=view&articleId=140923&QSL=F", "KB GOLD&WISE 고객 대상「KB골든라이프 Plus+센터」신설 안내\n                            \n\t\t\t\t\t\t\t09.12"),
+          new("바로가기", "https://otalk.kbstar.com/quics?page=C019391&QSL=F", "바로가기"),
+          new("케이봇쌤 가입하면 역대급 경품이 와르르♥  투자 꿀잼 케이봇쌤과 함께하는 경품 페스타 이벤트!\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t09.16~ 11.30", "https://omoney.kbstar.com/quics?page=C016559&cc=b033091:b032977&%EC%9D%B4%EB%B2%A4%ED%8A%B8%EC%9D%BC%EB%A0%A8%EB%B2%88%ED%98%B8=348881&QSL=F", "케이봇쌤 가입하면 역대급 경품이 와르르♥  투자 꿀잼 케이봇쌤과 함께하는 경품 페스타 이벤트!\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t09.16~ 11.30"),
+          new("황금빛 노후생활을 위한 평생금융 파트너 KB골든라이프센터!\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t08.20 ~ 10.20", "https://omoney.kbstar.com/quics?page=C016559&cc=b033091:b032977&%EC%9D%B4%EB%B2%A4%ED%8A%B8%EC%9D%BC%EB%A0%A8%EB%B2%88%ED%98%B8=348632&QSL=F", "황금빛 노후생활을 위한 평생금융 파트너 KB골든라이프센터!\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t08.20 ~ 10.20"),
+          new("당신의 연금에 금(金)을 더하다! 연속 수령으로 황금박스 오픈!\n                            \n\t\t\t\t\t\t\t07.21 ~ 12.31", "https://omoney.kbstar.com/quics?page=C016559&cc=b033091:b032977&%EC%9D%B4%EB%B2%A4%ED%8A%B8%EC%9D%BC%EB%A0%A8%EB%B2%88%ED%98%B8=348359&QSL=F", "당신의 연금에 금(金)을 더하다! 연속 수령으로 황금박스 오픈!\n                            \n\t\t\t\t\t\t\t07.21 ~ 12.31"),
+          new("추천상품\n\t\t\t\t\t\t\t\tKB마이핏통장\n\t\t\t\t\t\t\t\t높은 이율! 수수료 혜택!목적별 자금관리를 통장 하나로!", "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=Y&prcode=DP01001243", "추천상품\n\t\t\t\t\t\t\t\tKB마이핏통장\n\t\t\t\t\t\t\t\t높은 이율! 수수료 혜택!목적별 자금관리를 통장 하나로!"),
+          new("서비스\n\t\t\t\t\t\t\t\t건강한 자산관리 KB마이데이터\n\t\t\t\t\t\t\t\t각 기관에 흩어진 나의 자산을 한 곳에 모아서 관리해보세요.", "https://omoney.kbstar.com/quics?page=C043279&QSL=F", "서비스\n\t\t\t\t\t\t\t\t건강한 자산관리 KB마이데이터\n\t\t\t\t\t\t\t\t각 기관에 흩어진 나의 자산을 한 곳에 모아서 관리해보세요."),
+          new("서비스\n\t\t\t\t\t\t\t\tKB환전서비스\n\t\t\t\t\t\t\t\t최대 90%까지 환율우대 받고인터넷으로 편하게 환전 하세요", "https://obank.kbstar.com/quics?page=C101339", "서비스\n\t\t\t\t\t\t\t\tKB환전서비스\n\t\t\t\t\t\t\t\t최대 90%까지 환율우대 받고인터넷으로 편하게 환전 하세요"),
+          new("서비스\n\t\t\t\t\t\t\t\tKBot SAM (케이봇쌤)\n\t\t\t\t\t\t\t\t로봇과 인간이 함께 추천하는최적의 포트폴리오", "https://omoney.kbstar.com/quics?page=onmoney", "서비스\n\t\t\t\t\t\t\t\tKBot SAM (케이봇쌤)\n\t\t\t\t\t\t\t\t로봇과 인간이 함께 추천하는최적의 포트폴리오"),
+          new("추천상품\n\t\t\t\t\t\t\t\tKB Young Youth 적금\n\t\t\t\t\t\t\t\t나와 내아이를 위한 상품다양한 부가서비스까지 한가득", "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=Y&prcode=DP01000940", "추천상품\n\t\t\t\t\t\t\t\tKB Young Youth 적금\n\t\t\t\t\t\t\t\t나와 내아이를 위한 상품다양한 부가서비스까지 한가득"),
+          new("추천상품\n\t\t\t\t\t\t\t\tKB Star 정기예금\n\t\t\t\t\t\t\t\tDigital KB의 대표 정기예금알아서 자동재예치/자동해지", "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=Y&prcode=DP01000938", "추천상품\n\t\t\t\t\t\t\t\tKB Star 정기예금\n\t\t\t\t\t\t\t\tDigital KB의 대표 정기예금알아서 자동재예치/자동해지"),
+          new("서비스\n\t\t\t\t\t\t\t\tKB에스크로 이체\n\t\t\t\t\t\t\t\t안전한 상거래를 위해 매매보호서비스를 이용하세요", "https://okbfex.kbstar.com/quics?page=oescrow", "서비스\n\t\t\t\t\t\t\t\tKB에스크로 이체\n\t\t\t\t\t\t\t\t안전한 상거래를 위해 매매보호서비스를 이용하세요"),
+          new("예금", "https://obank.kbstar.com/quics?page=C016528", "예금"),
+          new("펀드", "https://obank.kbstar.com/quics?page=C016529", "펀드"),
+          new("대출", "https://obank.kbstar.com/quics?page=C016530", "대출"),
+          new("신탁", "https://obank.kbstar.com/quics?page=C016531", "신탁"),
+          new("ISA", "https://obank.kbstar.com/quics?page=C040686", "ISA"),
+          new("보험/공제", "https://obank.kbstar.com/quics?page=C016533", "보험/공제"),
+          new("골드", "https://obank.kbstar.com/quics?page=C016622", "골드"),
+          new("외화예금", "https://obank.kbstar.com/quics?page=C101324", "외화예금"),
+          new("바로가기", "https://obank.kbstar.com/quics?page=C030037", "바로가기"),
+          new("전자금융사기예방 서비스\n\t\t\t\t\t\t\t각종 금융사기수법에 한층 강화된 다양한전자금융사기예방 서비스로 안전한인터넷뱅킹 사용이 가능합니다.", "https://obank.kbstar.com/quics?page=C034288&QSL=F", "전자금융사기예방 서비스\n\t\t\t\t\t\t\t각종 금융사기수법에 한층 강화된 다양한전자금융사기예방 서비스로 안전한인터넷뱅킹 사용이 가능합니다."),
+          new("통장(카드) 매매·양도는 불법\n\t\t\t\t\t\t\t고객님의 자산을 보호하고 금융사기를예방하기 위한 최선의 방법은대포통장 근절입니다.", "https://obank.kbstar.com/quics?page=C047785&QSL=F", "통장(카드) 매매·양도는 불법\n\t\t\t\t\t\t\t고객님의 자산을 보호하고 금융사기를예방하기 위한 최선의 방법은대포통장 근절입니다."),
+          new("사진촬영·QR스캔 절대금지\n\t\t\t\t\t\t\t타인이 OTP/보안카드 번호를 요구(2개 초과) 하는 경우는 금융사기이니절대 응하지 마십시오.", "https://obank.kbstar.com/quics?page=C034305&boardId=722&compId=b035718&articleId=1489&bbsMode=view&viewPage=2&articleClass=&searchCondition=title&searchStr=&QSL=F", "사진촬영·QR스캔 절대금지\n\t\t\t\t\t\t\t타인이 OTP/보안카드 번호를 요구(2개 초과) 하는 경우는 금융사기이니절대 응하지 마십시오."),
+          new("금융감독원 바로가기", "http://www.fss.or.kr/", "금융감독원 바로가기"),
+          new("미수령주식 찾기", "https://obiz.kbstar.com/quics?page=C039486&QSL=F", "미수령주식 찾기"),
+          new("은행금리비교", "https://portal.kfb.or.kr/compare/receiving_deposit_3.php", "은행금리비교"),
+          new("금융상품한눈에", "http://finlife.fss.or.kr/", "금융상품한눈에"),
+          new("금융소비자정보포털 '파인'", "https://fine.fss.or.kr/fine/main/main.do?menuNo=900000", "금융소비자정보포털 '파인'"),
+          new("KB스타뱅킹", "https://omoney.kbstar.com/quics?page=C028156&QSL=F", "KB스타뱅킹"),
+          new("KB기업뱅킹", "https://omoney.kbstar.com/quics?page=C030160&QSL=F", "KB기업뱅킹"),
+          new("리브똑똑", "https://omoney.kbstar.com/quics?page=C056265&QSL=F", "리브똑똑"),
+          new("이용상담", "https://obank.kbstar.com/quics?page=C019763&QSL=F", "이용상담"),
+          new("보안프로그램", "https://obank.kbstar.com/quics?page=C040531&QSL=F", "보안프로그램"),
+          new("사고신고", "https://obank.kbstar.com/quics?page=C019933&QSL=F", "사고신고"),
+          new("보호금융상품등록부", "https://obank.kbstar.com/quics?page=C023000&QSL=F", "보호금융상품등록부"),
+          new("전자민원접수", "https://obank.kbstar.com/quics?page=C036346&QSL=F", "전자민원접수"),
+          new("개인정보 처리방침", "https://obank.kbstar.com/quics?page=C108662&QSL=F", "개인정보 처리방침"),
+          new("신용정보활용체제", "https://obank.kbstar.com/quics?page=C019924&QSL=F", "신용정보활용체제"),
+          new("위치기반서비스 이용약관", "https://obank.kbstar.com/quics?page=C110586&QSL=F", "위치기반서비스 이용약관"),
+          new("경영공시", "https://omoney.kbstar.com/quics?page=C017681&QSL=F", "경영공시"),
+          new("그룹 내 고객정보 제공안내", "https://obank.kbstar.com/quics?page=C040593&QSL=F", "그룹 내 고객정보 제공안내"),
+          new("스튜어드십 코드", "https://obank.kbstar.com/quics?page=C057315&QSL=F", "스튜어드십 코드"),
+          new("KB국민인증서 제휴문의", "https://cert.kbstar.com//quics?page=C112164", "KB국민인증서 제휴문의"),
+          new("KB금융그룹", "https://www.kbfg.com/", "KB금융그룹"),
+          new("KB증권", "http://www.kbsec.co.kr/", "KB증권"),
+          new("KB손해보험", "http://www.kbinsure.co.kr/", "KB손해보험"),
+          new("KB자산운용", "http://www.kbam.co.kr/", "KB자산운용"),
+          new("KB캐피탈", "http://www.kbcapital.co.kr/", "KB캐피탈"),
+          new("KB라이프생명", "https://www.kblife.co.kr/", "KB라이프생명"),
+          new("KB부동산신탁", "http://www.kbret.co.kr/", "KB부동산신탁"),
+          new("KB저축은행", "https://www.kbsavings.com/", "KB저축은행"),
+          new("KB인베스트먼트", "http://www.kbic.co.kr/", "KB인베스트먼트"),
+          new("KB데이타시스템", "http://www.kds.co.kr/", "KB데이타시스템"),
+          new("KB신용정보", "http://www.kbci.co.kr/", "KB신용정보"),
+          new("KB경영연구소", "https://www.kbfg.com/kbresearch/main.do", "KB경영연구소"),
+          new("챗봇/채팅/이메일상담(24시간)", "https://obank.kbstar.com/quics?page=C043954", "챗봇/채팅/이메일상담(24시간)"),
+          new("KB국민은행은 KB국민카드의 판매대리·중개업자입니다.", "https://img2.kbstar.com/obj/ocommon/20230228_kbcard.pdf", "KB국민은행은 KB국민카드의 판매대리·중개업자입니다."),
+          new("페이스북", "https://www.facebook.com/kbkookminbank", "페이스북"),
+          new("인스타그램", "https://instagram.com/kbkookminbank", "인스타그램"),
+          new("YouTube", "https://www.youtube.com/user/openkbstar", "YouTube"),
+          new("blog", "https://blog.naver.com/youngkbblog", "blog"),
+          new("과학기술정보통신부 WA(WEB접근성) 품질인증 마크, 웹와치(WebWatch) 2025.7.01 ~ 2026.6.30", "http://webwatch.or.kr/", "과학기술정보통신부 WA(WEB접근성) 품질인증 마크, 웹와치(WebWatch) 2025.7.01 ~ 2026.6.30"),
+          new("ISMS-P 인증, Global CBPR 인증, ISO27701 인증", "https://obank.kbstar.com/quics?page=C034312", "ISMS-P 인증, Global CBPR 인증, ISO27701 인증"),
      ]),
 ];
 
@@ -392,7 +476,7 @@ ServiceCollection services = [
          new("INISAFECrossWeb", "https://open.standardchartered.co.kr/initech/extension/down/INIS_EX.exe", SilentSwitches.NsisSilentSwitch),
          new("AhnLabSafeTx", "https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe", SilentSwitches.DefaultSilentSwitch),
          new("IPInside", "https://open.standardchartered.co.kr/interezen/install/Non/I3GSvcManager.exe", SilentSwitches.CustomNoDlgSwitch),
-    ], []),
+    ], []) { SearchKeywords = "스탠다드차타드", },
     new("CitiBankKorea", "한국씨티은행 개인뱅킹", Category.Banking, "https://www.citibank.co.kr/", "Citibank Korea Inc.", [
          new("Veraport", "https://www.citibank.co.kr/3rdParty/wizvera/veraport/down/veraport-g3-x64-sha2.exe", SilentSwitches.InnoSetupSilentSwitch),
          new("WizInDelfino", "https://www.citibank.co.kr/3rdParty/wizvera/delfino/down/delfino-g3.exe", SilentSwitches.InnoSetupSilentSwitch),
@@ -409,7 +493,7 @@ ServiceCollection services = [
          new("KSCertRelay32", "https://download.kbanknow.com/product/qrcertrelay/nxCR/module/KSCertRelay_nx_Installer_32bit.exe", SilentSwitches.InnoSetupSilentSwitch),
          new("ePageSafer", "https://download.kbanknow.com/product/markany/exe/Setup_ePageSaferRT.exe", SilentSwitches.InnoSetupSilentSwitch),
          new("KISSCAP", "https://download.kbanknow.com/product/scraping/KISSCAP.exe", "/s /v/qn"),
-    ], []),
+    ], []) { SearchKeywords = "K뱅크", },
     new("KakaoBank", "카카오뱅크 개인뱅킹", Category.Banking, "https://www.kakaobank.com/", "KakaoBank Corp.", [
          new("AhnLabSafeTx", "https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe", SilentSwitches.DefaultSilentSwitch),
          new("CertTool", "https://og.kakaobank.io/download/517591e5-9040-4393-b946-4de3ce14c886", SilentSwitches.DefaultSilentSwitch),
@@ -555,7 +639,7 @@ ServiceCollection services = [
          new("astx_setup", "https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe", SilentSwitches.InnoSetupSilentSwitch),
          new("I3GSvcManager", "https://download.kbanknow.com/product/interezen/I3GSvcManager.exe", SilentSwitches.InnoSetupSilentSwitch),
          new("Setup_ePageSaferRT", "https://download.kbanknow.com/product/markany/exe/Setup_ePageSaferRT.exe", SilentSwitches.InnoSetupSilentSwitch),
-    ], []),
+    ], []) { SearchKeywords = "K뱅크", },
     new("KakaoBankBiz", "카카오뱅크 기업뱅킹", Category.Banking, "https://corp.kakaobank.com/", "KakaoBank Corp. (Corp.)", [
          new("AnySign_Installer", "https://download.softforum.com/Published/AnySign/v1.1.0.11/AnySign_Installer.exe", SilentSwitches.NsisSilentSwitch),
          new("astx_setup", "https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe", SilentSwitches.InnoSetupSilentSwitch),
@@ -1683,7 +1767,7 @@ ServiceCollection services = [
     ]),
     new("MedCerti", "병원증명발급포털 메드서티 (medcerti.com)", Category.Other, "https://www.medcerti.com/", "Medcerti Hospital Certificate Issuance", [
          new("ICT_REPORTX", "https://www.medcerti.com/hp1.0/activex/ICT_REPORTX_SETUP.exe", SilentSwitches.InnoSetupSilentSwitch),
-    ], []),
+    ], []) { SearchKeywords = "가천대학교길병원;강남세브란스병원;강릉아산병원;강릉의료원;강북삼성병원;강원대학교병원;건국대학교병원;건양대학교병원;경상국립대학교병원;경희대학교병원;경희대학교치과병원;경희대학교한방병원;경희의료원;계명대학교병원;고신대학교복음병원;광명성애병원;구미차병원;국민건강보험공단 일산병원;군산의료원;국립중앙의료원;김안과병원;고도일병원;경산세명병원;경기도의료원 수원병원;경기도의료원 안성병원;경기도의료원 의정부병원;경기도의료원 이천병원;경기도의료원 파주병원;경기도의료원 포천병원;나은병원;노원을지대학교병원;대구파티마병원;대전선병원;동아대학교병원;대구가톨릭대학교병원;대전을지대학교병원;명지병원;미즈메디병원;강서;강남;부산대학교병원;분당제생병원;부산의료원;서귀포의료원;삼육서울병원;삼성창원병원;삼척의료원;서산의료원;서울성애병원;서울의료원;서울적십자병원;세종충남대학교병원;순천향대학교구미병원;순천향대학교부천병원;순천향대학교서울병원;순천향대학교천안병원;신촌세브란스병원;신촌세브란스치과병원;아인병원;안동의료원;안산튼튼병원;양산부산대학교병원;영월의료원;예수병원;용인세브란스병원;우리들병원;동래;부산;포항;청담;울산대학교병원;원광대학교병원;원자력병원;원주의료원;원주세브란스기독병원;유성선병원;이랜드 클리닉;이대목동병원;이대서울병원;인구보건복지협회;인제대학교 서울백병원;인제대학교 백병원;인제대학교 부산백병원;인제대학교 상계백병원;인제대학교 일산백병원;인제대학교 해운대백병원;인천광역시의료원;인천사랑병원;인하대학교병원;전남대학교병원;전남대학교치과병원;전북대학교병원;제일병원;제주대학교병원;제주한라병원;중앙보훈병원;조선대학교병원;창원파티마병원;창원경상국립대학교병원;천안의료원;청주의료원;청주효성병원;충남대학교병원;충북대학교병원;충주의료원;포항의료원;하나성심병원;한림대학교강남성심병원;한림대학교춘천성심병원;한림대학교동탄성심병원;한림대학교성심병원;한양대학교 구리병원;한양대학교병원;한일;구한전;병원;한전병원;화순전남대학교병원;21세기병원;서초;HM병원;구한전병원", },
     new("LemonCare", "레몬케어 병원제증명서발급포털", Category.Other, "https://lemoncare.lemonhc.com/", "Lemon Care", [
          new("ezPDFPrint", "https://unidocs.lemonhc.com/webviewer/ezpdf/print/ezPDFPrintEx_SETUP_1.0.0.19.exe", SilentSwitches.NsisSilentSwitch),
     ], []),
@@ -1737,10 +1821,10 @@ ServiceCollection services = [
     },
     new("Webminwon", "대학증명발급 웹민원센터 (webminwon.com)", Category.Education, "https://www.webminwon.com/", "WebMinwon.com Certificate Issuance", [
          new("ICT_REPORTX", "https://uni.webminwon.com/wm1.0/activex/ICT_REPORTX_SETUP.exe", SilentSwitches.InnoSetupSilentSwitch),
-    ], []),
+    ], []) { SearchKeywords = "가톨릭상지대학교;감리교신학대학교;강원대학교;건국대학교;건양대학교;건양사이버대학교;경기대학교;국제교육원;원격교육원;경기대평생교육원;서울캠퍼스;경남대학교;경남정보대학교;경민대학교;경복대학교;경북전문대학교;경안대학원대학교;경주대학교;경찰대학;경찰대학교;치안대학원;고구려대학;고려대학교;광운대학교;정보과학교육원;광주과학기술원;광주대학교;광주보건대학교;국민대학교;평생교육원;수도국제대학원대학교;국가평생교육진흥원;학점은행;국제언어대학원대학교;국제예술대학교;군산간호대학교;군산대학교;군장대학교;글로벌사이버대학교;금강대학교;기독간호대학교;기독교대한하나님의성회;여의도순복음총회;남부대학교;농협대학교;대경대학교;대구교육대학교;대전과학기술대학교;대교;대전대학교;대전보건대학교;대진대학교;대한신학대학원대학교;독학학위제;동강대학교;동국대학교;DUICA;동덕여자대학교;동방문화대학원대학교;동서대학교;동서대학교대학원;동서울대학교;동아대학교;동아보건대학교;동아인재대학교;동원대학교;동의과학대학교;동의대학교;디지털서울문화예술대학교;루터대학교;마산대학교;명지대학교;자연사회교육원;명지대학교교직원;명지전문대학;목원대학교;목포가톨릭대학교;목포과학대학;목포대학교;문경대학교;백석예술대학교;백제예술대학교;법학전문대학원협의회;부산과학기술대학교;부산디지털대학교;부산여자대학교;부산장신대학교;부천대학교;사이버한국외국어대학교;사이버한국외국어대학교대학원;삼육대학교;삼육보건대학교;상지대학교;대학원;상지영서대학교;서강대학교;서영대학교;서울과학기술대학교;서울과학종합대학원대학교;서울기독대학교;서울대학교;서울대학교 언어교육원;서울디지털대학교;서울디지털평생교육원;서울불교대학원대학교;서울사회복지대학원대학교;서울성경신학대학원대학교;서울신학대학교;서울여자간호대학교;서울여자대학교;서울예술실용전문학교;서울장신대학교;서울직업전문학교;글로벌서울직업전문학교;서울한영대학교;서울호서예술실용전문학교;서울호서직업전문학교;서원대학교;서정대학교;선문대학교;성결대학교;성공회대학교;성균관대학교;성신여자대학교;세명대학교;세종대학교;세한대학교;송곡대학교;송원대학교;송호대학교;수성대학교;수원과학대학교;수원대학교;수원대평생교육원;숙명여자대학교;순복음대학원대학교;순복음영산목회대학원;순복음영산신학원;순복음총회신학교;순천제일대학교;순천향대학교;숭실대학교;숭실사이버대학교;신라대학교;아주대학교;아주자동차대학;안동과학대학교;안양대학교;에스라성경대학원대학교;여주대학교;연세대학교;영진사이버대학교;영진전문대학교;예수대학교;예원예술대학교;서울상담심리대학원대학교;용인대학교;우송대학교;솔브릿지;우송정보대학;울산과학대학교;웅지세무대학교;원광대학교;원광디지털대학교;원광보건대학교;이화여자대학교;인제대학교;인천가톨릭대학교;인천대학교;제물포캠퍼스;인천재능대학교;장안대학교;전남과학대학교;전남대학교;전북과학대학교;시간제;전북대학교;국립익산대학;전주대학교;정화예술대학;제주국제대학교;제주대학교;조선간호대학교;조선이공대학교;주안대학원대학교;중앙대학교;중원대학교;청강문화산업대학교;총신대학교;원격평생교육원;추계예술대학교;충남도립청양대학;충북대학교;충북보건과학대학교;칼빈대학교;포항대학교;한국교통대학;철도대학;한국기술교육대학교;국립한국농수산대학교;한국공학대학교;한국상담대학원대학교;한국성서대학교;한국승강기대학교;한국영상대학교;한국외국어대학교;한국전통문화대학교;한국폴리텍대학;한림국제대학원;한림대학교;한밭대학교;한림성심대학교;한성대학교;디자인아트교육원;한세대학교;한양대학교;한양사이버대학교;한양여자대학교;한일장신대학교;한자교육진흥회;합동신학대학원대학교;협성대학교;혜전대학교;호남대학교;호남신학대학교;호산대학교;호원대학교;ICT폴리텍대학;강서대학교;KDI국제정책대학원;TEPS;TOPCIT;UNIST", },
     new("Certpia", "Certpia 인터넷증명발급센터 (certpia.com)", Category.Education, "https://www.certpia.com/", "CertPia.com Certificate Issuance", [
          new("ViewerApp", "https://www.certpia.com/upfile/ocx/Plugin/viewerSetup.exe", SilentSwitches.InnoSetupSilentSwitch),
-    ], []),
+    ], []) { SearchKeywords = "시간제;교직원;독학사;가야대학교;가천대학교;의학전문대학원;메디컬캠퍼스;가톨릭관동대학교;가톨릭꽃동네대학교;가톨릭대학교;성신교정;성심교정;성의교정;강남대학교;강동대학교;강릉영동대학교;강원관광대학교;강원도립대학교;거제대학교;경기과학기술대학교;경남도립거창대학;경남도립남해대학;경동대학교;경북과학대학교;경북대학교;경북보건대학교;경상국립대학교;경성대학교;경운대학교;경인여자대학교;경일대학교;경희대학교;경희사이버대학교;계명대학교;계명문화대학교;계원예술대학교;고려사이버대학교;고려신학대학원;고신대학교;공주교육대학교;과학기술연합대학원대학교;UST;광양보건대학교;광주교육대학교;광주여자대학교;구미대학교;국가평생교육진흥원;국립강릉원주대학교;국립공주대학교;국립목포해양대학교;국립부경대학교;국립창원대학교;국립한국교통대학교;국립한국해양대학교;국제뇌교육종합대학원대학교;국제대학교;국제사이버대학교;금오공과대학교;김천대학교;김포대학교;김해대학교;나사렛대학교;남서울대학교;대구가톨릭대학교;대구공업대학교;대구과학대학교;대구대학교;대구보건대학교;대구사이버대학교;대구예술대학교;대구한의대학교;경산대학교;대덕대학교;대동대학교;대림대학교;대신대학교;대원대학교;덕성여자대학교;동국대학교;동남보건대학교;동명대학교;동아대학교;동아방송예술대학교;동양대학교;동양미래대학교;동원과학기술대학교;두원공과대학교;로이문화예술실용전문학교;배재대학교;백석대학교;백석문화대학교;부산가톨릭대학교;부산경상대학교;부산교육대학교;부산대학교;부산보건대학교;부산여자대학교;부산예술대학교;부산외국어대학교;상명대학교;상명대학교산학협력단;서경대학교;서라벌대학교;서울대학교;서울모드패션직업전문학교;서울벤처대학원대학교;서울사이버대학교;서울시설공단;추모시설운영처;서울외국어대학원대학교;서울현대실용전문학교;서일대학교;선린대학교;성운대학교;세경대학교;세계사이버대학;세명대학교;세종사이버대학교;수원여자대학교;순천향대학교;숭의여자대학교;신구대학교;신성대학교;신안산대학교;신한대학교;아세아항공직업전문학교;아신대학교;안동과학대학교;안동대학교;안양대학교;여주농업경영전문학교;연성대학교;연암공과대학교;연암대학교;영남대학교;영남사이버대학교;영남신학대학교;영남외국어대학;경북외국어테크노대학;영남이공대학교;영산대학교;오산대학교;용인예술과학대학교;우석대학교;울산대학교;위덕대학교;유원대학교;유한대학교;을지대학교;인덕대학교;인하공업전문대학;장로회신학대학교;전북대학교;전주기전대학;전주비전대학교;제주관광대학교;중부대학교;진주교육대학교;진주보건대학교;창신대학교;창원문성대학교;청운대학교;청주교육대학교;청주대학교;춘천교육대학교;춘해보건대학교;충북도립대학교;충청대학교;평택대학교;한경국립대학교;한국골프대학교;한국과학기술원;KAIST;한국관광대학교;한국교원대학교;한국독립교회선교단체연합회;한국복지대학교;한국복지사이버대학;한국생명공학연구원;한국열린사이버대학교;한국침례신학대학교;한국항공대학교;한국호텔관광실용전문학교;한국IT직업전문학교;한남대학교;한동대학교;한라대학교;한서대학교;한영대학교;홍익대학교;화성의과학대학교;화신사이버대학교;횃불트리니티신학대학원대학교;KAC한국예술원", },
     new("Knou", "한국방송통신대학교 증명서발급", Category.Education, "https://certi.knou.ac.kr/haksa/ass/cint/ASSInetCrtiWebLinkPage.do", "Korea National Open University Certificate Issuance", [
          new("OZReportLauncher", "https://www.knou.ac.kr/bbs/knou/56/74346/download.do", SilentSwitches.DefaultSilentSwitch),
          new("OZReportPrinter", "https://www.knou.ac.kr/bbs/knou/56/6389/download.do", SilentSwitches.DefaultSilentSwitch),
@@ -1787,7 +1871,7 @@ using (var catalogXmlStream = File.Open(catalogXmlFilePath, FileMode.Create, Fil
                          new XAttribute("DisplayName", c.DisplayName),
                          new XAttribute("Url", c.Url),
                          new XAttribute("Arguments", c.Arguments),
-                         new XAttribute("EnglishDisplayName", c.EnglishDisplayName)
+                         new XAttribute("en-US-DisplayName", c.EnglishDisplayName)
                     )
                )
           ),
@@ -1798,7 +1882,10 @@ using (var catalogXmlStream = File.Open(catalogXmlFilePath, FileMode.Create, Fil
                          new XAttribute("DisplayName", s.DisplayName),
                          new XAttribute("Category", s.Category.ToString()),
                          new XAttribute("Url", s.Url),
-                         new XAttribute("EnglishDisplayName", s.EnglishDisplayName),
+                         new XAttribute("en-US-DisplayName", s.EnglishDisplayName),
+                         !string.IsNullOrWhiteSpace(s.SearchKeywords) ?
+                              new XElement("SearchKeywords", s.SearchKeywords) :
+                              default,
                          s.CompatNotes.Any() ?
                               new XElement("CompatNotes", string.Join(Environment.NewLine, s.CompatNotes)) :
                               default,
@@ -1810,7 +1897,9 @@ using (var catalogXmlStream = File.Open(catalogXmlFilePath, FileMode.Create, Fil
                               new XElement("Package",
                                    new XAttribute("Name", p.Name),
                                    new XAttribute("Url", p.Url),
-                                   new XAttribute("Arguments", p.Arguments)
+                                   !string.IsNullOrWhiteSpace(p.Arguments) ?
+                                        new XAttribute("Arguments", p.Arguments) :
+                                        default
                               )
                          )
                          ),
@@ -1824,7 +1913,7 @@ using (var catalogXmlStream = File.Open(catalogXmlFilePath, FileMode.Create, Fil
                               )
                          ) : default,
                          !string.IsNullOrWhiteSpace(s.CustomBootstrap) ?
-                              new XElement("CustomBootstrap", new XCData(s.CustomBootstrap)) :
+                              new XElement("CustomBootstrap", new XCData(Environment.NewLine + s.CustomBootstrap)) :
                               default
                     )
                )
@@ -1883,6 +1972,7 @@ using (var catalogJsonStream = File.Open(catalogJsonFilePath, FileMode.Create, F
                     e.CrxUrl,
                     e.ExtensionId
                }),
+               SearchKeywords = s.SearchKeywords,
                CompatNotes = string.Join(Environment.NewLine, s.CompatNotes),
                EnglishCompatNotes = string.Join(Environment.NewLine, s.EnglishCompatNotes),
                s.CustomBootstrap,
@@ -1896,7 +1986,7 @@ using (var catalogJsonStream = File.Open(catalogJsonFilePath, FileMode.Create, F
 
 // SiteInfoCatalog을 JSON 문서로 저장
 var siteInfoCatalog = new SiteInfoCatalog { Sites = sites };
-var siteInfoCatalogJsonFilePath = Path.GetFullPath("Sites.json");
+var siteInfoCatalogJsonFilePath = Path.GetFullPath("sites.json");
 using (var siteInfoCatalogJsonStream = File.Open(siteInfoCatalogJsonFilePath, FileMode.Create, FileAccess.Write))
 {
      // JSON 문서 생성
@@ -1910,13 +2000,15 @@ using (var siteInfoCatalogJsonStream = File.Open(siteInfoCatalogJsonFilePath, Fi
      {
           Sites = sites.Select(site => new
           {
-               site.Domain,
-               site.Name,
-               Submenus = site.Submenus.Select(submenu => new
+               displayName = site.Name,
+               domain = site.Domain,
+               url = site.CanonicalUrl,
+               category = site.Category,
+               subpages = site.Submenus.Select(submenu => new
                {
-                    submenu.Name,
-                    submenu.Url,
-                    submenu.Description
+                    name = submenu.Name,
+                    url = submenu.Url,
+                    description = submenu.Description
                })
           })
      };
@@ -1924,6 +2016,351 @@ using (var siteInfoCatalogJsonStream = File.Open(siteInfoCatalogJsonFilePath, Fi
      // JSON 파일로 저장
      await JsonSerializer.SerializeAsync(siteInfoCatalogJsonStream, jsonData, jsonOptions, cancellationToken).ConfigureAwait(false);
      Console.WriteLine($"SiteInfoCatalog JSON document created and saved as '{siteInfoCatalogJsonFilePath}'");
+}
+
+// URL 유효성 검증
+await ValidateUrlsAsync(catalog, sites, cancellationToken).ConfigureAwait(false);
+
+// PNG -> ICO 변환
+ConvertSiteLogoImagesIntoIconFiles();
+
+// 이미지 리소스 ZIP 생성
+CreateImageResourceZipFile();
+
+// XML 스키마 검증
+ValidateCatalogXml();
+
+static async Task ValidateUrlsAsync(TableClothCatalog catalog, SiteCollection sites, CancellationToken cancellationToken = default)
+{
+    const string userAgent = "curl/8.4.0";
+    var errorLogBuffer = new ConcurrentQueue<string>();
+    
+    using var httpClient = new HttpClient
+    {
+        Timeout = TimeSpan.FromSeconds(15)
+    };
+    
+    if (!string.IsNullOrWhiteSpace(userAgent))
+    {
+        Console.WriteLine($"Info: Using User Agent String `{userAgent}`. Timeout: 5 seconds.");
+        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", userAgent);
+        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept", "*/*");
+    }
+    
+    var testTargets = new Dictionary<string, (string ElementType, int LineNumber)>();
+    
+    // Companion URL 수집
+    foreach (var companion in catalog.Companions)
+    {
+        if (!string.IsNullOrWhiteSpace(companion.Url) && 
+            !testTargets.ContainsKey(companion.Url))
+        {
+            testTargets[companion.Url] = ("Companion", 0);
+        }
+    }
+    
+    // Service URL 수집
+    foreach (var service in catalog.InternetServices)
+    {
+        if (!string.IsNullOrWhiteSpace(service.Url) && 
+            !testTargets.ContainsKey(service.Url))
+        {
+            testTargets[service.Url] = ("Service", 0);
+        }
+        
+        // Package URL 수집
+        foreach (var package in service.Packages)
+        {
+            if (!string.IsNullOrWhiteSpace(package.Url) && 
+                !testTargets.ContainsKey(package.Url))
+            {
+                testTargets[package.Url] = ("Package", 0);
+            }
+        }
+    }
+    
+    // Site Submenu URL 수집
+    foreach (var site in sites)
+    {
+        foreach (var submenu in site.Submenus)
+        {
+            if (!string.IsNullOrWhiteSpace(submenu.Url) && 
+                !testTargets.ContainsKey(submenu.Url))
+            {
+                testTargets[submenu.Url] = ("Site", 0);
+            }
+        }
+    }
+    
+    Console.WriteLine($"Info: Starting URL validation for {testTargets.Count} unique URLs...");
+    
+    var tasks = new List<Task<bool>>(testTargets.Count);
+    foreach (var target in testTargets)
+    {
+        tasks.Add(TestUrlAsync(errorLogBuffer, httpClient, target.Key, target.Value.ElementType, target.Value.LineNumber, cancellationToken));
+    }
+    
+    var results = await Task.WhenAll(tasks).ConfigureAwait(false);
+    var succeedCount = results.Count(x => x);
+    var failedCount = results.Count(x => !x);
+    
+    Console.WriteLine($"\nInfo: URL validation completed.");
+    Console.WriteLine($"Info: Scheduled: {testTargets.Count} / Returned: {results.Length} / Succeed: {succeedCount} / Failed: {failedCount}");
+    
+    if (failedCount > 0)
+    {
+        Console.WriteLine("\nWarning: Failed URLs:");
+        foreach (var errorLog in errorLogBuffer.ToList())
+        {
+            Console.WriteLine(errorLog);
+        }
+    }
+    else
+    {
+        Console.WriteLine("Success: All URLs are valid!");
+    }
+}
+
+static async Task<bool> TestUrlAsync(
+    ConcurrentQueue<string> errorLogBuffer, 
+    HttpClient httpClient, 
+    string urlString, 
+    string element, 
+    int lineNumber, 
+    CancellationToken cancellationToken = default)
+{
+    var message = string.Empty;
+    
+    try
+    {
+        var response = await httpClient.GetAsync(urlString, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+        
+        if (response == null || !response.IsSuccessStatusCode)
+        {
+            message = $"Warning: Cannot fetch the URI `{urlString}` (Remote response code: {(int?)response?.StatusCode}) - (Element: `{element}`, Line: `{lineNumber}`)";
+            await Console.Out.WriteLineAsync(message.AsMemory(), cancellationToken).ConfigureAwait(false);
+            errorLogBuffer.Enqueue(message);
+            return false;
+        }
+    }
+    catch (AggregateException aex)
+    {
+        var ex = aex.InnerException ?? aex;
+        message = $"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} thrown. {ex.InnerException?.Message ?? ex.Message}) - (Element: `{element}`, Line: `{lineNumber}`)";
+        await Console.Out.WriteLineAsync(message.AsMemory(), cancellationToken).ConfigureAwait(false);
+        errorLogBuffer.Enqueue(message);
+        return false;
+    }
+    catch (Exception ex)
+    {
+        message = $"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} thrown. {ex.InnerException?.Message ?? ex.Message}) - (Element: `{element}`, Line: `{lineNumber}`)";
+        await Console.Out.WriteLineAsync(message.AsMemory(), cancellationToken).ConfigureAwait(false);
+        errorLogBuffer.Enqueue(message);
+        return false;
+    }
+    
+    message = $"Info: Test succeed on `{urlString}`.";
+    await Console.Out.WriteLineAsync(message.AsMemory(), cancellationToken).ConfigureAwait(false);
+    return true;
+}
+
+static void ConvertSiteLogoImagesIntoIconFiles()
+{
+    var imageDirectory = Path.GetFullPath("images");
+    Console.WriteLine($"Info: Investigating directory `{imageDirectory}`...");
+
+    if (!Directory.Exists(imageDirectory))
+    {
+        Console.WriteLine($"Warning: Directory `{imageDirectory}` does not exist. Skipping PNG to ICO conversion.");
+        return;
+    }
+
+    var pngFiles = Directory.GetFiles(imageDirectory, "*.png", SearchOption.AllDirectories);
+    Console.WriteLine($"Info: Found {pngFiles.Length} png files in `{imageDirectory}` directory.");
+
+    foreach (var eachPngFile in pngFiles)
+    {
+        var directoryPath = Path.GetDirectoryName(eachPngFile);
+
+        if (string.IsNullOrEmpty(directoryPath))
+        {
+            Console.Error.WriteLine($"Error: Cannot obtain directory path of `{eachPngFile}` file.");
+            continue;
+        }
+
+        var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(eachPngFile);
+        var iconFilePath = Path.Combine(directoryPath, $"{fileNameWithoutExtension}.ico");
+
+        Console.WriteLine($"Info: Converting `{eachPngFile}` image file into `{iconFilePath}` Win32 icon file.");
+        ConvertImageToIcon(eachPngFile, iconFilePath);
+    }
+
+    Console.WriteLine("Info: PNG to ICO conversion completed.");
+}
+
+// https://stackoverflow.com/questions/21387391/how-to-convert-an-image-to-an-icon-without-losing-transparency
+static void ConvertImageToIcon(string sourceImageFilePath, string targetIconFilePath)
+{
+    using (var outputFile = File.OpenWrite(targetIconFilePath))
+    using (var outputWriter = new BinaryWriter(outputFile))
+    using (var inputFile = File.OpenRead(sourceImageFilePath))
+    using (var inputImage = Image.Load(inputFile))
+    {
+        // Header
+        outputWriter.Write((short)0);   // 0 : reserved
+        outputWriter.Write((short)1);   // 2 : 1=ico, 2=cur
+        outputWriter.Write((short)1);   // 4 : number of images
+
+        // Image directory
+        var w = inputImage.Width;
+        if (w >= 256) w = 0;
+        outputWriter.Write((byte)w);    // 0 : width of image
+
+        var h = inputImage.Height;
+        if (h >= 256) h = 0;
+        outputWriter.Write((byte)h);    // 1 : height of image
+
+        outputWriter.Write((byte)0);    // 2 : number of colors in palette
+        outputWriter.Write((byte)0);    // 3 : reserved
+        outputWriter.Write((short)0);   // 4 : number of color planes
+        outputWriter.Write((short)0);   // 6 : bits per pixel
+
+        var sizeHere = outputFile.Position;
+        outputWriter.Write(0);     // 8 : image size
+
+        var start = (int)outputFile.Position + 4;
+        outputWriter.Write(start);      // 12: offset of image data
+
+        // Image data
+        inputImage.Save(outputFile, PngFormat.Instance);
+        var imageSize = (int)outputFile.Position - start;
+        outputFile.Seek(sizeHere, SeekOrigin.Begin);
+        outputWriter.Write(imageSize);
+        outputFile.Seek(0L, SeekOrigin.Begin);
+    }
+}
+
+static void CreateImageResourceZipFile()
+{
+    var imageDirectory = Path.GetFullPath("images");
+    Console.WriteLine($"Info: Investigating directory `{imageDirectory}`...");
+
+    if (!Directory.Exists(imageDirectory))
+    {
+        Console.WriteLine($"Warning: Directory `{imageDirectory}` does not exist. Skipping ZIP file creation.");
+        return;
+    }
+
+    var pngFiles = Directory.GetFiles(imageDirectory, "*.png", SearchOption.AllDirectories);
+    var icoFiles = Directory.GetFiles(imageDirectory, "*.ico", SearchOption.AllDirectories);
+    var sourceFiles = Enumerable.Concat(pngFiles, icoFiles).ToArray();
+    Console.WriteLine($"Info: Found total {sourceFiles.Length} source files.");
+
+    var workingDirectory = Path.GetFullPath("working");
+    if (!Directory.Exists(workingDirectory))
+    {
+        Console.WriteLine($"Info: Creating working directory `{workingDirectory}`...");
+        Directory.CreateDirectory(workingDirectory);
+    }
+
+    foreach (var eachResourceFile in sourceFiles)
+    {
+        var destFilePath = Path.Combine(workingDirectory, Path.GetFileName(eachResourceFile));
+        
+        if (File.Exists(destFilePath))
+            Console.WriteLine($"Warning: Duplicated file found. Source: `{eachResourceFile}`.");
+
+        Console.WriteLine($"Info: Copying `{eachResourceFile}` file to `{destFilePath}` file...");
+        File.Copy(eachResourceFile, destFilePath, true);
+    }
+
+    var zipFilePath = Path.GetFullPath("Images.zip");
+    
+    if (File.Exists(zipFilePath))
+    {
+        Console.WriteLine($"Info: Removing existing `{zipFilePath}` zip file...");
+        File.Delete(zipFilePath);
+    }
+    
+    Console.WriteLine($"Info: Creating `{zipFilePath}` zip file...");
+    ZipFile.CreateFromDirectory(workingDirectory, zipFilePath, CompressionLevel.Optimal, false);
+
+    Console.WriteLine($"Info: Removing working directory `{workingDirectory}`...");
+    Directory.Delete(workingDirectory, true);
+
+    Console.WriteLine("Info: Image resource ZIP file created successfully.");
+}
+
+static void ValidateCatalogXml()
+{
+    var catalogXmlPath = Path.GetFullPath("Catalog.xml");
+    var schemaXsdPath = Path.GetFullPath("Catalog.xsd");
+
+    if (!File.Exists(catalogXmlPath))
+    {
+        Console.Error.WriteLine($"Error: Catalog XML file not found at `{catalogXmlPath}`.");
+        return;
+    }
+
+    if (!File.Exists(schemaXsdPath))
+    {
+        Console.WriteLine($"Warning: Schema XSD file not found at `{schemaXsdPath}`. Skipping schema validation.");
+        return;
+    }
+
+    var config = new XmlReaderSettings
+    {
+        ValidationType = ValidationType.Schema,
+        ValidationFlags = XmlSchemaValidationFlags.ReportValidationWarnings | 
+                         XmlSchemaValidationFlags.ProcessSchemaLocation,
+    };
+
+    Console.WriteLine($"Info: Using schema `{schemaXsdPath}`.");
+    config.Schemas.Add(null, schemaXsdPath);
+
+    var warningCount = 0;
+    var errorCount = 0;
+
+    config.ValidationEventHandler += (_sender, _e) =>
+    {
+        var lineInfo = _sender as IXmlLineInfo;
+        var positionText = "Unknown Position";
+        
+        if (lineInfo != null && lineInfo.HasLineInfo())
+            positionText = $"Line: {lineInfo.LineNumber}, Position: {lineInfo.LinePosition}";
+
+        if (_e.Severity == XmlSeverityType.Warning)
+        {
+            Console.WriteLine($"Warning: {_e.Message} - {positionText}");
+            warningCount++;
+        }
+        else if (_e.Severity == XmlSeverityType.Error)
+        {
+            Console.Error.WriteLine($"Error: {_e.Message} - {positionText}");
+            errorCount++;
+        }
+    };
+
+    Console.WriteLine($"Info: Validating `{catalogXmlPath}` file.");
+    
+    try
+    {
+        using (var reader = XmlReader.Create(catalogXmlPath, config))
+        {
+            while (reader.Read()) { }
+        }
+
+        if (errorCount + warningCount < 1)
+            Console.WriteLine("Success: No XML warnings or errors found.");
+        else if (errorCount < 1 && warningCount > 0)
+            Console.WriteLine($"Warning: {warningCount} XML warning(s) found.");
+        else
+            Console.Error.WriteLine($"Error: {errorCount} XML error(s) and {warningCount} warning(s) found.");
+    }
+    catch (Exception ex)
+    {
+        Console.Error.WriteLine($"Error: Exception during XML validation - {ex.Message}");
+    }
 }
 
 public sealed record class Companion(
@@ -1953,6 +2390,7 @@ public sealed class EdgeExtensionCollection : KeyedCollection<string, EdgeExtens
 public sealed record class Service(
     string Id, string DisplayName, Category Category, string Url, string EnglishDisplayName, PackageCollection Packages, EdgeExtensionCollection EdgeExtensions)
 {
+     public string SearchKeywords { get; set; } = "";
      public List<string> CompatNotes { get; set; } = [];
      public List<string> EnglishCompatNotes { get; set; } = [];
      public string CustomBootstrap { get; set; } = "";
@@ -1975,7 +2413,7 @@ public sealed record class Submenu(string Name, string Url, string Description =
 
 public sealed class SubmenuCollection : List<Submenu> { }
 
-public sealed record class Site(string Domain, string Name, SubmenuCollection Submenus) { }
+public sealed record class Site(string Domain, string CanonicalUrl, string Category, string Name, SubmenuCollection Submenus) { }
 
 public sealed class SiteCollection : KeyedCollection<string, Site>
 {
@@ -1991,13 +2429,20 @@ public static class Extensions
 {
      public static ServiceCollection UpdateRequirements(this ServiceCollection services)
      {
+          string[] keywords = ["astx", "ahnlabsafetx"];
           foreach (var service in services)
           {
                // ASTx Requirements
-               if (service.Packages.Any(x => x.Name.Contains("astx", StringComparison.OrdinalIgnoreCase)))
+               foreach (var eachPackage in service.Packages)
                {
-                    service.CompatNotes.Add("이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.");
-                    service.EnglishCompatNotes.Add("This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.");
+                    foreach (var eachKeyword in keywords)
+                    {
+                         if (eachPackage.Name.Contains(eachKeyword, StringComparison.OrdinalIgnoreCase))
+                         {
+                              service.CompatNotes.Add("이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.");
+                              service.EnglishCompatNotes.Add("This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.");
+                         }
+                    }
                }
           }
 
@@ -2015,5 +2460,5 @@ public static class SilentSwitches
 
      public static readonly string CustomSilenceSwitch = "/silence";
 
-     public static readonly string DefaultSilentSwitch = "/S";
+     public static readonly string DefaultSilentSwitch = "";
 }
