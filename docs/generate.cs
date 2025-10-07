@@ -476,7 +476,7 @@ ServiceCollection services = [
          new("INISAFECrossWeb", "https://open.standardchartered.co.kr/initech/extension/down/INIS_EX.exe", SilentSwitches.NsisSilentSwitch),
          new("AhnLabSafeTx", "https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe", SilentSwitches.DefaultSilentSwitch),
          new("IPInside", "https://open.standardchartered.co.kr/interezen/install/Non/I3GSvcManager.exe", SilentSwitches.CustomNoDlgSwitch),
-    ], []),
+    ], []) { SearchKeywords = "스탠다드차타드", },
     new("CitiBankKorea", "한국씨티은행 개인뱅킹", Category.Banking, "https://www.citibank.co.kr/", "Citibank Korea Inc.", [
          new("Veraport", "https://www.citibank.co.kr/3rdParty/wizvera/veraport/down/veraport-g3-x64-sha2.exe", SilentSwitches.InnoSetupSilentSwitch),
          new("WizInDelfino", "https://www.citibank.co.kr/3rdParty/wizvera/delfino/down/delfino-g3.exe", SilentSwitches.InnoSetupSilentSwitch),
@@ -493,7 +493,7 @@ ServiceCollection services = [
          new("KSCertRelay32", "https://download.kbanknow.com/product/qrcertrelay/nxCR/module/KSCertRelay_nx_Installer_32bit.exe", SilentSwitches.InnoSetupSilentSwitch),
          new("ePageSafer", "https://download.kbanknow.com/product/markany/exe/Setup_ePageSaferRT.exe", SilentSwitches.InnoSetupSilentSwitch),
          new("KISSCAP", "https://download.kbanknow.com/product/scraping/KISSCAP.exe", "/s /v/qn"),
-    ], []),
+    ], []) { SearchKeywords = "K뱅크", },
     new("KakaoBank", "카카오뱅크 개인뱅킹", Category.Banking, "https://www.kakaobank.com/", "KakaoBank Corp.", [
          new("AhnLabSafeTx", "https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe", SilentSwitches.DefaultSilentSwitch),
          new("CertTool", "https://og.kakaobank.io/download/517591e5-9040-4393-b946-4de3ce14c886", SilentSwitches.DefaultSilentSwitch),
@@ -639,7 +639,7 @@ ServiceCollection services = [
          new("astx_setup", "https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe", SilentSwitches.InnoSetupSilentSwitch),
          new("I3GSvcManager", "https://download.kbanknow.com/product/interezen/I3GSvcManager.exe", SilentSwitches.InnoSetupSilentSwitch),
          new("Setup_ePageSaferRT", "https://download.kbanknow.com/product/markany/exe/Setup_ePageSaferRT.exe", SilentSwitches.InnoSetupSilentSwitch),
-    ], []),
+    ], []) { SearchKeywords = "K뱅크", },
     new("KakaoBankBiz", "카카오뱅크 기업뱅킹", Category.Banking, "https://corp.kakaobank.com/", "KakaoBank Corp. (Corp.)", [
          new("AnySign_Installer", "https://download.softforum.com/Published/AnySign/v1.1.0.11/AnySign_Installer.exe", SilentSwitches.NsisSilentSwitch),
          new("astx_setup", "https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe", SilentSwitches.InnoSetupSilentSwitch),
@@ -1767,7 +1767,7 @@ ServiceCollection services = [
     ]),
     new("MedCerti", "병원증명발급포털 메드서티 (medcerti.com)", Category.Other, "https://www.medcerti.com/", "Medcerti Hospital Certificate Issuance", [
          new("ICT_REPORTX", "https://www.medcerti.com/hp1.0/activex/ICT_REPORTX_SETUP.exe", SilentSwitches.InnoSetupSilentSwitch),
-    ], []),
+    ], []) { SearchKeywords = "가천대학교길병원;강남세브란스병원;강릉아산병원;강릉의료원;강북삼성병원;강원대학교병원;건국대학교병원;건양대학교병원;경상국립대학교병원;경희대학교병원;경희대학교치과병원;경희대학교한방병원;경희의료원;계명대학교병원;고신대학교복음병원;광명성애병원;구미차병원;국민건강보험공단 일산병원;군산의료원;국립중앙의료원;김안과병원;고도일병원;경산세명병원;경기도의료원 수원병원;경기도의료원 안성병원;경기도의료원 의정부병원;경기도의료원 이천병원;경기도의료원 파주병원;경기도의료원 포천병원;나은병원;노원을지대학교병원;대구파티마병원;대전선병원;동아대학교병원;대구가톨릭대학교병원;대전을지대학교병원;명지병원;미즈메디병원;강서;강남;부산대학교병원;분당제생병원;부산의료원;서귀포의료원;삼육서울병원;삼성창원병원;삼척의료원;서산의료원;서울성애병원;서울의료원;서울적십자병원;세종충남대학교병원;순천향대학교구미병원;순천향대학교부천병원;순천향대학교서울병원;순천향대학교천안병원;신촌세브란스병원;신촌세브란스치과병원;아인병원;안동의료원;안산튼튼병원;양산부산대학교병원;영월의료원;예수병원;용인세브란스병원;우리들병원;동래;부산;포항;청담;울산대학교병원;원광대학교병원;원자력병원;원주의료원;원주세브란스기독병원;유성선병원;이랜드 클리닉;이대목동병원;이대서울병원;인구보건복지협회;인제대학교 서울백병원;인제대학교 백병원;인제대학교 부산백병원;인제대학교 상계백병원;인제대학교 일산백병원;인제대학교 해운대백병원;인천광역시의료원;인천사랑병원;인하대학교병원;전남대학교병원;전남대학교치과병원;전북대학교병원;제일병원;제주대학교병원;제주한라병원;중앙보훈병원;조선대학교병원;창원파티마병원;창원경상국립대학교병원;천안의료원;청주의료원;청주효성병원;충남대학교병원;충북대학교병원;충주의료원;포항의료원;하나성심병원;한림대학교강남성심병원;한림대학교춘천성심병원;한림대학교동탄성심병원;한림대학교성심병원;한양대학교 구리병원;한양대학교병원;한일;구한전;병원;한전병원;화순전남대학교병원;21세기병원;서초;HM병원;구한전병원", },
     new("LemonCare", "레몬케어 병원제증명서발급포털", Category.Other, "https://lemoncare.lemonhc.com/", "Lemon Care", [
          new("ezPDFPrint", "https://unidocs.lemonhc.com/webviewer/ezpdf/print/ezPDFPrintEx_SETUP_1.0.0.19.exe", SilentSwitches.NsisSilentSwitch),
     ], []),
@@ -1821,10 +1821,10 @@ ServiceCollection services = [
     },
     new("Webminwon", "대학증명발급 웹민원센터 (webminwon.com)", Category.Education, "https://www.webminwon.com/", "WebMinwon.com Certificate Issuance", [
          new("ICT_REPORTX", "https://uni.webminwon.com/wm1.0/activex/ICT_REPORTX_SETUP.exe", SilentSwitches.InnoSetupSilentSwitch),
-    ], []),
+    ], []) { SearchKeywords = "가톨릭상지대학교;감리교신학대학교;강원대학교;건국대학교;건양대학교;건양사이버대학교;경기대학교;국제교육원;원격교육원;경기대평생교육원;서울캠퍼스;경남대학교;경남정보대학교;경민대학교;경복대학교;경북전문대학교;경안대학원대학교;경주대학교;경찰대학;경찰대학교;치안대학원;고구려대학;고려대학교;광운대학교;정보과학교육원;광주과학기술원;광주대학교;광주보건대학교;국민대학교;평생교육원;수도국제대학원대학교;국가평생교육진흥원;학점은행;국제언어대학원대학교;국제예술대학교;군산간호대학교;군산대학교;군장대학교;글로벌사이버대학교;금강대학교;기독간호대학교;기독교대한하나님의성회;여의도순복음총회;남부대학교;농협대학교;대경대학교;대구교육대학교;대전과학기술대학교;대교;대전대학교;대전보건대학교;대진대학교;대한신학대학원대학교;독학학위제;동강대학교;동국대학교;DUICA;동덕여자대학교;동방문화대학원대학교;동서대학교;동서대학교대학원;동서울대학교;동아대학교;동아보건대학교;동아인재대학교;동원대학교;동의과학대학교;동의대학교;디지털서울문화예술대학교;루터대학교;마산대학교;명지대학교;자연사회교육원;명지대학교교직원;명지전문대학;목원대학교;목포가톨릭대학교;목포과학대학;목포대학교;문경대학교;백석예술대학교;백제예술대학교;법학전문대학원협의회;부산과학기술대학교;부산디지털대학교;부산여자대학교;부산장신대학교;부천대학교;사이버한국외국어대학교;사이버한국외국어대학교대학원;삼육대학교;삼육보건대학교;상지대학교;대학원;상지영서대학교;서강대학교;서영대학교;서울과학기술대학교;서울과학종합대학원대학교;서울기독대학교;서울대학교;서울대학교 언어교육원;서울디지털대학교;서울디지털평생교육원;서울불교대학원대학교;서울사회복지대학원대학교;서울성경신학대학원대학교;서울신학대학교;서울여자간호대학교;서울여자대학교;서울예술실용전문학교;서울장신대학교;서울직업전문학교;글로벌서울직업전문학교;서울한영대학교;서울호서예술실용전문학교;서울호서직업전문학교;서원대학교;서정대학교;선문대학교;성결대학교;성공회대학교;성균관대학교;성신여자대학교;세명대학교;세종대학교;세한대학교;송곡대학교;송원대학교;송호대학교;수성대학교;수원과학대학교;수원대학교;수원대평생교육원;숙명여자대학교;순복음대학원대학교;순복음영산목회대학원;순복음영산신학원;순복음총회신학교;순천제일대학교;순천향대학교;숭실대학교;숭실사이버대학교;신라대학교;아주대학교;아주자동차대학;안동과학대학교;안양대학교;에스라성경대학원대학교;여주대학교;연세대학교;영진사이버대학교;영진전문대학교;예수대학교;예원예술대학교;서울상담심리대학원대학교;용인대학교;우송대학교;솔브릿지;우송정보대학;울산과학대학교;웅지세무대학교;원광대학교;원광디지털대학교;원광보건대학교;이화여자대학교;인제대학교;인천가톨릭대학교;인천대학교;제물포캠퍼스;인천재능대학교;장안대학교;전남과학대학교;전남대학교;전북과학대학교;시간제;전북대학교;국립익산대학;전주대학교;정화예술대학;제주국제대학교;제주대학교;조선간호대학교;조선이공대학교;주안대학원대학교;중앙대학교;중원대학교;청강문화산업대학교;총신대학교;원격평생교육원;추계예술대학교;충남도립청양대학;충북대학교;충북보건과학대학교;칼빈대학교;포항대학교;한국교통대학;철도대학;한국기술교육대학교;국립한국농수산대학교;한국공학대학교;한국상담대학원대학교;한국성서대학교;한국승강기대학교;한국영상대학교;한국외국어대학교;한국전통문화대학교;한국폴리텍대학;한림국제대학원;한림대학교;한밭대학교;한림성심대학교;한성대학교;디자인아트교육원;한세대학교;한양대학교;한양사이버대학교;한양여자대학교;한일장신대학교;한자교육진흥회;합동신학대학원대학교;협성대학교;혜전대학교;호남대학교;호남신학대학교;호산대학교;호원대학교;ICT폴리텍대학;강서대학교;KDI국제정책대학원;TEPS;TOPCIT;UNIST", },
     new("Certpia", "Certpia 인터넷증명발급센터 (certpia.com)", Category.Education, "https://www.certpia.com/", "CertPia.com Certificate Issuance", [
          new("ViewerApp", "https://www.certpia.com/upfile/ocx/Plugin/viewerSetup.exe", SilentSwitches.InnoSetupSilentSwitch),
-    ], []),
+    ], []) { SearchKeywords = "시간제;교직원;독학사;가야대학교;가천대학교;의학전문대학원;메디컬캠퍼스;가톨릭관동대학교;가톨릭꽃동네대학교;가톨릭대학교;성신교정;성심교정;성의교정;강남대학교;강동대학교;강릉영동대학교;강원관광대학교;강원도립대학교;거제대학교;경기과학기술대학교;경남도립거창대학;경남도립남해대학;경동대학교;경북과학대학교;경북대학교;경북보건대학교;경상국립대학교;경성대학교;경운대학교;경인여자대학교;경일대학교;경희대학교;경희사이버대학교;계명대학교;계명문화대학교;계원예술대학교;고려사이버대학교;고려신학대학원;고신대학교;공주교육대학교;과학기술연합대학원대학교;UST;광양보건대학교;광주교육대학교;광주여자대학교;구미대학교;국가평생교육진흥원;국립강릉원주대학교;국립공주대학교;국립목포해양대학교;국립부경대학교;국립창원대학교;국립한국교통대학교;국립한국해양대학교;국제뇌교육종합대학원대학교;국제대학교;국제사이버대학교;금오공과대학교;김천대학교;김포대학교;김해대학교;나사렛대학교;남서울대학교;대구가톨릭대학교;대구공업대학교;대구과학대학교;대구대학교;대구보건대학교;대구사이버대학교;대구예술대학교;대구한의대학교;경산대학교;대덕대학교;대동대학교;대림대학교;대신대학교;대원대학교;덕성여자대학교;동국대학교;동남보건대학교;동명대학교;동아대학교;동아방송예술대학교;동양대학교;동양미래대학교;동원과학기술대학교;두원공과대학교;로이문화예술실용전문학교;배재대학교;백석대학교;백석문화대학교;부산가톨릭대학교;부산경상대학교;부산교육대학교;부산대학교;부산보건대학교;부산여자대학교;부산예술대학교;부산외국어대학교;상명대학교;상명대학교산학협력단;서경대학교;서라벌대학교;서울대학교;서울모드패션직업전문학교;서울벤처대학원대학교;서울사이버대학교;서울시설공단;추모시설운영처;서울외국어대학원대학교;서울현대실용전문학교;서일대학교;선린대학교;성운대학교;세경대학교;세계사이버대학;세명대학교;세종사이버대학교;수원여자대학교;순천향대학교;숭의여자대학교;신구대학교;신성대학교;신안산대학교;신한대학교;아세아항공직업전문학교;아신대학교;안동과학대학교;안동대학교;안양대학교;여주농업경영전문학교;연성대학교;연암공과대학교;연암대학교;영남대학교;영남사이버대학교;영남신학대학교;영남외국어대학;경북외국어테크노대학;영남이공대학교;영산대학교;오산대학교;용인예술과학대학교;우석대학교;울산대학교;위덕대학교;유원대학교;유한대학교;을지대학교;인덕대학교;인하공업전문대학;장로회신학대학교;전북대학교;전주기전대학;전주비전대학교;제주관광대학교;중부대학교;진주교육대학교;진주보건대학교;창신대학교;창원문성대학교;청운대학교;청주교육대학교;청주대학교;춘천교육대학교;춘해보건대학교;충북도립대학교;충청대학교;평택대학교;한경국립대학교;한국골프대학교;한국과학기술원;KAIST;한국관광대학교;한국교원대학교;한국독립교회선교단체연합회;한국복지대학교;한국복지사이버대학;한국생명공학연구원;한국열린사이버대학교;한국침례신학대학교;한국항공대학교;한국호텔관광실용전문학교;한국IT직업전문학교;한남대학교;한동대학교;한라대학교;한서대학교;한영대학교;홍익대학교;화성의과학대학교;화신사이버대학교;횃불트리니티신학대학원대학교;KAC한국예술원", },
     new("Knou", "한국방송통신대학교 증명서발급", Category.Education, "https://certi.knou.ac.kr/haksa/ass/cint/ASSInetCrtiWebLinkPage.do", "Korea National Open University Certificate Issuance", [
          new("OZReportLauncher", "https://www.knou.ac.kr/bbs/knou/56/74346/download.do", SilentSwitches.DefaultSilentSwitch),
          new("OZReportPrinter", "https://www.knou.ac.kr/bbs/knou/56/6389/download.do", SilentSwitches.DefaultSilentSwitch),
@@ -1883,6 +1883,9 @@ using (var catalogXmlStream = File.Open(catalogXmlFilePath, FileMode.Create, Fil
                          new XAttribute("Category", s.Category.ToString()),
                          new XAttribute("Url", s.Url),
                          new XAttribute("en-US-DisplayName", s.EnglishDisplayName),
+                         !string.IsNullOrWhiteSpace(s.SearchKeywords) ?
+                              new XElement("SearchKeywords", s.SearchKeywords) :
+                              default,
                          s.CompatNotes.Any() ?
                               new XElement("CompatNotes", string.Join(Environment.NewLine, s.CompatNotes)) :
                               default,
@@ -1894,7 +1897,9 @@ using (var catalogXmlStream = File.Open(catalogXmlFilePath, FileMode.Create, Fil
                               new XElement("Package",
                                    new XAttribute("Name", p.Name),
                                    new XAttribute("Url", p.Url),
-                                   new XAttribute("Arguments", p.Arguments)
+                                   !string.IsNullOrWhiteSpace(p.Arguments) ?
+                                        new XAttribute("Arguments", p.Arguments) :
+                                        default
                               )
                          )
                          ),
@@ -1908,7 +1913,7 @@ using (var catalogXmlStream = File.Open(catalogXmlFilePath, FileMode.Create, Fil
                               )
                          ) : default,
                          !string.IsNullOrWhiteSpace(s.CustomBootstrap) ?
-                              new XElement("CustomBootstrap", new XCData(s.CustomBootstrap)) :
+                              new XElement("CustomBootstrap", new XCData(Environment.NewLine + s.CustomBootstrap)) :
                               default
                     )
                )
@@ -1967,6 +1972,7 @@ using (var catalogJsonStream = File.Open(catalogJsonFilePath, FileMode.Create, F
                     e.CrxUrl,
                     e.ExtensionId
                }),
+               SearchKeywords = s.SearchKeywords,
                CompatNotes = string.Join(Environment.NewLine, s.CompatNotes),
                EnglishCompatNotes = string.Join(Environment.NewLine, s.EnglishCompatNotes),
                s.CustomBootstrap,
@@ -2384,6 +2390,7 @@ public sealed class EdgeExtensionCollection : KeyedCollection<string, EdgeExtens
 public sealed record class Service(
     string Id, string DisplayName, Category Category, string Url, string EnglishDisplayName, PackageCollection Packages, EdgeExtensionCollection EdgeExtensions)
 {
+     public string SearchKeywords { get; set; } = "";
      public List<string> CompatNotes { get; set; } = [];
      public List<string> EnglishCompatNotes { get; set; } = [];
      public string CustomBootstrap { get; set; } = "";
@@ -2422,13 +2429,20 @@ public static class Extensions
 {
      public static ServiceCollection UpdateRequirements(this ServiceCollection services)
      {
+          string[] keywords = ["astx", "ahnlabsafetx"];
           foreach (var service in services)
           {
                // ASTx Requirements
-               if (service.Packages.Any(x => x.Name.Contains("astx", StringComparison.OrdinalIgnoreCase)))
+               foreach (var eachPackage in service.Packages)
                {
-                    service.CompatNotes.Add("이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.");
-                    service.EnglishCompatNotes.Add("This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.");
+                    foreach (var eachKeyword in keywords)
+                    {
+                         if (eachPackage.Name.Contains(eachKeyword, StringComparison.OrdinalIgnoreCase))
+                         {
+                              service.CompatNotes.Add("이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/troubleshoot.html 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.");
+                              service.EnglishCompatNotes.Add("This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/troubleshoot.html and change the AST to allow remote connections before using the site.");
+                         }
+                    }
                }
           }
 
@@ -2446,5 +2460,5 @@ public static class SilentSwitches
 
      public static readonly string CustomSilenceSwitch = "/silence";
 
-     public static readonly string DefaultSilentSwitch = "/S";
+     public static readonly string DefaultSilentSwitch = "";
 }
