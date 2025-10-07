@@ -1,6 +1,7 @@
 #!/usr/bin/env dotnet
 #:property PublishAot=false
 
+using System.Collections.Concurrent;
 using System.Text;
 using System.Collections.ObjectModel;
 using System.Text.Encodings.Web;
@@ -1924,6 +1925,143 @@ using (var siteInfoCatalogJsonStream = File.Open(siteInfoCatalogJsonFilePath, Fi
      // JSON 파일로 저장
      await JsonSerializer.SerializeAsync(siteInfoCatalogJsonStream, jsonData, jsonOptions, cancellationToken).ConfigureAwait(false);
      Console.WriteLine($"SiteInfoCatalog JSON document created and saved as '{siteInfoCatalogJsonFilePath}'");
+}
+
+// URL 유효성 검증
+await ValidateUrlsAsync(catalog, sites, cancellationToken).ConfigureAwait(false);
+
+static async Task ValidateUrlsAsync(TableClothCatalog catalog, SiteCollection sites, CancellationToken cancellationToken = default)
+{
+    const string userAgent = "curl/8.4.0";
+    var errorLogBuffer = new ConcurrentQueue<string>();
+    
+    using var httpClient = new HttpClient
+    {
+        Timeout = TimeSpan.FromSeconds(15)
+    };
+    
+    if (!string.IsNullOrWhiteSpace(userAgent))
+    {
+        Console.WriteLine($"Info: Using User Agent String `{userAgent}`. Timeout: 5 seconds.");
+        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", userAgent);
+        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept", "*/*");
+    }
+    
+    var testTargets = new Dictionary<string, (string ElementType, int LineNumber)>();
+    
+    // Companion URL 수집
+    foreach (var companion in catalog.Companions)
+    {
+        if (!string.IsNullOrWhiteSpace(companion.Url) && 
+            !testTargets.ContainsKey(companion.Url))
+        {
+            testTargets[companion.Url] = ("Companion", 0);
+        }
+    }
+    
+    // Service URL 수집
+    foreach (var service in catalog.InternetServices)
+    {
+        if (!string.IsNullOrWhiteSpace(service.Url) && 
+            !testTargets.ContainsKey(service.Url))
+        {
+            testTargets[service.Url] = ("Service", 0);
+        }
+        
+        // Package URL 수집
+        foreach (var package in service.Packages)
+        {
+            if (!string.IsNullOrWhiteSpace(package.Url) && 
+                !testTargets.ContainsKey(package.Url))
+            {
+                testTargets[package.Url] = ("Package", 0);
+            }
+        }
+    }
+    
+    // Site Submenu URL 수집
+    foreach (var site in sites)
+    {
+        foreach (var submenu in site.Submenus)
+        {
+            if (!string.IsNullOrWhiteSpace(submenu.Url) && 
+                !testTargets.ContainsKey(submenu.Url))
+            {
+                testTargets[submenu.Url] = ("Site", 0);
+            }
+        }
+    }
+    
+    Console.WriteLine($"Info: Starting URL validation for {testTargets.Count} unique URLs...");
+    
+    var tasks = new List<Task<bool>>(testTargets.Count);
+    foreach (var target in testTargets)
+    {
+        tasks.Add(TestUrlAsync(errorLogBuffer, httpClient, target.Key, target.Value.ElementType, target.Value.LineNumber, cancellationToken));
+    }
+    
+    var results = await Task.WhenAll(tasks).ConfigureAwait(false);
+    var succeedCount = results.Count(x => x);
+    var failedCount = results.Count(x => !x);
+    
+    Console.WriteLine($"\nInfo: URL validation completed.");
+    Console.WriteLine($"Info: Scheduled: {testTargets.Count} / Returned: {results.Length} / Succeed: {succeedCount} / Failed: {failedCount}");
+    
+    if (failedCount > 0)
+    {
+        Console.WriteLine("\nWarning: Failed URLs:");
+        foreach (var errorLog in errorLogBuffer.ToList())
+        {
+            Console.WriteLine(errorLog);
+        }
+    }
+    else
+    {
+        Console.WriteLine("Success: All URLs are valid!");
+    }
+}
+
+static async Task<bool> TestUrlAsync(
+    ConcurrentQueue<string> errorLogBuffer, 
+    HttpClient httpClient, 
+    string urlString, 
+    string element, 
+    int lineNumber, 
+    CancellationToken cancellationToken = default)
+{
+    var message = string.Empty;
+    
+    try
+    {
+        var response = await httpClient.GetAsync(urlString, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+        
+        if (response == null || !response.IsSuccessStatusCode)
+        {
+            message = $"Warning: Cannot fetch the URI `{urlString}` (Remote response code: {(int?)response?.StatusCode}) - (Element: `{element}`, Line: `{lineNumber}`)";
+            await Console.Out.WriteLineAsync(message.AsMemory(), cancellationToken).ConfigureAwait(false);
+            errorLogBuffer.Enqueue(message);
+            return false;
+        }
+    }
+    catch (AggregateException aex)
+    {
+        var ex = aex.InnerException ?? aex;
+        message = $"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} thrown. {ex.InnerException?.Message ?? ex.Message}) - (Element: `{element}`, Line: `{lineNumber}`)";
+        await Console.Out.WriteLineAsync(message.AsMemory(), cancellationToken).ConfigureAwait(false);
+        errorLogBuffer.Enqueue(message);
+        return false;
+    }
+    catch (Exception ex)
+    {
+        message = $"Warning: Cannot fetch the URI `{urlString}` ({ex.GetType().Name} thrown. {ex.InnerException?.Message ?? ex.Message}) - (Element: `{element}`, Line: `{lineNumber}`)";
+        await Console.Out.WriteLineAsync(message.AsMemory(), cancellationToken).ConfigureAwait(false);
+        errorLogBuffer.Enqueue(message);
+        return false;
+    }
+    
+    message = $"Info: Test succeed on `{urlString}`.";
+    await Console.Out.WriteLineAsync(message.AsMemory(), cancellationToken).ConfigureAwait(false);
+    return true;
 }
 
 public sealed record class Companion(
