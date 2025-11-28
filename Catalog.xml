@@ -1726,17 +1726,15 @@ Start-Service -ServiceName TrustedInstaller
     </Service>
     <Service Id="Ecfs" DisplayName="대한민국 법원 전자소송" Category="Government" Url="https://ecfs.scourt.go.kr/">
       <Packages>
-        <Package Name="TouchEnKey32" Url="https://ecfs.scourt.go.kr/raonsecure/TouchEn/nxKey/module/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
-        <Package Name="AnySign" Url="https://ecfs.scourt.go.kr/AnySign/AnySign4PC/AnySign_Installer.exe" Arguments="/S" />
-        <Package Name="Markany" Url="https://ecfs.scourt.go.kr/markany/bin/installer.exe" Arguments="/silent" />
-        <Package Name="INNORIX" Url="https://ecfs.scourt.go.kr/innorix/install/INNORIX-Agent.exe" Arguments="/silent" />
-        <Package Name="Papyrus" Url="https://ecfs.scourt.go.kr/ecfdocs/install/etc/Papyrus-PlugIn-agent_5.0.4.186.exe" Arguments="/silent" />
-        <Package Name="Papyrus-PlugIn-web" Url="https://ecfs.scourt.go.kr/ecfdocs/install/etc/Papyrus-PlugIn-web.exe" Arguments="/silent" />
-        <Package Name="Papyrus-PlugIn-xfa" Url="https://ecfs.scourt.go.kr/papyrus/install/Papyrus-PlugIn-xfa.exe" Arguments="/silent" />
-        <Package Name="BankpayEFT" Url="https://www.bankpay.or.kr/download/BankPayEFT.exe" Arguments="/silent" />
-        <Package Name="yessign5" Url="https://www.bankpay.or.kr/download/yessign5Install.exe" Arguments="/silent" />
-        <Package Name="DetectorX" Url="https://ecfs.scourt.go.kr/ecfdocs/install/Advscourt/DetectorX_Advscourt.exe" Arguments="/silent" />
-        <Package Name="ezPDF" Url="https://ecfs.scourt.go.kr/ecfdocs/install/ezPDF%20WorkBoard2.0/ezPDF_WorkBoard_setup.exe" Arguments="/silent" />
+        <Package Name="KSCertRelay_nx" Url="https://ecfs.scourt.go.kr/psp/cm/raonsecure/TouchEn/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" />
+        <Package Name="AnySign" Url="https://ecfs.scourt.go.kr/psp/cm/AnySignPlus/AnySign_Installer.exe" />
+        <Package Name="NOS" Url="https://ecfs.scourt.go.kr/psp/cm/pluginfree/nos_setup(2025.1.20.2).exe" />
+        <Package Name="Papyrus" Url="https://ecfs.scourt.go.kr/psp/cm/papyrus/Papyrus-PlugIn-agent_5.0.6.324.exe" />
+        <Package Name="ePageSafer" Url="https://ecfs.scourt.go.kr/psp/cm/markany/bin/installer_20241224.exe" />
+        <Package Name="BankpayEFT" Url="https://www.bankpay.or.kr/download/BankPayEFT.exe" />
+        <Package Name="yessign5" Url="https://www.bankpay.or.kr/download/yessign5Install.exe" />
+        <Package Name="SgvExternalDownloader" Url="https://ecfs.scourt.go.kr/sgvo/cm/install/SgvExternalDownloader.msi" />
+        <Package Name="SgvExternalCaseRecordInstaller" Url="https://ecfs.scourt.go.kr/sgvo/cm/install/SgvExternalCaseRecordInstaller.msi" />
       </Packages>
     </Service>
     <Service Id="Ekt" DisplayName="대한민국 법원 전자공탁" Category="Government" Url="https://ekt.scourt.go.kr/">
