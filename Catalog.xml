@@ -1971,6 +1971,12 @@ Start-Service -ServiceName TrustedInstaller
         <Package Name="KeySharp Biz" Url="https://apply.lh.or.kr/raonnx/ksbiz/module/KSbiz_Installer_32bit.exe" Arguments="/silence" />
       </Packages>
     </Service>
+    <Service Id="Appeal" DisplayName="행정심판" Category="Government" Url="https://simpan.go.kr/">
+      <Packages>
+        <Package Name="TouchEnKey32" Url="https://simpan.go.kr/raonnx/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence"></Package>
+        <Package Name="KeySharpBiz" Url="https://simpan.go.kr/raonnx/ksbiz/module/KSbiz_Installer_32bit.exe"></Package>
+      </Packages>
+    </Service>
     <!-- 공공기관 끝 -->
     <!-- 일반 서비스 시작 -->
     <Service Id="CultureLand" DisplayName="컬처랜드" Category="Other" Url="https://www.cultureland.co.kr/">
