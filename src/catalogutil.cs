@@ -1,4 +1,9 @@
-﻿using SixLabors.ImageSharp.Formats.Png;
+#!/usr/bin/env dotnet
+#:package IronSoftware.System.Drawing@2025.9.3
+#:property PublishAot=false
+
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Png;
 using System.Collections.Concurrent;
 using System.IO.Compression;
 using System.Text;
@@ -6,49 +11,81 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
 
-await AppMainAsync(args, default);
+var sourceDirectory = args.ElementAtOrDefault(0);
+var targetDirectory = args.ElementAtOrDefault(1);
 
-static async Task AppMainAsync(string[] args, CancellationToken cancellationToken = default)
+if (string.IsNullOrWhiteSpace(sourceDirectory) ||
+    !Directory.Exists(sourceDirectory))
 {
-    var sourceDirectory = args.ElementAtOrDefault(0);
-    var targetDirectory = args.ElementAtOrDefault(1);
+    Console.Error.WriteLine("Error: Please specify source directory to run this tool.");
+    Environment.Exit(1);
+    return;
+}
 
-    if (string.IsNullOrWhiteSpace(sourceDirectory) ||
-        !Directory.Exists(sourceDirectory))
+if (string.IsNullOrWhiteSpace(targetDirectory))
+{
+    Console.Error.WriteLine("Error: Please specify target directory to run this tool.");
+    Environment.Exit(1);
+    return;
+}
+
+// CancellationTokenSource 생성 및 Ctrl+C/종료 시그널 연결
+using var cts = new CancellationTokenSource();
+var cancellationToken = cts.Token;
+var gracefulShutdownTimeout = TimeSpan.FromSeconds(3); // Graceful shutdown 타임아웃
+
+Console.CancelKeyPress += (sender, e) =>
+{
+    if (cts.IsCancellationRequested)
     {
-        Console.Error.WriteLine("Error: Please specify source directory to run this tool.");
-        Environment.Exit(1);
+        // 두 번째 Ctrl+C: 강제 종료
+        Console.Out.WriteLine("Info: Force exit requested. Terminating immediately...");
+        e.Cancel = false;
         return;
     }
 
-    if (string.IsNullOrWhiteSpace(targetDirectory))
+    Console.Out.WriteLine($"Info: Cancellation requested. Shutting down gracefully (timeout: {gracefulShutdownTimeout.TotalSeconds}s)...");
+    Console.Out.WriteLine("Info: Press Ctrl+C again to force exit.");
+    e.Cancel = true; // 즉시 종료 방지, graceful shutdown 허용
+    cts.CancelAfter(gracefulShutdownTimeout); // 타임아웃 후 강제 취소
+    cts.Cancel();
+};
+
+AppDomain.CurrentDomain.ProcessExit += (sender, e) =>
+{
+    if (!cts.IsCancellationRequested)
     {
-        Console.Error.WriteLine("Error: Please specify target directory to run this tool.");
-        Environment.Exit(1);
-        return;
+        Console.Out.WriteLine("Info: Process exit requested. Shutting down...");
+        cts.CancelAfter(gracefulShutdownTimeout);
+        cts.Cancel();
     }
+};
 
-    try
-    {
-        Console.Out.WriteLine($"Info: Source directory path: `{sourceDirectory}`");
-        Console.Out.WriteLine($"Info: Target directory path: `{targetDirectory}`");
+try
+{
+    Console.Out.WriteLine($"Info: Source directory path: `{sourceDirectory}`");
+    Console.Out.WriteLine($"Info: Target directory path: `{targetDirectory}`");
 
-        using var logWriter = PrepareOutputDirectory(sourceDirectory, targetDirectory);
-        var catalog = await LoadCatalogXmlFile(targetDirectory, cancellationToken).ConfigureAwait(false);
+    using var logWriter = PrepareOutputDirectory(sourceDirectory, targetDirectory);
+    var catalog = await LoadCatalogXmlFile(targetDirectory, cancellationToken).ConfigureAwait(false);
 
-        ConvertSiteLogoImagesIntoIconFiles(catalog, logWriter, targetDirectory);
-        CreateImageResourceZipFile(catalog, logWriter, targetDirectory);
-        ValidatingCatalogSchemaFile(logWriter, targetDirectory, true);
+    ConvertSiteLogoImagesIntoIconFiles(catalog, logWriter, targetDirectory);
+    CreateImageResourceZipFile(catalog, logWriter, targetDirectory);
+    ValidatingCatalogSchemaFile(logWriter, targetDirectory, true);
 
-        logWriter.WriteLine(Console.Out, "Info: Catalog builder runs with succeed result.");
-        logWriter.Flush();
-        Environment.Exit(0);
-    }
-    catch (Exception thrownException)
-    {
-        Console.Error.WriteLine($"Error: {thrownException}");
-        Environment.Exit(2);
-    }
+    logWriter.WriteLine(Console.Out, "Info: Catalog builder runs with succeed result.");
+    logWriter.Flush();
+    Environment.Exit(0);
+}
+catch (OperationCanceledException)
+{
+    Console.Error.WriteLine("Error: Operation was cancelled.");
+    Environment.Exit(130); // 표준 SIGINT 종료 코드
+}
+catch (Exception thrownException)
+{
+    Console.Error.WriteLine($"Error: {thrownException}");
+    Environment.Exit(2);
 }
 
 static string? GetPositionInfo(IXmlLineInfo? lineInfo)

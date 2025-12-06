@@ -19,15 +19,11 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
-
-    # Build Catalog Builder tool
-    - name: Build Catalog Builder Tool
-      run: dotnet build src/TableCloth.CatalogBuilder/TableCloth.CatalogBuilder.csproj --configuration Release
+        dotnet-version: 10.0.x
 
     # Run Catalog Builder tool
     - name: Run Catalog Builder Tool
-      run: dotnet run --project src/TableCloth.CatalogBuilder/TableCloth.CatalogBuilder.csproj --configuration Release -- ./docs/ ./outputs/
+      run: dotnet run --file src/catalogutil.cs -- ./docs/ ./outputs/
 
     # Create build info file
     - name: Create Build Info
