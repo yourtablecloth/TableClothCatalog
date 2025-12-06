@@ -128,12 +128,13 @@ static async Task<PackageInfo?> FetchLatestPackageInfoAsync(
         var response = await httpClient.GetStringAsync(apiUrl, cancellationToken);
         
         // JSON 파싱하여 디렉터리 목록 가져오기
-        var directories = System.Text.Json.JsonDocument.Parse(response).RootElement;
+        using var directories = System.Text.Json.JsonDocument.Parse(response);
+        var directoriesRoot = directories.RootElement;
         
         // 버전 번호로 보이는 디렉터리 찾기 (숫자로 시작하는 것들)
         var versionDirs = new List<(string Name, string Path, string Url)>();
         
-        foreach (var item in directories.EnumerateArray())
+        foreach (var item in directoriesRoot.EnumerateArray())
         {
             if (item.GetProperty("type").GetString() == "dir")
             {
@@ -163,7 +164,8 @@ static async Task<PackageInfo?> FetchLatestPackageInfoAsync(
         
         // installer manifest 파일 가져오기
         var filesResponse = await httpClient.GetStringAsync(latestVersion.Url, cancellationToken);
-        var files = System.Text.Json.JsonDocument.Parse(filesResponse).RootElement;
+        using var filesDoc = System.Text.Json.JsonDocument.Parse(filesResponse);
+        var files = filesDoc.RootElement;
         
         string? installerManifestUrl = null;
         
