@@ -142,9 +142,9 @@ static async Task<PackageInfo?> FetchLatestPackageInfoAsync(
                 var path = item.GetProperty("path").GetString();
                 var url = item.GetProperty("url").GetString();
                 
-                if (!string.IsNullOrEmpty(name) && char.IsDigit(name[0]))
+                if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(path) && !string.IsNullOrEmpty(url) && char.IsDigit(name[0]))
                 {
-                    versionDirs.Add((name!, path!, url!));
+                    versionDirs.Add((name, path, url));
                 }
             }
         }
@@ -232,7 +232,15 @@ static Version ParseVersion(string versionString)
     try
     {
         // 버전 문자열에서 숫자와 점만 추출
-        var cleanVersion = new string(versionString.Where(c => char.IsDigit(c) || c == '.').ToArray());
+        var sb = new StringBuilder(versionString.Length);
+        foreach (var c in versionString)
+        {
+            if (char.IsDigit(c) || c == '.')
+            {
+                sb.Append(c);
+            }
+        }
+        var cleanVersion = sb.ToString();
         
         // 버전 파싱 시도
         if (Version.TryParse(cleanVersion, out var version))
