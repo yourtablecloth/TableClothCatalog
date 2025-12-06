@@ -35,7 +35,6 @@ Console.CancelKeyPress += (sender, e) =>
     Console.Out.WriteLine("Info: Press Ctrl+C again to force exit.");
     e.Cancel = true;
     cts.CancelAfter(gracefulShutdownTimeout);
-    cts.Cancel();
 };
 
 AppDomain.CurrentDomain.ProcessExit += (sender, e) =>
@@ -43,7 +42,6 @@ AppDomain.CurrentDomain.ProcessExit += (sender, e) =>
     if (!cts.IsCancellationRequested)
     {
         Console.Out.WriteLine("Info: Process exit requested. Shutting down...");
-        cts.CancelAfter(gracefulShutdownTimeout);
         cts.Cancel();
     }
 };
@@ -240,7 +238,13 @@ static Version ParseVersion(string versionString)
                 sb.Append(c);
             }
         }
-        var cleanVersion = sb.ToString();
+        var cleanVersion = sb.ToString().TrimEnd('.');
+        
+        // 빈 문자열이거나 점으로만 구성된 경우 실패
+        if (string.IsNullOrWhiteSpace(cleanVersion))
+        {
+            return new Version(0, 0, 0, 0);
+        }
         
         // 버전 파싱 시도
         if (Version.TryParse(cleanVersion, out var version))
