@@ -25,6 +25,12 @@ jobs:
     - name: Run Catalog Builder Tool
       run: dotnet run --file src/catalogutil.cs -- ./docs/ ./outputs/
 
+    # Run WinGet Package Feed tool
+    - name: Run WinGet Package Feed Tool
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: dotnet run --file src/wingetfeed.cs -- ./outputs/
+
     # Create build info file
     - name: Create Build Info
       run: |
