@@ -14,7 +14,7 @@
   - XML 파일 편집은 [Microsoft XML Notepad](https://microsoft.github.io/XmlNotepad/)를 사용하시는 것을 권장합니다.
 - [docs/sites.xml](docs/sites.xml): Internet Explorer Mode로 띄우려는 웹 사이트들의 목록을 저장하고 관리하는 XML 파일입니다. (식탁보 0.5.5 버전부터 사용)
   - XML 파일 편집은 [Microsoft XML Notepad](https://microsoft.github.io/XmlNotepad/)를 사용하시는 것을 권장합니다.
-  - Microsoft Edge 그룹 정책에서 https://yourtablecloth.app/TableClothCatalog/sites.xml 주소를 직접 지정하여 설정을 적용할 수 있습니다.
+  - Microsoft Edge 그룹 정책에서 <https://yourtablecloth.app/TableClothCatalog/sites.xml> 주소를 직접 지정하여 설정을 적용할 수 있습니다.
 - [docs/images/&lt;Category&gt;/&lt;Id&gt;.png](docs/images/): `<Category>`와 `<Id>`에 해당하는 식별자를 넣어 고해상도 투명 PNG 로고 이미지 파일을 등록하여 관리합니다. (예: [docs/images/Banking/WooriBank.png](docs/images/Banking/WooriBank.png))
 - [docs/instruction.md](docs/instruction.md): 식탁보 AI 서비스에서 사용할 시스템 프롬프트를 담는 마크다운 형식의 파일입니다. 이 파일에 금융/공공 서비스에 관한 지식, 주요 금융/공공 서비스 업무 별 웹 페이지 주소 (바로 가기)를 기재할 수 있습니다.
   - 마크다운 형식의 파일이므로, [마크다운 린터 플러그인](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)를 사용하여 커밋/PR 제출 전 확인하는 것을 권장합니다.
@@ -65,10 +65,42 @@ dotnet run .\src\checkimages.cs .\docs\Catalog.xml .\docs\images
 ```
 
 이 도구는 다음을 검사합니다:
+
 - **누락된 이미지**: Catalog.xml에 서비스는 등록되어 있지만 `docs/images/<Category>/<Id>.png` 파일이 없는 경우
 - **미사용 이미지**: 이미지 파일은 존재하지만 Catalog.xml에 해당 서비스가 없는 경우
 
 새로운 서비스를 추가할 때는 반드시 해당 서비스의 로고 이미지도 함께 추가해주세요.
+
+#### 파비콘 추출 도구 (fetchfavicon.cs)
+
+새로운 서비스를 추가할 때 로고 이미지를 쉽게 가져올 수 있는 도구입니다. 웹사이트에서 파비콘을 자동으로 추출하고 지정한 크기로 업스케일합니다.
+
+```powershell
+# 기본 사용법 (256x256으로 업스케일)
+dotnet run .\src\fetchfavicon.cs https://www.example.com .\docs\images\Banking\Example.png
+
+# 크기 지정 (512x512)
+dotnet run .\src\fetchfavicon.cs https://www.example.com .\docs\images\Banking\Example.png 512
+```
+
+이 도구는 다음 순서로 아이콘을 찾습니다:
+
+1. HTML의 `<link rel="icon">` 태그에서 지정된 아이콘
+2. Apple Touch Icon (일반적으로 가장 고해상도)
+3. Open Graph 이미지
+4. 기본 `/favicon.ico` 또는 `/favicon.png`
+
+**참고**: 이 도구로 생성된 이미지는 임시용입니다. 가능하면 해당 기관의 공식 로고 이미지로 교체해주세요.
+
+#### 💡 AI를 활용한 이미지 품질 개선
+
+`fetchfavicon.cs` 도구는 규칙 기반으로 파비콘을 추출하고 업스케일하지만, 저해상도(16x16) 아이콘을 확대할 경우 품질이 저하될 수 있습니다. 더 나은 결과를 위해 AI 도구 활용을 권장합니다:
+
+- **이미지 업스케일링**: [Google Gemini](https://gemini.google.com/), [ChatGPT](https://chatgpt.com/) 등의 AI 에이전트에게 저해상도 아이콘을 고해상도로 업스케일해달라고 요청할 수 있습니다.
+- **로고 검색**: AI에게 특정 기관의 공식 로고 이미지를 찾아달라고 요청하면 더 정확한 결과를 얻을 수 있습니다.
+- **SVG 변환**: 저해상도 래스터 이미지를 벡터(SVG)로 변환한 후 다시 고해상도 PNG로 내보내는 방법도 효과적입니다.
+
+특히 파비콘이 없거나 매우 작은 아이콘만 제공하는 사이트의 경우, AI 도구를 활용하면 훨씬 깔끔한 로고 이미지를 얻을 수 있습니다.
 
 ### 자동 응답 설치 옵션을 찾는 방법
 
