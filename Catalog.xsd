@@ -35,12 +35,7 @@
       <xs:documentation>식탁보 프로그램에서 사용하는 보조 프로그램들의 정보들을 담는 컬렉션 요소입니다. 추후 사용을 위해 예약된 요소입니다.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="Companion" type="CatalogCompanion" minOccurs="0" maxOccurs="unbounded">
-        <xs:unique name="CompanionIdUniqueness">
-          <xs:selector xpath="./*" />
-          <xs:field xpath="@Id" />
-        </xs:unique>
-      </xs:element>
+      <xs:element name="Companion" type="CatalogCompanion" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CatalogPackageInformation">
@@ -68,12 +63,7 @@
       <xs:documentation>특정 인터넷 서비스에서 사용하는 플러그인 정보들을 담는 컬렉션 요소입니다.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="Package" type="CatalogPackageInformation" minOccurs="0" maxOccurs="unbounded">
-        <xs:unique name="PackageNameUniqueness">
-          <xs:selector xpath="./*" />
-          <xs:field xpath="@Name" />
-        </xs:unique>
-      </xs:element>
+      <xs:element name="Package" type="CatalogPackageInformation" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CatalogEdgeExtensionInformation">
@@ -101,12 +91,7 @@
       <xs:documentation>특정 인터넷 서비스에서 사용하는 Microsoft Edge (Chromium) 플러그인 정보들을 담는 컬렉션 요소입니다.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="EdgeExtension" type="CatalogEdgeExtensionInformation" minOccurs="0" maxOccurs="unbounded">
-        <xs:unique name="EdgeExtensionNameUniqueness">
-          <xs:selector xpath="./*" />
-          <xs:field xpath="@Name" />
-        </xs:unique>
-      </xs:element>
+      <xs:element name="EdgeExtension" type="CatalogEdgeExtensionInformation" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="CatalogInternetServiceCategory">
@@ -223,12 +208,7 @@
       <xs:documentation>개별 인터넷 사이트들의 정보를 담는 컬렉션 요소입니다.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="Service" type="CatalogInternetService" maxOccurs="unbounded">
-        <xs:unique name="ServiceIdUniqueness">
-          <xs:selector xpath="./*" />
-          <xs:field xpath="@Id" />
-        </xs:unique>
-      </xs:element>
+      <xs:element name="Service" type="CatalogInternetService" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CatalogDocument">
