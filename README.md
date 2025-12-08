@@ -42,6 +42,34 @@ dotnet run --project src/TableCloth.CatalogBuilder/TableCloth.CatalogBuilder.csp
 
 도구를 실행하여 나타나는 Error나 Warning을 최대한 제거하는 것이 좋습니다. Catalog.xml 파일을 수정하여 제출하기 전에 검사를 진행하는 것을 권장합니다.
 
+### 카탈로그 품질 관리 도구
+
+카탈로그의 품질을 유지하기 위해 아래의 도구들을 활용할 수 있습니다. Pull Request를 제출하기 전에 이 도구들을 실행하여 문제가 없는지 확인해주세요.
+
+#### 카탈로그 유틸리티 (catalogutil.cs)
+
+XML 스키마 검증, 이미지 최적화, 출력 파일 생성 등을 수행하는 도구입니다.
+
+```powershell
+# 리포지터리 루트 디렉터리에서 실행
+dotnet run .\src\catalogutil.cs .\docs\ .\outputs\
+```
+
+#### 이미지 검증 도구 (checkimages.cs)
+
+각 서비스 ID에 해당하는 로고 이미지가 올바르게 존재하는지 검증하는 도구입니다. 누락된 이미지나 사용되지 않는 이미지를 찾아줍니다.
+
+```powershell
+# 리포지터리 루트 디렉터리에서 실행
+dotnet run .\src\checkimages.cs .\docs\Catalog.xml .\docs\images
+```
+
+이 도구는 다음을 검사합니다:
+- **누락된 이미지**: Catalog.xml에 서비스는 등록되어 있지만 `docs/images/<Category>/<Id>.png` 파일이 없는 경우
+- **미사용 이미지**: 이미지 파일은 존재하지만 Catalog.xml에 해당 서비스가 없는 경우
+
+새로운 서비스를 추가할 때는 반드시 해당 서비스의 로고 이미지도 함께 추가해주세요.
+
 ### 자동 응답 설치 옵션을 찾는 방법
 
 일반적으로 무인 설치 옵션은 설치 프로그램 명령줄 뒤에 `/?`나 `/help`, `/h`, `--help` 등 도움말을 표시하는 것과 관련된 스위치를 대입하여 실행하면 도움말과 함께 자세한 자동 응답 설치 옵션을 사용하는 방법을 표시합니다.
