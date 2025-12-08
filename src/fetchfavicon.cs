@@ -11,6 +11,7 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using SixImage = SixLabors.ImageSharp.Image;
 using SixSize = SixLabors.ImageSharp.Size;
@@ -237,6 +238,31 @@ async Task<List<string>> GetFaviconUrlsAsync(HttpClient client, Uri baseUri)
                 }
             }
         }
+
+        // Look for Web App Manifest (manifest.json or site.webmanifest)
+        var manifestLinks = doc.DocumentNode.SelectNodes("//link[@rel='manifest']");
+        if (manifestLinks != null)
+        {
+            foreach (var manifestLink in manifestLinks)
+            {
+                var manifestHref = manifestLink.GetAttributeValue("href", null);
+                if (!string.IsNullOrEmpty(manifestHref))
+                {
+                    var manifestUrl = GetAbsoluteUrl(baseUri, manifestHref);
+                    if (!string.IsNullOrEmpty(manifestUrl))
+                    {
+                        var manifestIcons = await GetIconsFromManifestAsync(client, baseUri, manifestUrl);
+                        foreach (var iconUrl in manifestIcons)
+                        {
+                            if (foundHrefs.Add(iconUrl))
+                            {
+                                urls.Add(iconUrl);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     catch (Exception ex)
     {
@@ -245,15 +271,71 @@ async Task<List<string>> GetFaviconUrlsAsync(HttpClient client, Uri baseUri)
         Console.ResetColor();
     }
 
-    // Always try common favicon locations
+    // Try to fetch common manifest locations
+    var manifestPaths = new[]
+    {
+        "/manifest.json",
+        "/site.webmanifest",
+        "/manifest.webmanifest"
+    };
+
+    foreach (var manifestPath in manifestPaths)
+    {
+        try
+        {
+            var manifestUrl = new Uri(baseUri, manifestPath).AbsoluteUri;
+            var manifestIcons = await GetIconsFromManifestAsync(client, baseUri, manifestUrl);
+            foreach (var iconUrl in manifestIcons)
+            {
+                if (!urls.Contains(iconUrl, StringComparer.OrdinalIgnoreCase))
+                {
+                    urls.Add(iconUrl);
+                }
+            }
+        }
+        catch { }
+    }
+
+    // Always try common favicon locations (including mobile device icons)
     var commonPaths = new[]
     {
+        // Standard favicons
         "/favicon.ico",
         "/favicon.png",
+        "/favicon-32x32.png",
+        "/favicon-16x16.png",
+        // Apple Touch Icons (iOS)
         "/apple-touch-icon.png",
         "/apple-touch-icon-180x180.png",
         "/apple-touch-icon-152x152.png",
-        "/apple-touch-icon-precomposed.png"
+        "/apple-touch-icon-144x144.png",
+        "/apple-touch-icon-120x120.png",
+        "/apple-touch-icon-114x114.png",
+        "/apple-touch-icon-76x76.png",
+        "/apple-touch-icon-72x72.png",
+        "/apple-touch-icon-60x60.png",
+        "/apple-touch-icon-57x57.png",
+        "/apple-touch-icon-precomposed.png",
+        // Android/Chrome icons
+        "/android-chrome-512x512.png",
+        "/android-chrome-384x384.png",
+        "/android-chrome-256x256.png",
+        "/android-chrome-192x192.png",
+        "/chrome-touch-icon-192x192.png",
+        // Microsoft Tile icons
+        "/mstile-310x310.png",
+        "/mstile-150x150.png",
+        "/mstile-144x144.png",
+        // Safari Pinned Tab
+        "/safari-pinned-tab.svg",
+        // Common icon paths
+        "/icon.png",
+        "/icon-512x512.png",
+        "/icon-256x256.png",
+        "/icon-192x192.png",
+        "/logo.png",
+        "/images/favicon.png",
+        "/assets/favicon.png"
     };
 
     foreach (var path in commonPaths)
@@ -265,12 +347,88 @@ async Task<List<string>> GetFaviconUrlsAsync(HttpClient client, Uri baseUri)
         }
     }
 
+    // Add favicon service providers as fallback (Google and DuckDuckGo)
+    var domain = baseUri.Host;
+    var faviconServices = new[]
+    {
+        // Google Favicon Service - supports various sizes
+        $"https://www.google.com/s2/favicons?domain={domain}&sz=128",
+        $"https://www.google.com/s2/favicons?domain={domain}&sz=64",
+        $"https://www.google.com/s2/favicons?domain={domain}&sz=32",
+        // DuckDuckGo Favicon Service - returns ICO with multiple sizes
+        $"https://icons.duckduckgo.com/ip3/{domain}.ico"
+    };
+
+    foreach (var serviceUrl in faviconServices)
+    {
+        if (!urls.Contains(serviceUrl, StringComparer.OrdinalIgnoreCase))
+        {
+            urls.Add(serviceUrl);
+        }
+    }
+
     // Sort URLs to prioritize larger icons (based on filename patterns)
     urls = urls
         .OrderByDescending(u => GetIconPriority(u))
         .ToList();
 
     return urls;
+}
+
+// Parse Web App Manifest to get icon URLs
+async Task<List<string>> GetIconsFromManifestAsync(HttpClient client, Uri baseUri, string manifestUrl)
+{
+    var icons = new List<string>();
+    
+    try
+    {
+        var manifestJson = await client.GetStringAsync(manifestUrl);
+        using var doc = JsonDocument.Parse(manifestJson);
+        
+        if (doc.RootElement.TryGetProperty("icons", out var iconsElement) && 
+            iconsElement.ValueKind == JsonValueKind.Array)
+        {
+            foreach (var iconElement in iconsElement.EnumerateArray())
+            {
+                if (iconElement.TryGetProperty("src", out var srcElement))
+                {
+                    var src = srcElement.GetString();
+                    if (!string.IsNullOrEmpty(src))
+                    {
+                        // Manifest URLs are relative to manifest location, not base URI
+                        var manifestUri = new Uri(manifestUrl);
+                        var absoluteUrl = GetAbsoluteUrl(manifestUri, src) ?? GetAbsoluteUrl(baseUri, src);
+                        if (!string.IsNullOrEmpty(absoluteUrl))
+                        {
+                            icons.Add(absoluteUrl);
+                        }
+                    }
+                }
+            }
+        }
+        
+        Console.ForegroundColor = ConsoleColor.DarkGray;
+        Console.WriteLine($"  Found {icons.Count} icon(s) in manifest: {manifestUrl}");
+        Console.ResetColor();
+    }
+    catch (HttpRequestException)
+    {
+        // Manifest not found - this is expected for many sites
+    }
+    catch (JsonException ex)
+    {
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.WriteLine($"  Warning: Could not parse manifest {manifestUrl}: {ex.Message}");
+        Console.ResetColor();
+    }
+    catch (Exception ex)
+    {
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.WriteLine($"  Warning: Error fetching manifest {manifestUrl}: {ex.Message}");
+        Console.ResetColor();
+    }
+    
+    return icons;
 }
 
 string? GetAbsoluteUrl(Uri baseUri, string href)
@@ -304,6 +462,13 @@ int GetIconPriority(string url)
     // Prefer apple-touch-icon (usually larger)
     if (lowerUrl.Contains("apple-touch-icon")) priority += 200;
     
+    // Prefer Android/Chrome icons (usually high resolution)
+    if (lowerUrl.Contains("android-chrome")) priority += 250;
+    if (lowerUrl.Contains("chrome-touch-icon")) priority += 200;
+    
+    // Microsoft tile icons
+    if (lowerUrl.Contains("mstile")) priority += 150;
+    
     // Extract size from URL if present
     var sizeMatch = Regex.Match(lowerUrl, @"(\d+)x(\d+)");
     if (sizeMatch.Success && int.TryParse(sizeMatch.Groups[1].Value, out var size))
@@ -316,6 +481,19 @@ int GetIconPriority(string url)
     if (sizeMatch2.Success && int.TryParse(sizeMatch2.Groups[1].Value, out var size2))
     {
         priority += size2;
+    }
+
+    // Handle Google Favicon Service size parameter (e.g., &sz=128)
+    var googleSizeMatch = Regex.Match(lowerUrl, @"[?&]sz=(\d+)");
+    if (googleSizeMatch.Success && int.TryParse(googleSizeMatch.Groups[1].Value, out var googleSize))
+    {
+        priority += googleSize;
+    }
+
+    // Favicon services are fallbacks, give them lower priority than direct sources
+    if (lowerUrl.Contains("google.com/s2/favicons") || lowerUrl.Contains("icons.duckduckgo.com"))
+    {
+        priority -= 500;
     }
 
     return priority;
