@@ -1710,15 +1710,16 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
     </Service>
     <Service Id="Ecfs" DisplayName="대한민국 법원 전자소송" Category="Government" Url="https://ecfs.scourt.go.kr/">
       <Packages>
-        <Package Name="KSCertRelay_nx" Url="https://ecfs.scourt.go.kr/psp/cm/raonsecure/TouchEn/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" />
-        <Package Name="AnySign" Url="https://ecfs.scourt.go.kr/psp/cm/AnySignPlus/AnySign_Installer.exe" />
-        <Package Name="nProtect Online Security" Url="https://ecfs.scourt.go.kr/psp/cm/pluginfree/nos_setup(2025.1.20.2).exe" />
-        <Package Name="Papyrus" Url="https://ecfs.scourt.go.kr/psp/cm/papyrus/Papyrus-PlugIn-agent_5.0.6.324.exe" />
-        <Package Name="ePageSafer" Url="https://ecfs.scourt.go.kr/psp/cm/markany/bin/installer_20241224.exe" />
-        <Package Name="BankpayEFT" Url="https://www.bankpay.or.kr/download/BankPayEFT.exe" />
-        <Package Name="yessign5" Url="https://www.bankpay.or.kr/download/yessign5Install.exe" />
-        <Package Name="SgvExternalDownloader" Url="https://ecfs.scourt.go.kr/sgvo/cm/install/SgvExternalDownloader.msi" />
-        <Package Name="SgvExternalCaseRecordInstaller" Url="https://ecfs.scourt.go.kr/sgvo/cm/install/SgvExternalCaseRecordInstaller.msi" />
+        <Package Name="KSCertRelay_nx" Url="https://ecfs.scourt.go.kr/psp/cm/raonsecure/TouchEn/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" Arguments="/S" />
+        <Package Name="AnySign" Url="https://ecfs.scourt.go.kr/psp/cm/AnySignPlus/AnySign_Installer.exe" Arguments="/S" />
+        <Package Name="nProtect Online Security" Url="https://ecfs.scourt.go.kr/psp/cm/pluginfree/nos_setup(2025.1.20.2).exe" Arguments="/S" />
+        <Package Name="Papyrus" Url="https://ecfs.scourt.go.kr/psp/cm/papyrus/Papyrus-PlugIn-agent_5.0.6.324.exe" Arguments="/S" />
+        <Package Name="ePageSafer" Url="https://ecfs.scourt.go.kr/psp/cm/markany/bin/installer_20241224.exe" Arguments="/S" />
+        <Package Name="BankpayEFT" Url="https://www.bankpay.or.kr/download/BankPayEFT.exe" Arguments="/S" />
+        <Package Name="yessign5" Url="https://www.bankpay.or.kr/download/yessign5Install.exe" Arguments="/S" />
+		<Package Name="SmartCert" Url="https://cdn.smartcert.kr/activex/SmartCert_v1.0.3.1.exe" Arguments="/S" />
+        <Package Name="SgvExternalDownloader" Url="https://ecfs.scourt.go.kr/sgvo/cm/install/SgvExternalDownloader.msi" Arguments="/S" />
+        <Package Name="SgvExternalCaseRecordInstaller" Url="https://ecfs.scourt.go.kr/sgvo/cm/install/SgvExternalCaseRecordInstaller.msi" Arguments="/S" />
       </Packages>
     </Service>
     <Service Id="Ekt" DisplayName="대한민국 법원 전자공탁" Category="Government" Url="https://ekt.scourt.go.kr/">
