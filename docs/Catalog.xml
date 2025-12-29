@@ -1697,7 +1697,13 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
       <Packages>
         <Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.4.6/AnySign_Installer.exe" Arguments="/S" />
         <Package Name="TouchEnKey32" Url="https://download.raonsecure.com/TouchEnnxKey/iros/90/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
-      </Packages>
+		<Package Name="XecureHSMMng" Url="https://www.iros.go.kr/solution/AnySign/XecureHSMMng/XecureHSMMng/installer/v2.0.1.2/XHSMMng_Installer.exe" Arguments="/S" />
+        <Package Name="ezPDFPrint" Url="https://www.iros.go.kr/unidocswv/print/ezPDFPrintEx_SETUP.exe" Arguments="/S" />
+		<Package Name="ePageSafer" Url="https://www.iros.go.kr/solution/Markany/bin/Setup_ePageSafer_iros_2.5.1.21.exe" Arguments="/S" />
+		<Package Name="InziSoft" Url="https://www.iros.go.kr/solution/inziSoft/install/sCourtScanSetup.exe" Arguments="/S" />
+		<Package Name="ScannerTester" Url="https://www.iros.go.kr/solution/install/ScanerTest.exe" Arguments="/S" />
+		<Package Name="VerifyToolInstall" Url="https://www.iros.go.kr/solution/install/install.exe" Arguments="/S" />
+	  </Packages>
       <EdgeExtensions>
         <EdgeExtension Name="TouchEnExtension" CrxUrl="https://clients2.google.com/service/update2/crx" ExtensionId="dncepekefegjiljlfbihljgogephdhph" />
       </EdgeExtensions>
