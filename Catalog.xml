@@ -1077,9 +1077,10 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
       <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/#troubleshoot and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
       <Packages>
         <Package Name="Veraport" Url="https://www.kbsec.com/ndataweb/exe/prod/veraport-g3-x64.exe" Arguments="/silent" />
-        <Package Name="SignKoreaCert" Url="https://www.kbsec.com/ndataweb/exe/prod/skcert_setup.exe" />
+        <Package Name="SignKoreaCert" Url="https://www.kbsec.com/ndataweb/exe/prod/skcert_setup.exe" Arguments="/S" />
         <Package Name="KOS" Url="https://www.kbsec.com/ndataweb/exe/prod/kos_setup.exe" Arguments="/silent" />
         <Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
+		<Package Name="DetectorX" Url="https://download.kbsec.com/Web/DetectorX_NOAX_RD.exe" Arguments="/S" />
       </Packages>
     </Service>
     <Service Id="MiraeAssetSecurity" DisplayName="미래에셋증권" Category="Security" Url="https://securities.miraeasset.com/" en-US-DisplayName="Mirae Asset Securities Co., Ltd.">
