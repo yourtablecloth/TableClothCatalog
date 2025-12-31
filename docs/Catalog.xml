@@ -1719,8 +1719,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
         <Package Name="BankpayEFT" Url="https://www.bankpay.or.kr/download/BankPayEFT.exe" Arguments="/S" />
         <Package Name="yessign5" Url="https://www.bankpay.or.kr/download/yessign5Install.exe" Arguments="/S" />
 		<Package Name="SmartCert" Url="https://cdn.smartcert.kr/activex/SmartCert_v1.0.3.1.exe" Arguments="/S" />
-        <Package Name="SgvExternalDownloader" Url="https://ecfs.scourt.go.kr/sgvo/cm/install/SgvExternalDownloader.msi" />
-        <Package Name="SgvExternalCaseRecordInstaller" Url="https://ecfs.scourt.go.kr/sgvo/cm/install/SgvExternalCaseRecordInstaller.msi" />
+        <Package Name="SgvExternalDownloader" Url="https://ecfs.scourt.go.kr/sgvo/cm/install/SgvExternalDownloader.msi" Arguments="/passive /norestart" />
+        <Package Name="SgvExternalCaseRecordInstaller" Url="https://ecfs.scourt.go.kr/sgvo/cm/install/SgvExternalCaseRecordInstaller.msi" Arguments="/passive /norestart" />
       </Packages>
     </Service>
     <Service Id="Ekt" DisplayName="대한민국 법원 전자공탁" Category="Government" Url="https://ekt.scourt.go.kr/">
