@@ -1106,10 +1106,11 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
       <CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/#troubleshoot 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
       <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/#troubleshoot and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
       <Packages>
-        <Package Name="KOS" Url="https://new.real.download.dws.co.kr/download/hpage/KOS_Setup_3.exe" Arguments="/silent" />
+		<Package Name="Veraport" Url="https://securities.koreainvestment.com/tfcommon/js/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
+        <Package Name="KOS" Url="https://new.real.download.dws.co.kr/download/hpage/KOS_Setup_1.3.1.6.exe" Arguments="/S" />
         <Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
-        <Package Name="IPInside" Url="https://file.truefriend.com/Storage/Download/I3GSvcManager.3.0.0.24.exe" Arguments="/nodlg" />
-        <Package Name="Veraport" Url="https://new.real.download.dws.co.kr/download/hpage/veraport-g3-x64.exe" Arguments="/silent" />
+        <Package Name="IPInside" Url="https://file.koreainvestment.com/Storage/Download/I3GSvcManager.3.0.0.24.exe" Arguments="/nodlg" />
+        <Package Name="SKCertService" Url="https://new.real.download.dws.co.kr/download/hpage/SKCertServiceSetup_v2.5.40_281.exe" Arguments="/S" />
       </Packages>
     </Service>
     <Service Id="NHSecurity" DisplayName="NH투자증권" Category="Security" Url="https://www.nhqv.com/" en-US-DisplayName="NH INVESTMENT &amp; SECURITIES">
