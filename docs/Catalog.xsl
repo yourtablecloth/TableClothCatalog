@@ -241,7 +241,9 @@
                 <div class="container">
                     <header>
                         <h1>🍽️ 식탁보 카탈로그</h1>
-                        <p>이 카탈로그는 <a href="https://yourtablecloth.app/TableClothCatalog/Catalog.xml" target="_blank">식탁보 카탈로그 XML</a>을 웹에서 쉽게 탐색할 수 있도록 만든 페이지입니다. 전체 기능을 사용하시려면 <a href="https://yourtablecloth.app" target="_blank">식탁보 프로그램</a>을 다운로드하세요.</p>
+                        <p>이 카탈로그는 <a href="https://yourtablecloth.app/TableClothCatalog/Catalog.xml" target="_blank">식탁보 카탈로그 XML</a>을 웹에서 쉽게 탐색할 수 있도록 만든 페이지입니다.</p>
+                        <p style="margin-top: 1rem; font-size: 0.9rem;">🔧 웹 사이트 추가, 수정, 삭제 건의는 <a href="https://forms.gle/ZhAMeo8uUQvHAHtd6" target="_blank">Google Forms</a> 또는 <a href="https://github.com/yourtablecloth/TableClothCatalog" target="_blank">GitHub 리포지터리</a>에 제출해주세요.</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem;">📥 전체 기능을 사용하려면 최신 버전의 <a href="https://yourtablecloth.app" target="_blank">식탁보</a>를 다운로드하여 설치하세요.</p>
                     </header>
 
                     <div class="filter-bar">
