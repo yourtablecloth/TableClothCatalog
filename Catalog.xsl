@@ -335,6 +335,48 @@
                         white-space: pre-wrap;
                         word-wrap: break-word;
                     }
+                    .modal-footer {
+                        margin-top: 1.5rem;
+                        padding-top: 1rem;
+                        border-top: 1px solid var(--border-color);
+                        text-align: right;
+                    }
+                    .modal-close-footer-btn {
+                        padding: 0.6rem 1.5rem;
+                        background: var(--primary-color);
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-size: 0.9rem;
+                        font-weight: 500;
+                        cursor: pointer;
+                        transition: background 0.2s;
+                    }
+                    .modal-close-footer-btn:hover {
+                        background: var(--primary-hover);
+                    }
+                    .keywords-title {
+                        font-size: 0.75rem;
+                        font-weight: 600;
+                        color: var(--text-secondary);
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                        margin-top: 0.75rem;
+                        margin-bottom: 0.5rem;
+                    }
+                    .keywords-list {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 0.4rem;
+                    }
+                    .keyword-tag {
+                        display: inline-block;
+                        padding: 0.25rem 0.5rem;
+                        background: #e0e7ff;
+                        border-radius: 4px;
+                        font-size: 0.75rem;
+                        color: #3730a3;
+                    }
                     .card-body {
                         padding: 1rem 1.25rem 1.25rem;
                     }
@@ -426,7 +468,7 @@
 
                     <div class="services-grid">
                         <xsl:for-each select="TableClothCatalog/InternetServices/Service">
-                            <div class="service-card" data-category="{@Category}" data-id="{@Id}" data-name="{@DisplayName}" data-name-en="{@en-US-DisplayName}" data-packages="{Packages/Package/@Name}">
+                            <div class="service-card" data-category="{@Category}" data-id="{@Id}" data-name="{@DisplayName}" data-name-en="{@en-US-DisplayName}" data-packages="{Packages/Package/@Name}" data-keywords="{SearchKeywords}">
                                 <div class="card-header">
                                     <img class="service-icon" 
                                          src="images/{@Category}/{@Id}.png" 
@@ -469,6 +511,10 @@
                                             </xsl:for-each>
                                         </ul>
                                     </xsl:if>
+                                    <xsl:if test="SearchKeywords">
+                                        <div class="keywords-title" data-i18n="searchKeywords">검색 키워드</div>
+                                        <div class="keywords-list" data-keywords="{SearchKeywords}"></div>
+                                    </xsl:if>
                                 </div>
                             </div>
                         </xsl:for-each>
@@ -490,6 +536,9 @@
                             <button class="modal-close-btn" onclick="closeModal()">✕</button>
                         </div>
                         <div class="modal-body" id="modalText"></div>
+                        <div class="modal-footer">
+                            <button class="modal-close-footer-btn" onclick="closeModal()" data-i18n="closeBtn">닫기</button>
+                        </div>
                     </div>
                 </div>
 
@@ -517,11 +566,13 @@
                             filterSecurity: '💹 증권',
                             filterOther: '📁 기타',
                             requiredPackages: '필요 패키지',
+                            searchKeywords: '검색 키워드',
                             warning: '⚠️ 주의',
                             viewDetails: '상세 정보 보기',
                             noResults: '🔍 검색 결과가 없습니다.',
                             madeWith: 'Made with ❤️ for Korean Internet Banking Users',
                             compatTitle: '⚠️ 호환성 안내',
+                            closeBtn: '닫기',
                             categoryBanking: '🏦 은행',
                             categoryCreditCard: '💳 카드',
                             categoryGovernment: '🏛️ 공공기관',
@@ -550,11 +601,13 @@
                             filterSecurity: '💹 Securities',
                             filterOther: '📁 Other',
                             requiredPackages: 'Required Packages',
+                            searchKeywords: 'Search Keywords',
                             warning: '⚠️ Warning',
                             viewDetails: 'View details',
                             noResults: '🔍 No results found.',
                             madeWith: 'Made with ❤️ for Korean Internet Banking Users',
                             compatTitle: '⚠️ Compatibility Notice',
+                            closeBtn: 'Close',
                             categoryBanking: '🏦 Banking',
                             categoryCreditCard: '💳 Credit Card',
                             categoryGovernment: '🏛️ Government',
@@ -677,10 +730,12 @@
                                 const serviceName = (card.dataset.name || '').toLowerCase();
                                 const category = (card.dataset.category || '').toLowerCase();
                                 const packages = (card.dataset.packages || '').toLowerCase();
+                                const keywords = (card.dataset.keywords || '').toLowerCase();
                                 searchMatch = serviceId.includes(searchTerm) ||
                                             serviceName.includes(searchTerm) || 
                                             category.includes(searchTerm) || 
-                                            packages.includes(searchTerm);
+                                            packages.includes(searchTerm) ||
+                                            keywords.includes(searchTerm);
                             }
                             
                             const shouldShow = categoryMatch &amp;&amp; searchMatch;
@@ -724,6 +779,19 @@
                         if (e.key === 'Escape') {
                             closeModal();
                         }
+                    });
+
+                    // 페이지 로드 시 키워드 렌더링
+                    document.addEventListener('DOMContentLoaded', function() {
+                        document.querySelectorAll('.keywords-list').forEach(container => {
+                            const keywords = container.getAttribute('data-keywords');
+                            if (keywords) {
+                                const keywordArray = keywords.split(';').map(k => k.trim()).filter(k => k);
+                                container.innerHTML = keywordArray.map(keyword => 
+                                    '<span class="keyword-tag">' + keyword + '</span>'
+                                ).join('');
+                            }
+                        });
                     });
                 </script>
             </body>
