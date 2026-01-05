@@ -252,7 +252,7 @@
                         <button class="filter-btn" onclick="filterCards('Financing')">💰 금융</button>
                         <button class="filter-btn" onclick="filterCards('Insurance')">🛡️ 보험</button>
                         <button class="filter-btn" onclick="filterCards('Education')">📚 교육</button>
-                        <button class="filter-btn" onclick="filterCards('Security')">🔒 보안</button>
+                        <button class="filter-btn" onclick="filterCards('Security')">💹 증권</button>
                         <button class="filter-btn" onclick="filterCards('Other')">📁 기타</button>
                     </div>
 
@@ -279,7 +279,7 @@
                                                 <xsl:when test="@Category='Financing'">💰 금융</xsl:when>
                                                 <xsl:when test="@Category='Insurance'">🛡️ 보험</xsl:when>
                                                 <xsl:when test="@Category='Education'">📚 교육</xsl:when>
-                                                <xsl:when test="@Category='Security'">🔒 보안</xsl:when>
+                                                <xsl:when test="@Category='Security'">💹 증권</xsl:when>
                                                 <xsl:otherwise>📁 기타</xsl:otherwise>
                                             </xsl:choose>
                                         </span>
