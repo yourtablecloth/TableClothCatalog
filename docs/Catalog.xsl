@@ -66,6 +66,83 @@
                     header a:hover {
                         text-decoration: underline;
                     }
+                    .lang-switch {
+                        position: absolute;
+                        top: 1rem;
+                        right: 1rem;
+                        display: flex;
+                        gap: 0.5rem;
+                    }
+                    .lang-btn {
+                        padding: 0.4rem 0.8rem;
+                        border: 1px solid rgba(255,255,255,0.3);
+                        border-radius: 6px;
+                        background: rgba(255,255,255,0.1);
+                        color: white;
+                        font-size: 0.8rem;
+                        font-weight: 500;
+                        cursor: pointer;
+                        transition: all 0.2s;
+                    }
+                    .lang-btn:hover {
+                        background: rgba(255,255,255,0.2);
+                    }
+                    .lang-btn.active {
+                        background: white;
+                        color: #667eea;
+                    }
+                    header {
+                        position: relative;
+                    }
+                    .search-box {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        margin-bottom: 1rem;
+                        padding: 0.75rem 1rem;
+                        background: var(--card-bg);
+                        border: 1px solid var(--border-color);
+                        border-radius: var(--radius);
+                        box-shadow: var(--shadow);
+                        transition: all 0.2s;
+                    }
+                    .search-box:focus-within {
+                        border-color: var(--primary-color);
+                        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+                    }
+                    .search-box input {
+                        flex: 1;
+                        border: none;
+                        outline: none;
+                        font-size: 0.95rem;
+                        font-family: inherit;
+                        color: var(--text-primary);
+                        background: transparent;
+                    }
+                    .search-box input::placeholder {
+                        color: var(--text-secondary);
+                    }
+                    .search-clear-btn {
+                        background: none;
+                        border: none;
+                        cursor: pointer;
+                        color: var(--text-secondary);
+                        font-size: 1.2rem;
+                        padding: 0;
+                        display: none;
+                        transition: color 0.2s;
+                    }
+                    .search-clear-btn:hover {
+                        color: var(--text-primary);
+                    }
+                    .no-results {
+                        grid-column: 1 / -1;
+                        text-align: center;
+                        padding: 3rem 1rem;
+                        color: var(--text-secondary);
+                        font-size: 1rem;
+                        display: none;
+                    }
                     .filter-bar {
                         display: flex;
                         flex-wrap: wrap;
@@ -171,6 +248,93 @@
                     .category-Education { background: #f3e8ff; color: #6b21a8; }
                     .category-Security { background: #fee2e2; color: #991b1b; }
                     .category-Other { background: #f1f5f9; color: #475569; }
+                    .warning-badge {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 0.35rem;
+                        padding: 0.2rem 0.6rem;
+                        border-radius: 9999px;
+                        font-size: 0.75rem;
+                        font-weight: 500;
+                        background: #fee2e2;
+                        color: #991b1b;
+                        margin-left: 0.35rem;
+                        cursor: pointer;
+                        transition: transform 0.2s, box-shadow 0.2s;
+                    }
+                    .warning-badge:hover {
+                        transform: scale(1.05);
+                        box-shadow: 0 2px 8px rgba(153, 27, 27, 0.2);
+                    }
+                    .modal {
+                        display: none;
+                        position: fixed;
+                        z-index: 1000;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.5);
+                    }
+                    .modal.show {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .modal-content {
+                        background-color: white;
+                        padding: 1.5rem;
+                        border-radius: var(--radius);
+                        box-shadow: var(--shadow-lg);
+                        max-width: 500px;
+                        width: 90%;
+                        max-height: 80vh;
+                        overflow-y: auto;
+                        animation: slideIn 0.3s ease-out;
+                    }
+                    @keyframes slideIn {
+                        from {
+                            transform: translateY(-50px);
+                            opacity: 0;
+                        }
+                        to {
+                            transform: translateY(0);
+                            opacity: 1;
+                        }
+                    }
+                    .modal-header {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        margin-bottom: 1rem;
+                        padding-bottom: 1rem;
+                        border-bottom: 1px solid var(--border-color);
+                    }
+                    .modal-header h2 {
+                        font-size: 1.25rem;
+                        color: var(--text-primary);
+                        margin: 0;
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                    }
+                    .modal-close-btn {
+                        background: none;
+                        border: none;
+                        font-size: 1.5rem;
+                        cursor: pointer;
+                        color: var(--text-secondary);
+                        transition: color 0.2s;
+                    }
+                    .modal-close-btn:hover {
+                        color: var(--text-primary);
+                    }
+                    .modal-body {
+                        color: var(--text-primary);
+                        line-height: 1.6;
+                        white-space: pre-wrap;
+                        word-wrap: break-word;
+                    }
                     .card-body {
                         padding: 1rem 1.25rem 1.25rem;
                     }
@@ -205,15 +369,7 @@
                         background: var(--primary-color);
                         color: white;
                     }
-                    .compat-note {
-                        margin-top: 0.75rem;
-                        padding: 0.6rem 0.8rem;
-                        background: #fef3c7;
-                        border-left: 3px solid #f59e0b;
-                        border-radius: 0 6px 6px 0;
-                        font-size: 0.8rem;
-                        color: #92400e;
-                    }
+
                     footer {
                         text-align: center;
                         margin-top: 3rem;
@@ -240,27 +396,37 @@
             <body>
                 <div class="container">
                     <header>
-                        <h1>🍽️ 식탁보 카탈로그</h1>
-                        <p>이 카탈로그는 <a href="https://yourtablecloth.app/TableClothCatalog/Catalog.xml" target="_blank">식탁보 카탈로그 XML</a>을 웹에서 쉽게 탐색할 수 있도록 만든 페이지입니다.</p>
-                        <p style="margin-top: 1rem; font-size: 0.9rem;">🔧 웹 사이트 추가, 수정, 삭제 건의는 <a href="https://forms.gle/ZhAMeo8uUQvHAHtd6" target="_blank">Google Forms</a> 또는 <a href="https://github.com/yourtablecloth/TableClothCatalog" target="_blank">GitHub 리포지터리</a>에 제출해주세요.</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.9rem;">📥 전체 기능을 사용하려면 최신 버전의 <a href="https://yourtablecloth.app" target="_blank">식탁보</a>를 다운로드하여 설치하세요.</p>
+                        <div class="lang-switch">
+                            <button class="lang-btn active" onclick="switchLang('ko')">KO</button>
+                            <button class="lang-btn" onclick="switchLang('en')">EN</button>
+                        </div>
+                        <h1 data-i18n="title">🍽️ 식탁보 카탈로그</h1>
+                        <p data-i18n="desc1">이 카탈로그는 <a href="https://yourtablecloth.app/TableClothCatalog/Catalog.xml" target="_blank" data-i18n="catalogXml">식탁보 카탈로그 XML</a>을 웹에서 쉽게 탐색할 수 있도록 만든 페이지입니다.</p>
+                        <p style="margin-top: 1rem; font-size: 0.9rem;" data-i18n="desc2">🔧 웹 사이트 추가, 수정, 삭제 건의는 <a href="https://forms.gle/28ZTZyorVCYd4N8F6" target="_blank">Google Forms</a> 또는 <a href="https://github.com/yourtablecloth/TableClothCatalog" target="_blank">GitHub 리포지터리</a>에 제출해주세요.</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem;" data-i18n="desc3">📥 전체 기능을 사용하려면 최신 버전의 <a href="https://yourtablecloth.app/" target="_blank" data-i18n="tablecloth">식탁보</a>를 다운로드하여 설치하세요.</p>
                     </header>
 
+                    <div class="search-box">
+                        <span style="font-size: 1.1rem;">🔍</span>
+                        <input type="text" id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="서비스명, 카테고리, 패키지명 검색..." oninput="performSearch()" />
+                        <button class="search-clear-btn" id="searchClear" onclick="clearSearch()" data-i18n-title="clearSearch" title="검색 초기화">✕</button>
+                    </div>
+
                     <div class="filter-bar">
-                        <button class="filter-btn active" onclick="filterCards('all')">전체</button>
-                        <button class="filter-btn" onclick="filterCards('Banking')">🏦 은행</button>
-                        <button class="filter-btn" onclick="filterCards('CreditCard')">💳 카드</button>
-                        <button class="filter-btn" onclick="filterCards('Government')">🏛️ 공공기관</button>
-                        <button class="filter-btn" onclick="filterCards('Financing')">💰 금융</button>
-                        <button class="filter-btn" onclick="filterCards('Insurance')">🛡️ 보험</button>
-                        <button class="filter-btn" onclick="filterCards('Education')">📚 교육</button>
-                        <button class="filter-btn" onclick="filterCards('Security')">💹 증권</button>
-                        <button class="filter-btn" onclick="filterCards('Other')">📁 기타</button>
+                        <button class="filter-btn active" onclick="filterCards('all')" data-i18n="filterAll">전체</button>
+                        <button class="filter-btn" onclick="filterCards('Banking')" data-i18n="filterBanking">🏦 은행</button>
+                        <button class="filter-btn" onclick="filterCards('CreditCard')" data-i18n="filterCreditCard">💳 카드</button>
+                        <button class="filter-btn" onclick="filterCards('Government')" data-i18n="filterGovernment">🏛️ 공공기관</button>
+                        <button class="filter-btn" onclick="filterCards('Financing')" data-i18n="filterFinancing">💰 금융</button>
+                        <button class="filter-btn" onclick="filterCards('Insurance')" data-i18n="filterInsurance">🛡️ 보험</button>
+                        <button class="filter-btn" onclick="filterCards('Education')" data-i18n="filterEducation">📚 교육</button>
+                        <button class="filter-btn" onclick="filterCards('Security')" data-i18n="filterSecurity">💹 증권</button>
+                        <button class="filter-btn" onclick="filterCards('Other')" data-i18n="filterOther">📁 기타</button>
                     </div>
 
                     <div class="services-grid">
                         <xsl:for-each select="TableClothCatalog/InternetServices/Service">
-                            <div class="service-card" data-category="{@Category}">
+                            <div class="service-card" data-category="{@Category}" data-id="{@Id}" data-name="{@DisplayName}" data-name-en="{@en-US-DisplayName}" data-packages="{Packages/Package/@Name}">
                                 <div class="card-header">
                                     <img class="service-icon" 
                                          src="images/{@Category}/{@Id}.png" 
@@ -271,7 +437,7 @@
                                     </div>
                                     <div class="service-info">
                                         <div class="service-name">
-                                            <a href="{@Url}" target="_blank"><xsl:value-of select="@DisplayName"/></a>
+                                            <a href="{@Url}" target="_blank" data-name-ko="{@DisplayName}" data-name-en="{@en-US-DisplayName}"><xsl:value-of select="@DisplayName"/></a>
                                         </div>
                                         <span class="category-badge category-{@Category}">
                                             <xsl:choose>
@@ -285,11 +451,14 @@
                                                 <xsl:otherwise>📁 기타</xsl:otherwise>
                                             </xsl:choose>
                                         </span>
+                                        <xsl:if test="CompatNotes">
+                                            <span class="warning-badge" onclick="openModal(event)" data-compat-notes="{CompatNotes}" data-compat-notes-en="{en-US-CompatNotes}" data-i18n-title="viewDetails" title="상세 정보 보기" data-i18n="warning">⚠️ 주의</span>
+                                        </xsl:if>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <xsl:if test="Packages/Package">
-                                        <div class="packages-title">필요 패키지</div>
+                                        <div class="packages-title" data-i18n="requiredPackages">필요 패키지</div>
                                         <ul class="packages-list">
                                             <xsl:for-each select="Packages/Package">
                                                 <li>
@@ -300,38 +469,262 @@
                                             </xsl:for-each>
                                         </ul>
                                     </xsl:if>
-                                    <xsl:if test="CompatNotes">
-                                        <div class="compat-note">
-                                            ⚠️ <xsl:value-of select="CompatNotes"/>
-                                        </div>
-                                    </xsl:if>
                                 </div>
                             </div>
                         </xsl:for-each>
+                        <div class="no-results" id="noResults" data-i18n="noResults">
+                            🔍 검색 결과가 없습니다.
+                        </div>
                     </div>
 
                     <footer>
                         <p>© 2024 <a href="https://rkttu.com" target="_blank">rkttu.com</a>. All rights reserved.</p>
-                        <p style="margin-top: 0.5rem;">Made with ❤️ for Korean Internet Banking Users</p>
+                        <p style="margin-top: 0.5rem;" data-i18n="madeWith">Made with ❤️ for Korean Internet Banking Users</p>
                     </footer>
                 </div>
 
+                <div id="compatModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 data-i18n="compatTitle">⚠️ 호환성 안내</h2>
+                            <button class="modal-close-btn" onclick="closeModal()">✕</button>
+                        </div>
+                        <div class="modal-body" id="modalText"></div>
+                    </div>
+                </div>
+
                 <script>
-                    function filterCards(category) {
-                        const cards = document.querySelectorAll('.service-card');
-                        const buttons = document.querySelectorAll('.filter-btn');
+                    let currentFilter = 'all';
+                    let currentLang = 'ko';
+
+                    const translations = {
+                        ko: {
+                            title: '🍽️ 식탁보 카탈로그',
+                            desc1: '이 카탈로그는 <a href="https://yourtablecloth.app/TableClothCatalog/Catalog.xml" target="_blank">식탁보 카탈로그 XML</a>을 웹에서 쉽게 탐색할 수 있도록 만든 페이지입니다.',
+                            desc2: '🔧 웹 사이트 추가, 수정, 삭제 건의는 <a href="https://forms.gle/28ZTZyorVCYd4N8F6" target="_blank">Google Forms</a> 또는 <a href="https://github.com/yourtablecloth/TableClothCatalog" target="_blank">GitHub 리포지터리</a>에 제출해주세요.',
+                            desc3: '📥 전체 기능을 사용하려면 최신 버전의 <a href="https://yourtablecloth.app/" target="_blank">식탁보</a>를 다운로드하여 설치하세요.',
+                            catalogXml: '식탁보 카탈로그 XML',
+                            tablecloth: '식탁보',
+                            searchPlaceholder: '서비스명, 카테고리, 패키지명 검색...',
+                            clearSearch: '검색 초기화',
+                            filterAll: '전체',
+                            filterBanking: '🏦 은행',
+                            filterCreditCard: '💳 카드',
+                            filterGovernment: '🏛️ 공공기관',
+                            filterFinancing: '💰 금융',
+                            filterInsurance: '🛡️ 보험',
+                            filterEducation: '📚 교육',
+                            filterSecurity: '💹 증권',
+                            filterOther: '📁 기타',
+                            requiredPackages: '필요 패키지',
+                            warning: '⚠️ 주의',
+                            viewDetails: '상세 정보 보기',
+                            noResults: '🔍 검색 결과가 없습니다.',
+                            madeWith: 'Made with ❤️ for Korean Internet Banking Users',
+                            compatTitle: '⚠️ 호환성 안내',
+                            categoryBanking: '🏦 은행',
+                            categoryCreditCard: '💳 카드',
+                            categoryGovernment: '🏛️ 공공기관',
+                            categoryFinancing: '💰 금융',
+                            categoryInsurance: '🛡️ 보험',
+                            categoryEducation: '📚 교육',
+                            categorySecurity: '💹 증권',
+                            categoryOther: '📁 기타'
+                        },
+                        en: {
+                            title: '🍽️ TableCloth Catalog',
+                            desc1: 'This catalog is a page for easily browsing the <a href="https://yourtablecloth.app/TableClothCatalog/Catalog.xml" target="_blank">TableCloth Catalog XML</a> on the web.',
+                            desc2: '🔧 To request additions, modifications, or deletions of websites, please submit via <a href="https://forms.gle/28ZTZyorVCYd4N8F6" target="_blank">Google Forms</a> or <a href="https://github.com/yourtablecloth/TableClothCatalog" target="_blank">GitHub repository</a>.',
+                            desc3: '📥 To use all features, download and install the latest version of <a href="https://yourtablecloth.app/" target="_blank">TableCloth</a>.',
+                            catalogXml: 'TableCloth Catalog XML',
+                            tablecloth: 'TableCloth',
+                            searchPlaceholder: 'Search services, categories, packages...',
+                            clearSearch: 'Clear search',
+                            filterAll: 'All',
+                            filterBanking: '🏦 Banking',
+                            filterCreditCard: '💳 Credit Card',
+                            filterGovernment: '🏛️ Government',
+                            filterFinancing: '💰 Financing',
+                            filterInsurance: '🛡️ Insurance',
+                            filterEducation: '📚 Education',
+                            filterSecurity: '💹 Securities',
+                            filterOther: '📁 Other',
+                            requiredPackages: 'Required Packages',
+                            warning: '⚠️ Warning',
+                            viewDetails: 'View details',
+                            noResults: '🔍 No results found.',
+                            madeWith: 'Made with ❤️ for Korean Internet Banking Users',
+                            compatTitle: '⚠️ Compatibility Notice',
+                            categoryBanking: '🏦 Banking',
+                            categoryCreditCard: '💳 Credit Card',
+                            categoryGovernment: '🏛️ Government',
+                            categoryFinancing: '💰 Financing',
+                            categoryInsurance: '🛡️ Insurance',
+                            categoryEducation: '📚 Education',
+                            categorySecurity: '💹 Securities',
+                            categoryOther: '📁 Other'
+                        }
+                    };
+
+                    const categoryMap = {
+                        'Banking': 'categoryBanking',
+                        'CreditCard': 'categoryCreditCard',
+                        'Government': 'categoryGovernment',
+                        'Financing': 'categoryFinancing',
+                        'Insurance': 'categoryInsurance',
+                        'Education': 'categoryEducation',
+                        'Security': 'categorySecurity',
+                        'Other': 'categoryOther'
+                    };
+
+                    function switchLang(lang) {
+                        currentLang = lang;
+                        const t = translations[lang];
                         
-                        buttons.forEach(btn => btn.classList.remove('active'));
-                        event.target.classList.add('active');
-                        
-                        cards.forEach(card => {
-                            if (category === 'all' || card.dataset.category === category) {
-                                card.style.display = 'block';
-                            } else {
-                                card.style.display = 'none';
+                        // 언어 버튼 활성화 상태 변경
+                        document.querySelectorAll('.lang-btn').forEach(btn => {
+                            btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+                        });
+
+                        // data-i18n 속성이 있는 요소들 번역
+                        const htmlKeys = ['desc1', 'desc2', 'desc3'];
+                        document.querySelectorAll('[data-i18n]').forEach(el => {
+                            const key = el.getAttribute('data-i18n');
+                            if (t[key]) {
+                                if (htmlKeys.includes(key)) {
+                                    el.innerHTML = t[key];
+                                } else {
+                                    el.textContent = t[key];
+                                }
                             }
                         });
+
+                        // placeholder 번역
+                        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                            const key = el.getAttribute('data-i18n-placeholder');
+                            if (t[key]) {
+                                el.placeholder = t[key];
+                            }
+                        });
+
+                        // title 속성 번역
+                        document.querySelectorAll('[data-i18n-title]').forEach(el => {
+                            const key = el.getAttribute('data-i18n-title');
+                            if (t[key]) {
+                                el.title = t[key];
+                            }
+                        });
+
+                        // 카테고리 뱃지 번역
+                        document.querySelectorAll('.category-badge').forEach(badge => {
+                            const card = badge.closest('.service-card');
+                            if (card) {
+                                const category = card.dataset.category;
+                                const key = categoryMap[category] || 'categoryOther';
+                                if (t[key]) {
+                                    badge.textContent = t[key];
+                                }
+                            }
+                        });
+
+                        // 서비스명 번역
+                        document.querySelectorAll('.service-name a').forEach(link => {
+                            const nameKo = link.getAttribute('data-name-ko');
+                            const nameEn = link.getAttribute('data-name-en');
+                            if (lang === 'en' &amp;&amp; nameEn) {
+                                link.textContent = nameEn;
+                            } else if (nameKo) {
+                                link.textContent = nameKo;
+                            }
+                        });
+
+                        // 페이지 제목 변경
+                        document.title = lang === 'ko' ? '식탁보 카탈로그 페이지' : 'TableCloth Catalog';
                     }
+
+                    function filterCards(category) {
+                        currentFilter = category;
+                        const buttons = document.querySelectorAll('.filter-btn');
+                        buttons.forEach(btn => btn.classList.remove('active'));
+                        event.target.classList.add('active');
+                        applyFiltersAndSearch();
+                    }
+
+                    function performSearch() {
+                        const searchInput = document.getElementById('searchInput');
+                        const clearBtn = document.getElementById('searchClear');
+                        clearBtn.style.display = searchInput.value ? 'block' : 'none';
+                        applyFiltersAndSearch();
+                    }
+
+                    function clearSearch() {
+                        document.getElementById('searchInput').value = '';
+                        document.getElementById('searchClear').style.display = 'none';
+                        applyFiltersAndSearch();
+                    }
+
+                    function applyFiltersAndSearch() {
+                        const cards = document.querySelectorAll('.service-card');
+                        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                        let visibleCount = 0;
+                        
+                        cards.forEach(card => {
+                            const categoryMatch = currentFilter === 'all' || card.dataset.category === currentFilter;
+                            
+                            let searchMatch = true;
+                            if (searchTerm) {
+                                const serviceId = (card.dataset.id || '').toLowerCase();
+                                const serviceName = (card.dataset.name || '').toLowerCase();
+                                const category = (card.dataset.category || '').toLowerCase();
+                                const packages = (card.dataset.packages || '').toLowerCase();
+                                searchMatch = serviceId.includes(searchTerm) ||
+                                            serviceName.includes(searchTerm) || 
+                                            category.includes(searchTerm) || 
+                                            packages.includes(searchTerm);
+                            }
+                            
+                            const shouldShow = categoryMatch &amp;&amp; searchMatch;
+                            card.style.display = shouldShow ? 'block' : 'none';
+                            if (shouldShow) visibleCount++;
+                        });
+
+                        document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+                    }
+
+                    function openModal(event) {
+                        const compatTextKo = event.target.getAttribute('data-compat-notes');
+                        const compatTextEn = event.target.getAttribute('data-compat-notes-en');
+                        const modalText = document.getElementById('modalText');
+                        
+                        if (currentLang === 'en' &amp;&amp; compatTextEn) {
+                            modalText.textContent = compatTextEn;
+                        } else {
+                            modalText.textContent = compatTextKo;
+                        }
+                        
+                        const modal = document.getElementById('compatModal');
+                        modal.classList.add('show');
+                    }
+
+                    function closeModal() {
+                        const modal = document.getElementById('compatModal');
+                        modal.classList.remove('show');
+                    }
+
+                    // 모달 외부 클릭 시 닫기
+                    document.addEventListener('click', function(e) {
+                        const modal = document.getElementById('compatModal');
+                        if (e.target === modal) {
+                            closeModal();
+                        }
+                    });
+
+                    // ESC 키 누를 시 모달 닫기
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape') {
+                            closeModal();
+                        }
+                    });
                 </script>
             </body>
         </html>
