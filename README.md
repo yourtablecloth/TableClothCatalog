@@ -6,7 +6,15 @@
 
 그 외에 식탁보 프로그램 자체에 대한 이슈 제보나 최신 버전 다운로드는 [이곳](https://github.com/yourtablecloth/TableCloth)을 참고해주세요.
 
-## 컨트리뷰션 방법
+## 카탈로그 피드백 전달 방법
+
+식탁보에서 접속할 수 있는 특정 웹 사이트와 관련된 문제는 다음 중 한 가지 방법을 통하여 제보 또는 기여를 부탁드립니다.
+
+* **권장**: [식탁보 카탈로그 리포지터리에 이슈 등록 또는 PR 제출](https://github.com/yourtablecloth/TableClothCatalog)
+* [Google Forms를 통한 제보](https://forms.gle/Pw6pBKhqF1e5Nesw6)
+* [Discord 채널을 통한 제보/토론](https://discord.gg/eT2UnUXyTV)
+
+## PR 제출 시 컨트리뷰션 방법
 
 카탈로그 리포지터리는 다음의 파일들로 구성됩니다.
 
@@ -31,13 +39,7 @@
 각종 유효성 검사 및 리소스 자동 생성을 위하여 CatalogBuilder를 새롭게 추가하였습니다. 새로운 커밋이 브랜치에 푸시되면, CatalogBuilder가 `outputs` 디렉터리에 `gh-pages` 브랜치에 내보낼 파일들을 복사하면서 추가 리소스 생성이나 유효성 검사를 진행하게 됩니다.
 
 ```bash
-# 리포지터리 루트 디렉터리에서 아래 명령어를 실행한다고 가정합니다.
-
-# 빌드
-dotnet build src/TableCloth.CatalogBuilder/TableCloth.CatalogBuilder.csproj --configuration Release
-
-# 실행
-dotnet run --project src/TableCloth.CatalogBuilder/TableCloth.CatalogBuilder.csproj --configuration Release -- ./docs/ ./outputs/
+dotnet run --file src/catalogutil.cs -- ./docs/ ./outputs/
 ```
 
 도구를 실행하여 나타나는 Error나 Warning을 최대한 제거하는 것이 좋습니다. Catalog.xml 파일을 수정하여 제출하기 전에 검사를 진행하는 것을 권장합니다.
