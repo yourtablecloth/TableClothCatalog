@@ -1,5 +1,9 @@
 # 식탁보 카탈로그
 
+[![식탁보 카탈로그 빌드 상황](https://github.com/yourtablecloth/TableClothCatalog/actions/workflows/publish.yml/badge.svg)](https://github.com/yourtablecloth/TableClothCatalog/actions)
+[![식탁보 Discord](https://img.shields.io/discord/1443777680418930761?label=Discord&logo=discord&color=7289DA)](https://discord.gg/eT2UnUXyTV)
+[![식탁보 후원](https://img.shields.io/github/sponsors/yourtablecloth)](https://github.com/sponsors/yourtablecloth)
+
 이 리포지터리는 식탁보에서 참조하는 카탈로그 XML 파일을 관리하는 리포지터리입니다.
 
 기존 사이트에 변경이 발생했을 경우 이 리포지터리에 풀 리퀘스트를 올려주세요.
