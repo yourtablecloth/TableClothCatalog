@@ -1987,6 +1987,11 @@ Start-Service -ServiceName TrustedInstaller
         <Package Name="iSASService" Url="https://enhuf.molit.go.kr/veraport/down/NXiSAS.exe" Arguments="/silent" />
       </Packages>
     </Service>
+    <Service Id="Seniorro" DisplayName="노인일자리여기" Url="https://www.seniorro.or.kr/login/main.do">
+      <Packages>
+        <Package Name="MaWebDRM" Url="https://www.seniorro.or.kr/resources/MaWebDRM/bin/Inst_MaWebDRM.exe" Arguments="/silent" />
+      </Packages>
+    </Service>
     <!-- 공공기관 끝 -->
     <!-- 일반 서비스 시작 -->
     <Service Id="CultureLand" DisplayName="컬처랜드" Category="Other" Url="https://www.cultureland.co.kr/">
