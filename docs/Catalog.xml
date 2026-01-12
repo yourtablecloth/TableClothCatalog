@@ -1990,6 +1990,7 @@ Start-Service -ServiceName TrustedInstaller
     <Service Id="Seniorro" DisplayName="노인일자리여기" Url="https://www.seniorro.or.kr/login/main.do">
       <Packages>
         <Package Name="MaWebDRM" Url="https://www.seniorro.or.kr/resources/MaWebDRM/bin/Inst_MaWebDRM.exe" Arguments="/silent" />
+        <Package Name="nProtect Online Security" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
       </Packages>
     </Service>
     <!-- 공공기관 끝 -->
