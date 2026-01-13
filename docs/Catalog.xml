@@ -33,6 +33,7 @@
         <Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" />
         <Package Name="Delfino G3" Url="https://download.kbstar.com/security/wizvera/delfino/g3/delfino-g3.exe" Arguments="/silent" />
         <Package Name="Veraport" Url="https://download.kbstar.com/security/wizvera/veraport/g3/veraport-g3-x64.exe" Arguments="/silent" />
+		<Package Name="UniSign" Url="https://www.unisign.co.kr/EXE/install/UniSignCRSV3Setup.exe" Arguments="/silent" />
       </Packages>
     </Service>
     <Service Id="KEBHanaBank" DisplayName="하나은행 개인뱅킹" Category="Banking" Url="https://www.kebhana.com/" en-US-DisplayName="KEB Hana Bank">
@@ -279,6 +280,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
         <Package Name="Delfino G3" Url="https://download.kbstar.com/security/wizvera/delfino/g3/delfino-g3.exe" Arguments="/silent" />
         <Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
         <Package Name="Veraport" Url="https://download.kbstar.com/security/wizvera/veraport/g3/veraport-g3-x64.exe" Arguments="/silent" />
+		<Package Name="UniSign" Url="https://www.unisign.co.kr/EXE/install/UniSignCRSV3Setup.exe" Arguments="/silent" />
       </Packages>
     </Service>
     <Service Id="KEBHanaBankBiz" DisplayName="하나은행 기업뱅킹" Category="Banking" Url="https://biz.kebhana.com/" en-US-DisplayName="KEB Hana Bank (Corp.)">
@@ -2207,3 +2209,4 @@ foreach ($EachMsi in $MsiList) {
     <!-- 교육기관 끝 -->
   </InternetServices>
 </TableClothCatalog>
+
