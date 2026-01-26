@@ -897,9 +897,9 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
     </Service>
     <Service Id="WelcomeSavingsBank" DisplayName="웰컴저축은행" Category="Financing" Url="https://www.welcomebank.co.kr/" en-US-DisplayName="Welcome Savings Bank">
       <Packages>
-        <Package Name="SmartManagerEx" Url="https://www.welcomebank.co.kr/3rdparty/initech/smartmanagerex/extension/down/SmartManagerEX.exe" />
-        <Package Name="KeySharpBiz" Url="https://www.welcomebank.co.kr/3rdparty/raon/nxbiz/download/keysharpnxbiz.exe" />
-        <Package Name="SignKoreaCert" Url="https://www.welcomebank.co.kr/3rdparty/signkorea/SKCertServiceSetup.exe" />
+        <Package Name="SmartManagerEx" Url="https://www.welcomebank.co.kr/3rdparty/initech/smartmanagerex/extension/down/SmartManagerEX.exe" Arguments="/silent" />
+        <Package Name="KeySharpBiz" Url="https://www.welcomebank.co.kr/3rdparty/raon/nxbiz/download/keysharpnxbiz.exe" Arguments="/silent" />
+        <Package Name="SignKoreaCert" Url="https://www.welcomebank.co.kr/3rdparty/signkorea/SKCertServiceSetup.exe" Arguments="/silent" />
         <Package Name="KSCertRelay32" Url="https://www.welcomebank.co.kr/3rdparty/raon/TouchEn/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" Arguments="/silence" />
         <Package Name="TouchEnKey32" Url="https://www.welcomebank.co.kr/3rdparty/raon/TouchEn/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
         <Package Name="TouchEnFirewall" Url="https://www.welcomebank.co.kr/3rdparty/raon/TouchEn/nxFw/module/TEFW_Installer.exe" Arguments="/silence" />
@@ -1549,7 +1549,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
     <Service Id="MeritzFire" DisplayName="메리츠화재" Category="Insurance" Url="https://www.meritzfire.com/" en-US-DisplayName="Meritz Fire &amp; Marine Insurance Co., Ltd.">
       <Packages>
         <Package Name="Veraport" Url="https://cmdown.meritzfire.com/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
-        <Package Name="KeySharpBiz" Url="https://cmdown.meritzfire.com/nxbiz/download/keysharpnxbiz.exe" />
+        <Package Name="KeySharpBiz" Url="https://cmdown.meritzfire.com/nxbiz/download/keysharpnxbiz.exe" Arguments="/silent" />
         <Package Name="TouchEnKey32" Url="https://cmdown.meritzfire.com/TouchEn/nxKey/module/TouchEn_nxKey_Installer_32bit.exe" Arguments="/silence" />
         <Package Name="TouchEnFirewall" Url="https://cmdown.meritzfire.com/TouchEn/nxFw/module/TEFW_Installer.exe" Arguments="/silence" />
       </Packages>
@@ -1916,7 +1916,8 @@ Start-Service -ServiceName TrustedInstaller
     </Service>
     <Service Id="Wetax" DisplayName="위택스" Category="Government" Url="https://www.wetax.go.kr/">
       <Packages>
-        <Package Name="KeySharNXBiz" Url="https://down.wetax.go.kr/ext/raonnx/ksbiz/module/KSbiz_Installer_32bit.exe" Arguments="/silent" />
+        <Package Name="KeySharpNXBiz" Url="https://www.wetax.go.kr/oacx/setup/ksbiz/module/KSbiz_Installer_32bit.exe" Arguments="/silent" />
+        <Package Name="TouchEnKey" Url="https://www.wetax.go.kr/oacx/setup/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
         <Package Name="nProtect Online Security" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
       </Packages>
     </Service>
@@ -2209,4 +2210,5 @@ foreach ($EachMsi in $MsiList) {
     <!-- 교육기관 끝 -->
   </InternetServices>
 </TableClothCatalog>
+
 
