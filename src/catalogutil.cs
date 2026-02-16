@@ -40,10 +40,14 @@ builder.Services.AddHttpClient("CatalogClient", client =>
     client.DefaultRequestHeaders.TryAddWithoutValidation("Accept", "*/*");
 });
 
+// 커맨드라인 플래그 파싱
+var verbose = args.Any(a => a is "--verbose" or "-v");
+var positionalArgs = args.Where(a => !a.StartsWith('-')).ToArray();
+
 // 로깅 구성
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
-builder.Logging.SetMinimumLevel(LogLevel.Information);
+builder.Logging.SetMinimumLevel(verbose ? LogLevel.Information : LogLevel.Warning);
 
 using var host = builder.Build();
 
@@ -75,7 +79,7 @@ try
     using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
         cts.Token, 
         host.Services.GetRequiredService<IHostApplicationLifetime>().ApplicationStopping);
-    exitCode = await processor.ProcessAsync(args, linkedCts.Token);
+    exitCode = await processor.ProcessAsync(positionalArgs, linkedCts.Token);
 }
 finally
 {
@@ -277,8 +281,9 @@ public class SchemaValidator
         _logger = logger;
     }
 
-    public void Validate(string targetDirectory, bool evaluateUrls)
+    public List<ProblemItem> Validate(string targetDirectory, bool evaluateUrls)
     {
+        var problems = new List<ProblemItem>();
         var catalogXmlPath = Path.Combine(targetDirectory, "Catalog.xml");
         var schemaXsdPath = Path.Combine(targetDirectory, "Catalog.xsd");
 
@@ -292,22 +297,11 @@ public class SchemaValidator
         config.ValidationType = ValidationType.Schema;
         config.Schemas.Add(null, schemaXsdPath);
 
-        var warningCount = 0;
-        var errorCount = 0;
-
         config.ValidationEventHandler += new ValidationEventHandler((_sender, _e) =>
         {
             var positionInfo = GetPositionInfo(_sender as IXmlLineInfo);
-            if (_e.Severity == XmlSeverityType.Warning)
-            {
-                warningCount++;
-                _logger.LogWarning("{Message} - {Position}", _e.Message, positionInfo);
-            }
-            else if (_e.Severity == XmlSeverityType.Error)
-            {
-                errorCount++;
-                _logger.LogError("{Message} - {Position}", _e.Message, positionInfo);
-            }
+            var severity = _e.Severity == XmlSeverityType.Warning ? "Warning" : "Error";
+            problems.Add(new ProblemItem(severity, _e.Message, positionInfo));
         });
 
         _logger.LogInformation("Validating `{CatalogPath}` file.", catalogXmlPath);
@@ -331,17 +325,15 @@ public class SchemaValidator
 
                             if (string.IsNullOrWhiteSpace(urlString))
                             {
-                                errorCount++;
                                 var posInfo = GetPositionInfo(reader as IXmlLineInfo);
-                                _logger.LogError("[{ElementName}] URL string cannot be empty - {Position}", reader.Name, posInfo);
+                                problems.Add(new ProblemItem("Error", $"[{reader.Name}] URL string cannot be empty", posInfo));
                                 continue;
                             }
 
                             if (!Uri.TryCreate(urlString, UriKind.Absolute, out Uri? result) || result == null)
                             {
-                                errorCount++;
                                 var posInfo = GetPositionInfo(reader as IXmlLineInfo);
-                                _logger.LogError("Cannot parse the URI `{Url}` - {Position}", urlString, posInfo);
+                                problems.Add(new ProblemItem("Error", $"Cannot parse the URI `{urlString}`", posInfo));
                                 continue;
                             }
 
@@ -355,17 +347,15 @@ public class SchemaValidator
                 }
                 catch (AggregateException aex)
                 {
-                    errorCount++;
                     var ex = aex.InnerException ?? aex;
                     var posInfo = GetPositionInfo(reader as IXmlLineInfo);
-                    _logger.LogError("{ExType} / {InnerExType} throwed. ({Message}) - {Position}", ex.GetType().Name, ex.InnerException?.GetType().Name, ex.InnerException?.Message ?? ex.Message, posInfo);
+                    problems.Add(new ProblemItem("Error", $"{ex.GetType().Name} / {ex.InnerException?.GetType().Name} throwed. ({ex.InnerException?.Message ?? ex.Message})", posInfo));
                     continue;
                 }
                 catch (Exception ex)
                 {
-                    errorCount++;
                     var posInfo = GetPositionInfo(reader as IXmlLineInfo);
-                    _logger.LogError("{ExType} / {InnerExType} throwed. ({Message}) - {Position}", ex.GetType().Name, ex.InnerException?.GetType().Name, ex.InnerException?.Message ?? ex.Message, posInfo);
+                    problems.Add(new ProblemItem("Error", $"{ex.GetType().Name} / {ex.InnerException?.GetType().Name} throwed. ({ex.InnerException?.Message ?? ex.Message})", posInfo));
                     continue;
                 }
             }
@@ -380,25 +370,17 @@ public class SchemaValidator
                 tasks.Add(_urlTester.TestAsync(errorLogBuffer, eachTestTarget.Key, eachTestTarget.Value.Item1, eachTestTarget.Value.Item2));
 
             var results = Task.WhenAll(tasks).Result;
-            var succeedCount = results.Count(x => x == true);
-            var failedCount = results.Count(x => x == false);
-            errorCount += failedCount;
 
             foreach (var eachErrorLog in errorLogBuffer.ToList())
-                _logger.LogWarning("{ErrorLog}", eachErrorLog);
+                problems.Add(new ProblemItem("Warning", eachErrorLog, null));
 
-            _logger.LogInformation("Test runner completed. (Scheduled: {Scheduled} / Returned: {Returned} / Succeed: {Succeed} / Failed: {Failed})", testTargets.Count, results.Length, succeedCount, failedCount);
+            _logger.LogInformation("Test runner completed. (Scheduled: {Scheduled} / Returned: {Returned} / Succeed: {Succeed} / Failed: {Failed})", testTargets.Count, results.Length, results.Count(x => x), results.Count(x => !x));
 
             if (testTargets.Count != results.Length)
-                _logger.LogWarning("Some test targets skipped due to task cancellation.");
+                problems.Add(new ProblemItem("Warning", "Some test targets skipped due to task cancellation.", null));
         }
 
-        if (errorCount + warningCount < 1)
-            _logger.LogInformation("Success: No XML warnings or errors found.");
-        else if (errorCount < 1 && warningCount > 0)
-            _logger.LogWarning("Some XML warnings found.");
-        else
-            _logger.LogError("One or more XML errors or warnings found.");
+        return problems;
     }
 
     private static string? GetPositionInfo(IXmlLineInfo? lineInfo)
@@ -459,7 +441,45 @@ public class CatalogProcessor
 
             _imageConverter.ConvertAllImages(catalog, targetDirectory);
             _zipArchiver.CreateImageResourceZip(catalog, targetDirectory);
-            _schemaValidator.Validate(targetDirectory, true);
+            var problems = _schemaValidator.Validate(targetDirectory, true);
+
+            // 문제 항목만 추려서 표시
+            if (problems.Count > 0)
+            {
+                Console.WriteLine();
+                Console.WriteLine($"=== 문제 항목 요약 ({problems.Count}건) ===");
+                Console.WriteLine();
+
+                var errors = problems.Where(p => p.Severity == "Error").ToList();
+                var warnings = problems.Where(p => p.Severity == "Warning").ToList();
+
+                if (errors.Count > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"[오류] {errors.Count}건:");
+                    foreach (var error in errors)
+                        Console.WriteLine($"  - {error.Message}" + (error.Position != null ? $" ({error.Position})" : ""));
+                    Console.ResetColor();
+                    Console.WriteLine();
+                }
+
+                if (warnings.Count > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"[경고] {warnings.Count}건:");
+                    foreach (var warning in warnings)
+                        Console.WriteLine($"  - {warning.Message}" + (warning.Position != null ? $" ({warning.Position})" : ""));
+                    Console.ResetColor();
+                    Console.WriteLine();
+                }
+
+                return errors.Count > 0 ? 1 : 0;
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("문제 항목이 없습니다. 모든 검증을 통과했습니다.");
+            }
 
             _logger.LogInformation("Catalog builder runs with succeed result.");
             return 0;
@@ -521,3 +541,5 @@ public class CatalogProcessor
         }
     }
 }
+
+public record ProblemItem(string Severity, string Message, string? Position);
