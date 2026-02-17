@@ -117,3 +117,7 @@ dotnet run .\src\fetchfavicon.cs https://www.example.com .\docs\images\Banking\E
 [Universal Silent Switch Finder 홈페이지](https://www.capstanservices.com/tools-blog/2018/4/4/the-ultimate-silent-switch-finder-ussf)
 
 자동 설치 옵션이 잘 작동하는지 확인하기 위해, Windows Sandbox, 또는 디스크 이미지 수준의 복원 스냅샷 포인트를 확보한 가상 컴퓨터 인스턴스를 활용하여 반복 테스트를 실행해볼 수 있습니다.
+
+## 라이선스
+
+이 프로젝트는 Apache License 2.0을 따릅니다. 자세한 내용은 [LICENSE](LICENSE)를 참고해주세요.
