@@ -33,15 +33,15 @@
     <compat-mode>Default</compat-mode>
     <open-in>IE11</open-in>
   </site>
-  <site url="cmsedi.or.kr">
+  <site url="www.cmsedi.or.kr">
     <compat-mode>Default</compat-mode>
     <open-in>IE11</open-in>
   </site>
-  <site url="billingone.or.kr">
+  <site url="asp.billingone.or.kr">
     <compat-mode>Default</compat-mode>
     <open-in>IE11</open-in>
   </site>
-  <site url="narabill.kr">
+  <site url="www.narabill.kr">
     <compat-mode>Default</compat-mode>
     <open-in>IE11</open-in>
   </site>
