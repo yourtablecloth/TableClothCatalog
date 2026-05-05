@@ -108,6 +108,23 @@ dotnet run .\src\fetchfavicon.cs https://www.example.com .\docs\images\Banking\E
 
 특히 파비콘이 없거나 매우 작은 아이콘만 제공하는 사이트의 경우, AI 도구를 활용하면 훨씬 깔끔한 로고 이미지를 얻을 수 있습니다.
 
+#### 사이트 헬스 체크 도구 (checksites.cs)
+
+카탈로그에 등록된 웹 사이트들의 접속 가능성을 Microsoft Edge(Windows x64로 가장)로 점검하고, 사람의 검토를 거쳐 카탈로그를 갱신할 수 있게 도와주는 도구입니다. 식탁보가 실행되는 Edge IE Mode 환경에 맞춰 User-Agent·Client Hints·`navigator.platform`을 Windows Edge로 일치시켜 진단합니다.
+
+```powershell
+# 자동 헬스 체크 (헤드리스, 스크린샷 + report.json/.md 생성)
+dotnet run .\src\checksites.cs probe .\docs\ .\health-report\
+
+# 사람 판정 단계 (라이브 URL을 시스템 브라우저로 띄우고 verdict 입력)
+dotnet run .\src\checksites.cs triage .\health-report\<timestamp>\
+
+# 후속 작업이 필요한 verdict들을 GitHub 이슈로 자동 등록 (gh CLI 필요)
+dotnet run .\src\checksites.cs issue .\health-report\<timestamp>\
+```
+
+자동 검출과 사람 판정의 분리, GitHub 이슈 자동 등록, AI 어시스트(Claude Code 등)를 활용한 후속 카탈로그 갱신 방법은 [docs/SITE_HEALTH_WORKFLOW.md](docs/SITE_HEALTH_WORKFLOW.md)를 참고하세요.
+
 ### 자동 응답 설치 옵션을 찾는 방법
 
 일반적으로 무인 설치 옵션은 설치 프로그램 명령줄 뒤에 `/?`나 `/help`, `/h`, `--help` 등 도움말을 표시하는 것과 관련된 스위치를 대입하여 실행하면 도움말과 함께 자세한 자동 응답 설치 옵션을 사용하는 방법을 표시합니다.
