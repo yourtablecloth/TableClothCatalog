@@ -1800,6 +1800,11 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
         <Package Name="iSASService" Url="https://www.gbuspb.kr/userResource/file/NXiSAS.exe" Arguments="/silent" />
       </Packages>
     </Service>
+    <Service Id="Car365" DisplayName="자동차365" Category="Government" Url="https://www.car365.go.kr/" en-US-DisplayName="Car365">
+      <Packages>
+        <Package Name="TouchEnKey32" Url="https://www.car365.go.kr/resources/touchenNx/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
+      </Packages>
+    </Service>
     <Service Id="KGeoPlatform" DisplayName="K-Geo 플랫폼" Category="Government" Url="https://kgeop.go.kr/">
       <Packages>
         <Package Name="UniSign" Url="https://kgeop.go.kr/myland/plugins/crosscert/CC_WSTD_home/install/UniSignCRSV3Setup.exe" Arguments="/silent" />
