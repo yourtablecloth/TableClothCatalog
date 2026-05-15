@@ -1664,6 +1664,16 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
         <Package Name="MagicLine" Url="https://yebigun1.mil.kr/MagicLine4NPIZ/magicline4np/install_bin/magicline4npiz.exe" Arguments="/silent" />
       </Packages>
     </Service>
+    <Service Id="MmaCivil" DisplayName="병무청 병무민원" Category="Government" Url="https://mwpt.mma.go.kr/" en-US-DisplayName="Military Manpower Administration">
+      <Packages>
+        <Package Name="AnySign" Url="https://cert.mma.go.kr/AnySign4PC/install/v1.1.4.4/AnySign_Installer.exe" Arguments="/S" />
+      </Packages>
+    </Service>
+    <Service Id="MmaWork" DisplayName="병무청 산업지원 병역일터" Category="Government" Url="https://work.mma.go.kr/" en-US-DisplayName="Industrial Support Military Service Workplace">
+      <Packages>
+        <Package Name="AnySign" Url="https://cert.mma.go.kr/AnySign4PC/install/v1.1.4.4/AnySign_Installer.exe" Arguments="/S" />
+      </Packages>
+    </Service>
     <Service Id="Scourt" DisplayName="대한민국 법원 대국민서비스" Category="Government" Url="https://scourt.go.kr/">
       <Packages>
         <Package Name="AnySign" Url="https://ssgo.scourt.go.kr/ssgo/cm/AnySignPlus/AnySign_Installer.exe" Arguments="/S" />
