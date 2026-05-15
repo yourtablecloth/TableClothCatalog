@@ -73,10 +73,6 @@
     <compat-mode>Default</compat-mode>
     <open-in>IE11</open-in>
   </site>
-  <site url="cust.ilogen.com">
-    <compat-mode>Default</compat-mode>
-    <open-in>IE11</open-in>
-  </site>
   <site url="neis.go.kr">
     <compat-mode>Default</compat-mode>
     <open-in>IE11</open-in>
