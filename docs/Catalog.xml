@@ -1134,17 +1134,15 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
         <Package Name="SignKoreaCert" Url="https://www.iprovest.com/upload/customhelp/download/SKCertServiceSetup_v2.5.18_152.exe" />
       </Packages>
     </Service>
-    <!--
-    <Service Id="HiSecurity" DisplayName="하이투자증권" Category="Security" Url="https://www.hi-ib.com/" en-US-DisplayName="HI INVESTMENT &amp; SECURITIES">
+    <Service Id="HiSecurity" DisplayName="iM증권" Category="Security" Url="https://www.imfnsec.com/" en-US-DisplayName="iM Securities">
       <Packages>
-        <Package Name="SetupNx" Url="https://www.hi-ib.com/program/HI_setupNx.exe" Arguments="/silent" />
-        <Package Name="SignKoreaCert" Url="https://www.hi-ib.com/SKCertService/SKCertServiceSetup.exe" />
-        <Package Name="TouchEnKey64" Url="https://www.hi-ib.com/raon/e2e/TouchEn/nxKey/module/TouchEn_nxKey_Installer_64bit.exe" Arguments="/silence" />
-        <Package Name="TouchEnFirewall" Url="https://www.hi-ib.com/raon/e2e/TouchEnfw/nxFw/module/TEFW_Installer64.exe" Arguments="/silence" />
-        <Package Name="TouchEnWeb" Url="https://www.hi-ib.com/raon/e2e/TouchEnfw/nxWeb/module/TouchEn_nxWeb_Installer.exe" Arguments="/silence" />
+        <Package Name="SetupNx" Url="https://www.imfnsec.com/program/HI_setupNx.exe" Arguments="/silent" />
+        <Package Name="SignKoreaCert" Url="https://www.imfnsec.com/SKCertService/SKCertServiceSetup.exe" />
+        <Package Name="TouchEnKey64" Url="https://www.imfnsec.com/raon/e2e/TouchEn/nxKey/module/TouchEn_nxKey_Installer_64bit.exe" Arguments="/silence" />
+        <Package Name="TouchEnFirewall" Url="https://www.imfnsec.com/raon/e2e/TouchEnfw/nxFw/module/TEFW_Installer64.exe" Arguments="/silence" />
+        <Package Name="TouchEnWeb" Url="https://www.imfnsec.com/raon/e2e/TouchEnfw/nxWeb/module/TouchEn_nxWeb_Installer.exe" Arguments="/silence" />
       </Packages>
     </Service>
-    -->
     <Service Id="HyundaiCarSecurity" DisplayName="현대차증권" Category="Security" Url="https://www.hmsec.com/" en-US-DisplayName="HYUNDAI MOTOR SECURITIES">
       <CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/#troubleshoot 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
       <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/#troubleshoot and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
