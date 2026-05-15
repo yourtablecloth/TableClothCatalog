@@ -57,7 +57,7 @@
     <compat-mode>Default</compat-mode>
     <open-in>IE11</open-in>
   </site>
-  <site url="g-health.kr">
+  <site url="www.e-health.go.kr">
     <compat-mode>Default</compat-mode>
     <open-in>IE11</open-in>
   </site>
@@ -70,10 +70,6 @@
     <open-in>IE11</open-in>
   </site>
   <site url="www.cultureland.co.kr">
-    <compat-mode>Default</compat-mode>
-    <open-in>IE11</open-in>
-  </site>
-  <site url="cust.ilogen.com">
     <compat-mode>Default</compat-mode>
     <open-in>IE11</open-in>
   </site>
