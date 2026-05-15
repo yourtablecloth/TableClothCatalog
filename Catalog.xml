@@ -1800,6 +1800,11 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
         <Package Name="iSASService" Url="https://www.gbuspb.kr/userResource/file/NXiSAS.exe" Arguments="/silent" />
       </Packages>
     </Service>
+    <Service Id="Car365" DisplayName="자동차365" Category="Government" Url="https://www.car365.go.kr/" en-US-DisplayName="Car365">
+      <Packages>
+        <Package Name="TouchEnKey32" Url="https://www.car365.go.kr/resources/touchenNx/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
+      </Packages>
+    </Service>
     <Service Id="KGeoPlatform" DisplayName="K-Geo 플랫폼" Category="Government" Url="https://kgeop.go.kr/">
       <Packages>
         <Package Name="UniSign" Url="https://kgeop.go.kr/myland/plugins/crosscert/CC_WSTD_home/install/UniSignCRSV3Setup.exe" Arguments="/silent" />
@@ -2039,6 +2044,11 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
       <EdgeExtensions>
         <EdgeExtension Name="WehagoRTC" CrxUrl="https://clients2.google.com/service/update2/crx" ExtensionId="eljddogfdgnndbemlmjgmocgjpniamie" />
       </EdgeExtensions>
+    </Service>
+    <Service Id="HeumAlfred" DisplayName="혜움 알프레드" Category="Other" Url="https://www.alfred.kr/" en-US-DisplayName="Heuum Alfred">
+      <Packages>
+        <Package Name="ExAdapter" Url="https://d3sg6u4266hv3i.cloudfront.net/files/ExAdapter_Web_Setup_20260105.exe" Arguments="/silent" />
+      </Packages>
     </Service>
     <Service Id="MedCerti" DisplayName="병원증명발급포털 메드서티 (medcerti.co.kr)" Category="Other" Url="https://www.medcerti.co.kr/medcerti_portal/index.jsp" en-US-DisplayName="Medcerti Hospital Certificate Issuance">
       <SearchKeywords>
