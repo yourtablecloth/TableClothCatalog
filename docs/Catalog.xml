@@ -2079,6 +2079,11 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
         <Package Name="WebCubeAgent" Url="https://medicopy.lemonhc.com/lct/medicopy/WebCube/components/WebCubeAgentSetup.exe" Arguments="/S" />
       </Packages>
     </Service>
+	<Service Id="Epost" DisplayName="인터넷우체국" Category="Other" Url="https://www.epost.go.kr">
+      <Packages>
+        <Package Name="nProtect Online Security" Url="https://supdate.nprotect.net/nprotect/nos_service/windows/install/nos_setup.exe" Arguments="/silent" />
+      </Packages>
+    </Service>
     <!-- 일반 서비스 끝 -->
     <!-- 교육기관 시작 - Category: Education -->
     <Service Id="Neis" DisplayName="나이스 대국민 서비스" Category="Education" Url="https://neis.go.kr/" en-US-DisplayName="National Education Information System">
