@@ -1958,7 +1958,7 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
     </Service>
     <Service Id="Startbiz" DisplayName="온라인 법인설립시스템" Category="Government" Url="https://www.startbiz.go.kr/">
       <Packages>
-        <Package Name="AnySign" Url="https://www.4insure.or.kr/solution/AnySign_19/AnySign4PC/download/AnySign_Installer.exe" Arguments="/S" />
+        <Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.5.1/AnySign_Installer.exe" Arguments="/S" />
       </Packages>
     </Service>
     <!-- 공공기관 끝 -->
