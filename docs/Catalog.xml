@@ -1858,6 +1858,19 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
         <Package Name="AnySign" Url="https://download.softforum.com/Published/AnySign/v1.1.3.3/AnySign_Installer.exe" Arguments="/S" />
       </Packages>
     </Service>
+    <Service Id="NHISBigData" DisplayName="건강보험 빅데이터 플랫폼" Category="Government" Url="https://nhiss.nhis.or.kr/" en-US-DisplayName="NHIS Big Data Platform">
+      <Packages>
+        <Package Name="Veraport" Url="https://nhiss.nhis.or.kr/resources/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
+        <Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
+        <Package Name="TouchEnKey32" Url="https://nhiss.nhis.or.kr/resources/raonnx/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
+        <Package Name="TouchEnWeb" Url="https://nhiss.nhis.or.kr/resources/raonnx/nxWeb/module/TouchEn_nxWeb_Installer.exe" Arguments="/silence" />
+      </Packages>
+    </Service>
+    <Service Id="PoliceCivilService24" DisplayName="경찰민원24" Category="Government" Url="https://minwon24.police.go.kr/" en-US-DisplayName="Police Civil Service 24">
+      <Packages>
+        <Package Name="MaWebDRM" Url="https://minwon24.police.go.kr/js/markany/bin/Inst_MaWebDRM.exe" Arguments="/silent" />
+      </Packages>
+    </Service>
     <Service Id="Work24" DisplayName="고용24" Category="Government" Url="https://www.work24.go.kr/">
       <Packages>
         <Package Name="AnySign4PC" Url="https://www.work24.go.kr/cm/static/solution/AnySignLite_31/module/AnySign_Installer.exe" Arguments="/S" />
