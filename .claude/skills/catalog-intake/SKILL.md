@@ -26,6 +26,16 @@ Google Forms 제보(비-GitHub 사용자용)를 `docs/Catalog.xml` 변경으로 
 - 참고 문서: [references/field-mapping.md](references/field-mapping.md) — 필드 매핑·Category·
   gap 정의·설치기/스위치 시드표. 처리 규칙의 근거는 전부 여기에 있다.
 
+## 사전 준비 (도구)
+
+- **uv** (Python) — `scripts/*.py` 실행. PEP 723 자체완결이라 `uv run` 시 의존성 자동 설치.
+- **[ussfc](https://www.nuget.org/packages/ussfc)** — 무인 설치 스위치 탐지(.NET 전역 도구). 최초 1회 설치:
+  ```bash
+  dotnet tool install -g ussfc      # 갱신: dotnet tool update -g ussfc
+  ```
+  설치 없이 쓰려면 `.NET 10 SDK`의 `dnx ussfc`도 가능(`detect_switch.py`가 자동 폴백).
+- **gh** (GitHub CLI) — PR/이슈 생성. **dotnet 10 SDK** — `catalogutil.cs` 등 검증 도구.
+
 ## 파이프라인
 
 ```text
@@ -78,15 +88,24 @@ uv run .claude/skills/catalog-intake/scripts/normalize_csv.py \
 
 [references/field-mapping.md](references/field-mapping.md) 3~5절을 근거로:
 
-- **`arguments-missing` + `package-name-derive`** — 각 `package_urls`를 확인:
-  ```bash
-  uv run .claude/skills/catalog-intake/scripts/check_urls.py <url> [<url> ...] --json
-  ```
-  살아있는지·최종 URL·파일명을 얻는다. 파일명을 시드표(4절)에 대조해 **Package Name**과
-  **Arguments**를 정한다. 시드표에 없으면 `src/ussf.cs` 또는 설치기 `/?`로 스위치를 조사하고,
-  넘겨짚지 않는다(특히 TouchEn=`/silence`, IPInside=`/nodlg`).
-  - `check_urls`가 403/차단이면 JS 게이트일 수 있음 → 무거운 케이스이므로
-    `dotnet run --file src/checksites.cs -- probe ...`(Playwright Edge)로 폴백.
+- **`arguments-missing` + `package-name-derive`** — 각 `package_urls`에 대해:
+  1. 생존/최종 URL/파일명 확인:
+     ```bash
+     uv run .claude/skills/catalog-intake/scripts/check_urls.py <url> [<url> ...] --json
+     ```
+     `check_urls`가 403/차단이면 JS 게이트일 수 있음 → 무거운 케이스이므로
+     `dotnet run --file src/checksites.cs -- probe ...`(Playwright Edge)로 폴백.
+  2. **무인 설치 스위치 자동 추론** — 설치 파일을 브라우저(Edge)로 위장해 내려받아
+     `ussfc`로 판별한다(사전 준비 절 참고):
+     ```bash
+     uv run .claude/skills/catalog-intake/scripts/detect_switch.py <installer-url>
+     ```
+     출력의 `▶ 후보`가 `Package Name`/`Arguments` 제안이다. 판정 규칙:
+     - **시드표 매칭(source: seed)**: 알려진 벤더 → 시드표 값을 채택. `ussf`가 달라도(conflict)
+       시드표 우선(국내 보안 설치기는 ussf의 일반 판별이 틀리기 쉬움. TouchEn=`/silence`, IPInside=`/nodlg`).
+     - **시드표에 없음(source: ussf, needs_verification)**: ussf 추정값을 넣되, **넘겨짚지 말고**
+       실제 무인 설치 테스트(Windows Sandbox/VM)로 확정할 것을 사람에게 요청.
+     - 어느 쪽이든 스위치는 **자동 확정이 아니라 후보**다 — 최종은 실제 설치 테스트로 사람이 확인.
 
 - **로고 → 투명 정사각 PNG** — CSV의 `icon_ref`는 인증이 필요한 Drive 링크이므로 보통
   사이트에서 직접 만든다:
@@ -170,6 +189,8 @@ gh issue create \
 |---|---|---|:---:|
 | `normalize_csv.py` | uv(무의존) | CSV→정규화 JSON·gap 플래그·Id 파생·충돌검사 | ✗ |
 | `check_urls.py` | uv(httpx) | Edge 위장 URL 생존/파일명 확인 | ✓ |
+| `detect_switch.py` | uv(httpx) + ussfc | Edge 위장 설치기 다운로드→ussfc 스위치 탐지→시드 교차검증 | ✓ |
 | `fetch_logo.py` | uv(pillow/numpy/bs4) | 로고 수집→배경 투명화→정사각 PNG | ✓* |
 
 `*` `--from-image`는 네트워크 불필요. UA 프로파일은 `src/checksites.cs`의 Edge 131과 동일.
+`detect_switch.py`는 `ussfc`(dotnet 전역 도구)가 필요하다 — 사전 준비 절 참고.

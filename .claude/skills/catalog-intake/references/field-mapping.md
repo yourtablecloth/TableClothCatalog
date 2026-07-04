@@ -57,8 +57,9 @@ XSD `CatalogInternetServiceCategory` enum:
 ## 4. 설치 프로그램 시드표 (Catalog.xml 실측 빈도 기반)
 
 URL 파일명 → **Package Name** 및 **Arguments(사일런트 스위치)** 추론용. 신규 URL이
-아래 파일명 패턴과 맞으면 그대로 쓰고, 아니면 조사한다. (스위치는 벤더마다 다르니
-`/silent`로 넘겨짚지 말 것 — 특히 TouchEn 계열은 `/silence`, IPInside는 `/nodlg`.)
+아래 파일명 패턴과 맞으면 그대로 쓰고, 아니면 `detect_switch.py`(설치기 다운로드 → `ussfc`
+탐지)로 조사한다. (스위치는 벤더마다 다르니 `/silent`로 넘겨짚지 말 것 — 특히 TouchEn 계열은
+`/silence`, IPInside는 `/nodlg`.)
 
 | 파일명 패턴(예) | Package Name | Arguments |
 |---|---|---|
@@ -78,7 +79,9 @@ URL 파일명 → **Package Name** 및 **Arguments(사일런트 스위치)** 추
 | `SecuKit*` | `SecuKitNXS` | `/silent` |
 
 > 이 표는 힌트다. 최종 확인은 실제 설치기 동작(무인 설치 테스트) 기준.
-> 새 벤더/버전이면 `src/ussf.cs`로 스위치를 탐색하고 표를 갱신하는 것을 권장.
+> 새 벤더/버전이면 `detect_switch.py <url>`(내부적으로 [`ussfc`](https://www.nuget.org/packages/ussfc))로
+> 스위치를 탐색하고 이 표를 갱신하는 것을 권장. 단, `ussfc`의 일반 EXE 판별은 국내 보안 설치기에서
+> 틀릴 수 있으므로(예: Veraport를 Inno로 보고 `/VERYSILENT` 제안) **시드표 값이 있으면 우선**한다.
 
 ## 5. Id 파생 규칙
 
