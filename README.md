@@ -125,6 +125,25 @@ dotnet run .\src\checksites.cs issue .\health-report\<timestamp>\
 
 자동 검출과 사람 판정의 분리, GitHub 이슈 자동 등록, AI 어시스트(Claude Code 등)를 활용한 후속 카탈로그 갱신 방법은 [docs/SITE_HEALTH_WORKFLOW.md](docs/SITE_HEALTH_WORKFLOW.md)를 참고하세요.
 
+#### 제보 인테이크 스킬 (catalog-intake)
+
+GitHub에 익숙하지 않은 사용자를 위한 [Google Forms 제보](https://forms.gle/Pw6pBKhqF1e5Nesw6)를, **검토부터 카탈로그 수용까지 반자동으로 처리**하는 Claude Code 스킬입니다. [.claude/skills/catalog-intake/](.claude/skills/catalog-intake/)에 있으며, 그동안 수작업으로 처리하던 제보 반영을 자동화합니다.
+
+Google Forms 응답을 내보낸 CSV를 입력으로 받아 다음을 수행합니다.
+
+1. **정규화**: CSV → 카탈로그 스키마 필드 매핑, Service Id 파생, 기존 Id 충돌 검사, 폼이 받지 않는 항목(사일런트 스위치 등)을 gap으로 플래그.
+2. **URL 검증**: 보안 플러그인 설치 URL을 Windows Edge로 위장(User-Agent + Client Hints)해 접속 — 국내 공공/금융 사이트의 봇 차단을 통과하고, 설치 *페이지*와 직접 설치 *파일*을 구분합니다.
+3. **로고 생성**: 기관 공식 로고를 수집해 배경을 투명 처리한 정사각 PNG(`docs/images/<Category>/<Id>.png`)로 변환.
+4. **검증·제출**: `catalogutil.cs` 스키마 검증을 거쳐 사람이 검토할 PR 후보를 생성.
+
+처리 결과는 세 갈래로 정리하며, **검출·정규화는 자동, 최종 판정과 병합(merge)은 사람**이 합니다(사이트 헬스 워크플로와 동일 철학).
+
+- **완전 반영**: 검증까지 끝난 항목 → PR diff에 포함
+- **미완(수동 검토 필요)**: 자동으로 확정하지 못한 항목 → 유실 방지를 위해 추적 이슈를 생성하고 PR에 링크
+- **중복/무효**: 기존 항목과 중복이거나 부적합 → 사유를 기록하고 제외
+
+실행에는 [uv](https://docs.astral.sh/uv/)(Python)가 필요합니다. 스크립트는 PEP 723 자체완결 형식이라 `uv run <script>` 실행 시 의존성이 자동 설치됩니다. 자세한 절차는 [.claude/skills/catalog-intake/SKILL.md](.claude/skills/catalog-intake/SKILL.md), 필드 매핑·설치기 시드표는 [references/field-mapping.md](.claude/skills/catalog-intake/references/field-mapping.md)를 참고하세요.
+
 ### 자동 응답 설치 옵션을 찾는 방법
 
 일반적으로 무인 설치 옵션은 설치 프로그램 명령줄 뒤에 `/?`나 `/help`, `/h`, `--help` 등 도움말을 표시하는 것과 관련된 스위치를 대입하여 실행하면 도움말과 함께 자세한 자동 응답 설치 옵션을 사용하는 방법을 표시합니다.
