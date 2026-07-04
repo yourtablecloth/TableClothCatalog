@@ -7,7 +7,7 @@
 ## 1. 필드 매핑
 
 | 폼 질문(키워드) | 논리 필드 | 카탈로그 대상 | 비고 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 타임스탬프 | `timestamp` | (이슈 메타) | Google 자동 |
 | 이메일 주소 | `reporter_email` | (이슈 메타) | 로그인 필수 → verified |
 | 어떤 유형의 변경 사항 | `change_type` | 처리 분기 | 추가/수정/삭제 → add/modify/delete |
@@ -31,7 +31,7 @@ XSD `CatalogInternetServiceCategory` enum:
 `Other, Banking, Financing, Security, Insurance, CreditCard, Government, Education`
 
 | 폼 선택지 | enum | 상태 |
-|---|---|---|
+| --- | --- | --- |
 | 은행 | `Banking` | 1:1 |
 | 카드 | `CreditCard` | 1:1 |
 | 공공기관 | `Government` | 1:1 |
@@ -47,7 +47,7 @@ XSD `CatalogInternetServiceCategory` enum:
 ## 3. 기계가 못 채우는 빈칸(gaps) — 스킬이 반드시 개입
 
 | gap 플래그 | 의미 | 해결 방법 |
-|---|---|---|
+| --- | --- | --- |
 | `arguments-missing` | 폼이 사일런트 스위치를 안 받음 | 4절 시드표 → 없으면 `src/ussf.cs` 또는 설치기 `/?`·`/help` |
 | `package-name-derive` | Package Name 미수집(URL만) | 4절 시드표 + `check_urls.py` 파일명 |
 | `category-needs-decision` | 증권 등 enum 없는 종류 | 사람 결정 |
@@ -62,7 +62,7 @@ URL 파일명 → **Package Name** 및 **Arguments(사일런트 스위치)** 추
 `/silence`, IPInside는 `/nodlg`.)
 
 | 파일명 패턴(예) | Package Name | Arguments |
-|---|---|---|
+| --- | --- | --- |
 | `veraport-g3*`, `veraport*` | `Veraport` | `/silent` |
 | `nos_setup*` | `nProtect Online Security` | `/silent` |
 | `astx_setup*`, `astxdn*` | `AhnLabSafeTx` | `/silent` |
