@@ -1871,6 +1871,16 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
         <Package Name="MaWebDRM" Url="https://minwon24.police.go.kr/js/markany/bin/Inst_MaWebDRM.exe" Arguments="/silent" />
       </Packages>
     </Service>
+    <Service Id="Silson24" DisplayName="실손24" Category="Government" Url="https://www.silson24.or.kr/" en-US-DisplayName="Silson24">
+      <Packages>
+        <Package Name="Veraport" Url="https://www.silson24.or.kr/wizvera/veraport/down/veraport-g3-x64.exe" Arguments="/silent" />
+        <Package Name="TouchEnKey32" Url="https://cdn.silson24.or.kr/raonnx/nxKey/module/TouchEn_nxKey_32bit.exe" Arguments="/silence" />
+        <Package Name="TouchEnWeb" Url="https://cdn.silson24.or.kr/raonnx/nxWeb/module/TouchEn_nxWeb_Installer32.exe" Arguments="/silence" />
+        <Package Name="TouchEnFirewall" Url="https://cdn.silson24.or.kr/raonnx/nxFw/module/TEFW_Installer.exe" Arguments="/silence" />
+        <Package Name="KSCertRelay_nx" Url="https://cdn.silson24.or.kr/raonnx/nxCR/module/KSCertRelay_nx_Installer_32bit.exe" Arguments="/S" />
+        <Package Name="KSbiz" Url="https://cdn.silson24.or.kr/raonnx/ksbiz/module/KSbiz_Installer_32bit.exe" Arguments="/S" />
+      </Packages>
+    </Service>
     <Service Id="Work24" DisplayName="고용24" Category="Government" Url="https://www.work24.go.kr/">
       <Packages>
         <Package Name="AnySign4PC" Url="https://www.work24.go.kr/cm/static/solution/AnySignLite_31/module/AnySign_Installer.exe" Arguments="/S" />
