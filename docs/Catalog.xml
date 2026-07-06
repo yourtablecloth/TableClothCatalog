@@ -59,11 +59,10 @@
       <CompatNotes>이 웹 사이트는 해당 기관의 보안 정책에 따라 AhnLab Safe Transaction이 Windows Sandbox의 필수 구성 요소인 RDP 세션을 강제 종료하도록 구성되어있습니다. https://yourtablecloth.app/#troubleshoot 페이지를 참고하여 AST가 원격 연결을 허용하도록 사이트 이용 전에 먼저 변경한 후 접속하는 것을 권장합니다.</CompatNotes>
       <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/#troubleshoot and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
       <Packages>
-        <Package Name="Veraport" Url="https://veraport.nonghyup.com/download/20230210/veraport-g3-x64.exe" Arguments="/silent" />
+        <Package Name="Veraport" Url="https://veraport.nonghyup.com/download/20251029/veraport-g3-x64.exe" Arguments="/silent" />
         <Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
-        <Package Name="INISAFECrossWebEx" Url="https://veraport.nonghyup.com/download/20230210/INIS_EX_SHA2.exe" Arguments="/S" />
-        <Package Name="TouchEnKey64" Url="https://img.nonghyup.com/install/so/raon/TouchEnNxKey/TouchEn_nxKey_Installer_64bit_new.exe" Arguments="/silence" />
-        <Package Name="TouchEnKey32" Url="https://veraport.nonghyup.com/download/20230210/TouchEn_nxKey_Installer_32bit_new.exe" Arguments="/silence" />
+        <Package Name="INISAFECrossWebEx" Url="https://veraport.nonghyup.com/download/20260422/INIS_EX_SHA2.exe?ver=1.0.1.1021" Arguments="/S" />
+        <Package Name="TouchEnKey32" Url="https://veraport.nonghyup.com/download/20250417/TouchEn_nxKey_Installer_32bit_new.exe" Arguments="/silence" />
       </Packages>
       <EdgeExtensions>
         <EdgeExtension Name="TouchEnExtension" CrxUrl="https://clients2.google.com/service/update2/crx" ExtensionId="dncepekefegjiljlfbihljgogephdhph" />
@@ -308,8 +307,8 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "1"
       <en-US-CompatNotes>This website is configured to force RDP sessions to be terminated by AhnLab Safe Transaction, which is a required component of Windows Sandbox, in accordance with your institution's security policy. We recommend that you refer to https://yourtablecloth.app/#troubleshoot and change the AST to allow remote connections before using the site.</en-US-CompatNotes>
       <Packages>
         <Package Name="AhnLabSafeTx" Url="https://safetx.ahnlab.com/master/win/default/all/astx_setup.exe" Arguments="/silent" />
-        <Package Name="INISAFE CrossWeb EX" Url="https://veraport.nonghyup.com/download/20230515/INIS_EX_SHA2.exe" Arguments="/S" />
-        <Package Name="TouchEnKey32" Url="https://veraport.nonghyup.com/download/20230421/TouchEn_nxKey_Installer_32bit_new.exe" Arguments="/silence" />
+        <Package Name="INISAFE CrossWeb EX" Url="https://veraport.nonghyup.com/download/20260422/INIS_EX_SHA2.exe?ver=1.0.1.1021" Arguments="/S" />
+        <Package Name="TouchEnKey32" Url="https://veraport.nonghyup.com/download/20250417/TouchEn_nxKey_Installer_32bit_new.exe" Arguments="/silence" />
       </Packages>
     </Service>
     <Service Id="SHInternetBankBiz" DisplayName="SH수협은행 기업뱅킹" Category="Banking" Url="https://biz.suhyup-bank.com/" en-US-DisplayName="Suhyup Bank (Corp.)">
