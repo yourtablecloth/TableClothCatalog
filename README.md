@@ -125,6 +125,15 @@ dotnet run .\src\checksites.cs issue .\health-report\<timestamp>\
 
 자동 검출과 사람 판정의 분리, GitHub 이슈 자동 등록, AI 어시스트(Claude Code 등)를 활용한 후속 카탈로그 갱신 방법은 [docs/SITE_HEALTH_WORKFLOW.md](docs/SITE_HEALTH_WORKFLOW.md)를 참고하세요.
 
+#### AI 에이전트 기반 카탈로그 품질 관리 (자동 이슈 등록)
+
+카탈로그 검사 도구에서 발견되는 오류를 GitHub 이슈로 자동 등록하고, AI 에이전트(Copilot 코딩 에이전트·Claude Code 등)의 도움을 받아 해결하는 워크플로가 준비되어 있습니다. 검출은 자동, 최종 판정과 카탈로그 반영(merge)은 사람이 담당합니다.
+
+- **[`.github/workflows/catalog-quality.yml`](.github/workflows/catalog-quality.yml)**: `checkimages.cs`·`catalogutil.cs`를 주기적으로 실행하여 발견된 오류를 하나의 추적 이슈로 등록/갱신하고, 문제가 해소되면 자동으로 닫습니다.
+- **[`.github/workflows/savings-bank-merger-watch.yml`](.github/workflows/savings-bank-merger-watch.yml)**: 통폐합이 잦은 저축은행 업계를 대상으로, 매월 AI 에이전트에게 업계 통폐합 뉴스 조사를 위임하는 이슈를 자동 생성합니다.
+
+두 워크플로의 전체 흐름과 AI 에이전트 작업 지침은 [docs/CATALOG_QUALITY_WORKFLOW.md](docs/CATALOG_QUALITY_WORKFLOW.md)를 참고하세요.
+
 #### 제보 인테이크 스킬 (catalog-intake)
 
 GitHub에 익숙하지 않은 사용자를 위한 [Google Forms 제보](https://forms.gle/Pw6pBKhqF1e5Nesw6)를, **검토부터 카탈로그 수용까지 반자동으로 처리**하는 Claude Code 스킬입니다. [.claude/skills/catalog-intake/](.claude/skills/catalog-intake/)에 있으며, 그동안 수작업으로 처리하던 제보 반영을 자동화합니다.
