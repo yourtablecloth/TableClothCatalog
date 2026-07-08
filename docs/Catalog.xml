@@ -1658,6 +1658,11 @@ REG ADD "HKCU\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" /v "2"
         <Package Name="TouchEnKey32" Url="https://download.raonsecure.com/TouchEnnxKey/minwon/TouchEn_nxKey_Installer_32bit_1.0.0.47.exe" Arguments="/silence" />
       </Packages>
     </Service>
+    <Service Id="InfoDisclosure" DisplayName="정보공개포털" Category="Government" Url="https://www.open.go.kr/" en-US-DisplayName="Information Disclosure Portal">
+      <Packages>
+        <Package Name="MagicLine4NX" Url="https://www.open.go.kr/MagicLine4Web/ML4Web/install_bin/magicline4nx_setup.exe" Arguments="/silent" />
+      </Packages>
+    </Service>
     <Service Id="ReserveForces" DisplayName="예비군" Category="Government" Url="https://yebigun1.mil.kr/">
       <Packages>
         <Package Name="MagicLine" Url="https://yebigun1.mil.kr/MagicLine4NPIZ/magicline4np/install_bin/magicline4npiz.exe" Arguments="/silent" />
