@@ -377,9 +377,13 @@ SiteCollection sites = [
 
 CompanionCollection companions = [
     new("EveryonesPrinter", "모두의 프린터", "https://modu-print.com/모두의-프린터-다운로드", "", "Everyone's Printer"),
+    new("EveryonesPDF", "모두의 PDF", "https://modu-print.com/모두의pdf-다운로드", "", "Everyone's PDF"),
     new("HancomOfficeViewer", "한컴오피스 뷰어", "https://www.hancom.com/product/office/officeViewer", "", "Hancom Office Viewer"),
     new("AdobeAcrobatReader", "Adobe Acrobat Reader", "https://get.adobe.com/kr/reader", "", "Adobe Acrobat Reader"),
     new("RaiDrive", "RaiDrive", "https://www.raidrive.com/download", "", "RaiDrive"),
+    new("Ghostscript", "Ghostscript (AGPL)", "https://www.ghostscript.com/releases/gsdnld.html", "", "Ghostscript (AGPL)"),
+    new("GhostPCL", "GhostPCL (AGPL)", "https://www.ghostscript.com/releases/gpcldnld.html", "", "GhostPCL (AGPL)"),
+    new("VisualCppRedist", "Visual C++ 재배포 가능 패키지", "https://learn.microsoft.com/ko-kr/cpp/windows/latest-supported-vc-redist", "", "Visual C++ Redistributable"),
 ];
 
 ServiceCollection services = [
