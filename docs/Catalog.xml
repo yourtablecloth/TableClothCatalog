@@ -11,6 +11,10 @@
     <Companion Id="HancomOfficeViewer" DisplayName="한컴오피스 뷰어" Url="https://www.hancom.com/product/office/officeViewer" Arguments="" en-US-DisplayName="Hancom Office Viewer" />
     <Companion Id="AdobeAcrobatReader" DisplayName="Adobe Acrobat Reader" Url="https://get.adobe.com/kr/reader" Arguments="" en-US-DisplayName="Adobe Acrobat Reader" />
     <Companion Id="RaiDrive " DisplayName="RaiDrive" Url="https://www.raidrive.com/download" Arguments="" en-US-DisplayName="RaiDrive" />
+    <Companion Id="SevenZip" DisplayName="7-Zip (LGPL)" Url="https://www.7-zip.org/download.html" Arguments="" en-US-DisplayName="7-Zip (LGPL)" />
+    <Companion Id="Bandizip" DisplayName="반디집" Url="https://www.bandisoft.com/bandizip/" Arguments="" en-US-DisplayName="Bandizip" />
+    <Companion Id="EdgeWebView2Runtime" DisplayName="Microsoft Edge WebView2 런타임" Url="https://developer.microsoft.com/ko-kr/microsoft-edge/webview2/" Arguments="" en-US-DisplayName="Microsoft Edge WebView2 Runtime" />
+    <Companion Id="EclipseTemurin" DisplayName="OpenJDK (GPLv2+CE)" Url="https://adoptium.net/temurin/releases/" Arguments="" en-US-DisplayName="OpenJDK (GPLv2+CE)" />
   </Companions>
   <InternetServices>
     <!-- 인터넷 뱅킹 시작 -->
