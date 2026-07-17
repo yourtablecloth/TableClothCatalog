@@ -443,6 +443,22 @@ public class CatalogProcessor
             _zipArchiver.CreateImageResourceZip(catalog, targetDirectory);
             var problems = _schemaValidator.Validate(targetDirectory, true);
 
+            // 선택적 머신 판독 출력 (환경변수 opt-in) — 품질 리포트 워크플로가 사용합니다.
+            // 기존 호출에는 영향이 없습니다.
+            var problemsJsonOut = Environment.GetEnvironmentVariable("CATALOGUTIL_PROBLEMS_JSON");
+            if (!string.IsNullOrWhiteSpace(problemsJsonOut))
+            {
+                var payload = new
+                {
+                    errors = problems.Where(p => p.Severity == "Error")
+                        .Select(p => new { message = p.Message, position = p.Position }).ToArray(),
+                    warnings = problems.Where(p => p.Severity == "Warning")
+                        .Select(p => new { message = p.Message, position = p.Position }).ToArray(),
+                };
+                File.WriteAllText(problemsJsonOut, System.Text.Json.JsonSerializer.Serialize(
+                    payload, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
+            }
+
             // 문제 항목만 추려서 표시
             if (problems.Count > 0)
             {

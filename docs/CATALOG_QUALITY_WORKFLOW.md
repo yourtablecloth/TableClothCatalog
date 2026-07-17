@@ -1,0 +1,67 @@
+# 카탈로그 품질 리포트 워크플로 (진화형)
+
+이 문서는 카탈로그 검사 도구에서 발견되는 문제를 **개별 이슈로 쪼개지 않고**, 주 1회 **하나의 진화형 품질 리포트**로 모아 관리하는 절차를 설명합니다. 이전 리포트와 병합하여 **신규 / 계속 남아있음(경과 주차) / 이번에 해결됨**을 추적하므로, 관리 추적 부담을 최소화하면서도 문제의 나이(aging)와 추세를 볼 수 있습니다.
+
+전체 철학은 [사이트 헬스 워크플로](SITE_HEALTH_WORKFLOW.md)와 동일합니다 — **검출(detect)은 자동, 최종 판정과 카탈로그 반영(merge)은 사람 또는 AI 에이전트**가 합니다.
+
+## 구성 요소
+
+| 파일 | 역할 |
+|---|---|
+| [`.github/workflows/catalog-quality.yml`](../.github/workflows/catalog-quality.yml) | 주 1회 검사 실행 → 리포트 생성 → 커밋 + 단일 이슈 동기화 |
+| [`src/qualityreport.cs`](../src/qualityreport.cs) | 검사 결과(JSON)를 이전 상태와 병합해 리포트·상태 파일 생성 |
+| `quality/report.md` | 사람이 읽는 최신 리포트(커밋되어 git 이력으로 진화) |
+| `quality/state.json` | 병합용 머신 상태(문제별 `firstSeen` 등). **수동 편집 불필요** |
+| GitHub 이슈(`catalog-quality` 라벨) | 리포트 본문을 보여주는 단일 대시보드 |
+
+`checkimages.cs` / `catalogutil.cs`는 환경변수(`CHECKIMAGES_JSON`, `CATALOGUTIL_PROBLEMS_JSON`)가 설정되면 결과를 JSON으로도 내보냅니다. 이 환경변수가 없으면 기존 동작과 완전히 동일합니다(다른 워크플로에 영향 없음).
+
+## 하이브리드 저장 (① 이슈 + ② 커밋 파일)
+
+- **① 단일 이슈(대시보드)**: 항상 최신 리포트 본문을 표시. AI 에이전트에 배정하거나 사람이 바로 확인·착수하는 **행동 지점**입니다.
+- **② 커밋 파일(`quality/`)**: `report.md`·`state.json`을 매주 커밋 → **git 이력 자체가 리포트의 진화 기록**이자, 다음 주 병합(diff)의 재료입니다. `docs/` 밖에 두어 GitHub Pages로 공개 배포되지 않습니다.
+
+## 트리거
+
+- **스케줄**: 매주 월요일 00:00 UTC (한국시간 월요일 09:00)
+- **수동 실행**: Actions 탭 `workflow_dispatch` (`assign_copilot` 옵션)
+
+> 이전 설계처럼 `docs/` 푸시마다 전체 URL 스캔을 돌리지 않습니다. 매 커밋마다 수백 개 사이트를 두드리던 비용·소음을 제거하고 주간 배치로 통일했습니다.
+
+## 동작
+
+1. [`checkimages.cs`](../src/checkimages.cs)로 누락/미사용 로고 이미지를 검출(오프라인, 결정론적).
+2. [`catalogutil.cs`](../src/catalogutil.cs)로 XSD 스키마 검증 및 URL 접속성 점검.
+3. [`qualityreport.cs`](../src/qualityreport.cs)가 결과를 이전 `quality/state.json`과 병합:
+   - **문제를 "안정적 키"로 식별** — 라인 번호가 아니라 `Category/Id`(이미지)·정규 메시지(스키마)로 키를 잡습니다. 카탈로그를 한 줄만 편집해도 라인 번호가 밀려 "전부 신규/전부 해결"로 오검출되는 것을 방지합니다.
+   - **신규 / 지속(경과 주차) / 해결**을 계산하고, 해결된 항목은 상태에서 제거.
+   - **URL 접속 경고는 "참고"로만 집계** — CI 일시 장애가 섞일 수 있어 리포트 개폐 상태에 영향을 주지 않습니다.
+4. `quality/report.md`·`quality/state.json`을 커밋하고, 단일 리포트 이슈 본문을 갱신.
+
+## 이슈 개폐 정책
+
+| 상황 | 동작 |
+|---|---|
+| 문제 있음 & 이슈 없음 | 리포트 이슈 **생성** |
+| 문제 있음 & 이슈 닫힘 | **자동 재오픈** + 본문 갱신 |
+| 문제 있음 & 이슈 열림 | 본문 갱신 |
+| 문제 없음(clean) & 이슈 열림 | 워크플로가 **직접 닫지 않고**, `close-requested` 라벨 + Copilot 배정 + 코멘트로 **코딩 AI 어시스턴트에게 "검증 후 종료"를 위임** |
+
+즉 **닫기는 AI 어시스턴트의 검증 판단**을 거치고, **다시 필요할 때(문제 재발) 워크플로가 자동으로 재오픈**합니다. 도구가 잠깐 오작동해 "문제 없음"으로 보이더라도 즉시 닫히지 않도록 하는 안전장치입니다.
+
+## AI 에이전트로 해결하기
+
+리포트 이슈를 Copilot 코딩 에이전트에 배정하거나 본문을 Claude Code에 전달하세요. 리포트의 권장 조치를 따라:
+
+- **이미지 누락**: 공식 로고를 `docs/images/<Category>/<Id>.png`로 추가 ([`fetchfavicon.cs`](../src/fetchfavicon.cs) 활용).
+- **미사용 이미지**: 삭제된 서비스의 잔여 이미지면 함께 제거.
+- **스키마/구조 오류**: `Catalog.xml`을 `Catalog.xsd`에 맞게 수정.
+
+수정 후 재검증:
+
+```bash
+dotnet run --file src/checkimages.cs -- ./docs/Catalog.xml ./docs/images
+dotnet run --file src/catalogutil.cs -- ./docs/ ./outputs/
+```
+
+> **자동 삭제 금지**: 항목 삭제·`Id` 변경·통폐합 반영은 반드시 사람의 승인을 받으세요. 리포트는 worklist가 아니라 dashboard이며, PR 병합은 사람이 최종 판정합니다.

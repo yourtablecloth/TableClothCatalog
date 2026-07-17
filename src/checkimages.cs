@@ -1,6 +1,7 @@
 #!/usr/bin/env dotnet
 #:property PublishAot=false
 
+using System.Text.Json;
 using System.Xml.Linq;
 
 // Process command line arguments
@@ -198,6 +199,24 @@ Console.ResetColor();
 Console.ForegroundColor = extraImages.Count > 0 ? ConsoleColor.DarkYellow : ConsoleColor.Green;
 Console.WriteLine($"  Unused images: {extraImages.Count}");
 Console.ResetColor();
+
+// Optional machine-readable output (opt-in via env var) for the quality-report workflow.
+// 기존 호출(publish.yml 등)에는 영향이 없습니다.
+var checkImagesJsonOut = Environment.GetEnvironmentVariable("CHECKIMAGES_JSON");
+if (!string.IsNullOrWhiteSpace(checkImagesJsonOut))
+{
+    var payload = new
+    {
+        totalServices = services.Count,
+        missing = missingImages
+            .Select(s => new { category = s.Category, id = s.Id, displayName = s.DisplayName })
+            .ToArray(),
+        unused = extraImages
+            .Select(e => new { category = e.Category, imageName = e.ImageName })
+            .ToArray(),
+    };
+    File.WriteAllText(checkImagesJsonOut, JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true }));
+}
 
 return missingImages.Count > 0 || extraImages.Count > 0 ? 1 : 0;
 
