@@ -380,6 +380,10 @@ CompanionCollection companions = [
     new("HancomOfficeViewer", "한컴오피스 뷰어", "https://www.hancom.com/product/office/officeViewer", "", "Hancom Office Viewer"),
     new("AdobeAcrobatReader", "Adobe Acrobat Reader", "https://get.adobe.com/kr/reader", "", "Adobe Acrobat Reader"),
     new("RaiDrive", "RaiDrive", "https://www.raidrive.com/download", "", "RaiDrive"),
+    new("SevenZip", "7-Zip (LGPL)", "https://www.7-zip.org/download.html", "", "7-Zip (LGPL)"),
+    new("Bandizip", "반디집", "https://www.bandisoft.com/bandizip/", "", "Bandizip"),
+    new("EdgeWebView2Runtime", "Microsoft Edge WebView2 런타임", "https://developer.microsoft.com/ko-kr/microsoft-edge/webview2/", "", "Microsoft Edge WebView2 Runtime"),
+    new("EclipseTemurin", "OpenJDK (GPLv2+CE)", "https://adoptium.net/temurin/releases/", "", "OpenJDK (GPLv2+CE)"),
 ];
 
 ServiceCollection services = [
