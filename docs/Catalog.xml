@@ -10,6 +10,7 @@
     <Companion Id="EveryonesPrinter" DisplayName="모두의 프린터" Url="https://modu-print.com/모두의-프린터-다운로드" Arguments="" en-US-DisplayName="Everyone's Printer" />
     <Companion Id="EveryonesPDF" DisplayName="모두의 PDF" Url="https://modu-print.com/모두의pdf-다운로드" Arguments="" en-US-DisplayName="Everyone's PDF" />
     <Companion Id="HancomOfficeViewer" DisplayName="한컴오피스 뷰어" Url="https://www.hancom.com/product/office/officeViewer" Arguments="" en-US-DisplayName="Hancom Office Viewer" />
+    <Companion Id="LibreOffice" DisplayName="LibreOffice" Url="https://ko.libreoffice.org/download/download/" Arguments="" en-US-DisplayName="LibreOffice" />
     <Companion Id="AdobeAcrobatReader" DisplayName="Adobe Acrobat Reader" Url="https://get.adobe.com/kr/reader" Arguments="" en-US-DisplayName="Adobe Acrobat Reader" />
     <Companion Id="RaiDrive " DisplayName="RaiDrive" Url="https://www.raidrive.com/download" Arguments="" en-US-DisplayName="RaiDrive" />
     <Companion Id="SevenZip" DisplayName="7-Zip (LGPL)" Url="https://www.7-zip.org/download.html" Arguments="" en-US-DisplayName="7-Zip (LGPL)" />
