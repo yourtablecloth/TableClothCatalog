@@ -379,6 +379,7 @@ CompanionCollection companions = [
     new("EveryonesPrinter", "모두의 프린터", "https://modu-print.com/모두의-프린터-다운로드", "", "Everyone's Printer"),
     new("EveryonesPDF", "모두의 PDF", "https://modu-print.com/모두의pdf-다운로드", "", "Everyone's PDF"),
     new("HancomOfficeViewer", "한컴오피스 뷰어", "https://www.hancom.com/product/office/officeViewer", "", "Hancom Office Viewer"),
+    new("LibreOffice", "LibreOffice", "https://ko.libreoffice.org/download/download/", "", "LibreOffice"),
     new("AdobeAcrobatReader", "Adobe Acrobat Reader", "https://get.adobe.com/kr/reader", "", "Adobe Acrobat Reader"),
     new("RaiDrive", "RaiDrive", "https://www.raidrive.com/download", "", "RaiDrive"),
     new("SevenZip", "7-Zip (LGPL)", "https://www.7-zip.org/download.html", "", "7-Zip (LGPL)"),
