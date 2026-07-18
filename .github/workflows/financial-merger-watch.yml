@@ -1,0 +1,160 @@
+name: Financial Institution Merger Watch (AI Agent Assisted)
+
+# 통폐합이 잦은 금융기관(저축은행)과 종종 통폐합이 일어나는 보험사를 대상으로,
+# 주기적으로 AI 에이전트에게 "최근 통폐합/명칭변경/폐업 뉴스"를 조사하도록 위임하는
+# 이슈를 자동 생성/갱신합니다.
+#   - 기본 작업 주체는 GitHub Copilot 코딩 에이전트(자동 배정)이며,
+#     Claude Code 등 다른 AI 어시스턴트나 사람이 대신 처리해도 됩니다.
+#   - 실제 뉴스 검색·판정은 AI 에이전트가 수행하고, 카탈로그 반영(merge)은 사람이 최종 검토합니다.
+#   - 추적 부담을 줄이기 위해 열린 조사 이슈는 라벨 기준 항상 최대 1건입니다(단일 상시 이슈).
+#
+#   ※ 환각 방지: 이 조사는 "실제 웹 검색이 가능한" 어시스턴트를 전제로 합니다. Copilot 코딩
+#     에이전트는 2025-10부터 웹 검색을 지원하지만, 조직/엔터프라이즈에서 "Copilot can search
+#     the web" 정책과 방화벽 허용이 켜져 있어야 합니다(기본 제한). 이슈 본문에 "검색 불가 시
+#     날조 금지·출처 URL 강제" 지침을 명시합니다.
+
+on:
+  schedule:
+    # 매주 수요일 00:00 UTC (한국시간 수요일 09:00) — 품질 리포트(월)와 요일을 분리.
+    - cron: '0 0 * * 3'
+  workflow_dispatch:
+    inputs:
+      assign_copilot:
+        description: '조사 이슈를 GitHub Copilot 코딩 에이전트에 배정합니다(기본 작업 주체).'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: financial-merger-watch
+  cancel-in-progress: false
+
+jobs:
+  merger-watch:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ISSUE_LABEL: financial-merger-watch
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract financial institution entries from catalog
+        id: extract
+        run: |
+          set -euo pipefail
+
+          # 매칭된 <Service> 태그 목록을 마크다운 불릿으로 변환하는 헬퍼.
+          to_bullets() {
+            local infile="$1" outfile="$2"
+            : > "$outfile"
+            local n=0
+            while IFS= read -r line; do
+              local id name url
+              id=$(printf '%s' "$line" | grep -oP 'Id="\K[^"]*' | head -n1 || true)
+              name=$(printf '%s' "$line" | grep -oP 'DisplayName="\K[^"]*' | head -n1 || true)
+              url=$(printf '%s' "$line" | grep -oP 'Url="\K[^"]*' | head -n1 || true)
+              [ -z "$id" ] && continue
+              echo "- \`$id\` — $name (<$url>)" >> "$outfile"
+              n=$((n + 1))
+            done < "$infile"
+            echo "$n"
+          }
+
+          # 저축은행: DisplayName에 "저축은행" 포함(이름 기반).
+          grep -oP '<Service\s+Id="[^"]*"[^>]*DisplayName="[^"]*저축은행[^"]*"[^>]*Url="[^"]*"' \
+            docs/Catalog.xml > sb-matches.txt || true
+          SB_COUNT=$(to_bullets sb-matches.txt sb.md)
+
+          # 보험사: Category="Insurance"(카테고리 기반). 생명·손해보험을 모두 포함하고,
+          # 정부 성격의 건강보험/무역보험공사 등은 제외됩니다.
+          grep -oP '<Service\s+Id="[^"]*"[^>]*Category="Insurance"[^>]*Url="[^"]*"' \
+            docs/Catalog.xml > ins-matches.txt || true
+          INS_COUNT=$(to_bullets ins-matches.txt ins.md)
+
+          echo "sb_count=$SB_COUNT" >> "$GITHUB_OUTPUT"
+          echo "ins_count=$INS_COUNT" >> "$GITHUB_OUTPUT"
+          echo "저축은행 $SB_COUNT건 / 보험사 $INS_COUNT건 추출."
+
+      - name: Build research issue body
+        run: |
+          set -euo pipefail
+          STAMP=$(date -u '+%Y-%m-%d')
+          {
+            echo "<!-- financial-merger-watch -->"
+            echo "## 금융기관(저축은행·보험) 통폐합 점검 요청 (${STAMP} 기준)"
+            echo
+            echo "저축은행은 인수합병·통폐합·명칭변경이 잦고, 보험사도 자주는 아니지만 통폐합이 종종 일어납니다."
+            echo "이 이슈는 주 1회 자동 생성/갱신되며, **AI 에이전트가 최근 업계 뉴스를 조사하여 카탈로그에**"
+            echo "**반영이 필요한 변경을 식별**하도록 위임합니다."
+            echo
+            echo "> **작업 주체**: 기본 배정은 GitHub Copilot 코딩 에이전트입니다. Claude Code 등 다른 AI"
+            echo "> 어시스턴트나 사람이 대신 처리해도 됩니다. 검출·조사는 AI가, 카탈로그 반영(merge)은 사람이 최종 판정합니다."
+            echo
+            echo "> ⚠️ **환각 방지(반드시 준수)**: 이 작업은 **실제 웹 검색이 가능한** 어시스턴트를 전제로 합니다."
+            echo "> GitHub Copilot 코딩 에이전트는 웹 검색을 지원하나 조직 정책/방화벽 설정에 따라 꺼져 있을 수 있습니다."
+            echo "> - **검색이 불가하거나 출처를 확인할 수 없으면 추정하지 말고 \`확인 불가\`로 남기세요.**"
+            echo "> - **모든 변경 주장에는 반드시 공식 출처 URL을 첨부**하세요. 근거 없는 통폐합 주장은 절대 생성 금지."
+            echo "> - 검색 도구가 없다면, 그 사실을 코멘트로 밝히고 검색 가능한 어시스턴트/사람에게 넘기세요."
+            echo
+            echo "### AI 에이전트 작업 지침"
+            echo
+            echo "1. 아래 카탈로그 목록을 기준으로, **최근(대략 지난 6~12개월) 국내 저축은행·보험사의 통폐합/인수합병/명칭변경/영업정지·폐업** 뉴스를 검색하세요."
+            echo "   - 저축은행 참고 출처: 금융위원회·금융감독원, 저축은행중앙회(<https://www.fsb.or.kr/>)."
+            echo "   - 보험사 참고 출처: 금융위원회·금융감독원, 생명보험협회(<https://www.klia.or.kr/>), 손해보험협회(<https://www.knia.or.kr/>)."
+            echo "2. 확인된 변경 건마다: 대상 기관(현재 카탈로그 \`Id\`/\`DisplayName\`), 변경 유형, **공식 발표·뉴스 출처 URL**, 시점, 반영 방향(\`Url\` 교체 / \`DisplayName\`·\`Id\` 갱신 / 항목 삭제 / 신규 추가)."
+            echo "3. **검증**: 변경 후보 기관의 현재 사이트 접속 상태를 확인하세요."
+            echo
+            echo '```bash'
+            echo "dotnet run --file src/checksites.cs -- probe ./docs/ ./health-report/ --only <id1,id2,...>"
+            echo '```'
+            echo
+            echo "4. 실제 반영이 필요한 건은 이 이슈에 코멘트로 근거(출처 URL 포함)와 함께 제안하고, 승인 후 PR로 처리하세요."
+            echo "   - **자동 삭제 금지**: 폐업·통폐합으로 삭제가 필요한 항목은 반드시 사람의 승인을 받으세요."
+            echo "5. 반영할 변경이 없으면 확인한 범위를 코멘트로 남기고 이 이슈를 닫아도 됩니다. (다음 주 새 조사 이슈가 열립니다.)"
+            echo
+            echo "### 현재 카탈로그의 저축은행 목록 (${{ steps.extract.outputs.sb_count }}건)"
+            echo
+            if [ -s sb.md ]; then cat sb.md; else echo "_(추출된 항목이 없습니다. 추출 로직을 확인하세요.)_"; fi
+            echo
+            echo "### 현재 카탈로그의 보험사 목록 (${{ steps.extract.outputs.ins_count }}건)"
+            echo
+            if [ -s ins.md ]; then cat ins.md; else echo "_(추출된 항목이 없습니다. 추출 로직을 확인하세요.)_"; fi
+            echo
+            echo "---"
+            echo "*generated by \`.github/workflows/financial-merger-watch.yml\`*"
+          } > issue-body.md
+
+      - name: Create or refresh research issue (single open issue)
+        env:
+          ASSIGN_COPILOT: ${{ github.event.inputs.assign_copilot }}
+        run: |
+          set -euo pipefail
+
+          gh label create "$ISSUE_LABEL" \
+            --description "금융기관(저축은행·보험) 통폐합 AI 점검 요청" --color D4C5F9 --force >/dev/null 2>&1 || true
+
+          # 추적 부담 최소화: 열려 있는 조사 이슈는 라벨 기준 최대 1건.
+          EXISTING=$(gh issue list --state open --label "$ISSUE_LABEL" \
+            --limit 1 --json number --jq '.[0].number // empty')
+
+          TITLE="[금융기관 통폐합 점검] 저축은행·보험 업계 통폐합 뉴스 조사 요청"
+
+          if [ -n "${EXISTING}" ]; then
+            echo "열린 조사 이슈 #$EXISTING 를 최신 목록으로 갱신합니다."
+            gh issue edit "$EXISTING" --body-file issue-body.md
+            NUM="$EXISTING"
+          else
+            echo "새 조사 이슈를 생성합니다."
+            ISSUE_URL=$(gh issue create --title "$TITLE" --body-file issue-body.md --label "$ISSUE_LABEL")
+            echo "생성됨: $ISSUE_URL"
+            NUM=$(basename "$ISSUE_URL")
+          fi
+
+          # GitHub Copilot을 기본 작업 주체로 배정(스케줄 실행 포함).
+          if [ "${ASSIGN_COPILOT:-true}" != "false" ] && [ -n "${NUM:-}" ]; then
+            gh issue edit "$NUM" --add-assignee "@copilot" \
+              || echo "Copilot 배정 실패 — Claude Code 등 다른 AI 어시스턴트/사람이 처리 가능."
+          fi
