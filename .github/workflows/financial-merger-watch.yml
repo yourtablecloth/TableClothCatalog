@@ -14,9 +14,13 @@ name: Financial Institution Merger Watch (AI Agent Assisted)
 #     날조 금지·출처 URL 강제" 지침을 명시합니다.
 
 on:
-  schedule:
-    # 매주 수요일 00:00 UTC (한국시간 수요일 09:00) — 품질 리포트(월)와 요일을 분리.
-    - cron: '0 0 * * 3'
+  # [일시 비활성화 — 2026-07] 조직(yourtablecloth) 소유 저장소에서 Copilot 코딩 에이전트를
+  # 쓰려면 조직 Copilot Business/Enterprise가 필요합니다. 아직 준비 전이라 자동 주간 실행을
+  # 꺼둡니다. 재개하려면 아래 schedule 블록의 주석(#)을 해제하세요.
+  # (수동 실행 workflow_dispatch는 테스트용으로 계속 사용 가능합니다.)
+  # schedule:
+  #   # 매주 수요일 00:00 UTC (한국시간 수요일 09:00) — 품질 리포트(월)와 요일을 분리.
+  #   - cron: '0 0 * * 3'
   workflow_dispatch:
     inputs:
       assign_copilot:
