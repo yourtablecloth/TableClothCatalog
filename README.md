@@ -125,6 +125,15 @@ dotnet run .\src\checksites.cs issue .\health-report\<timestamp>\
 
 자동 검출과 사람 판정의 분리, GitHub 이슈 자동 등록, AI 어시스트(Claude Code 등)를 활용한 후속 카탈로그 갱신 방법은 [docs/SITE_HEALTH_WORKFLOW.md](docs/SITE_HEALTH_WORKFLOW.md)를 참고하세요.
 
+#### 카탈로그 품질 리포트 (주간 진화형)
+
+카탈로그 검사 도구의 결과를 **개별 이슈로 쪼개지 않고**, 주 1회 **하나의 진화형 품질 리포트**로 모아 관리하는 워크플로가 준비되어 있습니다. 이전 리포트와 병합하여 **신규/지속(경과 주차)/해결**을 추적하므로 관리 추적 부담이 적습니다. 리포트 본문은 단일 이슈(대시보드)로, 상태·이력은 `quality/` 커밋 파일로 남는 하이브리드 구조입니다. 생성된 이슈는 **기본적으로 GitHub Copilot 코딩 에이전트에 배정**되며, Claude Code 등 다른 AI 어시스턴트나 사람이 처리해도 됩니다.
+
+* **[`.github/workflows/catalog-quality.yml`](.github/workflows/catalog-quality.yml)**: 매주 `checkimages.cs`·`catalogutil.cs`를 실행하여 [`src/qualityreport.cs`](src/qualityreport.cs)로 리포트를 생성/병합하고, 단일 리포트 이슈를 갱신합니다. 문제가 없으면 AI 어시스턴트에게 검증 후 종료를 위임하고, 문제가 재발하면 자동으로 다시 엽니다.
+* **[`.github/workflows/savings-bank-merger-watch.yml`](.github/workflows/savings-bank-merger-watch.yml)**: 통폐합이 잦은 저축은행 업계를 대상으로, 매주 AI 에이전트에게 업계 통폐합 뉴스 조사를 위임하는 단일 상시 이슈를 생성/갱신합니다.
+
+전체 흐름과 이슈 개폐 정책은 [docs/CATALOG_QUALITY_WORKFLOW.md](docs/CATALOG_QUALITY_WORKFLOW.md)를 참고하세요.
+
 #### 제보 인테이크 스킬 (catalog-intake)
 
 GitHub에 익숙하지 않은 사용자를 위한 [Google Forms 제보](https://forms.gle/Pw6pBKhqF1e5Nesw6)를, **검토부터 카탈로그 수용까지 반자동으로 처리**하는 Claude Code 스킬입니다. [.claude/skills/catalog-intake/](.claude/skills/catalog-intake/)에 있으며, 그동안 수작업으로 처리하던 제보 반영을 자동화합니다.

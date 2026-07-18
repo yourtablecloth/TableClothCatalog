@@ -1,0 +1,139 @@
+name: Catalog Quality Report (Weekly, Evolving)
+
+# 카탈로그 검사 도구(checkimages.cs / catalogutil.cs)를 주 1회 실행하고,
+# 그 결과를 "이전 리포트와 병합"하여 신규/지속(경과 주차)/해결을 추적하는
+# 단일 품질 리포트로 만듭니다.
+#   - 하이브리드 저장: 리포트 본문은 단일 이슈(대시보드)로, 상태·이력은 quality/ 커밋 파일로.
+#   - 개별 문제를 이슈로 쪼개지 않습니다(추적 부담 최소).
+#   - 문제가 있으면 리포트 이슈를 열고(닫혀 있으면 자동 재오픈), 문제가 없으면 워크플로가
+#     직접 닫지 않고 코딩 AI 어시스턴트에게 "검증 후 종료"를 위임합니다.
+#   - 검출은 자동, 실제 카탈로그 수정(반영)은 사람 또는 AI 에이전트가 담당합니다.
+
+on:
+  schedule:
+    # 매주 월요일 00:00 UTC (한국시간 월요일 09:00)
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+    inputs:
+      assign_copilot:
+        description: '리포트 이슈를 GitHub Copilot 코딩 에이전트에 배정합니다(기본 작업 주체). 끄면 다른 AI/사람이 처리.'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write   # quality/ 리포트·상태 파일 커밋
+  issues: write     # 리포트 이슈 생성/갱신/재오픈
+
+concurrency:
+  group: catalog-quality
+  cancel-in-progress: false
+
+jobs:
+  quality-report:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ISSUE_LABEL: catalog-quality
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      # 이미지 검증(오프라인, 결정론적) — 누락/미사용 로고를 JSON으로 내보냅니다.
+      - name: Run image validation
+        env:
+          CHECKIMAGES_JSON: ${{ github.workspace }}/checkimages.json
+        run: |
+          dotnet run --file src/checkimages.cs -- ./docs/Catalog.xml ./docs/images \
+            > checkimages.log 2>&1 || true
+
+      # 스키마 검증 + URL 접속성 점검 — 문제 목록을 JSON으로 내보냅니다.
+      - name: Run schema/URL validation
+        env:
+          CATALOGUTIL_PROBLEMS_JSON: ${{ github.workspace }}/catalogutil.json
+        run: |
+          dotnet run --file src/catalogutil.cs -- ./docs/ ./outputs/ \
+            > catalogutil.log 2>&1 || true
+
+      # 이전 상태(quality/state.json)와 병합하여 진화형 리포트를 생성합니다.
+      - name: Build evolving quality report
+        id: report
+        run: |
+          set -euo pipefail
+          mkdir -p quality
+          test -f quality/state.json || echo '{"schema":1,"items":[]}' > quality/state.json
+          cp quality/state.json prev-state.json
+          dotnet run --file src/qualityreport.cs -- \
+            checkimages.json catalogutil.json prev-state.json \
+            quality/report.md quality/state.json "$GITHUB_OUTPUT"
+
+      # 리포트·상태 파일을 커밋(변경이 있을 때만). [skip ci]로 다른 워크플로 재트리거 방지.
+      - name: Commit report + state (history)
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add quality/report.md quality/state.json
+          if git diff --cached --quiet; then
+            echo "리포트 변화 없음 — 커밋 생략."
+          else
+            git commit -m "chore(quality): 카탈로그 품질 리포트 갱신 [skip ci]"
+            git push
+          fi
+
+      # 단일 리포트 이슈(대시보드) 동기화.
+      - name: Sync living report issue
+        env:
+          HAS_PROBLEMS: ${{ steps.report.outputs.has_problems }}
+          ASSIGN_COPILOT: ${{ github.event.inputs.assign_copilot }}
+        run: |
+          set -euo pipefail
+
+          gh label create "$ISSUE_LABEL" \
+            --description "카탈로그 품질 리포트(자동, 단일 진화형)" --color BFD4F2 --force >/dev/null 2>&1 || true
+          gh label create "close-requested" \
+            --description "AI 에이전트 검증 후 종료 요청" --color D4C5F9 --force >/dev/null 2>&1 || true
+
+          # 라벨 기준 단일 리포트 이슈(상태 무관, 최대 1건).
+          ISSUE_JSON=$(gh issue list --state all --label "$ISSUE_LABEL" --limit 1 --json number,state)
+          NUM=$(echo "$ISSUE_JSON" | jq -r '.[0].number // empty')
+          STATE=$(echo "$ISSUE_JSON" | jq -r '.[0].state // empty')
+          TITLE="[카탈로그 품질] 리포트"
+
+          if [ "${HAS_PROBLEMS}" = "true" ]; then
+            if [ -z "${NUM}" ]; then
+              echo "새 리포트 이슈 생성."
+              gh issue create --title "$TITLE" --body-file quality/report.md --label "$ISSUE_LABEL"
+              NUM=$(gh issue list --state open --label "$ISSUE_LABEL" --limit 1 --json number --jq '.[0].number // empty')
+            else
+              gh issue edit "$NUM" --body-file quality/report.md
+              if [ "${STATE}" = "CLOSED" ]; then
+                gh issue reopen "$NUM"
+                gh issue comment "$NUM" \
+                  --body "🔁 새로운 문제가 발견되어 리포트를 다시 엽니다. (실행 ${GITHUB_RUN_ID})"
+              fi
+              # 문제가 다시 생겼으므로 종료 요청 라벨은 해제.
+              gh issue edit "$NUM" --remove-label "close-requested" >/dev/null 2>&1 || true
+            fi
+
+            # GitHub Copilot을 기본 작업 주체로 배정(스케줄 실행 포함).
+            # Claude Code 등 다른 AI 어시스턴트나 사람이 대신 처리해도 됩니다.
+            if [ "${ASSIGN_COPILOT:-true}" != "false" ] && [ -n "${NUM:-}" ]; then
+              gh issue edit "$NUM" --add-assignee "@copilot" \
+                || echo "Copilot 배정 실패 — Claude Code 등 다른 AI 어시스턴트/사람이 처리 가능."
+            fi
+          else
+            # 문제 없음(clean): 워크플로가 직접 닫지 않고, 코딩 AI 어시스턴트에 검증 후 종료를 위임.
+            if [ -n "${NUM}" ] && [ "${STATE}" = "OPEN" ]; then
+              gh issue edit "$NUM" --body-file quality/report.md --add-label "close-requested"
+              gh issue edit "$NUM" --add-assignee "@copilot" >/dev/null 2>&1 \
+                || echo "Copilot 배정 실패(수동 처리 필요)."
+              gh issue comment "$NUM" --body \
+                "✅ 자동 검사에서 더 이상 문제가 발견되지 않았습니다. **AI 어시스턴트가 검증 후 이 이슈를 닫아주세요** — 기본 배정은 GitHub Copilot이며, Claude Code 등 다른 AI 어시스턴트나 사람이 처리해도 됩니다. (워크플로는 직접 닫지 않습니다.) 이후 새 문제가 생기면 자동으로 다시 열립니다. (실행 ${GITHUB_RUN_ID})"
+            else
+              echo "문제 없음 & 열린 리포트 이슈 없음 — 조치 불필요."
+            fi
+          fi
