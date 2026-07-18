@@ -16,9 +16,9 @@ on:
   workflow_dispatch:
     inputs:
       assign_copilot:
-        description: '문제가 있을 때 리포트 이슈를 Copilot 코딩 에이전트에 배정합니다.'
+        description: '리포트 이슈를 GitHub Copilot 코딩 에이전트에 배정합니다(기본 작업 주체). 끄면 다른 AI/사람이 처리.'
         type: boolean
-        default: false
+        default: true
 
 permissions:
   contents: write   # quality/ 리포트·상태 파일 커밋
@@ -119,9 +119,11 @@ jobs:
               gh issue edit "$NUM" --remove-label "close-requested" >/dev/null 2>&1 || true
             fi
 
-            if [ "${ASSIGN_COPILOT:-false}" = "true" ] && [ -n "${NUM:-}" ]; then
+            # GitHub Copilot을 기본 작업 주체로 배정(스케줄 실행 포함).
+            # Claude Code 등 다른 AI 어시스턴트나 사람이 대신 처리해도 됩니다.
+            if [ "${ASSIGN_COPILOT:-true}" != "false" ] && [ -n "${NUM:-}" ]; then
               gh issue edit "$NUM" --add-assignee "@copilot" \
-                || echo "Copilot 배정 실패(수동 배정 필요)."
+                || echo "Copilot 배정 실패 — Claude Code 등 다른 AI 어시스턴트/사람이 처리 가능."
             fi
           else
             # 문제 없음(clean): 워크플로가 직접 닫지 않고, 코딩 AI 어시스턴트에 검증 후 종료를 위임.
@@ -130,7 +132,7 @@ jobs:
               gh issue edit "$NUM" --add-assignee "@copilot" >/dev/null 2>&1 \
                 || echo "Copilot 배정 실패(수동 처리 필요)."
               gh issue comment "$NUM" --body \
-                "✅ 자동 검사에서 더 이상 문제가 발견되지 않았습니다. **코딩 AI 어시스턴트가 검증 후 이 이슈를 닫아주세요.** (워크플로는 직접 닫지 않습니다.) 이후 새 문제가 생기면 자동으로 다시 열립니다. (실행 ${GITHUB_RUN_ID})"
+                "✅ 자동 검사에서 더 이상 문제가 발견되지 않았습니다. **AI 어시스턴트가 검증 후 이 이슈를 닫아주세요** — 기본 배정은 GitHub Copilot이며, Claude Code 등 다른 AI 어시스턴트나 사람이 처리해도 됩니다. (워크플로는 직접 닫지 않습니다.) 이후 새 문제가 생기면 자동으로 다시 열립니다. (실행 ${GITHUB_RUN_ID})"
             else
               echo "문제 없음 & 열린 리포트 이슈 없음 — 조치 불필요."
             fi

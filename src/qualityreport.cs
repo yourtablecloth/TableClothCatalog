@@ -154,6 +154,9 @@ sb.AppendLine();
 sb.AppendLine("이 리포트는 `catalog-quality` 워크플로가 주 1회 자동 생성하며, 이전 리포트와 병합하여 " +
              "신규/지속/해결을 추적합니다. 검출은 자동, 실제 카탈로그 수정은 사람 또는 AI 에이전트가 담당합니다.");
 sb.AppendLine();
+sb.AppendLine("> **처리 주체**: 기본 배정은 GitHub Copilot 코딩 에이전트입니다. " +
+             "Claude Code 등 다른 AI 어시스턴트나 사람이 대신 처리해도 됩니다.");
+sb.AppendLine();
 sb.AppendLine("### 요약");
 sb.AppendLine();
 sb.AppendLine("| 유형 | 건수 |");
