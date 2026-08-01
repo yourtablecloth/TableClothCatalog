@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
 using System.Collections.Concurrent;
+using System.Globalization;
 using System.IO.Compression;
 using System.Text;
 using System.Xml;
@@ -321,6 +322,9 @@ public class SchemaValidator
                         case "Companion":
                         case "Service":
                         case "Package":
+                            if (reader.Name is "Service" or "Package")
+                                ValidateProvenance(reader, problems);
+
                             var urlString = reader.GetAttribute("Url", null);
 
                             if (string.IsNullOrWhiteSpace(urlString))
@@ -381,6 +385,39 @@ public class SchemaValidator
         }
 
         return problems;
+    }
+
+    // 출처 메타데이터(SourceUrl/VerifiedOn)는 모두 선택 속성이므로, 값이 없는 항목은 그냥 넘어간다.
+    // 값이 있을 때에만 일관성을 Warning 수준으로 알린다. Error로 올리지 않는다.
+    private const int VerifiedOnStaleDays = 365;
+
+    private static void ValidateProvenance(XmlReader reader, List<ProblemItem> problems)
+    {
+        var elementName = reader.Name;
+        var sourceUrl = reader.GetAttribute("SourceUrl", null);
+        var verifiedOn = reader.GetAttribute("VerifiedOn", null);
+        var posInfo = GetPositionInfo(reader as IXmlLineInfo);
+
+        var hasSourceUrl = !string.IsNullOrWhiteSpace(sourceUrl);
+        var hasVerifiedOn = !string.IsNullOrWhiteSpace(verifiedOn);
+
+        if (hasSourceUrl &&
+            Uri.TryCreate(sourceUrl, UriKind.Absolute, out var sourceUri) &&
+            !string.Equals(sourceUri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
+            problems.Add(new ProblemItem("Warning", $"[{elementName}] SourceUrl `{sourceUrl}` does not use https.", posInfo));
+
+        if (hasSourceUrl && !hasVerifiedOn)
+            problems.Add(new ProblemItem("Warning", $"[{elementName}] SourceUrl is specified but VerifiedOn is missing.", posInfo));
+
+        // 형식이 잘못된 날짜는 스키마 검증이 이미 보고하므로 여기서는 중복 보고하지 않는다.
+        if (hasVerifiedOn &&
+            DateTime.TryParse(verifiedOn, CultureInfo.InvariantCulture, DateTimeStyles.None, out var verifiedDate))
+        {
+            var elapsedDays = (int)(DateTime.UtcNow.Date - verifiedDate.Date).TotalDays;
+
+            if (elapsedDays > VerifiedOnStaleDays)
+                problems.Add(new ProblemItem("Warning", $"[{elementName}] VerifiedOn `{verifiedOn}` is {elapsedDays} days old (threshold: {VerifiedOnStaleDays} days).", posInfo));
+        }
     }
 
     private static string? GetPositionInfo(IXmlLineInfo? lineInfo)

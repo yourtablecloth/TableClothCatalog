@@ -22,6 +22,21 @@
 | 개인 정보 수집 동의 | `consent` | 게이트 | 비면 `consent-missing` |
 | 없거나 반영되지…먼저 확인 | `dedup_ack` | 게이트 | 비면 `dedup-missing` |
 
+### 1-1. 출처 메타데이터 (폼 미수집, 전부 선택 속성)
+
+폼이 받지 않는 필드다. 스킬이 검증 과정에서 실제로 확인한 값만 채운다. **추정해서 채우지 말 것.**
+확인 못 했으면 비워 두는 것이 정상이며, 비어 있어도 `catalogutil.cs` 검증은 통과한다.
+
+| 논리 필드 | 카탈로그 대상 | 채우는 근거 |
+| --- | --- | --- |
+| `source_url` | `Service@SourceUrl` | 항목 확인의 근거가 된 **공식 안내 페이지** 주소. https 아니면 Warning |
+| `verified_on` | `Service@VerifiedOn` | 확인한 날짜(`YYYY-MM-DD`). 365일 초과 시 Warning |
+| `verified_by` | `Service@VerifiedBy` | 확인자 식별자(GitHub 핸들 권장) |
+| `package_source_url` | `Package@SourceUrl` | 플러그인 안내 페이지. 설치 파일 URL과 따로 바뀌므로 별도 기록 |
+| `package_verified_on` | `Package@VerifiedOn` | `check_urls.py`로 생존 확인한 날짜 |
+
+`SourceUrl`만 있고 `VerifiedOn`이 없으면 Warning이 나므로 두 값은 짝으로 채운다.
+
 > 헤더는 **부분 문자열 키워드**로 매칭하므로 폼 문구가 조금 바뀌어도 견딘다.
 > 매칭 안 된 열은 normalize 요약의 "매칭 안 된 CSV 열"에 출력된다 — 무시하지 말 것.
 

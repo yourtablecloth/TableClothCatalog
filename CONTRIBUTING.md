@@ -32,6 +32,29 @@ dotnet run --file src/catalogutil.cs -- ./docs/ ./outputs/
 
 대상 서비스의 이용 자체에 로그인이 필요한 것은 무방하지만, 설치 파일을 내려받기 위해 로그인이 필요한 항목은 수록하지 않습니다.
 
+## 출처 메타데이터 기재 (권장)
+
+새로운 항목을 제출하실 때에는 그 값을 무엇을 근거로 언제 확인하셨는지 함께 남겨주시기를 권장합니다. 아래 속성은 모두 선택 사항이며, 비워두셔도 검증은 통과합니다.
+
+| 속성 | 대상 | 내용 |
+| --- | --- | --- |
+| `SourceUrl` | `Service`, `Package` | 확인의 근거가 된 공식 안내 페이지 주소입니다. |
+| `VerifiedOn` | `Service`, `Package` | 확인한 날짜입니다. `YYYY-MM-DD` 형식으로 적어주십시오. |
+| `VerifiedBy` | `Service` | 확인하신 분의 식별자입니다. GitHub 핸들을 권장합니다. |
+
+```xml
+<Service Id="ExampleBank" DisplayName="예시은행" Category="Banking" Url="https://www.example.com/"
+         SourceUrl="https://www.example.com/guide/security" VerifiedOn="2026-08-01" VerifiedBy="octocat">
+```
+
+검증 도구는 다음의 경우 Warning을 표시합니다. Warning은 병합을 막지 않습니다.
+
+- `SourceUrl`은 있는데 `VerifiedOn`이 없는 경우
+- `VerifiedOn`이 오늘로부터 365일 이상 지난 경우
+- `SourceUrl`이 `https`가 아닌 경우
+
+확인하지 못한 값은 추정해서 채우지 말고 비워두십시오. 기존 항목에 대한 소급 입력은 별도로 진행하므로 신규 항목 제출 시에만 신경 쓰시면 됩니다.
+
 ## 로고 이미지 기여
 
 로고 이미지는 가능한 한 해당 기관이 공식적으로 배포하는 자산을 사용해주십시오. 표지 사용에 관한 방침은 [TRADEMARKS.md](TRADEMARKS.md)를 참고해주십시오.
