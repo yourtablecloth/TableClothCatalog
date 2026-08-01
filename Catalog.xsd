@@ -57,6 +57,16 @@
         <xs:documentation>플러그인 설치 프로그램을 실행할 때 지정할 명령줄 인수를 담는 속성입니다. 주로 무인 설치 (Unattend Install)를 유도하는 옵션을 이곳에 지정합니다.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
+    <xs:attribute name="SourceUrl" type="xs:anyURI" use="optional">
+      <xs:annotation>
+        <xs:documentation>이 플러그인 정보의 근거가 된 공식 안내 페이지 주소를 담는 속성입니다. 설치 파일 URL과 별도로 변경되는 경우가 많으므로 별개로 기록합니다. https:// 로 시작하는 주소를 권장합니다.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="VerifiedOn" type="xs:date" use="optional">
+      <xs:annotation>
+        <xs:documentation>이 플러그인 정보를 마지막으로 확인한 일자를 ISO 8601 날짜 형식 (YYYY-MM-DD)으로 담는 속성입니다.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
   <xs:complexType name="CatalogPackageInformationList">
     <xs:annotation>
@@ -200,6 +210,21 @@
     <xs:attribute name="en-US-DisplayName" type="xs:string" use="optional">
       <xs:annotation>
         <xs:documentation>개별 인터넷 사이트의 영어 (미국 영어) 이름을 담는 속성입니다.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="SourceUrl" type="xs:anyURI" use="optional">
+      <xs:annotation>
+        <xs:documentation>이 항목의 근거가 된 공식 안내 페이지 주소를 담는 속성입니다. https:// 로 시작하는 주소를 권장합니다.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="VerifiedOn" type="xs:date" use="optional">
+      <xs:annotation>
+        <xs:documentation>이 항목을 마지막으로 확인한 일자를 ISO 8601 날짜 형식 (YYYY-MM-DD)으로 담는 속성입니다.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="VerifiedBy" type="xs:string" use="optional">
+      <xs:annotation>
+        <xs:documentation>이 항목을 확인한 사람의 식별자를 담는 속성입니다. GitHub 핸들 사용을 권장합니다.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>
