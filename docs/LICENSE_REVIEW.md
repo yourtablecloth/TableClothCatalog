@@ -36,7 +36,7 @@
 | 자산군 | 경로 | 이 프로젝트가 권리를 보유하는가 |
 | --- | --- | --- |
 | 코드 | `src/`, `docs/generate.cs` | 예. 기여자가 작성한 저작물입니다. |
-| 데이터 및 문서 | `docs/Catalog.xml`, `docs/sites.xml`, `docs/instruction.md`, `docs/*.md` | 예. 이 프로젝트가 직접 작성한 기술입니다. |
+| 데이터 및 문서 | `docs/Catalog.xml`, `docs/sites.xml`, `docs/*.md` | 예. 이 프로젝트가 직접 작성한 기술입니다. |
 | 제3자 로고 이미지 | `docs/images/` (265개 파일) | 아니요. 각 기관의 표지입니다. |
 
 앞의 두 자산군은 이 프로젝트가 권리를 보유하므로 Apache-2.0으로 배포하는 데 구조적 문제가 관찰되지 않습니다.

@@ -63,7 +63,7 @@ XSD `CatalogInternetServiceCategory` enum:
 
 | gap 플래그 | 의미 | 해결 방법 |
 | --- | --- | --- |
-| `arguments-missing` | 폼이 사일런트 스위치를 안 받음 | 4절 시드표 → 없으면 `src/ussf.cs` 또는 설치기 `/?`·`/help` |
+| `arguments-missing` | 폼이 사일런트 스위치를 안 받음 | 4절 시드표 → 없으면 [`ussfc`](https://github.com/yourtablecloth/ussfc) 또는 설치기 `/?`·`/help` |
 | `package-name-derive` | Package Name 미수집(URL만) | 4절 시드표 + `check_urls.py` 파일명 |
 | `category-needs-decision` | 증권 등 enum 없는 종류 | 사람 결정 |
 | `id-collision` | 기존 Service/Companion Id와 충돌 | 이름 조정 or 기존 항목 수정으로 처리 |

@@ -30,8 +30,8 @@
   - XML 파일 편집은 [Microsoft XML Notepad](https://microsoft.github.io/XmlNotepad/)를 사용하시는 것을 권장합니다.
   - Microsoft Edge 그룹 정책에서 <https://yourtablecloth.app/TableClothCatalog/sites.xml> 주소를 직접 지정하여 설정을 적용할 수 있습니다.
 - [docs/images/&lt;Category&gt;/&lt;Id&gt;.png](docs/images/): `<Category>`와 `<Id>`에 해당하는 식별자를 넣어 고해상도 투명 PNG 로고 이미지 파일을 등록하여 관리합니다. (예: [docs/images/Banking/WooriBank.png](docs/images/Banking/WooriBank.png))
-- [docs/instruction.md](docs/instruction.md): 식탁보 AI 서비스에서 사용할 시스템 프롬프트를 담는 마크다운 형식의 파일입니다. 이 파일에 금융/공공 서비스에 관한 지식, 주요 금융/공공 서비스 업무 별 웹 페이지 주소 (바로 가기)를 기재할 수 있습니다.
-  - 마크다운 형식의 파일이므로, [마크다운 린터 플러그인](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)를 사용하여 커밋/PR 제출 전 확인하는 것을 권장합니다.
+
+마크다운 문서를 수정하실 때에는 [마크다운 린터 플러그인](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)을 사용하여 커밋/PR 제출 전 확인하는 것을 권장합니다.
 
 아래 파일은 구 버전의 식탁보 프로그램에서 사용했던 파일로, 현재는 사용되지 않습니다.
 
@@ -159,9 +159,20 @@ Google Forms 응답을 내보낸 CSV를 입력으로 받아 다음을 수행합�
 
 일반적으로 무인 설치 옵션은 설치 프로그램 명령줄 뒤에 `/?`나 `/help`, `/h`, `--help` 등 도움말을 표시하는 것과 관련된 스위치를 대입하여 실행하면 도움말과 함께 자세한 자동 응답 설치 옵션을 사용하는 방법을 표시합니다.
 
-만약 위의 방법을 통하여 옵션을 찾기 어려울 때에는 Universal Silent Switch Finder (USSF) 도구를 이용하여 찾는 것을 시도할 수 있습니다. 이 도구는 Windows에서 실행할 수 있으며, EXE 파일을 열면 콘텐츠를 분석하여 예상되는 자동 응답 설치 옵션 방법이나 스위치를 표시합니다.
+만약 위의 방법을 통하여 옵션을 찾기 어려울 때에는 Universal Silent Setup Finder / Console (`ussfc`) 도구를 이용하는 것을 권장합니다. 설치 파일을 분석하여 패키징 형식을 판별하고, 예상되는 무인 설치 명령줄을 출력해줍니다.
 
-[Universal Silent Switch Finder 홈페이지](https://www.capstanservices.com/tools-blog/2018/4/4/the-ultimate-silent-switch-finder-ussf)
+[yourtablecloth/ussfc](https://github.com/yourtablecloth/ussfc)는 기존의 Windows 전용 도구였던 [USSF](https://github.com/alexandruavadanii/USSF)를 C#으로 포팅한 것으로, .NET 도구로 배포되며 Windows뿐 아니라 Linux와 macOS에서도 명령줄로 실행할 수 있습니다. 새로 사용하실 때에는 이 버전을 사용해주세요.
+
+```bash
+# .NET 10 SDK가 있으면 설치 없이 바로 실행
+dnx ussfc setup.exe
+
+# 반복해서 사용하실 경우 전역 도구로 설치
+dotnet tool install -g ussfc
+ussfc setup.exe
+```
+
+.NET 런타임 설치 없이 사용하시려면 [릴리스 페이지](https://github.com/yourtablecloth/ussfc/releases)에서 플랫폼별 자체 포함 실행 파일을 내려받으실 수 있습니다. Windows x64/ARM64, Linux x64/ARM64, macOS ARM64용 빌드가 제공됩니다.
 
 자동 설치 옵션이 잘 작동하는지 확인하기 위해, Windows Sandbox, 또는 디스크 이미지 수준의 복원 스냅샷 포인트를 확보한 가상 컴퓨터 인스턴스를 활용하여 반복 테스트를 실행해볼 수 있습니다.
 
