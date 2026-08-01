@@ -1,0 +1,77 @@
+name: 정정 및 삭제 요청
+description: 카탈로그 항목의 정정, 로고 및 표지 사용 중단, 항목 삭제를 요청합니다.
+title: "[정정/삭제] "
+labels: ["removal-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        카탈로그 항목에 관한 정정 및 삭제 요청 창구입니다. 접수 전에 아래 내용을 확인해주십시오.
+
+        **처리 방침**
+
+        - 접수된 요청은 신원 확인을 거친 뒤 사실관계를 검토합니다. 권리자 또는 그 대리인의 요청은 우선하여 검토합니다.
+        - 처리는 best effort이며 이 프로젝트는 처리 시한을 약속하지 않습니다. 자세한 사항은 [docs/CATALOG_POLICY.md](https://github.com/yourtablecloth/TableClothCatalog/blob/main/docs/CATALOG_POLICY.md)를 참고해주십시오.
+        - 전체 처리 절차는 [docs/REMOVAL_REQUEST.md](https://github.com/yourtablecloth/TableClothCatalog/blob/main/docs/REMOVAL_REQUEST.md)에 정리되어 있습니다.
+
+        **공개 게시 안내**
+
+        이 이슈에 입력하신 내용은 공개 리포지터리에 그대로 게시됩니다. 공개 게시가 곤란한 사안이거나 긴급한 사안인 경우, 이 양식 대신 [Discord 채널](https://discord.gg/eT2UnUXyTV)을 통해 관리자에게 개별적으로 연락해주십시오.
+
+  - type: dropdown
+    id: request-type
+    attributes:
+      label: 요청 유형
+      description: 요청하시는 조치의 종류를 선택해주십시오.
+      options:
+        - 항목 삭제
+        - 로고 및 표지 사용 중단
+        - 정보 정정
+        - 기타
+    validations:
+      required: true
+
+  - type: input
+    id: target
+    attributes:
+      label: 대상 항목
+      description: 카탈로그의 `Category`와 `Id` 값을 적어주십시오. 값을 모르시는 경우 서비스 표시명을 적어주셔도 됩니다.
+      placeholder: "예: Banking / WooriBank, 또는 우리은행"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: requester-type
+    attributes:
+      label: 요청인 구분
+      description: 요청하시는 분의 지위를 선택해주십시오.
+      options:
+        - 권리자 또는 그 대리인
+        - 일반 이용자
+        - 기타
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: 요청 사유
+      description: 어떤 점이 문제인지, 어떤 조치를 원하시는지 구체적으로 적어주십시오.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 근거 자료 또는 참고 URL
+      description: 공식 안내 페이지 주소, 변경 공지, 권한을 확인할 수 있는 자료 등이 있으면 적어주십시오.
+    validations:
+      required: false
+
+  - type: input
+    id: contact
+    attributes:
+      label: 연락 가능한 경로
+      description: 추가 확인이 필요할 때 사용할 연락 경로입니다. 입력하신 내용은 공개 게시되므로 공개를 원하지 않으시면 비워두십시오.
+    validations:
+      required: false

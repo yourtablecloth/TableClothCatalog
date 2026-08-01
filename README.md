@@ -18,6 +18,8 @@
 * [Google Forms를 통한 제보](https://forms.gle/Pw6pBKhqF1e5Nesw6)
 * [Discord 채널을 통한 제보/토론](https://discord.gg/eT2UnUXyTV)
 
+기관명, 로고, 표지의 사용 중단이나 항목 삭제, 정보 정정을 요청하시는 경우에는 [정정 및 삭제 요청 양식](https://github.com/yourtablecloth/TableClothCatalog/issues/new?template=removal-request.yml)을 이용해주세요. 처리 절차는 [docs/REMOVAL_REQUEST.md](docs/REMOVAL_REQUEST.md)에 정리되어 있습니다.
+
 ## PR 제출 시 컨트리뷰션 방법
 
 카탈로그 리포지터리는 다음의 파일들로 구성됩니다.
@@ -163,6 +165,17 @@ Google Forms 응답을 내보낸 CSV를 입력으로 받아 다음을 수행합�
 
 자동 설치 옵션이 잘 작동하는지 확인하기 위해, Windows Sandbox, 또는 디스크 이미지 수준의 복원 스냅샷 포인트를 확보한 가상 컴퓨터 인스턴스를 활용하여 반복 테스트를 실행해볼 수 있습니다.
 
+## 고지 및 정책 문서
+
+식탁보 카탈로그는 독립적으로 운영되는 오픈소스 프로젝트이며, 카탈로그에 수록된 어떠한 금융기관, 공공기관, 소프트웨어 제공사와도 제휴, 승인, 후원 관계가 없습니다. 카탈로그 수록은 해당 소프트웨어에 대한 검증이나 추천을 의미하지 않으며, 항목의 정확성과 최신성은 커뮤니티 기여에 기반한 best effort로 유지됩니다.
+
+* [NOTICE.md](NOTICE.md): 제휴 관계 및 수록 의미에 관한 고지 (국문 및 영문)
+* [TRADEMARKS.md](TRADEMARKS.md): 제3자 기관명, 서비스명, 로고의 표시 정책
+* [docs/CATALOG_POLICY.md](docs/CATALOG_POLICY.md): 카탈로그 품질 및 갱신 방침
+* [docs/REMOVAL_REQUEST.md](docs/REMOVAL_REQUEST.md): 정정 및 삭제 요청 처리 절차
+
 ## 라이선스
 
 이 프로젝트는 Apache License 2.0을 따릅니다. 자세한 내용은 [LICENSE](LICENSE)를 참고해주세요.
+
+제3자 상표와 로고 자산은 이 프로젝트의 라이선스가 사용을 허락하는 대상이 아닙니다. [TRADEMARKS.md](TRADEMARKS.md)를 함께 참고해주세요.
