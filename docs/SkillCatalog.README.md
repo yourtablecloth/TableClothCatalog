@@ -8,7 +8,7 @@ As of October 25, 2026, [SkillCatalog.xml](SkillCatalog.xml) contains ten active
 
 ## Adding and removing a skill
 
-Add an active `Skill` element with a stable ID, an existing upstream skill directory, a full commit SHA and a license URL pinned to that same repository and commit. `Install.Mode` is `upstream`. To remove a skill from the remote catalog, comment out its entire `Skill` element and record a short reason outside or inside that comment. XML comments never become marketplace entries. A catalog removal leaves existing local installations available to manage and remove.
+Add an active `Skill` element with a stable ID, an existing upstream skill directory, a full commit SHA and a license URL pinned to that same repository and commit. `Install.Mode` is `upstream`. To remove a skill from the remote catalog, comment out its entire `Skill` element and record a short reason outside or inside that comment. Encode consecutive hyphens in element text as `&#45;&#45;` so the raw block can become a valid XML comment; XML readers preserve the original text. XML comments never become marketplace entries. A catalog removal leaves existing local installations available to manage and remove.
 
 ## Pinned versions and updates
 

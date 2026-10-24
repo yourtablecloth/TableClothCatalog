@@ -64,7 +64,7 @@
     <License SPDX="MIT" Source="https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/LICENSE" />
     <Requirements Runtime="Codex" Network="required" />
     <Install Mode="upstream" />
-    <Notes>기본 일반 조회는 외부 hosted proxy를 사용합니다. 사용자 KSKILL_KOSIS_API_KEY와 --direct 옵션으로 KOSIS에 직접 연결할 수 있습니다. 실행에는 Node.js 18 이상, npx CLI와 Python 3.9 이상을 사용합니다.</Notes>
+    <Notes>기본 일반 조회는 외부 hosted proxy를 사용합니다. 사용자 KSKILL_KOSIS_API_KEY와 &#45;&#45;direct 옵션으로 KOSIS에 직접 연결할 수 있습니다. 실행에는 Node.js 18 이상, npx CLI와 Python 3.9 이상을 사용합니다.</Notes>
   </Skill>
   <Skill Id="g2b-bid-search" Category="Procurement" DisplayName="나라장터 입찰 검색">
     <Description>나라장터 입찰공고의 예산, 마감일과 상세 정보를 조회합니다.</Description>
