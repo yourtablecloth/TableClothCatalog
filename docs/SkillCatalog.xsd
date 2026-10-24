@@ -27,20 +27,11 @@
   <xs:simpleType name="CommitRef">
     <xs:restriction base="xs:token"><xs:pattern value="[0-9a-fA-F]{40}" /><xs:length value="40" /></xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="ListingStatus">
-    <xs:restriction base="xs:token"><xs:enumeration value="listed" /><xs:enumeration value="unlisted" /></xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="LicenseReviewStatus">
-    <xs:restriction base="xs:token"><xs:enumeration value="pending" /><xs:enumeration value="verified" /><xs:enumeration value="rejected" /></xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="InstallReviewStatus">
-    <xs:restriction base="xs:token"><xs:enumeration value="pending" /><xs:enumeration value="approved" /><xs:enumeration value="rejected" /></xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="NetworkRequirement">
     <xs:restriction base="xs:token"><xs:enumeration value="required" /><xs:enumeration value="optional" /><xs:enumeration value="none" /></xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="InstallMode">
-    <xs:restriction base="xs:token"><xs:enumeration value="upstream" /><xs:enumeration value="adapter" /></xs:restriction>
+    <xs:restriction base="xs:token"><xs:enumeration value="upstream" /></xs:restriction>
   </xs:simpleType>
   <xs:element name="SkillCatalog">
     <xs:complexType>
@@ -53,7 +44,7 @@
                 <xs:complexType>
                   <xs:attribute name="Repository" type="GitHubRepository" use="required" />
                   <xs:attribute name="Path" type="RepositoryPath" use="required" />
-                  <xs:attribute name="Ref" type="CommitRef" use="optional" />
+                  <xs:attribute name="Ref" type="CommitRef" use="required" />
                 </xs:complexType>
               </xs:element>
               <xs:element name="Author" minOccurs="0">
@@ -65,8 +56,7 @@
               <xs:element name="License">
                 <xs:complexType>
                   <xs:attribute name="SPDX" type="DisplayLabel" use="required" />
-                  <xs:attribute name="ReviewStatus" type="LicenseReviewStatus" use="required" />
-                  <xs:attribute name="Source" type="HttpsUrl" use="optional" />
+                  <xs:attribute name="Source" type="HttpsUrl" use="required" />
                 </xs:complexType>
               </xs:element>
               <xs:element name="Requirements">
@@ -78,7 +68,6 @@
               <xs:element name="Install">
                 <xs:complexType>
                   <xs:attribute name="Mode" type="InstallMode" use="required" />
-                  <xs:attribute name="ReviewStatus" type="InstallReviewStatus" use="required" />
                 </xs:complexType>
               </xs:element>
               <xs:element name="Notes" type="NonEmptyText" minOccurs="0" />
@@ -86,7 +75,6 @@
             <xs:attribute name="Id" type="SkillId" use="required" />
             <xs:attribute name="Category" type="ShortLabel" use="required" />
             <xs:attribute name="DisplayName" type="DisplayLabel" use="required" />
-            <xs:attribute name="Status" type="ListingStatus" use="required" />
           </xs:complexType>
         </xs:element>
       </xs:sequence>

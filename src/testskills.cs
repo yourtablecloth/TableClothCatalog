@@ -32,24 +32,41 @@ try
     var failures = 0;
     foreach (var (path, expected) in cases)
     {
-        var fixture = XElement.Parse("""
-            <SkillCatalog Version="1">
-              <Skill Id="fixture" Category="Test" DisplayName="Fixture" Status="listed">
-                <Description>Path validation fixture.</Description>
-                <Source Repository="https://github.com/fixture/skills" Path="." />
-                <License SPDX="MIT" ReviewStatus="pending" />
-                <Requirements Runtime="Codex" Network="required" />
-                <Install Mode="upstream" ReviewStatus="pending" />
-              </Skill>
-            </SkillCatalog>
-            """);
+        var fixture = Fixture();
         fixture.Element("Skill")!.Element("Source")!.SetAttributeValue("Path", path);
         if (Accepts(fixture, schemas) == expected) continue;
         failures++;
         Console.Error.WriteLine($"Path '{path}': expected {(expected ? "acceptance" : "rejection")}.");
     }
+    var lifecycle = new (string Name, Action<XElement> Change, bool Valid)[]
+    {
+        ("active entry without review attributes", _ => { }, true),
+        ("removed entry as XML comment", xml => xml.Element("Skill")!.ReplaceWith(new XComment(xml.Element("Skill")!.ToString())), true),
+        ("legacy listing status", xml => xml.Element("Skill")!.SetAttributeValue("Status", "listed"), false),
+        ("legacy license review", xml => xml.Element("Skill")!.Element("License")!.SetAttributeValue("ReviewStatus", "pending"), false),
+        ("legacy installation review", xml => xml.Element("Skill")!.Element("Install")!.SetAttributeValue("ReviewStatus", "pending"), false),
+        ("MCP adapter without a skill", xml => xml.Element("Skill")!.Element("Install")!.SetAttributeValue("Mode", "adapter"), false),
+        ("missing immutable source", xml => xml.Element("Skill")!.Element("Source")!.Attribute("Ref")!.Remove(), false),
+        ("mutable source branch", xml => xml.Element("Skill")!.Element("Source")!.SetAttributeValue("Ref", "main"), false),
+        ("missing license source", xml => xml.Element("Skill")!.Element("License")!.Attribute("Source")!.Remove(), false),
+        ("duplicate skill ID", xml => xml.Add(new XElement(xml.Element("Skill")!)), false),
+        ("updated pinned source", xml =>
+        {
+            var version = new string('2', 40);
+            xml.Element("Skill")!.Element("Source")!.SetAttributeValue("Ref", version);
+            xml.Element("Skill")!.Element("License")!.SetAttributeValue("Source", "https://github.com/fixture/skills/blob/" + version + "/LICENSE");
+        }, true),
+    };
+    foreach (var (name, change, expected) in lifecycle)
+    {
+        var fixture = Fixture();
+        change(fixture);
+        if (Accepts(fixture, schemas) == expected) continue;
+        failures++;
+        Console.Error.WriteLine($"Lifecycle '{name}': expected {(expected ? "acceptance" : "rejection")}.");
+    }
     if (failures != 0) return 1;
-    Console.WriteLine($"All {cases.Length} repository-path schema regression checks passed.");
+    Console.WriteLine($"All {cases.Length + lifecycle.Length} path and lifecycle schema regression checks passed.");
     return 0;
 }
 catch (Exception e) when (e is XmlException or XmlSchemaException or IOException or UnauthorizedAccessException)
@@ -57,6 +74,18 @@ catch (Exception e) when (e is XmlException or XmlSchemaException or IOException
     Console.Error.WriteLine($"Regression validation failed: {e.Message}");
     return 1;
 }
+
+static XElement Fixture() => XElement.Parse("""
+    <SkillCatalog Version="1">
+      <Skill Id="fixture" Category="Test" DisplayName="Fixture">
+        <Description>Path and lifecycle validation fixture.</Description>
+        <Source Repository="https://github.com/fixture/skills" Path="." Ref="1111111111111111111111111111111111111111" />
+        <License SPDX="MIT" Source="https://github.com/fixture/skills/blob/1111111111111111111111111111111111111111/LICENSE" />
+        <Requirements Runtime="Codex" Network="required" />
+        <Install Mode="upstream" />
+      </Skill>
+    </SkillCatalog>
+    """);
 
 static bool Accepts(XElement fixture, XmlSchemaSet schemas)
 {
