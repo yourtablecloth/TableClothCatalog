@@ -14,6 +14,8 @@ The catalog is published at `https://catalog.yourtablecloth.app/SkillCatalog.xml
 
 Each `Source` records the public GitHub repository, a relative directory and a full commit SHA. `Path="."` denotes the repository root for MCP candidates without a skill directory. A pinned Git commit does not pin packages subsequently downloaded by an upstream instruction. The NomaDamas candidates currently load instructions through an `npx` CLI; package pinning and runtime review remain open.
 
+Directory segments can contain internal dots, such as `skills/example.v1`, but cannot end with a dot. The single root marker `.` remains valid. This prevents publishing paths that the marketplace client rejects.
+
 ## Independent review states
 
 `Status` accepts `listed` or `unlisted`. `License.ReviewStatus` accepts `pending`, `verified` or `rejected`. `Install.ReviewStatus` accepts `pending`, `approved` or `rejected`. Installation requires `listed`, a verified license, an approved installation review, `Mode="upstream"`, `Runtime="Codex"`, an immutable source ref and a license source pinned to the same repository and commit. The installer preserves that file as `LICENSE.upstream`. Other entries remain visible for review. `Mode="adapter"` records integration work; it does not install or configure an MCP server.
@@ -25,3 +27,5 @@ The license identifiers come from the pinned source files: [NomaDamas MIT](https
 ## Validation and qualification
 
 [SkillCatalog.xsd](SkillCatalog.xsd) validates the metadata, review values and unique IDs. Run `dotnet run --file src/checkskills.cs -- docs/SkillCatalog.xml docs/SkillCatalog.xsd` from the repository root. The Pages workflow runs the same check before publishing. Installation review also covers the complete file set and license notices, helper paths, package versions, compatibility with TableCloth's dedicated Codex environment, API keys and document access. Executing skills inside Windows Sandbox would require separate implementation and qualification. The catalog stores no credentials and runs no upstream code. `Network` describes skill execution; installing any remote skill still requires a download. The initial catalog intentionally offers no installable entries.
+
+Run `dotnet run --file src/testskills.cs -- docs/SkillCatalog.xsd` to check path regressions against the actual schema. The [PR workflow](../.github/workflows/skill-catalog.yml) runs this check alongside catalog validation.

@@ -5,6 +5,7 @@ on:
     paths:
       - 'docs/SkillCatalog*'
       - 'src/checkskills.cs'
+      - 'src/testskills.cs'
       - '.github/workflows/skill-catalog.yml'
   workflow_dispatch:
 
@@ -21,3 +22,5 @@ jobs:
           dotnet-version: 10.0.x
       - name: Validate skill catalog
         run: dotnet run --file src/checkskills.cs -- ./docs/SkillCatalog.xml ./docs/SkillCatalog.xsd
+      - name: Run skill catalog schema regression checks
+        run: dotnet run --file src/testskills.cs -- ./docs/SkillCatalog.xsd

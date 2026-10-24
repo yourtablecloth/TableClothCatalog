@@ -16,6 +16,8 @@
 
 원본 고정 범위를 검토하겠습니다. 각 `Source`는 공개 GitHub 저장소, 상대 디렉터리와 전체 커밋 SHA를 기록합니다. `Path="."`는 스킬 디렉터리가 없는 MCP 후보의 저장소 루트를 가리킵니다.
 
+디렉터리 이름 내부의 점은 `skills/example.v1`처럼 사용할 수 있지만 각 이름의 끝에는 점을 붙일 수 없습니다. 루트 표시 `.`는 계속 허용합니다. 이 규칙으로 마켓플레이스 클라이언트가 거부하는 경로의 게시를 방지합니다.
+
 다만 Git 커밋을 고정해도 원본 지침이 실행 중 내려받는 패키지까지 고정하지는 않습니다. NomaDamas 후보는 현재 `npx` CLI로 지침을 읽습니다. 패키지 버전과 실행 환경 검토는 계속 `pending`으로 남깁니다.
 
 ## 목록 노출과 설치 승인 조건
@@ -33,6 +35,8 @@
 ## 스키마 검사와 실행 검증 범위
 
 [SkillCatalog.xsd](SkillCatalog.xsd)는 메타데이터, 검토 상태와 ID 중복을 검사합니다. 저장소 루트에서 `dotnet run --file src/checkskills.cs -- docs/SkillCatalog.xml docs/SkillCatalog.xsd`로 실행할 수 있습니다. Pages 워크플로도 게시 전에 같은 검사를 실행합니다. 설치 검토에서는 전체 파일과 라이선스 고지, 보조 스크립트 경로, 패키지 버전, 식탁보 전용 Codex 환경 호환성, API 키와 문서 접근 범위를 함께 다룹니다.
+
+경로 회귀 검사는 `dotnet run --file src/testskills.cs -- docs/SkillCatalog.xsd`로 실행할 수 있습니다. [PR 워크플로](../.github/workflows/skill-catalog.yml)가 실제 스키마를 대상으로 카탈로그 검증과 회귀 검사를 함께 실행합니다.
 
 카탈로그는 자격증명을 저장하거나 원본 코드를 실행하지 않습니다. `Network`는 스킬 실행 시 네트워크 의존성을 표시합니다. 원격 스킬 다운로드에는 별도로 네트워크를 사용합니다. Windows Sandbox 내부 스킬 실행은 별도 구현과 검증을 전제로 합니다.
 

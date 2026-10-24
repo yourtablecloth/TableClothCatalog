@@ -22,7 +22,7 @@
     <xs:restriction base="xs:anyURI"><xs:pattern value="https://github\.com/[A-Za-z0-9_-][A-Za-z0-9_.-]*/[A-Za-z0-9_-][A-Za-z0-9_.-]*" /></xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="RepositoryPath">
-    <xs:restriction base="xs:token"><xs:pattern value="\.|[A-Za-z0-9_-][A-Za-z0-9_.-]*(/[A-Za-z0-9_-][A-Za-z0-9_.-]*)*" /><xs:maxLength value="160" /></xs:restriction>
+    <xs:restriction base="xs:token"><xs:pattern value="\.|[A-Za-z0-9_-]([A-Za-z0-9_.-]*[A-Za-z0-9_-])?(/[A-Za-z0-9_-]([A-Za-z0-9_.-]*[A-Za-z0-9_-])?)*" /><xs:maxLength value="160" /></xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="CommitRef">
     <xs:restriction base="xs:token"><xs:pattern value="[0-9a-fA-F]{40}" /><xs:length value="40" /></xs:restriction>
