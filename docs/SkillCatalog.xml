@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SkillCatalog Version="1">
+  <!-- Candidate metadata only. No entry has completed installation or redistribution review. -->
+  <Skill Id="k-dart" Category="Finance" DisplayName="전자공시 조회" Status="listed">
+    <Description>기업의 공시, 기업개황과 재무 정보를 조회합니다.</Description>
+    <Source Repository="https://github.com/NomaDamas/k-skill" Path="k-dart" Ref="0102e5133865f00886e37ac8cf39a49e2c7a3d39" />
+    <Author Name="NomaDamas" Url="https://github.com/NomaDamas" />
+    <License SPDX="MIT" ReviewStatus="pending" Source="https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/LICENSE" />
+    <Requirements Runtime="Codex" Network="required" />
+    <Install Mode="upstream" ReviewStatus="pending" />
+    <Notes>우선 검토합니다. 원본은 사용자 API_K_DART 키로 금융감독원 DART OpenAPI를 직접 호출합니다. 현재 SKILL.md는 Node.js 18 이상과 npx 기반 CLI에 의존합니다. CLI 버전 고정, 자격증명 전달과 식탁보 전용 Codex 환경 호환성을 검증한 뒤 설치 검토를 진행합니다.</Notes>
+  </Skill>
+  <Skill Id="bok-ecos-stats" Category="Economics" DisplayName="한국은행 경제통계" Status="listed">
+    <Description>한국은행 ECOS의 기준금리, 물가, 환율과 통화량 통계를 조회합니다.</Description>
+    <Source Repository="https://github.com/NomaDamas/k-skill" Path="bok-ecos-stats" Ref="0102e5133865f00886e37ac8cf39a49e2c7a3d39" />
+    <Author Name="NomaDamas" Url="https://github.com/NomaDamas" />
+    <License SPDX="MIT" ReviewStatus="pending" Source="https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/LICENSE" />
+    <Requirements Runtime="Codex" Network="required" />
+    <Install Mode="upstream" ReviewStatus="pending" />
+    <Notes>우선 검토합니다. 원본은 ECOS에 직접 연결하며 sample 키 또는 사용자 KSKILL_BOK_ECOS_API_KEY를 사용합니다. Node.js 18 이상, npx CLI와 Python 3.9 이상 의존성을 검토합니다. CLI 버전과 조회 범위를 고정하고 식탁보 전용 Codex 환경 호환성을 검증합니다.</Notes>
+  </Skill>
+  <Skill Id="korea-stock-mcp" Category="Finance" DisplayName="국내 주식 분석" Status="listed">
+    <Description>국내 주식 분석용 MCP 서버를 Codex에서 활용하는 방안을 검토합니다.</Description>
+    <Source Repository="https://github.com/jjlabsio/korea-stock-mcp" Path="." Ref="210595eec73a39cd04e2fb175f6e69b1516f0dd4" />
+    <Author Name="jjlabsio" Url="https://github.com/jjlabsio" />
+    <License SPDX="ISC" ReviewStatus="pending" Source="https://github.com/jjlabsio/korea-stock-mcp/blob/210595eec73a39cd04e2fb175f6e69b1516f0dd4/LICENSE" />
+    <Requirements Runtime="Codex" Network="required" />
+    <Install Mode="adapter" ReviewStatus="pending" />
+    <Notes>우선 검토합니다. 원본은 MCP 서버이며 SKILL.md를 제공하지 않습니다. Codex 스킬 어댑터, MCP 등록, 서버 실행 환경과 자격증명 처리를 구현하고 검증한 뒤 별도 설치 항목으로 전환합니다.</Notes>
+  </Skill>
+  <Skill Id="korean-jangbu-for" Category="Accounting" DisplayName="회계 장부 작성" Status="listed">
+    <Description>은행 CSV, 카드 명세서와 영수증을 활용한 장부 작성을 지원합니다.</Description>
+    <Source Repository="https://github.com/kimlawtech/korean-jangbu-for" Path="skills/korean-jangbu-for" Ref="592f6d7c7be138ae578be9ed6769239cc527ddea" />
+    <Author Name="kimlawtech / SpeciAI" Url="https://github.com/kimlawtech" />
+    <License SPDX="Apache-2.0" ReviewStatus="pending" Source="https://github.com/kimlawtech/korean-jangbu-for/blob/592f6d7c7be138ae578be9ed6769239cc527ddea/LICENSE" />
+    <Requirements Runtime="Codex" Network="optional" />
+    <Install Mode="upstream" ReviewStatus="pending" />
+    <Notes>조건부로 검토합니다. 원본 진입점은 jangbu-mcp와 하위 스킬에 의존합니다. 단일 디렉터리 설치만으로 전체 기능을 제공하지 않습니다. MCP와 하위 스킬 배치, Windows 호환성, 민감정보 마스킹, 로컬 파일 접근과 CODEF 자격증명 처리를 검증합니다.</Notes>
+  </Skill>
+  <Skill Id="toss-investment" Category="Finance" DisplayName="증권 계좌 조회" Status="listed">
+    <Description>토스증권 공식 Open API를 활용해 계좌, 보유 주식과 시세를 조회합니다.</Description>
+    <Source Repository="https://github.com/NomaDamas/k-skill" Path="toss-investment" Ref="0102e5133865f00886e37ac8cf39a49e2c7a3d39" />
+    <Author Name="NomaDamas" Url="https://github.com/NomaDamas" />
+    <License SPDX="MIT" ReviewStatus="pending" Source="https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/LICENSE" />
+    <Requirements Runtime="Codex" Network="required" />
+    <Install Mode="upstream" ReviewStatus="pending" />
+    <Notes>2차 검토 후보로 분류합니다. 원본은 토스증권 공식 Open API를 OAuth 2.0 Client Credentials로 직접 호출합니다. Node.js 18 이상과 npx CLI 의존성, 토큰과 client_secret 보관, 계좌별 접근 범위 및 조회 전용 동작을 검증합니다.</Notes>
+  </Skill>
+  <Skill Id="korean-law-mcp" Category="Law" DisplayName="법령과 판례 검색" Status="listed">
+    <Description>법령, 판례와 조례를 조회하고 인용 내용을 검증합니다.</Description>
+    <Source Repository="https://github.com/chrisryugj/korean-law-mcp" Path="skills/korean-law" Ref="4ccedb0dc89fce164493ffc9019b5ad35cb9b782" />
+    <Author Name="chrisryugj" Url="https://github.com/chrisryugj" />
+    <License SPDX="MIT" ReviewStatus="pending" Source="https://github.com/chrisryugj/korean-law-mcp/blob/4ccedb0dc89fce164493ffc9019b5ad35cb9b782/LICENSE" />
+    <Requirements Runtime="Codex" Network="required" />
+    <Install Mode="adapter" ReviewStatus="pending" />
+    <Notes>우선 검토합니다. 원본은 skills/korean-law/SKILL.md를 제공하지만 korean-law MCP 서버 연결을 전제로 합니다. Codex MCP 등록과 서버 실행, API 자격증명 및 인용 검증 도구 연동을 구현하고 검증합니다.</Notes>
+  </Skill>
+  <Skill Id="kosis-stats" Category="Statistics" DisplayName="국가통계 조회" Status="listed">
+    <Description>KOSIS의 인구, 가구, 고용과 물가 통계를 검색하고 조회합니다.</Description>
+    <Source Repository="https://github.com/NomaDamas/k-skill" Path="kosis-stats" Ref="0102e5133865f00886e37ac8cf39a49e2c7a3d39" />
+    <Author Name="NomaDamas" Url="https://github.com/NomaDamas" />
+    <License SPDX="MIT" ReviewStatus="pending" Source="https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/LICENSE" />
+    <Requirements Runtime="Codex" Network="required" />
+    <Install Mode="upstream" ReviewStatus="pending" />
+    <Notes>조건부로 검토합니다. 원본의 일반 조회는 외부 hosted proxy를 기본 사용합니다. 식탁보에서는 사용자 KSKILL_KOSIS_API_KEY와 --direct를 사용하는 경로로 제한하는 방안을 검토합니다. Node.js 18 이상, npx CLI, Python 3.9 이상과 식탁보 전용 Codex 환경 호환성을 검증합니다.</Notes>
+  </Skill>
+  <Skill Id="g2b-bid-search" Category="Procurement" DisplayName="나라장터 입찰 검색" Status="listed">
+    <Description>나라장터 입찰공고의 예산, 마감일과 상세 정보를 조회합니다.</Description>
+    <Source Repository="https://github.com/mouseco/k-gov-skills" Path="skills/g2b-bid-search" Ref="a55816b9b44e8391576204a095bf6337940d80f3" />
+    <Author Name="mouseco" Url="https://github.com/mouseco" />
+    <License SPDX="MIT" ReviewStatus="pending" Source="https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/LICENSE" />
+    <Requirements Runtime="Codex" Network="required" />
+    <Install Mode="upstream" ReviewStatus="pending" />
+    <Notes>우선 검토합니다. 원본은 Python 3.9 이상과 사용자 NARAJANGTEO_SERVICE_KEY를 사용합니다. docs/attribution.md의 원본 작성 및 API 데이터 권리 구분을 함께 검토합니다. 상대 스크립트 경로, 인증키 마스킹과 조회 전용 동작을 식탁보 전용 Codex 환경에서 검증합니다.</Notes>
+  </Skill>
+  <Skill Id="public-data-finder" Category="PublicData" DisplayName="공공데이터 검색" Status="listed">
+    <Description>공공데이터포털에서 데이터셋과 Open API를 검색합니다.</Description>
+    <Source Repository="https://github.com/mouseco/k-gov-skills" Path="skills/public-data-finder" Ref="a55816b9b44e8391576204a095bf6337940d80f3" />
+    <Author Name="mouseco" Url="https://github.com/mouseco" />
+    <License SPDX="MIT" ReviewStatus="pending" Source="https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/LICENSE" />
+    <Requirements Runtime="Codex" Network="required" />
+    <Install Mode="upstream" ReviewStatus="pending" />
+    <Notes>우선 검토합니다. 원본은 Python 3.9 이상과 사용자 DATA_GO_KR_API_KEY를 사용합니다. docs/attribution.md와 공공데이터포털 데이터 이용 조건을 함께 검토합니다. 상대 스크립트 경로와 인증키 마스킹을 식탁보 전용 Codex 환경에서 검증합니다.</Notes>
+  </Skill>
+  <Skill Id="national-assembly-tracker" Category="Law" DisplayName="국회 입법 동향" Status="listed">
+    <Description>국회 의안과 법률안의 발의 정보 및 처리 상태를 조회합니다.</Description>
+    <Source Repository="https://github.com/mouseco/k-gov-skills" Path="skills/national-assembly-tracker" Ref="a55816b9b44e8391576204a095bf6337940d80f3" />
+    <Author Name="mouseco" Url="https://github.com/mouseco" />
+    <License SPDX="MIT" ReviewStatus="pending" Source="https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/LICENSE" />
+    <Requirements Runtime="Codex" Network="required" />
+    <Install Mode="upstream" ReviewStatus="pending" />
+    <Notes>우선 검토합니다. 원본은 Python 3.9 이상과 사용자 OPEN_ASSEMBLY_API_KEY를 사용합니다. docs/attribution.md 및 국회 공식 서비스 이용 조건을 검토합니다. 상대 스크립트 경로, 조회 범위와 인증키 마스킹을 식탁보 전용 Codex 환경에서 검증합니다.</Notes>
+  </Skill>
+  <Skill Id="real-estate-mcp" Category="RealEstate" DisplayName="부동산 거래 조회" Status="listed">
+    <Description>국토교통부 API를 활용한 부동산 거래 조회 방안을 검토합니다.</Description>
+    <Source Repository="https://github.com/tae0y/real-estate-mcp" Path="." Ref="1119eb1069d1b1bae15f7b38c6c0268fe07995c0" />
+    <Author Name="tae0y" Url="https://github.com/tae0y" />
+    <License SPDX="MIT" ReviewStatus="pending" Source="https://github.com/tae0y/real-estate-mcp/blob/1119eb1069d1b1bae15f7b38c6c0268fe07995c0/LICENSE" />
+    <Requirements Runtime="Codex" Network="required" />
+    <Install Mode="adapter" ReviewStatus="pending" />
+    <Notes>조건부로 검토합니다. 원본은 MCP 서버이며 SKILL.md를 제공하지 않습니다. 국토교통부 API에 직접 연결하는 Codex 스킬 어댑터, 사용자 API 키 전달과 MCP 실행 환경을 구현하고 검증합니다.</Notes>
+  </Skill>
+  <Skill Id="official-report-skillset" Category="Documents" DisplayName="공공기관 보고서 작성" Status="listed">
+    <Description>공공기관 보고서와 내부 결재문서의 구성 및 초안 작성을 지원합니다.</Description>
+    <Source Repository="https://github.com/mouseco/k-gov-skills" Path="skills/official-report-skillset" Ref="a55816b9b44e8391576204a095bf6337940d80f3" />
+    <Author Name="mouseco" Url="https://github.com/mouseco" />
+    <License SPDX="MIT" ReviewStatus="pending" Source="https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/LICENSE" />
+    <Requirements Runtime="Codex" Network="none" />
+    <Install Mode="upstream" ReviewStatus="pending" />
+    <Notes>우선 검토합니다. 원본 문서와 references를 함께 보존하고 docs/attribution.md를 검토합니다. 사용자가 선택한 로컬 문서로 접근 범위를 제한하며 문서 외부 전송, 생성 문안과 기존 사용자 지침의 충돌 여부를 검증합니다.</Notes>
+  </Skill>
+</SkillCatalog>

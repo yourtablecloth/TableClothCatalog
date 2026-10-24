@@ -1,0 +1,23 @@
+name: Validate Skill Catalog
+
+on:
+  pull_request:
+    paths:
+      - 'docs/SkillCatalog*'
+      - 'src/checkskills.cs'
+      - '.github/workflows/skill-catalog.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Validate skill catalog
+        run: dotnet run --file src/checkskills.cs -- ./docs/SkillCatalog.xml ./docs/SkillCatalog.xsd

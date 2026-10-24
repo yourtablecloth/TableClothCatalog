@@ -21,6 +21,9 @@ jobs:
       with:
         dotnet-version: 10.0.x
 
+    - name: Validate skill catalog
+      run: dotnet run --file src/checkskills.cs -- ./docs/SkillCatalog.xml ./docs/SkillCatalog.xsd
+
     # Run Catalog Builder tool
     - name: Run Catalog Builder Tool
       run: dotnet run --file src/catalogutil.cs -- ./docs/ ./outputs/
