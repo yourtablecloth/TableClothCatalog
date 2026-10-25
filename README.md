@@ -41,19 +41,29 @@
 
 위의 두 개의 파일에 새로운 항목을 추가하고 Pull Request를 보내주시면, 검토 후에 반영하도록 하겠습니다.
 
-### 카탈로그 빌더 실행하기
+### 에이전트형 브라우저를 활용한 카탈로그 최신화
 
-각종 유효성 검사 및 리소스 자동 생성을 위하여 CatalogBuilder를 새롭게 추가하였습니다. 새로운 커밋이 브랜치에 푸시되면, CatalogBuilder가 `outputs` 디렉터리에 `gh-pages` 브랜치에 내보낼 파일들을 복사하면서 추가 리소스 생성이나 유효성 검사를 진행하게 됩니다.
+카탈로그 최신화에는 [Aside](https://aside.com/)와 같이 브라우저와 AI를 함께 활용하는 에이전트형 웹 브라우저를 권장합니다. 공식 홈페이지의 메뉴와 설치 안내를 따라가며 현재 카탈로그의 서비스 주소, 프로그램 목록, 설치 파일 URL을 비교합니다. Aside의 작업 방식은 [공식 안내](https://docs.aside.com/help/tasks)에서 확인할 수 있습니다.
+
+1. 대상 서비스 ID와 기존 XML 항목을 브라우저에 전달하고 공식 공개 안내 페이지를 조사합니다.
+2. 확인한 변경의 XML 변경안을 작성하고 공식 출처 URL, 확인일, 미확인 항목을 남깁니다.
+3. 카탈로그 빌더로 검증한 뒤 결과와 함께 PR을 제출합니다. 사람이 근거와 diff를 검토하여 반영합니다.
+
+요청 예시와 검증 범위는 [카탈로그 최신화 절차](docs/SITE_HEALTH_WORKFLOW.md)에서 정리합니다. 기존 헬스 체크, 품질 리포트, 제보 인테이크 도구는 조사 범위에 따라 함께 사용할 수 있습니다.
+
+### 카탈로그 빌더를 통한 변경안 검증
+
+카탈로그 빌더는 스키마 검증, URL 접속성 점검, 출력 리소스 생성을 수행합니다. [배포 워크플로](.github/workflows/publish.yml)는 main 브랜치의 관련 파일 변경 시 빌더를 실행하고 `outputs` 디렉터리의 결과물을 `gh-pages` 브랜치에 배포합니다.
 
 ```bash
 dotnet run --file src/catalogutil.cs -- ./docs/ ./outputs/
 ```
 
-도구를 실행하여 나타나는 Error나 Warning을 최대한 제거하는 것이 좋습니다. Catalog.xml 파일을 수정하여 제출하기 전에 검사를 진행하는 것을 권장합니다.
+빌더의 오류와 경고를 검토하고 해결하지 못한 항목은 PR 본문에 사유를 적습니다. URL 접속 확인과 Windows Sandbox에서의 실제 설치 시험 결과는 구분하여 기록합니다.
 
 ### 카탈로그 품질 관리 도구
 
-카탈로그의 품질을 유지하기 위해 아래의 도구들을 활용할 수 있습니다. Pull Request를 제출하기 전에 이 도구들을 실행하여 문제가 없는지 확인해주세요.
+아래 도구는 브라우저 조사 결과의 검증과 다수 항목의 상태 확인을 지원합니다. 카탈로그 빌더로 변경안을 검증하고 이미지나 접속 상태는 작업 범위에 맞는 도구로 추가 점검할 수 있습니다.
 
 #### 카탈로그 유틸리티 (catalogutil.cs)
 
@@ -61,7 +71,7 @@ XML 스키마 검증, 이미지 최적화, 출력 파일 생성 등을 수행하
 
 ```powershell
 # 리포지터리 루트 디렉터리에서 실행
-dotnet run .\src\catalogutil.cs .\docs\ .\outputs\
+dotnet run --file src/catalogutil.cs -- ./docs/ ./outputs/
 ```
 
 #### 이미지 검증 도구 (checkimages.cs)
@@ -70,7 +80,7 @@ dotnet run .\src\catalogutil.cs .\docs\ .\outputs\
 
 ```powershell
 # 리포지터리 루트 디렉터리에서 실행
-dotnet run .\src\checkimages.cs .\docs\Catalog.xml .\docs\images
+dotnet run --file src/checkimages.cs -- ./docs/Catalog.xml ./docs/images
 ```
 
 이 도구는 다음을 검사합니다:
@@ -101,7 +111,7 @@ dotnet run .\src\fetchfavicon.cs https://www.example.com .\docs\images\Banking\E
 
 **참고**: 이 도구로 생성된 이미지는 임시용입니다. 가능하면 해당 기관의 공식 로고 이미지로 교체해주세요.
 
-#### 💡 AI를 활용한 이미지 품질 개선
+#### AI를 활용한 이미지 품질 개선
 
 `fetchfavicon.cs` 도구는 규칙 기반으로 파비콘을 추출하고 업스케일하지만, 저해상도(16x16) 아이콘을 확대할 경우 품질이 저하될 수 있습니다. 더 나은 결과를 위해 AI 도구 활용을 권장합니다:
 
@@ -113,48 +123,26 @@ dotnet run .\src\fetchfavicon.cs https://www.example.com .\docs\images\Banking\E
 
 #### 사이트 헬스 체크 도구 (checksites.cs)
 
-카탈로그에 등록된 웹 사이트들의 접속 가능성을 Microsoft Edge(Windows x64로 가장)로 점검하고, 사람의 검토를 거쳐 카탈로그를 갱신할 수 있게 도와주는 도구입니다. 식탁보가 실행되는 Edge IE Mode 환경에 맞춰 User-Agent·Client Hints·`navigator.platform`을 Windows Edge로 일치시켜 진단합니다.
+[checksites.cs](src/checksites.cs)는 Edge 헤드리스 접속 결과와 스크린샷을 수집하는 보조 도구입니다. 대상 서비스만 확인할 때에는 다음 명령을 사용할 수 있습니다.
 
 ```powershell
-# 자동 헬스 체크 (헤드리스, 스크린샷 + report.json/.md 생성)
-dotnet run .\src\checksites.cs probe .\docs\ .\health-report\
-
-# 사람 판정 단계 (라이브 URL을 시스템 브라우저로 띄우고 verdict 입력)
-dotnet run .\src\checksites.cs triage .\health-report\<timestamp>\
-
-# 후속 작업이 필요한 verdict들을 GitHub 이슈로 자동 등록 (gh CLI 필요)
-dotnet run .\src\checksites.cs issue .\health-report\<timestamp>\
+dotnet run --file src/checksites.cs -- probe ./docs/ ./health-report/ --only WooriBank,NHInternetBank
 ```
 
-자동 검출과 사람 판정의 분리, GitHub 이슈 자동 등록, AI 어시스트(Claude Code 등)를 활용한 후속 카탈로그 갱신 방법은 [docs/SITE_HEALTH_WORKFLOW.md](docs/SITE_HEALTH_WORKFLOW.md)를 참고하세요.
+`triage`는 사람의 판정을 저장하고 `issue`는 판정 결과에 따라 GitHub 이슈를 등록합니다. 전체 단계를 거치지 않고 브라우저 조사에서 바로 XML 변경안과 PR을 작성할 수도 있습니다. 도구의 자동 분류는 설치 파일의 최신성이나 IE Mode 및 Windows Sandbox의 동작을 보증하지 않습니다. 활용 범위는 [카탈로그 최신화 절차](docs/SITE_HEALTH_WORKFLOW.md)에서 설명합니다.
 
-#### 카탈로그 품질 리포트 (주간 진화형)
+#### 품질 리포트와 금융기관 통폐합 조사 도구
 
-카탈로그 검사 도구의 결과를 **개별 이슈로 쪼개지 않고**, 주 1회 **하나의 진화형 품질 리포트**로 모아 관리하는 워크플로가 준비되어 있습니다. 이전 리포트와 병합하여 **신규/지속(경과 주차)/해결**을 추적하므로 관리 추적 부담이 적습니다. 리포트 본문은 단일 이슈(대시보드)로, 상태·이력은 `quality/` 커밋 파일로 남는 하이브리드 구조입니다. 생성된 이슈는 **기본적으로 GitHub Copilot 코딩 에이전트에 배정**되며, Claude Code 등 다른 AI 어시스턴트나 사람이 처리해도 됩니다.
+기존 워크플로는 여러 항목의 문제나 조사 대상을 모아서 관리할 때 사용할 수 있습니다. 두 워크플로의 주간 일정은 현재 비활성화되어 있으며 `workflow_dispatch`로 수동 실행할 수 있습니다.
 
-* **[`.github/workflows/catalog-quality.yml`](.github/workflows/catalog-quality.yml)**: 매주 `checkimages.cs`·`catalogutil.cs`를 실행하여 [`src/qualityreport.cs`](src/qualityreport.cs)로 리포트를 생성/병합하고, 단일 리포트 이슈를 갱신합니다. 문제가 없으면 AI 어시스턴트에게 검증 후 종료를 위임하고, 문제가 재발하면 자동으로 다시 엽니다.
-* **[`.github/workflows/financial-merger-watch.yml`](.github/workflows/financial-merger-watch.yml)**: 통폐합이 잦은 저축은행과 종종 통폐합이 일어나는 보험사를 대상으로, 매주 AI 에이전트에게 업계 통폐합 뉴스 조사를 위임하는 단일 상시 이슈를 생성/갱신합니다. (환각 방지를 위해 출처 URL 강제·검색 불가 시 날조 금지 지침 포함)
+- [catalog-quality.yml](.github/workflows/catalog-quality.yml): 이미지와 스키마 검사 결과를 `quality/` 파일과 단일 이슈로 관리
+- [financial-merger-watch.yml](.github/workflows/financial-merger-watch.yml): 저축은행과 보험사 목록을 추출하여 통폐합 조사 이슈 생성 또는 갱신
 
-전체 흐름과 이슈 개폐 정책은 [docs/CATALOG_QUALITY_WORKFLOW.md](docs/CATALOG_QUALITY_WORKFLOW.md)를 참고하세요.
+워크플로가 만든 조사 대상도 에이전트형 브라우저로 공식 공지를 확인하여 처리할 수 있습니다. 수동 실행과 AI 배정 옵션은 [품질 리포트 참고 절차](docs/CATALOG_QUALITY_WORKFLOW.md)에서 설명합니다.
 
 #### 제보 인테이크 스킬 (catalog-intake)
 
-GitHub에 익숙하지 않은 사용자를 위한 [Google Forms 제보](https://forms.gle/Pw6pBKhqF1e5Nesw6)를, **검토부터 카탈로그 수용까지 반자동으로 처리**하는 Claude Code 스킬입니다. [.claude/skills/catalog-intake/](.claude/skills/catalog-intake/)에 있으며, 그동안 수작업으로 처리하던 제보 반영을 자동화합니다.
-
-Google Forms 응답을 내보낸 CSV를 입력으로 받아 다음을 수행합니다.
-
-1. **정규화**: CSV → 카탈로그 스키마 필드 매핑, Service Id 파생, 기존 Id 충돌 검사, 폼이 받지 않는 항목(사일런트 스위치 등)을 gap으로 플래그.
-2. **URL 검증**: 보안 플러그인 설치 URL을 Windows Edge로 위장(User-Agent + Client Hints)해 접속 — 국내 공공/금융 사이트의 봇 차단을 통과하고, 설치 *페이지*와 직접 설치 *파일*을 구분합니다.
-3. **로고 생성**: 기관 공식 로고를 수집해 배경을 투명 처리한 정사각 PNG(`docs/images/<Category>/<Id>.png`)로 변환.
-4. **검증·제출**: `catalogutil.cs` 스키마 검증을 거쳐 사람이 검토할 PR 후보를 생성.
-
-처리 결과는 세 갈래로 정리하며, **검출·정규화는 자동, 최종 판정과 병합(merge)은 사람**이 합니다(사이트 헬스 워크플로와 동일 철학).
-
-- **완전 반영**: 검증까지 끝난 항목 → PR diff에 포함
-- **미완(수동 검토 필요)**: 자동으로 확정하지 못한 항목 → 유실 방지를 위해 추적 이슈를 생성하고 PR에 링크
-- **중복/무효**: 기존 항목과 중복이거나 부적합 → 사유를 기록하고 제외
-
-실행에는 [uv](https://docs.astral.sh/uv/)(Python)가 필요합니다. 스크립트는 PEP 723 자체완결 형식이라 `uv run <script>` 실행 시 의존성이 자동 설치됩니다. 자세한 절차는 [.claude/skills/catalog-intake/SKILL.md](.claude/skills/catalog-intake/SKILL.md), 필드 매핑·설치기 시드표는 [references/field-mapping.md](.claude/skills/catalog-intake/references/field-mapping.md)를 참고하세요.
+[Google Forms 제보](https://forms.gle/Pw6pBKhqF1e5Nesw6)를 CSV로 모아서 처리할 때에는 기존 [catalog-intake 스킬](.claude/skills/catalog-intake/SKILL.md)을 사용할 수 있습니다. 필드 정규화, URL 검사, 로고 수집과 PR 후보 작성을 지원합니다. 조사 결과의 근거를 검토하고 미확인 항목을 남기는 원칙은 브라우저를 활용할 때에도 동일하게 적용합니다.
 
 ### 자동 응답 설치 옵션을 찾는 방법
 
