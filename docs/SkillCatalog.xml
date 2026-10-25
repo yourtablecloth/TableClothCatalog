@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SkillCatalog Version="1">
   <!-- Active Skill elements are installable. Comment out an entire Skill element to remove it from the catalog. -->
+  <!-- Deferred from the initial catalog: a user DART API key is required.
   <Skill Id="k-dart" Category="Finance" DisplayName="전자공시 조회">
     <Description>기업의 공시, 기업개황과 재무 정보를 조회합니다.</Description>
     <Source Repository="https://github.com/NomaDamas/k-skill" Path="k-dart" Ref="0102e5133865f00886e37ac8cf39a49e2c7a3d39" />
@@ -10,6 +11,7 @@
     <Install Mode="upstream" />
     <Notes>사용자 API_K_DART 키로 금융감독원 DART OpenAPI를 직접 호출합니다. Node.js 18 이상과 npx 기반 CLI를 사용합니다. 설치 관리자는 스킬 파일과 라이선스를 복사하며 CLI 패키지나 API 키를 설정하지 않습니다.</Notes>
   </Skill>
+  -->
   <Skill Id="bok-ecos-stats" Category="Economics" DisplayName="한국은행 경제통계">
     <Description>한국은행 ECOS의 기준금리, 물가, 환율과 통화량 통계를 조회합니다.</Description>
     <Source Repository="https://github.com/NomaDamas/k-skill" Path="bok-ecos-stats" Ref="0102e5133865f00886e37ac8cf39a49e2c7a3d39" />
@@ -39,6 +41,7 @@
     <Install Mode="upstream" />
     <Notes>설치 관리자는 진입점 SKILL.md를 복사합니다. 실행에는 jangbu-mcp 서버와 별도 하위 스킬, OCR 환경을 설정합니다. 은행 CSV, 카드 명세서와 CODEF 자격증명은 사용자가 허용한 범위에서 다룹니다.</Notes>
   </Skill>
+  <!-- Deferred from the initial catalog: user OAuth client credentials are required.
   <Skill Id="toss-investment" Category="Finance" DisplayName="증권 계좌 조회">
     <Description>토스증권 공식 Open API를 활용해 계좌, 보유 주식과 시세를 조회합니다.</Description>
     <Source Repository="https://github.com/NomaDamas/k-skill" Path="toss-investment" Ref="0102e5133865f00886e37ac8cf39a49e2c7a3d39" />
@@ -48,6 +51,7 @@
     <Install Mode="upstream" />
     <Notes>토스증권 공식 Open API를 OAuth 2.0 Client Credentials로 직접 호출합니다. Node.js 18 이상과 npx CLI, 사용자 TOSSINVEST_CLIENT_ID 및 TOSSINVEST_CLIENT_SECRET을 사용합니다. 설치 관리자는 계좌 인증정보를 설정하지 않습니다.</Notes>
   </Skill>
+  -->
   <Skill Id="korean-law-mcp" Category="Law" DisplayName="법령과 판례 검색">
     <Description>법령, 판례와 조례를 조회하고 인용 내용을 검증합니다.</Description>
     <Source Repository="https://github.com/chrisryugj/korean-law-mcp" Path="skills/korean-law" Ref="4ccedb0dc89fce164493ffc9019b5ad35cb9b782" />
@@ -66,6 +70,7 @@
     <Install Mode="upstream" />
     <Notes>기본 일반 조회는 외부 hosted proxy를 사용합니다. 사용자 KSKILL_KOSIS_API_KEY와 &#45;&#45;direct 옵션으로 KOSIS에 직접 연결할 수 있습니다. 실행에는 Node.js 18 이상, npx CLI와 Python 3.9 이상을 사용합니다.</Notes>
   </Skill>
+  <!-- Deferred from the initial catalog: a user procurement API key is required.
   <Skill Id="g2b-bid-search" Category="Procurement" DisplayName="나라장터 입찰 검색">
     <Description>나라장터 입찰공고의 예산, 마감일과 상세 정보를 조회합니다.</Description>
     <Source Repository="https://github.com/mouseco/k-gov-skills" Path="skills/g2b-bid-search" Ref="a55816b9b44e8391576204a095bf6337940d80f3" />
@@ -75,6 +80,8 @@
     <Install Mode="upstream" />
     <Notes>Python 3.9 이상과 사용자 NARAJANGTEO_SERVICE_KEY를 사용합니다. 나라장터 입찰공고를 조회하며 입찰 참가나 인증서 사용은 수행하지 않습니다. 스킬과 자체 스크립트에는 원본 MIT 라이선스를 적용하며 API 응답 데이터에는 제공기관의 이용 조건을 적용합니다.</Notes>
   </Skill>
+  -->
+  <!-- Deferred from the initial catalog: dataset searches require a user API key.
   <Skill Id="public-data-finder" Category="PublicData" DisplayName="공공데이터 검색">
     <Description>공공데이터포털에서 데이터셋과 Open API를 검색합니다.</Description>
     <Source Repository="https://github.com/mouseco/k-gov-skills" Path="skills/public-data-finder" Ref="a55816b9b44e8391576204a095bf6337940d80f3" />
@@ -84,6 +91,8 @@
     <Install Mode="upstream" />
     <Notes>Python 3.9 이상과 사용자 DATA_GO_KR_API_KEY를 사용합니다. 공공데이터포털의 데이터셋 목록을 조회합니다. 스킬과 자체 스크립트에는 원본 MIT 라이선스를 적용하며 API 응답 데이터에는 제공기관의 이용 조건을 적용합니다.</Notes>
   </Skill>
+  -->
+  <!-- Deferred from the initial catalog: bill queries require a user API key.
   <Skill Id="national-assembly-tracker" Category="Law" DisplayName="국회 입법 동향">
     <Description>국회 의안과 법률안의 발의 정보 및 처리 상태를 조회합니다.</Description>
     <Source Repository="https://github.com/mouseco/k-gov-skills" Path="skills/national-assembly-tracker" Ref="a55816b9b44e8391576204a095bf6337940d80f3" />
@@ -93,6 +102,7 @@
     <Install Mode="upstream" />
     <Notes>Python 3.9 이상과 사용자 OPEN_ASSEMBLY_API_KEY를 사용합니다. 국회 의안과 법률안 정보를 조회합니다. 스킬과 자체 스크립트에는 원본 MIT 라이선스를 적용하며 API 응답 데이터에는 국회 공식 서비스의 이용 조건을 적용합니다.</Notes>
   </Skill>
+  -->
   <!-- Removed: the pinned repository has no SKILL.md; an adapter is required.
   <Skill Id="real-estate-mcp" Category="RealEstate" DisplayName="부동산 거래 조회">
     <Description>국토교통부 API를 활용한 부동산 거래 조회 방안을 검토합니다.</Description>

@@ -4,7 +4,7 @@
 
 ## Installable catalog entries
 
-As of October 25, 2026, [SkillCatalog.xml](SkillCatalog.xml) contains ten active skill entries. Each active `Skill` element offers an upstream skill for installation. There are no listing or review states. The catalog also retains two removed MCP candidates as XML comments because their pinned repositories provide no `SKILL.md`.
+As of October 25, 2026, [SkillCatalog.xml](SkillCatalog.xml) contains five active skill entries. Each active `Skill` element offers an upstream skill for installation. There are no listing or review states. The catalog retains seven other candidates as XML comments: five deferred from the initial catalog and two MCP candidates whose pinned repositories provide no `SKILL.md`.
 
 ## Adding and removing a skill
 
@@ -20,7 +20,7 @@ Installing a skill copies its files and preserves the pinned license as `LICENSE
 
 ## License and source boundaries
 
-The pinned licenses identify [NomaDamas MIT](https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/LICENSE), [kimlawtech Apache-2.0](https://github.com/kimlawtech/korean-jangbu-for/blob/592f6d7c7be138ae578be9ed6769239cc527ddea/LICENSE), [chrisryugj MIT](https://github.com/chrisryugj/korean-law-mcp/blob/4ccedb0dc89fce164493ffc9019b5ad35cb9b782/LICENSE) and [mouseco MIT](https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/LICENSE). The four mouseco entries have original-contribution records in the pinned [attribution notes](https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/docs/attribution.md). API response data and referenced tools retain their own terms. The catalog stores no credentials and executes no upstream code.
+The pinned licenses identify [NomaDamas MIT](https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/LICENSE), [kimlawtech Apache-2.0](https://github.com/kimlawtech/korean-jangbu-for/blob/592f6d7c7be138ae578be9ed6769239cc527ddea/LICENSE), [chrisryugj MIT](https://github.com/chrisryugj/korean-law-mcp/blob/4ccedb0dc89fce164493ffc9019b5ad35cb9b782/LICENSE) and [mouseco MIT](https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/LICENSE). All four mouseco candidates have original-contribution records in the pinned [attribution notes](https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/docs/attribution.md). API response data and referenced tools retain their own terms. The catalog stores no credentials and executes no upstream code.
 
 ## Validation and publication
 

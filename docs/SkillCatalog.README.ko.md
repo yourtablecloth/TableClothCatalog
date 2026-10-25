@@ -2,7 +2,7 @@
 
 [English](SkillCatalog.README.md)
 
-2026년 10월 25일 기준으로 [SkillCatalog.xml](SkillCatalog.xml)은 스킬 10개를 활성 항목으로 제공합니다. `SKILL.md`가 없는 MCP 후보 2개는 XML 주석으로 보존합니다.
+2026년 10월 25일 기준으로 [SkillCatalog.xml](SkillCatalog.xml)은 스킬 5개를 활성 항목으로 제공합니다. 초기 목록에서 보류한 후보 5개와 `SKILL.md`가 없는 MCP 후보 2개는 XML 주석으로 보존합니다.
 
 이 문서는 항목 추가와 제거, 고정 버전 갱신, 실행 선행 조건, 라이선스 및 게시 전 검증을 다룹니다. 활성 `Skill` 요소는 별도 검토 상태 없이 설치 대상으로 표시합니다.
 
@@ -30,7 +30,7 @@
 
 활성 항목은 [NomaDamas MIT](https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/LICENSE), [kimlawtech Apache-2.0](https://github.com/kimlawtech/korean-jangbu-for/blob/592f6d7c7be138ae578be9ed6769239cc527ddea/LICENSE), [chrisryugj MIT](https://github.com/chrisryugj/korean-law-mcp/blob/4ccedb0dc89fce164493ffc9019b5ad35cb9b782/LICENSE)와 [mouseco MIT](https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/LICENSE)를 원본 고정 커밋에서 참조합니다.
 
-또한 mouseco의 [출처 기록](https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/docs/attribution.md)은 이번 항목 4개를 직접 작성한 스킬로 구분합니다. API 응답 데이터와 참조 도구에는 각 원 출처의 조건을 적용합니다. 카탈로그는 자격증명을 저장하거나 원본 코드를 실행하지 않습니다.
+또한 mouseco의 [출처 기록](https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/docs/attribution.md)은 후보 4개를 직접 작성한 스킬로 구분합니다. API 응답 데이터와 참조 도구에는 각 원 출처의 조건을 적용합니다. 카탈로그는 자격증명을 저장하거나 원본 코드를 실행하지 않습니다.
 
 ## 스키마 검사와 기존 Pages 배포
 
