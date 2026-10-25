@@ -70,6 +70,43 @@ try
     var catalogText = File.ReadAllText(catalogPath);
     if (!AcceptsXml(catalogText, schemas, out var originalCount))
         throw new XmlException("The catalog fixture must pass schema validation before removal checks.");
+    var current = XDocument.Parse(catalogText).Root!;
+    if (!QualifiesForCurrentHost(current))
+    {
+        failures++;
+        Console.Error.WriteLine("Eligibility: the actual catalog contains an unqualified ID or pinned source.");
+    }
+    var qualifiedFixture = QualifiedFixture();
+    var eligibility = new (string Name, Action<XElement> Change, bool Valid)[]
+    {
+        ("qualified pinned catalog", _ => { }, true),
+        ("removal of a qualified skill", xml => xml.Elements("Skill").First().Remove(), true),
+        ("all qualified skills removed", xml => xml.RemoveNodes(), true),
+        ("script-dependent skill reactivation", xml => xml.Add(PinnedSkill("tablecloth-calculators", "https://github.com/yourtablecloth/tablecloth-calculators", ".", "877b58cf0741db21342445f2b3fcb54ad1ada85c")), false),
+        ("unconnected MCP reactivation", xml => xml.Add(PinnedSkill("korean-law-mcp", "https://github.com/chrisryugj/korean-law-mcp", "skills/korean-law", "4ccedb0dc89fce164493ffc9019b5ad35cb9b782")), false),
+        ("unqualified skill insertion", xml =>
+        {
+            var added = new XElement(xml.Elements("Skill").First());
+            added.SetAttributeValue("Id", "unqualified-skill");
+            xml.Add(added);
+        }, false),
+        ("source update without a matching qualification", xml =>
+        {
+            var skill = xml.Elements("Skill").First();
+            var source = skill.Element("Source")!;
+            var version = new string('2', 40);
+            source.SetAttributeValue("Ref", version);
+            skill.Element("License")!.SetAttributeValue("Source", (string?)source.Attribute("Repository") + "/blob/" + version + "/LICENSE");
+        }, false),
+    };
+    foreach (var (name, change, expected) in eligibility)
+    {
+        var fixture = new XElement(qualifiedFixture);
+        change(fixture);
+        if (Accepts(fixture, schemas) && QualifiesForCurrentHost(fixture) == expected) continue;
+        failures++;
+        Console.Error.WriteLine($"Eligibility '{name}': expected {(expected ? "acceptance" : "rejection")}.");
+    }
     var removals = 0;
     foreach (var (id, start, length) in RawSkillSpans(catalogText))
     {
@@ -81,7 +118,7 @@ try
     }
     if (removals != originalCount) throw new XmlException("Could not locate every active raw Skill block.");
     if (failures != 0) return 1;
-    Console.WriteLine($"All {cases.Length + lifecycle.Length + removals} path, lifecycle and raw-block removal checks passed.");
+    Console.WriteLine($"All {cases.Length + lifecycle.Length + eligibility.Length + 1 + removals} path, lifecycle, eligibility and raw-block removal checks passed.");
     return 0;
 }
 catch (Exception e) when (e is XmlException or XmlSchemaException or IOException or UnauthorizedAccessException)
@@ -103,6 +140,49 @@ static XElement Fixture() => XElement.Parse("""
     """);
 
 static bool Accepts(XElement fixture, XmlSchemaSet schemas) => AcceptsXml(fixture.ToString(), schemas, out _);
+
+// Qualification is specific to the current host and pinned sources. Update this list together
+// with docs/SKILL_ELIGIBILITY.md and its Korean companion after reviewing new execution evidence.
+static bool QualifiesForCurrentHost(XElement catalog)
+{
+    var qualified = QualifiedSources();
+    return catalog.Elements("Skill").All(skill =>
+    {
+        if (!qualified.TryGetValue((string?)skill.Attribute("Id") ?? "", out var expected)) return false;
+        var source = skill.Element("Source");
+        return (string?)source?.Attribute("Repository") == expected.Repository &&
+            (string?)source?.Attribute("Path") == expected.Path &&
+            string.Equals((string?)source?.Attribute("Ref"), expected.Ref, StringComparison.OrdinalIgnoreCase);
+    });
+}
+
+static Dictionary<string, (string Repository, string Path, string Ref)> QualifiedSources() =>
+    new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["official-report-skillset"] = ("https://github.com/mouseco/k-gov-skills", "skills/official-report-skillset", "a55816b9b44e8391576204a095bf6337940d80f3"),
+        ["tablecloth-certificate-expiry"] = ("https://github.com/yourtablecloth/tablecloth-certificate-expiry", ".", "9d2eca6431d1cba34bc872b80fc55fa71fa2dcb2"),
+        ["tablecloth-windows-sandbox"] = ("https://github.com/yourtablecloth/tablecloth-windows-sandbox", ".", "b9e52bcd303624dbba81e7de66a3f56344e922fe"),
+    };
+
+static XElement QualifiedFixture()
+{
+    var catalog = new XElement("SkillCatalog", new XAttribute("Version", "1"));
+    foreach (var (id, source) in QualifiedSources())
+        catalog.Add(PinnedSkill(id, source.Repository, source.Path, source.Ref));
+    return catalog;
+}
+
+static XElement PinnedSkill(string id, string repository, string path, string version)
+{
+    var skill = new XElement(Fixture().Element("Skill")!);
+    skill.SetAttributeValue("Id", id);
+    var source = skill.Element("Source")!;
+    source.SetAttributeValue("Repository", repository);
+    source.SetAttributeValue("Path", path);
+    source.SetAttributeValue("Ref", version);
+    skill.Element("License")!.SetAttributeValue("Source", repository + "/blob/" + version + "/LICENSE");
+    return skill;
+}
 
 static bool AcceptsXml(string fixture, XmlSchemaSet schemas, out int activeCount)
 {
