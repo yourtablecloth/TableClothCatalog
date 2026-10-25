@@ -4,7 +4,7 @@
 
 ## Installable catalog entries
 
-As of October 25, 2026, [SkillCatalog.xml](SkillCatalog.xml) contains five active skill entries. Each active `Skill` element offers an upstream skill for installation. There are no listing or review states. The catalog retains seven other candidates as XML comments: five deferred from the initial catalog and two MCP candidates whose pinned repositories provide no `SKILL.md`.
+As of October 25, 2026, [SkillCatalog.xml](SkillCatalog.xml) contains seven active skill entries. Each active `Skill` element offers an upstream skill for installation. There are no listing or review states. The catalog retains seven other candidates as XML comments: five deferred from the initial catalog and two MCP candidates whose pinned repositories provide no `SKILL.md`.
 
 ## Adding and removing a skill
 
@@ -23,6 +23,8 @@ Keep `Id`, `Source.Repository` and `Source.Path` unchanged when updating the sam
 ## Skill files and execution prerequisites
 
 Installing a skill copies its files and preserves the pinned license as `LICENSE.upstream`. It does not install runtimes, register MCP servers or configure API keys. The [Korean law skill](https://github.com/chrisryugj/korean-law-mcp/blob/4ccedb0dc89fce164493ffc9019b5ad35cb9b782/skills/korean-law/SKILL.md) is installable as a skill file and requires a separately configured `korean-law` MCP server. The [jangbu entry](https://github.com/kimlawtech/korean-jangbu-for/blob/592f6d7c7be138ae578be9ed6769239cc527ddea/skills/korean-jangbu-for/SKILL.md) also depends on a separate MCP server and sibling skills. Each entry's `Notes` lists the relevant prerequisites. `Network` describes execution; remote installation always downloads files.
+
+The optional [certificate-expiry skill](https://github.com/yourtablecloth/tablecloth-certificate-expiry) and [Windows Sandbox skill](https://github.com/yourtablecloth/tablecloth-windows-sandbox) are distributed in separate repositories and are not preinstalled. They require no additional API keys and interpret local reports supplied by a compatible TableCloth host bridge. Certificate checks require user consent and share counts only. Sandbox operations also require compatible Windows Sandbox support. The original AGPL license and commercial-license contact notice are preserved.
 
 ## License and source boundaries
 
