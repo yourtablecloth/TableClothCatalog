@@ -2,7 +2,7 @@
 
 [English](SkillCatalog.README.md)
 
-2026년 10월 25일 기준으로 [SkillCatalog.xml](SkillCatalog.xml)은 보고서 작성 지침 1개와 기존 식탁보 호스트 브리지 2개를 활성 후보로 제공합니다. 기존 활성 8개의 검토로 보류한 5개를 포함해 나머지 후보 12개는 XML 주석으로 보존합니다. 현재 대화는 설치한 Python과 Node 스크립트 실행이나 MCP 서버 자동 설정을 지원하지 않습니다. [등재 기준과 고정 원본 검증](SKILL_ELIGIBILITY.ko.md)에서 파일 설치, 스킬 발견과 실제 기능 실행을 구분합니다.
+2026년 10월 25일 기준으로 이 `poc/appcontainer-skill-evaluation` 분기의 [SkillCatalog.xml](SkillCatalog.xml)은 운영 후보 3개와 격리 평가용 고정 스크립트 후보 3개를 활성화해 총 6개를 제공합니다. 나머지 후보 9개는 XML 주석으로 보존합니다. 이 분기는 운영 카탈로그와 구분합니다. [AppContainer 평가 보고서](APP_CONTAINER_POC.ko.md)에서 격리 실행과 고정 응답을 사용한 CLI 연결 성공을 기록하며 실제 모델 선택과 운영 AI 대화의 통합은 미검증으로 유지합니다. 현재 대화는 설치한 Python과 Node 스크립트 실행이나 MCP 서버 자동 설정을 지원하지 않습니다. [등재 기준과 고정 원본 검증](SKILL_ELIGIBILITY.ko.md)에서 파일 설치, 스킬 발견과 실제 기능 실행을 구분합니다.
 
 이 문서는 항목 추가와 제거, 고정 버전 갱신, 실행 선행 조건, 라이선스 및 게시 전 검증을 다룹니다. 활성 `Skill` 요소는 별도 검토 상태 없이 설치 대상으로 표시합니다.
 
@@ -32,7 +32,7 @@
 
 [공동인증서 만료 스킬](https://github.com/yourtablecloth/tablecloth-certificate-expiry)과 [Windows Sandbox 스킬](https://github.com/yourtablecloth/tablecloth-windows-sandbox)은 별도 저장소에서 배포하며 기본 구성에는 포함하지 않습니다. 추가 API 키 없이 식탁보 호스트가 제공한 로컬 보고서를 해석합니다. 인증서 조회는 사용자 동의를 받은 건수 요약으로 제한하며 Sandbox 작업은 호환되는 Windows 환경과 식탁보 호스트 브리지를 요구합니다. 원본 AGPL과 별도 상용 라이선스 문의 안내를 보존합니다.
 
-주석으로 보류한 [금융 및 생활 계산기](https://github.com/yourtablecloth/tablecloth-calculators)는 Python 3.11 이상과 표준 라이브러리만 사용합니다. 계산 스크립트는 사용자 입력값을 사용하며 API 키, 외부 데이터 조회와 추가 패키지 다운로드를 요구하지 않습니다. 현재 식탁보 대화는 필요한 스크립트 실행 경로를 제공하지 않으며 런타임을 설치해도 이 제한은 유지합니다. `Network="none"`은 계산 스크립트의 조건을 나타내며 Codex 대화는 기존 온라인 연결을 사용합니다. 고정 원본의 [저작권 준수 기준](https://github.com/yourtablecloth/tablecloth-calculators/blob/877b58cf0741db21342445f2b3fcb54ad1ada85c/docs/COPYRIGHT.ko.md)도 해당 후보에 계속 적용합니다.
+PoC 평가에서만 활성화한 [금융 및 생활 계산기](https://github.com/yourtablecloth/tablecloth-calculators)는 Python 3.11 이상과 표준 라이브러리만 사용합니다. 계산 스크립트는 사용자 입력값을 사용하며 API 키, 외부 데이터 조회와 추가 패키지 다운로드를 요구하지 않습니다. 현재 식탁보 대화는 필요한 스크립트 실행 경로를 제공하지 않으며 런타임을 설치해도 이 제한은 유지합니다. `Network="none"`은 계산 스크립트의 조건을 나타내며 Codex 대화는 기존 온라인 연결을 사용합니다. 고정 원본의 [저작권 준수 기준](https://github.com/yourtablecloth/tablecloth-calculators/blob/877b58cf0741db21342445f2b3fcb54ad1ada85c/docs/COPYRIGHT.ko.md)도 해당 후보에 계속 적용합니다.
 
 주석으로 보류한 [법령 스킬](https://github.com/chrisryugj/korean-law-mcp/blob/4ccedb0dc89fce164493ffc9019b5ad35cb9b782/skills/korean-law/SKILL.md)은 별도로 연결한 `korean-law` MCP 서버를 사용합니다. [장부 스킬](https://github.com/kimlawtech/korean-jangbu-for/blob/592f6d7c7be138ae578be9ed6769239cc527ddea/skills/korean-jangbu-for/SKILL.md)도 설치한 진입점 경로 밖의 Python MCP 서버와 하위 스킬을 사용합니다. 스크립트 파일이 없는 진입점도 필수 도구에 따라 실행 의존성을 판단합니다.
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SkillCatalog Version="1">
+  <!-- PoC BRANCH ONLY: six active entries include three script-evaluation candidates, not production compatibility approval. -->
   <!-- Active Skill elements are installable. Comment out an entire Skill element to remove it from the catalog. -->
   <!-- Deferred from the initial catalog: a user DART API key is required.
   <Skill Id="k-dart" Category="Finance" DisplayName="전자공시 조회">
@@ -12,7 +13,7 @@
     <Notes>사용자 API_K_DART 키로 금융감독원 DART OpenAPI를 직접 호출합니다. Node.js 18 이상과 npx 기반 CLI를 사용합니다. 설치 관리자는 스킬 파일과 라이선스를 복사하며 CLI 패키지나 API 키를 설정하지 않습니다.</Notes>
   </Skill>
   -->
-  <!-- Deferred: requires npx and Python execution, which the current TableCloth chat does not support.
+  <!-- PoC evaluation only: isolated AppContainer execution has not been qualified for production chat. -->
   <Skill Id="bok-ecos-stats" Category="Economics" DisplayName="한국은행 경제통계">
     <Description>한국은행 ECOS의 기준금리, 물가, 환율과 통화량 통계를 조회합니다.</Description>
     <Source Repository="https://github.com/NomaDamas/k-skill" Path="bok-ecos-stats" Ref="0102e5133865f00886e37ac8cf39a49e2c7a3d39" />
@@ -22,7 +23,6 @@
     <Install Mode="upstream" />
     <Notes>ECOS에 직접 연결하며 sample 키 또는 사용자 KSKILL_BOK_ECOS_API_KEY를 사용합니다. sample 키는 호출당 최대 10행으로 제한합니다. 실행에는 Node.js 18 이상, npx CLI와 Python 3.9 이상을 사용합니다.</Notes>
   </Skill>
-  -->
   <!-- Removed: the pinned repository has no SKILL.md; an adapter is required.
   <Skill Id="korea-stock-mcp" Category="Finance" DisplayName="국내 주식 분석">
     <Description>국내 주식 분석용 MCP 서버를 Codex에서 활용하는 방안을 검토합니다.</Description>
@@ -67,7 +67,7 @@
     <Notes>원본의 skills/korean-law/SKILL.md를 설치합니다. 법령 도구 실행에는 korean-law MCP 서버 연결과 사용자 법제처 Open API 인증키 OC를 별도로 설정합니다. 로컬 MCP 서버 패키지는 Node.js 20.19.0 이상을 사용합니다. 스킬 설치가 MCP 서버 설치나 등록을 수행하지는 않습니다.</Notes>
   </Skill>
   -->
-  <!-- Deferred: requires npx and Python execution, which the current TableCloth chat does not support.
+  <!-- PoC evaluation only: isolated AppContainer execution has not been qualified for production chat. -->
   <Skill Id="kosis-stats" Category="Statistics" DisplayName="국가통계 조회">
     <Description>KOSIS의 인구, 가구, 고용과 물가 통계를 검색하고 조회합니다.</Description>
     <Source Repository="https://github.com/NomaDamas/k-skill" Path="kosis-stats" Ref="0102e5133865f00886e37ac8cf39a49e2c7a3d39" />
@@ -77,7 +77,6 @@
     <Install Mode="upstream" />
     <Notes>기본 일반 조회는 외부 hosted proxy를 사용합니다. 사용자 KSKILL_KOSIS_API_KEY와 &#45;&#45;direct 옵션으로 KOSIS에 직접 연결할 수 있습니다. 실행에는 Node.js 18 이상, npx CLI와 Python 3.9 이상을 사용합니다.</Notes>
   </Skill>
-  -->
   <!-- Deferred from the initial catalog: a user procurement API key is required.
   <Skill Id="g2b-bid-search" Category="Procurement" DisplayName="나라장터 입찰 검색">
     <Description>나라장터 입찰공고의 예산, 마감일과 상세 정보를 조회합니다.</Description>
@@ -149,7 +148,7 @@
     <Install Mode="upstream" />
     <Notes>기본 구성에 포함하지 않는 선택 설치 스킬입니다. 별도 API 키를 요구하지 않습니다. 호환되는 Windows Sandbox 환경과 식탁보 AI의 호스트 브리지가 필요합니다. 호스트가 전달한 list, start, stop, connect, ip 결과를 설명하며 스킬 자체가 wsb.exe를 실행하거나 Windows Sandbox를 설치하지 않습니다. 원본 AGPL 라이선스와 별도 상용 라이선스 문의 안내를 함께 보존합니다.</Notes>
   </Skill>
-  <!-- Deferred: requires installed-skill Python execution, which the current TableCloth chat does not support.
+  <!-- PoC evaluation only: isolated AppContainer execution has not been qualified for production chat. -->
   <Skill Id="tablecloth-calculators" Category="Utilities" DisplayName="금융 및 생활 계산기">
     <Description>사용자 입력으로 퍼센트, 할인, 이자, 대출 상환, 날짜, 고정 시차, 단위와 BMI 수치를 계산합니다.</Description>
     <Source Repository="https://github.com/yourtablecloth/tablecloth-calculators" Path="." Ref="877b58cf0741db21342445f2b3fcb54ad1ada85c" />
@@ -159,5 +158,4 @@
     <Install Mode="upstream" />
     <Notes>선택 설치 스킬입니다. Python 3.11 이상과 표준 라이브러리만 사용하며 API 키, 외부 데이터 조회와 추가 패키지를 요구하지 않습니다. 설치된 스킬의 Python 스크립트 실행을 허용하는 호스트가 필요하며 이전 식탁보 빌드에 런타임만 설치해도 실행 권한을 추가하지는 않습니다. Network 값은 계산 스크립트의 조건이며 Codex 대화는 온라인 연결을 사용합니다. 세금, 최신 규제, 시세, 공휴일, 음력, 지역별 서머타임, 의학적 분류와 사이트 고유 통합분석을 제외합니다. 원본 저장소의 저작권 준수 기준과 기여 안내를 적용합니다.</Notes>
   </Skill>
-  -->
 </SkillCatalog>

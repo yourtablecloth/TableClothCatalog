@@ -71,19 +71,22 @@ try
     if (!AcceptsXml(catalogText, schemas, out var originalCount))
         throw new XmlException("The catalog fixture must pass schema validation before removal checks.");
     var current = XDocument.Parse(catalogText).Root!;
-    if (!QualifiesForCurrentHost(current))
+    if (!MatchesPocEvaluationSources(current))
     {
         failures++;
-        Console.Error.WriteLine("Eligibility: the actual catalog contains an unqualified ID or pinned source.");
+        Console.Error.WriteLine("PoC eligibility: the actual catalog contains an ID or pinned source outside this evaluation branch.");
     }
-    var qualifiedFixture = QualifiedFixture();
+    var qualifiedFixture = ProductionFixture();
     var eligibility = new (string Name, Action<XElement> Change, bool Valid)[]
     {
         ("qualified pinned catalog", _ => { }, true),
         ("removal of a qualified skill", xml => xml.Elements("Skill").First().Remove(), true),
         ("all qualified skills removed", xml => xml.RemoveNodes(), true),
-        ("script-dependent skill reactivation", xml => xml.Add(PinnedSkill("tablecloth-calculators", "https://github.com/yourtablecloth/tablecloth-calculators", ".", "877b58cf0741db21342445f2b3fcb54ad1ada85c")), false),
+        ("pinned calculator PoC evaluation only", xml => xml.Add(PinnedSkill("tablecloth-calculators", "https://github.com/yourtablecloth/tablecloth-calculators", ".", "877b58cf0741db21342445f2b3fcb54ad1ada85c")), true),
+        ("pinned BOK PoC evaluation only", xml => xml.Add(PinnedSkill("bok-ecos-stats", "https://github.com/NomaDamas/k-skill", "bok-ecos-stats", "0102e5133865f00886e37ac8cf39a49e2c7a3d39")), true),
+        ("pinned KOSIS PoC evaluation only", xml => xml.Add(PinnedSkill("kosis-stats", "https://github.com/NomaDamas/k-skill", "kosis-stats", "0102e5133865f00886e37ac8cf39a49e2c7a3d39")), true),
         ("unconnected MCP reactivation", xml => xml.Add(PinnedSkill("korean-law-mcp", "https://github.com/chrisryugj/korean-law-mcp", "skills/korean-law", "4ccedb0dc89fce164493ffc9019b5ad35cb9b782")), false),
+        ("credential-dependent candidate remains deferred", xml => xml.Add(PinnedSkill("k-dart", "https://github.com/NomaDamas/k-skill", "k-dart", "0102e5133865f00886e37ac8cf39a49e2c7a3d39")), false),
         ("unqualified skill insertion", xml =>
         {
             var added = new XElement(xml.Elements("Skill").First());
@@ -103,7 +106,7 @@ try
     {
         var fixture = new XElement(qualifiedFixture);
         change(fixture);
-        if (Accepts(fixture, schemas) && QualifiesForCurrentHost(fixture) == expected) continue;
+        if (Accepts(fixture, schemas) && MatchesPocEvaluationSources(fixture) == expected) continue;
         failures++;
         Console.Error.WriteLine($"Eligibility '{name}': expected {(expected ? "acceptance" : "rejection")}.");
     }
@@ -141,11 +144,11 @@ static XElement Fixture() => XElement.Parse("""
 
 static bool Accepts(XElement fixture, XmlSchemaSet schemas) => AcceptsXml(fixture.ToString(), schemas, out _);
 
-// Qualification is specific to the current host and pinned sources. Update this list together
-// with docs/SKILL_ELIGIBILITY.md and its Korean companion after reviewing new execution evidence.
-static bool QualifiesForCurrentHost(XElement catalog)
+// This PoC branch additionally allows three pinned scripts for isolated evaluation only.
+// Inclusion here does not qualify script execution for production TableCloth chat.
+static bool MatchesPocEvaluationSources(XElement catalog)
 {
-    var qualified = QualifiedSources();
+    var qualified = PocEvaluationSources();
     return catalog.Elements("Skill").All(skill =>
     {
         if (!qualified.TryGetValue((string?)skill.Attribute("Id") ?? "", out var expected)) return false;
@@ -156,7 +159,7 @@ static bool QualifiesForCurrentHost(XElement catalog)
     });
 }
 
-static Dictionary<string, (string Repository, string Path, string Ref)> QualifiedSources() =>
+static Dictionary<string, (string Repository, string Path, string Ref)> ProductionSources() =>
     new(StringComparer.OrdinalIgnoreCase)
     {
         ["official-report-skillset"] = ("https://github.com/mouseco/k-gov-skills", "skills/official-report-skillset", "a55816b9b44e8391576204a095bf6337940d80f3"),
@@ -164,10 +167,19 @@ static Dictionary<string, (string Repository, string Path, string Ref)> Qualifie
         ["tablecloth-windows-sandbox"] = ("https://github.com/yourtablecloth/tablecloth-windows-sandbox", ".", "b9e52bcd303624dbba81e7de66a3f56344e922fe"),
     };
 
-static XElement QualifiedFixture()
+static Dictionary<string, (string Repository, string Path, string Ref)> PocEvaluationSources()
+{
+    var sources = ProductionSources();
+    sources.Add("bok-ecos-stats", ("https://github.com/NomaDamas/k-skill", "bok-ecos-stats", "0102e5133865f00886e37ac8cf39a49e2c7a3d39"));
+    sources.Add("kosis-stats", ("https://github.com/NomaDamas/k-skill", "kosis-stats", "0102e5133865f00886e37ac8cf39a49e2c7a3d39"));
+    sources.Add("tablecloth-calculators", ("https://github.com/yourtablecloth/tablecloth-calculators", ".", "877b58cf0741db21342445f2b3fcb54ad1ada85c"));
+    return sources;
+}
+
+static XElement ProductionFixture()
 {
     var catalog = new XElement("SkillCatalog", new XAttribute("Version", "1"));
-    foreach (var (id, source) in QualifiedSources())
+    foreach (var (id, source) in ProductionSources())
         catalog.Add(PinnedSkill(id, source.Repository, source.Path, source.Ref));
     return catalog;
 }

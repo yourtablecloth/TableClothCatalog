@@ -2,13 +2,15 @@
 
 [한국어](SKILL_ELIGIBILITY.ko.md) | [Catalog lifecycle](SkillCatalog.README.md) | [Contributing](../CONTRIBUTING.md)
 
-As of October 25, 2026, the current TableCloth chat keeps `shell_tool=false` and `unified_exec=false`. It does not support executing installed-skill Python or Node scripts or automatically configuring an MCP server. This review covers the eight active entries in catalog commit `12b1622da1b69ec1d24c0729bbebd70cbb19a902`. Three remain eligible candidates; five retain their complete XML blocks as comments.
+As of October 25, 2026, the current TableCloth chat keeps `shell_tool=false` and `unified_exec=false`. It does not support executing installed-skill Python or Node scripts or automatically configuring an MCP server. This review covers the eight active entries in catalog commit `12b1622da1b69ec1d24c0729bbebd70cbb19a902`. The production baseline retains three eligible candidates and defers five. This `poc/appcontainer-skill-evaluation` branch alone reactivates the three pinned script candidates for isolated AppContainer evaluation, for six active entries in total. It does not approve production script execution. Both MCP-dependent entries and credential-dependent candidates remain commented out.
 
 This record covers eligibility criteria, pinned-source decisions, installation/discovery results and application regression tests. It distinguishes successful package handling from a supported feature execution path.
 
 The current-host criteria come first, followed by the eight pinned sources and their evidence. Entry changes and catalog checks follow; live service and model-driven execution remain outside this verification.
 
 ## Eligibility depends on the required execution path
+
+The PoC exception applies only to the exact BOK, KOSIS and calculator commits in the table below. The allowlist in `testskills.cs` permits their evaluation in this branch; catalog checks do not qualify AppContainer isolation, service access or AI-conversation tool execution. The separate [AppContainer evaluation report](APP_CONTAINER_POC.md) now records 46/46 checks and actual pinned CLI/MCP routing driven by deterministic local replies. It does not establish real model selection or production integration. The earlier eight-source audit and 519 application tests remain historical evidence with their original scope.
 
 The existing [source and installation requirements](SkillCatalog.README.md) continue to apply: a public GitHub repository, a fixed 40-character commit, a valid `SKILL.md`, and preservation of the license from that same commit. The execution criteria below add to those requirements.
 
@@ -27,9 +29,9 @@ Each row records the fixed source and the result of reviewing its required workf
 | [official-report-skillset](https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/skills/official-report-skillset/SKILL.md) | `a55816b9b44e8391576204a095bf6337940d80f3` | Instructions and two local reference documents; draft from supplied facts | Eligible candidate, active |
 | [tablecloth-certificate-expiry](https://github.com/yourtablecloth/tablecloth-certificate-expiry/blob/9d2eca6431d1cba34bc872b80fc55fa71fa2dcb2/SKILL.md) | `9d2eca6431d1cba34bc872b80fc55fa71fa2dcb2` | Existing host bridge supplies consented expiry counts; Codex interprets the report | Eligible candidate, active |
 | [tablecloth-windows-sandbox](https://github.com/yourtablecloth/tablecloth-windows-sandbox/blob/b9e52bcd303624dbba81e7de66a3f56344e922fe/SKILL.md) | `b9e52bcd303624dbba81e7de66a3f56344e922fe` | Existing host bridge supplies an allowlisted operation result; compatible Windows support applies | Eligible candidate, active |
-| [bok-ecos-stats](https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/bok-ecos-stats/SKILL.md) | `0102e5133865f00886e37ac8cf39a49e2c7a3d39` | Mandatory `npx` instruction loader and Python helper execution | Incompatible, commented out |
-| [kosis-stats](https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/kosis-stats/SKILL.md) | `0102e5133865f00886e37ac8cf39a49e2c7a3d39` | Mandatory `npx` instruction loader and Python helper execution | Incompatible, commented out |
-| [tablecloth-calculators](https://github.com/yourtablecloth/tablecloth-calculators/blob/877b58cf0741db21342445f2b3fcb54ad1ada85c/SKILL.md) | `877b58cf0741db21342445f2b3fcb54ad1ada85c` | Execute packaged `scripts/calculate.py`; no guessed-result fallback | Incompatible, commented out |
+| [bok-ecos-stats](https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/bok-ecos-stats/SKILL.md) | `0102e5133865f00886e37ac8cf39a49e2c7a3d39` | Mandatory `npx` instruction loader and Python helper execution | Production incompatible; active only for PoC evaluation |
+| [kosis-stats](https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/kosis-stats/SKILL.md) | `0102e5133865f00886e37ac8cf39a49e2c7a3d39` | Mandatory `npx` instruction loader and Python helper execution | Production incompatible; active only for PoC evaluation |
+| [tablecloth-calculators](https://github.com/yourtablecloth/tablecloth-calculators/blob/877b58cf0741db21342445f2b3fcb54ad1ada85c/SKILL.md) | `877b58cf0741db21342445f2b3fcb54ad1ada85c` | Execute packaged `scripts/calculate.py`; no guessed-result fallback | Production incompatible; active only for PoC evaluation |
 | [korean-jangbu-for](https://github.com/kimlawtech/korean-jangbu-for/blob/592f6d7c7be138ae578be9ed6769239cc527ddea/skills/korean-jangbu-for/SKILL.md) | `592f6d7c7be138ae578be9ed6769239cc527ddea` | Separate Python MCP server and six sibling skills; installed entry contains only `SKILL.md` | Incompatible, commented out |
 | [korean-law-mcp](https://github.com/chrisryugj/korean-law-mcp/blob/4ccedb0dc89fce164493ffc9019b5ad35cb9b782/skills/korean-law/SKILL.md) | `4ccedb0dc89fce164493ffc9019b5ad35cb9b782` | Separately connected `korean-law` MCP search and citation-verification tools | Incompatible, commented out |
 
@@ -50,7 +52,7 @@ The production Windows profile's ACL setter rejected the audit token. The audit 
 
 At level 3, the local Release suites passed 197/197 ManagedAi tests and 322/322 application tests, 519 total. The application suite includes host-bridge fixtures, chat, two-tab UI and installed-skill management. The retained TRX records are `managed-ai-removal.trx` and `app-runtime-removal.trx`. Fixture success does not establish real certificate access, live Sandbox operations or model-driven script execution. Spork was unchanged and was not rerun for this change.
 
-Level 4 remains unverified: the audit made no real service API requests, certificate scans, Sandbox operations or model calls. Unit tests or a direct `codex sandbox` subprocess do not establish model tool registration or automatic script execution in TableCloth chat. Changing execution settings is outside this catalog review.
+Level 4 remains unverified: the earlier eight-skill installation audit made no real service API requests, certificate scans, Sandbox operations or model calls. The later [AppContainer report](APP_CONTAINER_POC.md) separately records contained execution and two fixed public-service samples without real model inference. Unit tests or a direct `codex sandbox` subprocess do not establish model tool registration or automatic script execution in TableCloth chat. Changing execution settings is outside this catalog review.
 
 ## Adding, updating and deferring entries
 
@@ -60,7 +62,7 @@ If the current host cannot perform a required step, preserve the entire XML bloc
 
 ## Catalog checks and their limits
 
-The schema and [checkskills.cs](../src/checkskills.cs) check source and license coordinates. [testskills.cs](../src/testskills.cs) additionally guards the current qualified pinned sources, rejects reactivation of unsupported script/MCP candidates, and checks raw-block commenting. It allows removal of qualified entries. No execution-type field or review state is added to the XML.
+The schema and [checkskills.cs](../src/checkskills.cs) check source and license coordinates. [testskills.cs](../src/testskills.cs) additionally guards the current qualified pinned sources, limits the PoC script exceptions to their exact pins and rejects reactivation of unconnected MCP or credential-dependent candidates, and checks raw-block commenting. It allows removal of qualified entries. No execution-type field or review state is added to the XML.
 
 Run the catalog-only checks from the repository root:
 
@@ -74,6 +76,6 @@ Successful checks establish catalog structure, policy consistency and generated 
 
 ## Current decisions and later requalification
 
-The catalog keeps instruction-only drafting and existing host-report interpretation as active candidates. The [eight-source audit](skill-eligibility-audit-2026-10-25.json) establishes package installation, discovery and management separately from the dependency-based eligibility decisions. Five incompatible entries remain commented out with their original fixed coordinates.
+The catalog keeps instruction-only drafting and existing host-report interpretation as active candidates. The [eight-source audit](skill-eligibility-audit-2026-10-25.json) establishes package installation, discovery and management separately from the dependency-based eligibility decisions. The production baseline defers five incompatible entries. This PoC branch activates only the three pinned script candidates for evaluation; both MCP entries remain commented out. The [AppContainer evaluation](APP_CONTAINER_POC.md) records contained execution and deterministic CLI routing on the measured x64 host. Real model execution and production compatibility remain unverified.
 
 Users can continue managing existing local installations. Future execution or MCP support requires application work and verification before a candidate is reactivated. Contributors can use the pinned-source table and evidence levels to distinguish a package update from a newly supported execution path.
