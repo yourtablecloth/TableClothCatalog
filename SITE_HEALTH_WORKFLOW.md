@@ -1,243 +1,97 @@
-# 사이트 헬스 체크 워크플로
+# 에이전트형 브라우저를 활용한 카탈로그 최신화
 
-이 문서는 카탈로그에 등록된 웹 사이트들의 접속 가능성을 주기적으로 점검하고, AI 어시스트(Claude Code 등)와 함께 카탈로그를 갱신하는 절차를 설명합니다.
+2026년 10월 25일 기준으로 이 저장소는 카탈로그 최신화에 [Aside](https://aside.com/)와 같은 에이전트형 웹 브라우저를 활용하는 절차를 권장합니다. 브라우저와 AI로 공식 안내 페이지를 확인하고 기존 카탈로그와 비교하여 변경안을 작성합니다.
 
-## 전체 흐름
+이 문서는 조사 범위 지정, 공식 출처 수집, XML 변경안 작성, 검증과 PR 검토를 다룹니다.
 
-```text
-[1] probe   (자동, 헤드리스)       →   report.json + 스크린샷
-        │
-        ▼
-[2] triage  (대화형, 사람 판정)    →   triage.json (사람 verdict 포함)
-        │
-        ▼
-[3] issue   (gh CLI 자동화)        →   GitHub 이슈 등록 (verdict별 1건씩)
-        │
-        ▼
-[4] AI 어시스트 (Claude Code 등)   →   Catalog.xml / sites.xml 패치 후보
-        │
-        ▼
-[5] 본인 검토 + commit/PR (이슈 닫기)
-        │
-        ▼
-[6] 변경분 재검증 (probe --only)   →   다음 라운드까지 stale 제거
-```
+브라우저에 전달할 작업과 요청 예시부터 설명한 뒤 변경안을 검증하는 방법을 정리하겠습니다. 기존 헬스 체크와 품질 리포트는 필요할 때 사용하는 보조 도구로 안내합니다.
 
-자동화는 **검출(detect)**까지만 — "이 사이트가 정상이다"의 최종 판정은 사람이 합니다. 휴리스틱은 우선순위를 매기는 도구이지 판결문이 아닙니다.
+## 1. 에이전트형 브라우저를 활용한 공식 페이지 조사
 
-## 1. probe — 자동 헬스 체크
+조사 도구와 작업 범위를 살펴보겠습니다. Aside는 웹 탐색과 파일 작업을 함께 수행할 수 있는 도구의 예시이며 사용법은 [공식 작업 안내](https://docs.aside.com/help/tasks)에서 확인할 수 있습니다. 같은 작업을 수행할 수 있는 다른 에이전트형 브라우저도 활용할 수 있습니다.
 
-```bash
-dotnet run --file src/checksites.cs -- probe ./docs/ ./health-report/
-```
+작업을 시작할 때 [Catalog.xml](Catalog.xml)의 대상 `Service Id`와 확인할 항목을 지정합니다. 제보가 들어온 서비스나 주소가 오래된 항목처럼 범위를 좁히면 조사 결과와 변경안을 대조하기 쉽습니다.
 
-각 카탈로그 항목에 대해 Microsoft Edge(헤드리스, Windows x64로 가장)로 접속을 시도하고 다음을 캡처합니다. 식탁보가 실제로 동작하는 Edge IE Mode 환경과 일치시키기 위해 User-Agent, Client Hints 헤더(`sec-ch-ua-*`), `navigator.platform`, `navigator.userAgentData`를 모두 Windows Edge 값으로 설정합니다.
+- 서비스 주소와 명칭
+- 공식 보안 프로그램 설치 안내 페이지
+- 프로그램 이름, 직접 설치 파일 URL, 대상 아키텍처
+- 공식 안내에서 확인할 수 있는 설치 인수와 호환성 설명
+- 기관 통폐합이나 서비스 종료에 관한 공식 공지
 
-- 최종 URL (리다이렉트 후), HTTP status, 페이지 타이틀, 에러
-- 뷰포트 스크린샷 (1280×800)
+브라우저 조사로 확인한 내용과 실제 설치 시험 결과를 구분하여 기록합니다.
 
-결과는 `health-report/<UTC-timestamp>/`에 저장됩니다.
+## 2. 범위와 산출물을 지정하는 요청 예시
+
+브라우저에 전달할 요청을 구체화하겠습니다. 대상 XML 항목을 붙여 넣거나 파일 접근 기능이 있는 도구에 [Catalog.xml](Catalog.xml)을 지정하면 현재 값과 조사 결과를 비교할 수 있습니다.
+
+다음 예시에서 서비스 ID와 항목 내용을 이번 조사 대상에 맞게 바꿉니다.
 
 ```text
-health-report/2026-05-06T010203Z/
-├── report.json          # 머신리더블 결과 (probe 단계)
-├── report.md            # 사람이 읽기 쉬운 요약
-└── screenshots/
-    ├── WooriBank.png
-    └── ...
+식탁보 카탈로그의 WooriBank, NHInternetBank 항목을 최신화하기 위한 조사를 수행해주십시오.
+현재 docs/Catalog.xml의 해당 Service 항목과 공식 홈페이지의 공개 설치 안내를 비교해주십시오.
+
+1. 공식 홈페이지에서 보안 프로그램 설치 안내를 찾아 메뉴와 다운로드 버튼을 확인해주십시오.
+2. 프로그램 이름, 직접 설치 파일 URL, 대상 아키텍처와 공식 안내에 있는 설치 인수를 수집해주십시오.
+3. 항목별로 기존 값, 확인한 값, 공식 출처 URL, 확인일을 정리해주십시오.
+4. 설치 안내 페이지 URL과 실제 설치 파일 URL을 구분해주십시오.
+5. 확인하지 못한 값은 추정하지 말고 미확인으로 표시해주십시오.
+6. 공개적으로 접근할 수 있는 정보만 사용하고 접근 차단이나 로그인 요구가 있으면 그 사실을 기록해주십시오.
+7. 확인한 변경만 반영하는 XML 변경안을 작성하고 항목 삭제, Id 변경, 통폐합 판단은 검토 대상으로 표시해주십시오.
+8. 접속 확인, 파일 취득 확인, 실제 설치 시험을 수행했는지 각각 기록해주십시오.
+
+결과에는 변경 요약, XML 변경안, 출처와 확인일, 미확인 항목을 포함해주십시오.
 ```
 
-### 분류 (3-tier)
+파일을 편집할 수 없는 브라우저에서는 조사 결과와 XML 변경안을 받아 편집기에서 반영할 수 있습니다. 별도 이슈 생성이나 `probe → triage → issue` 실행 없이 이 조사에서 바로 PR 작성으로 이어갈 수 있습니다.
 
-| Tier | 의미 | 트리거 (strong signals) |
-|------|------|--------|
-| `AutoOk` | 자동으로 정상 추정 | strong signal 없음 |
-| `NeedsReview` | 사람 검토 필요 | 4xx/5xx, 도메인 변경 redirect, 종료 키워드(`서비스 종료`, `통합되었습니다`, `이전되었습니다` 등), timeout/SSL/connection-reset 등 |
-| `AutoDead` | 사망 추정 | DNS 실패, connection refused |
+## 3. 출처를 남기는 XML 변경안
 
-타이틀이 비어있는 것(`empty-title`)은 weak signal로 기록만 되며 단독으론 NeedsReview를 트리거하지 않습니다 — 한국 공공/금융 사이트는 JS 렌더링이 끝난 뒤에 타이틀을 채우는 경우가 많아 false positive가 너무 많기 때문입니다. (probe는 빈 타이틀일 때 1.5초 대기 후 재조회로 자동 보정합니다.)
+이어서 조사 결과를 카탈로그 필드에 연결하겠습니다. [기여 안내](../CONTRIBUTING.md)의 출처 메타데이터와 [데이터 접근 원칙](DATA_BOUNDARY.md)을 기준으로 변경안을 작성합니다.
 
-`AutoOk`도 "사람이 봐도 정상"이 아니라 "자동 검사로 의심점이 없음"입니다. 의심되면 `triage --all`로 전수 검토 가능.
+`Service.Url`에는 서비스 접속 주소를 기록합니다. `Package.Url`에는 공개 설치 안내에서 확인한 직접 설치 파일 주소를 기록합니다. 공식 안내가 공급사 CDN으로 연결되면 안내 페이지를 근거로 함께 남깁니다. 설치 안내 페이지 자체를 직접 설치 파일 주소로 대입하지 않습니다.
 
-### 자주 쓰는 옵션
+PR 본문에 공식 출처 URL과 확인일을 남깁니다. XML에 함께 기록할 때에는 선택 속성인 `SourceUrl`, `VerifiedOn`, `VerifiedBy`를 사용할 수 있습니다. `VerifiedOn`에는 `YYYY-MM-DD` 형식으로 실제 확인일을 적습니다. URL 접속만 확인했다면 설치 성공으로 기록하지 않습니다.
+
+설치 인수는 공식 안내나 별도 시험으로 확인한 범위에서 반영합니다. 추정한 값은 변경안에서 제외하고 미확인 사유를 남깁니다. 항목 삭제, `Id` 변경, 기관 통폐합은 근거와 처리 방향을 PR 검토자가 판단할 수 있도록 설명합니다.
+
+접근을 차단하거나 로그인을 요구하는 배포 경로는 [데이터 접근 원칙](DATA_BOUNDARY.md)에 따라 처리합니다. AI가 찾은 주소도 같은 기준으로 검토합니다.
+
+## 4. 검증 결과를 포함하는 PR
+
+검증 단계에서는 XML 구조와 실제 동작의 확인 범위를 짚어보겠습니다. [카탈로그 빌더](../src/catalogutil.cs)는 스키마 검증, URL 접속성 점검, 출력 리소스 생성을 수행합니다.
+
+리포지터리 루트에서 다음 명령으로 빌더를 실행합니다. .NET 10 SDK를 사용합니다.
 
 ```bash
-# 일부만 재검증 (예: 방금 수정한 항목만)
-dotnet run --file src/checksites.cs -- probe ./docs/ ./health-report/ --only WooriBank,KookminBank
-
-# 동시성/타임아웃 조정
-dotnet run --file src/checksites.cs -- probe ./docs/ ./health-report/ --concurrency 8 --timeout-ms 45000
+dotnet run --file src/catalogutil.cs -- ./docs/ ./outputs/
 ```
 
-## 2. triage — 대화형 사람 판정
+PR을 제출할 때 다음 순서로 변경안과 근거를 점검합니다.
+
+1. 변경한 서비스 ID와 각 변경의 공식 출처 URL 및 확인일을 PR 본문에 적습니다.
+2. 빌더의 오류와 경고를 검토하고 해결하지 못한 항목과 사유를 적습니다.
+3. 로고를 추가하거나 변경했다면 [이미지 검증 도구](../src/checkimages.cs)로 누락과 미사용 이미지를 점검합니다.
+4. 패키지 URL이나 설치 인수를 변경했다면 Windows Sandbox에서 설치 동작을 시험하고 수행 범위와 결과를 적습니다. 시험하지 못한 경우에는 미검증으로 표시합니다.
+5. XML diff와 미확인 항목을 검토한 뒤 PR을 제출합니다.
+
+빌더의 URL 접속 결과는 파일 내용이나 무인 설치 성공을 보증하지 않습니다. 기존의 [갱신 방침](CATALOG_POLICY.md)에 따라 사람이 근거와 검증 결과를 검토하여 반영합니다.
+
+## 5. 필요할 때 사용하는 기존 점검 도구
+
+여러 사이트의 접속 상태를 한꺼번에 확인할 때에는 [checksites.cs](../src/checksites.cs)를 보조 도구로 사용할 수 있습니다. `probe`는 Edge 헤드리스 접속 결과와 스크린샷을 수집하고 `triage`는 사람의 판정을 저장합니다. `issue`는 그 판정에 따라 후속 이슈를 등록합니다.
+
+다음 명령은 지정한 서비스만 점검합니다. 전체 명령과 옵션은 [도구 소스](../src/checksites.cs)에서 확인할 수 있습니다.
 
 ```bash
-dotnet run --file src/checksites.cs -- triage ./health-report/2026-05-06T010203Z/
+dotnet run --file src/checksites.cs -- probe ./docs/ ./health-report/ --only WooriBank,NHInternetBank
 ```
 
-`NeedsReview` 항목을 한 건씩 보여주며, 자동으로 시스템 브라우저에 라이브 URL을 띄워 직접 클릭 확인할 수 있게 해줍니다. 본인의 쿠키·인증서·확장 프로그램이 그대로 사용되므로 한국 공공/금융 사이트의 인증 흐름까지 검증할 수 있습니다.
+`AutoOk`, `NeedsReview`, `AutoDead`는 검토 우선순위를 정하는 자동 분류입니다. `AutoOk`만으로 설치 파일의 최신성이나 Windows Sandbox에서의 동작을 판정하지 않습니다. Edge 접속 결과와 IE Mode 동작도 구분합니다.
 
-각 항목마다 verdict를 입력합니다:
+이미지와 스키마 문제를 모아서 관리하거나 금융기관 통폐합 조사 대상을 추출할 때에는 [품질 리포트 참고 절차](CATALOG_QUALITY_WORKFLOW.md)를 사용할 수 있습니다. 해당 워크플로의 주간 일정은 현재 비활성화되어 있으며 수동 실행을 지원합니다.
 
-| 키 | 의미 | 추가 입력 |
-|----|------|----------|
-| `o` | healthy — 사이트 정상 | (메모만) |
-| `d` | dead — 사이트 폐쇄 | (메모만) |
-| `c` | url-changed — URL이 바뀜 | 새 URL + 메모 |
-| `m` | merged-or-renamed — 기관 통폐합/명칭변경 | 후속 기관 Id(선택) + 메모 |
-| `u` | unsure — 추가 조사 필요 | (메모) |
-| `s` | skip — 이번엔 건너뜀 | (저장 안 함, 다음 실행 시 재출현) |
-| `q` | quit — 즉시 종료 (지금까지 저장은 보존) | — |
+## 6. 근거와 검토를 통한 최신화
 
-verdict는 입력 즉시 `triage.json`에 저장되어 도중에 끊어도 다음 실행 시 이어서 진행됩니다.
+여기까지 정리하면 에이전트형 브라우저로 공식 페이지를 조사하고 근거가 있는 변경을 XML에 반영하는 절차를 기본으로 사용합니다. 갱신 주기와 반영 시한은 [카탈로그 갱신 방침](CATALOG_POLICY.md)에 따라 별도로 약속하지 않습니다.
 
-### triage 옵션
-
-```bash
-# AutoOk까지 모두 전수 검토
-dotnet run --file src/checksites.cs -- triage <report-dir> --all
-
-# 시스템 브라우저 자동 오픈 비활성화 (URL만 출력)
-dotnet run --file src/checksites.cs -- triage <report-dir> --no-browser
-```
-
-## 3. issue — GitHub 이슈 자동 등록
-
-triage 결과에서 후속 작업이 필요한 verdict들을 GitHub 이슈로 자동 등록합니다. `gh` CLI가 설치·로그인되어 있어야 합니다.
-
-```bash
-dotnet run --file src/checksites.cs -- issue ./health-report/2026-05-06T010203Z/
-```
-
-이슈가 생성되는 verdict:
-
-- `dead` — 사이트 폐쇄 의심
-- `merged-or-renamed` — 기관 통폐합/명칭변경 의심
-- `unsure` — 추가 조사 필요
-- `url-changed` — **도메인이 변경된 경우만** (같은 도메인 내 URL 변경은 단순 PR로 충분하므로 이슈를 만들지 않습니다)
-
-`healthy`나 verdict가 없는 항목은 이슈가 만들어지지 않습니다.
-
-이슈 본문은 자기완결적입니다 — 카탈로그 항목 메타정보, 사람 verdict + 메모, 권장 조치, ProbedAt/스크린샷 경로 등 후속 처리에 필요한 모든 컨텍스트가 포함되어 PR 작성 시 따로 설명을 짜낼 필요가 없습니다.
-
-이슈 등록 결과(`IssueUrl`)는 `triage.json`의 해당 verdict에 다시 저장되므로, **여러 번 실행해도 같은 항목을 중복 등록하지 않습니다**.
-
-### issue 옵션
-
-```bash
-# 미리보기 (실제 이슈 안 만듦, 본문/타이틀만 출력)
-dotnet run --file src/checksites.cs -- issue <report-dir> --dry-run
-
-# 다른 리포에 등록
-dotnet run --file src/checksites.cs -- issue <report-dir> --repo yourtablecloth/TableClothCatalog
-
-# 라벨 부여 (라벨이 리포에 미리 존재해야 함)
-dotnet run --file src/checksites.cs -- issue <report-dir> --label site-health
-```
-
-## 4. AI 어시스트 — Claude Code와 카탈로그 갱신
-
-issue까지 끝나면 `triage.json`이 사람 verdict + 등록된 이슈 URL을 포함한 자기완결 입력이 됩니다. Claude Code에 다음을 전달하세요.
-
-### 진입 프롬프트 (복사해서 사용)
-
-```text
-triage.json 경로: <여기에 본인 경로 채우기>
-
-이 파일을 읽고 verdict별로 다음 규칙대로 처리해줘.
-
-verdict별 처리 규칙:
-- url-changed:
-  - newUrl과 originalUrl이 같은 등록 가능 도메인(eTLD+1)에 속하면 docs/Catalog.xml(또는 sites.xml)의 해당 항목 Url 속성을 newUrl로 자동 패치.
-  - 도메인이 다르면 자동 적용하지 말고 먼저 보고 → 본인 승인 후 적용.
-- merged-or-renamed:
-  - 기관 조사 결과(공식 발표·뉴스 출처 URL 포함)를 보고 → 처리 방향(URL 교체/항목 삭제/항목 분할/새 항목 추가) 제안 → 본인 승인 후 적용.
-- dead:
-  - 항목 삭제 후보로 보고. 자동 삭제 금지. 삭제 결정 시 commit 메시지에 사유 명시.
-- unsure:
-  - 추가로 확인이 필요한 정보(예: 정확한 후속 도메인, 인수합병 시점)를 정리해 알려줘.
-- healthy / pending(verdict 없음):
-  - 건드리지 않음.
-
-작업 단위로 commit 분리:
-  (1) 단순 URL 갱신 (같은 도메인)
-  (2) 기관 변경/통폐합
-  (3) 삭제
-
-각 항목에 IssueUrl이 있으면 commit/PR 메시지에 `Closes <IssueUrl>` 형식으로 언급해 자동으로 이슈가 닫히게 해줘.
-
-편집 후:
-  1. dotnet run --file src/catalogutil.cs -- ./docs/ ./outputs/ 로 스키마 검증 통과 확인
-  2. 변경된 Service Id 목록을 모아 다음을 실행:
-     dotnet run --file src/checksites.cs -- probe ./docs/ ./health-report/ --only <id1,id2,...>
-  3. 새 report에서 Tier가 NeedsReview/AutoDead로 떨어지지 않는지 확인 후 보고.
-```
-
-### 자동 vs 확인-먼저 경계선
-
-| 작업 | 자동 패치 | 본인 승인 필요 |
-|------|:---:|:---:|
-| `Url=` 한 속성 변경 (같은 도메인) | ✓ | |
-| 도메인이 바뀌는 URL 교체 | | ✓ |
-| `Service` 항목 삭제 | | ✓ |
-| `Service Id` 변경 | | ✓ |
-| 새 항목 추가 / 항목 분할 | | ✓ |
-| `Packages`·`CompatNotes` 등 부속 필드 수정 | | ✓ |
-
-규칙: **diff가 한 줄이고 의미가 보존되는 변경**만 자동, 그 외는 보고 후 결정.
-
-## 5. 대화 위생
-
-- **triage 한 번 = 대화 한 번**이 이상적. 여러 라운드를 한 대화에 끌고 가면 stale verdict가 컨텍스트에 쌓입니다.
-- 시작할 때 triage.json의 절대 경로와 이번 작업 범위(`url-changed만`, `m verdict만 같이 검토` 등)를 한 줄로 명시.
-- 큰 변경은 commit 단위로 끊어서 — 되돌리기 쉬워집니다.
-
-## 6. 재검증 루프
-
-편집을 마친 뒤 변경된 항목만 재-probe해서 상태가 회복되었는지 확인합니다.
-
-```bash
-dotnet run --file src/checksites.cs -- probe ./docs/ ./health-report/ --only WooriBank,KookminBank
-```
-
-새 report의 Tier가 모두 `AutoOk`이면 라운드 종료. 여전히 `NeedsReview`/`AutoDead`로 떨어지면 다시 triage로.
-
-## triage.json 스키마 (참고)
-
-```jsonc
-{
-  "SchemaVersion": 1,
-  "CatalogRoot": "/abs/path/to/docs/",
-  "ProbedAt": "2026-05-06T01:02:03Z",
-  "UpdatedAt": "2026-05-06T01:30:00Z",
-  "Entries": [
-    {
-      "Probe": {
-        "Id": "WooriBank",
-        "DisplayName": "우리은행 개인뱅킹",
-        "Category": "Banking",
-        "Source": "Catalog.xml",
-        "Url": "https://www.wooribank.com/",
-        "FinalUrl": "https://www.wooribank.com/",
-        "HttpStatus": 200,
-        "Title": "우리은행",
-        "Error": null,
-        "ScreenshotPath": "screenshots/WooriBank.png",
-        "Tier": "AutoOk",
-        "Signals": [],
-        "ProbedAt": "2026-05-06T01:02:03Z"
-      },
-      "Verdict": {
-        "Kind": "healthy",        // healthy | dead | url-changed | merged-or-renamed | unsure
-        "NewUrl": null,           // url-changed일 때 채워짐
-        "SuccessorId": null,      // merged-or-renamed일 때 선택적
-        "Notes": null,
-        "VerdictAt": "2026-05-06T01:30:00Z",
-        "IssueUrl": null          // issue 단계 후 채워짐 (멱등성에 사용)
-      }
-    }
-  ]
-}
-```
-
-`Verdict`가 `null`이면 아직 사람 판정이 없는 항목입니다. AI는 verdict가 채워진 항목만 처리해야 합니다.
+제보나 URL 변경을 처리할 때에는 대상 항목부터 브라우저로 조사할 수 있습니다. 다수 항목의 상태를 추적할 때에는 기존 검사 도구와 리포트를 함께 활용할 수 있습니다. 당장 확인한 변경은 검증 결과와 함께 제출하고 장기 조사가 필요한 항목은 미확인 사유와 출처를 남겨 후속 검토로 이어갑니다.
