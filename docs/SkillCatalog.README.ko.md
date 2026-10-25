@@ -2,7 +2,7 @@
 
 [English](SkillCatalog.README.md)
 
-2026년 10월 25일 기준으로 [SkillCatalog.xml](SkillCatalog.xml)은 스킬 7개를 활성 항목으로 제공합니다. 초기 목록에서 보류한 후보 5개와 `SKILL.md`가 없는 MCP 후보 2개는 XML 주석으로 보존합니다.
+2026년 10월 25일 기준으로 [SkillCatalog.xml](SkillCatalog.xml)은 스킬 8개를 활성 항목으로 제공합니다. 초기 목록에서 보류한 후보 5개와 `SKILL.md`가 없는 MCP 후보 2개는 XML 주석으로 보존합니다.
 
 이 문서는 항목 추가와 제거, 고정 버전 갱신, 실행 선행 조건, 라이선스 및 게시 전 검증을 다룹니다. 활성 `Skill` 요소는 별도 검토 상태 없이 설치 대상으로 표시합니다.
 
@@ -31,6 +31,8 @@
 설치 관리자는 스킬 파일을 복사하고 같은 커밋의 라이선스를 `LICENSE.upstream`으로 보존합니다. 런타임, MCP 서버 등록과 API 키는 별도로 설정합니다. `Network`는 스킬 실행 시 네트워크 의존성을 나타내며 원격 설치에는 항상 다운로드를 사용합니다.
 
 [공동인증서 만료 스킬](https://github.com/yourtablecloth/tablecloth-certificate-expiry)과 [Windows Sandbox 스킬](https://github.com/yourtablecloth/tablecloth-windows-sandbox)은 별도 저장소에서 배포하며 기본 구성에는 포함하지 않습니다. 추가 API 키 없이 식탁보 호스트가 제공한 로컬 보고서를 해석합니다. 인증서 조회는 사용자 동의를 받은 건수 요약으로 제한하며 Sandbox 작업은 호환되는 Windows 환경과 식탁보 호스트 브리지를 요구합니다. 원본 AGPL과 별도 상용 라이선스 문의 안내를 보존합니다.
+
+[금융 및 생활 계산기](https://github.com/yourtablecloth/tablecloth-calculators)는 Python 3.11 이상과 표준 라이브러리만 사용합니다. 계산 스크립트는 사용자 입력값을 사용하며 API 키, 외부 데이터 조회와 추가 패키지 다운로드를 요구하지 않습니다. 설치한 스킬의 Python 스크립트 실행을 허용하는 호스트가 필요하며 이전 식탁보 빌드에 런타임만 설치해도 실행 권한을 추가하지는 않습니다. `Network="none"`은 계산 스크립트의 조건을 나타내며 Codex 대화는 기존 온라인 연결을 사용합니다. 원본 저장소의 [저작권 준수 기준](https://github.com/yourtablecloth/tablecloth-calculators/blob/main/docs/COPYRIGHT.ko.md)에서 독립 구현, 출처 기록과 기여 범위를 설명합니다.
 
 [법령 스킬](https://github.com/chrisryugj/korean-law-mcp/blob/4ccedb0dc89fce164493ffc9019b5ad35cb9b782/skills/korean-law/SKILL.md)은 파일 설치 후 별도 `korean-law` MCP 서버와 법제처 API 인증키를 사용합니다. [장부 스킬](https://github.com/kimlawtech/korean-jangbu-for/blob/592f6d7c7be138ae578be9ed6769239cc527ddea/skills/korean-jangbu-for/SKILL.md)도 진입점 외에 MCP 서버와 하위 스킬을 사용합니다. 각 항목의 `Notes`에서 실행 조건을 확인할 수 있습니다.
 
