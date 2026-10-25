@@ -10,6 +10,12 @@ As of October 25, 2026, [SkillCatalog.xml](SkillCatalog.xml) contains five activ
 
 Add an active `Skill` element with a stable ID, an existing upstream skill directory, a full commit SHA and a license URL pinned to that same repository and commit. `Install.Mode` is `upstream`. To remove a skill from the remote catalog, comment out its entire `Skill` element and record a short reason outside or inside that comment. Encode consecutive hyphens in element text as `&#45;&#45;` so the raw block can become a valid XML comment; XML readers preserve the original text. XML comments never become marketplace entries. A catalog removal leaves existing local installations available to manage and remove.
 
+## Deferral of new skills that receive credentials through environment variables
+
+New submissions of skills that receive user API keys, tokens or client secrets through environment variables are currently deferred. Secrets in environment variables risk plaintext exposure and child-process inheritance, and TableCloth has not yet implemented per-skill credential storage and delivery. Submissions will resume after the corresponding features in [TableCloth #321](https://github.com/yourtablecloth/TableCloth/issues/321) are implemented and verified. See the [contribution policy](../CONTRIBUTING.md).
+
+For functionality that works independently without a user key, specify the supported commands, output scope and additional dependencies separately from credential-dependent paths. New credential-delivery paths remain deferred even when an existing catalog entry also provides independently usable, keyless functionality. Do not suggest system or user environment variables, `.env` files or chat prompts as workarounds for the deferral. Never include real keys, tokens or client secrets in code, catalog entries, documentation or pull requests; use nonsecret placeholders in examples.
+
 ## Pinned versions and updates
 
 Keep `Id`, `Source.Repository` and `Source.Path` unchanged when updating the same skill. Change `Source.Ref` to the new full commit SHA and change `License.Source` to the matching commit. The application compares the installed source commit with the current catalog commit to offer an update. A pinned Git commit does not pin packages downloaded later by upstream instructions. The NomaDamas skills currently load instructions through an `npx` CLI, so those packages have their own version behavior.
