@@ -40,7 +40,7 @@ dotnet run --file src/catalogutil.cs -- ./docs/ ./outputs/
 
 ## 스킬의 필수 실행 의존성과 등재 기준
 
-이 `poc/appcontainer-skill-evaluation` 분기에서만 BOK, KOSIS와 계산기의 고정 스크립트를 격리 평가 대상으로 추가합니다. 평가용 활성 항목 6개와 운영 호환 후보 3개를 구분하며 실행 결과는 [AppContainer 평가 보고서](docs/APP_CONTAINER_POC.ko.md)와 [영문 보고서](docs/APP_CONTAINER_POC.md)에 기록합니다. 이 예외는 MCP 연결이나 사용자 자격 증명 경로의 접수 재개를 포함하지 않습니다.
+`main` 공개 카탈로그는 실제 테스트를 위해 BOK, KOSIS와 계산기의 고정 스크립트를 격리 평가 대상으로 제공합니다. 활성 항목 6개 중 기존 운영 호환 후보 3개와 스크립트 평가 후보 3개를 구분하며 스크립트 후보를 운영 호환성 통과로 승격하지 않습니다. [앱 PR #322](https://github.com/yourtablecloth/TableCloth/pull/322)는 아직 반영하지 않았으므로 현재 제품 대화는 설치한 스크립트의 자동 실행을 지원하지 않습니다. 실행 결과는 [AppContainer 평가 보고서](docs/APP_CONTAINER_POC.ko.md)와 [영문 보고서](docs/APP_CONTAINER_POC.md)에 기록합니다. 이 예외는 MCP 연결이나 사용자 자격 증명 경로의 접수 재개를 포함하지 않습니다.
 
 스킬 등록과 고정 버전 갱신에는 [현재 호스트의 등재 기준과 검증 기록](docs/SKILL_ELIGIBILITY.ko.md), [English criteria and verification](docs/SKILL_ELIGIBILITY.md)을 적용합니다. 현재 식탁보 대화는 `shell_tool=false`와 `unified_exec=false`를 유지하며 설치한 Python과 Node 스크립트 실행이나 MCP 서버 자동 설정을 지원하지 않습니다. 스크립트가 없는 진입점도 별도 MCP나 하위 스킬이 필수이면 실행 의존성을 기록합니다. 런타임 설치, `SKILL.md` 존재와 모델의 답변만으로 기능 실행 성공을 표시하지 않습니다.
 

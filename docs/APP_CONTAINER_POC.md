@@ -4,13 +4,13 @@
 
 On October 25, 2026, the AppContainer proof of concept passed 46 of 46 broker, execution and policy checks on Windows build 26300 x64. A separate pinned Codex 0.156.1 run completed a calculator call through MCP and AppContainer using two deterministic loopback Responses replies. No real model inference or authentication participated.
 
-This report covers the pinned skill adaptations, contained execution, public-service samples, CLI routing and retained evidence. These outcomes apply to the evaluation branch; they do not promote the candidates to production compatibility.
+This report covers the pinned skill adaptations, contained execution, public-service samples, CLI routing and retained evidence. The public `main` catalog provides the three pinned script candidates for hands-on testing. These outcomes do not promote them to production compatibility.
 
-The branch and source boundary come first, followed by worker controls, measured results, Codex routing, evidence records and remaining qualification work.
+The publication and source boundary come first, followed by worker controls, measured results, Codex routing, evidence records and remaining qualification work.
 
-## Evaluation branch and pinned source boundary
+## Public evaluation catalog and pinned source boundary
 
-The `poc/appcontainer-skill-evaluation` catalog contains six active entries: the three existing production candidates and three script candidates enabled only for this experiment. Nine other blocks remain commented out. The corresponding TableCloth implementation uses `poc/appcontainer-skill-runner`. Production chat retains `shell_tool=false` and `unified_exec=false`; it does not automatically register this broker. The [catalog criteria](SKILL_ELIGIBILITY.md) and credential deferral in [TableCloth #321](https://github.com/yourtablecloth/TableCloth/issues/321) continue to apply.
+The public `main` catalog contains six active entries for hands-on testing: the three existing production candidates and three pinned script candidates for isolated evaluation. Nine other blocks remain commented out. Publishing the script candidates does not qualify them for production compatibility. The corresponding TableCloth implementation uses `poc/appcontainer-skill-runner` in [application PR #322](https://github.com/yourtablecloth/TableCloth/pull/322), which has not been integrated. The current product chat retains `shell_tool=false` and `unified_exec=false`; it does not automatically register this broker or execute installed scripts. The [catalog criteria](SKILL_ELIGIBILITY.md) and credential deferral in [TableCloth #321](https://github.com/yourtablecloth/TableCloth/issues/321) continue to apply.
 
 | Evaluated script | Pinned upstream commit | Execution adaptation |
 | --- | --- | --- |
@@ -66,6 +66,6 @@ The measured host reports Windows NT `10.0.26300.0`, x64. It staged Python 3.14.
 
 ## Current decision and remaining qualification
 
-The PoC establishes bounded script execution and deterministic CLI/MCP routing on the measured host. The [eligibility criteria](SKILL_ELIGIBILITY.md) continue to separate that evidence from production integration, live model behavior and broader platform qualification. All six active entries in this branch retain evaluation-only scope; MCP-dependent and credential-dependent deferred candidates remain inactive.
+The PoC establishes bounded script execution and deterministic CLI/MCP routing on the measured host. The [eligibility criteria](SKILL_ELIGIBILITY.md) continue to separate that evidence from production integration, live model behavior and broader platform qualification. The three pinned script candidates published in the public catalog retain evaluation-only scope; MCP-dependent and credential-dependent deferred candidates remain inactive.
 
 Production use still depends on reviewed application integration, network policy, cancellation and cleanup behavior, platform qualification and a separately authorized real-model test. The immediate result supports further evaluation of the three exact script pins. It does not activate a general shell or convert runtime installation into script support in the shipped chat.

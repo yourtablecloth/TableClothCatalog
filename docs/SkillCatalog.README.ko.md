@@ -2,7 +2,7 @@
 
 [English](SkillCatalog.README.md)
 
-2026년 10월 25일 기준으로 이 `poc/appcontainer-skill-evaluation` 분기의 [SkillCatalog.xml](SkillCatalog.xml)은 운영 후보 3개와 격리 평가용 고정 스크립트 후보 3개를 활성화해 총 6개를 제공합니다. 나머지 후보 9개는 XML 주석으로 보존합니다. 이 분기는 운영 카탈로그와 구분합니다. [AppContainer 평가 보고서](APP_CONTAINER_POC.ko.md)에서 격리 실행과 고정 응답을 사용한 CLI 연결 성공을 기록하며 실제 모델 선택과 운영 AI 대화의 통합은 미검증으로 유지합니다. 현재 대화는 설치한 Python과 Node 스크립트 실행이나 MCP 서버 자동 설정을 지원하지 않습니다. [등재 기준과 고정 원본 검증](SKILL_ELIGIBILITY.ko.md)에서 파일 설치, 스킬 발견과 실제 기능 실행을 구분합니다.
+2026년 10월 25일 기준으로 `main` 공개 카탈로그의 [SkillCatalog.xml](SkillCatalog.xml)은 실제 테스트를 위해 운영 후보 3개와 격리 평가용 고정 스크립트 후보 3개를 활성화해 총 6개를 제공합니다. 나머지 후보 9개는 XML 주석으로 보존합니다. 스크립트 후보의 공개가 운영 호환성 통과를 뜻하지는 않습니다. [앱 PR #322](https://github.com/yourtablecloth/TableCloth/pull/322)는 아직 반영하지 않았으므로 현재 제품 대화는 설치한 스크립트의 자동 실행이나 MCP 서버 자동 설정을 지원하지 않습니다. [AppContainer 평가 보고서](APP_CONTAINER_POC.ko.md)에서 격리 실행과 고정 응답을 사용한 CLI 연결 성공을 기록하며 실제 모델 선택과 운영 AI 대화의 통합은 미검증으로 유지합니다. [등재 기준과 고정 원본 검증](SKILL_ELIGIBILITY.ko.md)에서 파일 설치, 스킬 발견과 실제 기능 실행을 구분합니다.
 
 이 문서는 항목 추가와 제거, 고정 버전 갱신, 실행 선행 조건, 라이선스 및 게시 전 검증을 다룹니다. 활성 `Skill` 요소는 별도 검토 상태 없이 설치 대상으로 표시합니다.
 

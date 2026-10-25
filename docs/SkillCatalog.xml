@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SkillCatalog Version="1">
-  <!-- PoC BRANCH ONLY: six active entries include three script-evaluation candidates, not production compatibility approval. -->
+  <!-- PUBLIC MAIN EVALUATION: six active entries include three pinned script candidates for hands-on testing, not production compatibility approval. Application PR #322 is not integrated; product chat does not automatically execute installed scripts. -->
   <!-- Active Skill elements are installable. Comment out an entire Skill element to remove it from the catalog. -->
   <!-- Deferred from the initial catalog: a user DART API key is required.
   <Skill Id="k-dart" Category="Finance" DisplayName="전자공시 조회">

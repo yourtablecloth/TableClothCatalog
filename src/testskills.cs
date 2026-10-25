@@ -144,7 +144,7 @@ static XElement Fixture() => XElement.Parse("""
 
 static bool Accepts(XElement fixture, XmlSchemaSet schemas) => AcceptsXml(fixture.ToString(), schemas, out _);
 
-// This PoC branch additionally allows three pinned scripts for isolated evaluation only.
+// The public catalog additionally allows three pinned scripts for hands-on isolated evaluation.
 // Inclusion here does not qualify script execution for production TableCloth chat.
 static bool MatchesPocEvaluationSources(XElement catalog)
 {
