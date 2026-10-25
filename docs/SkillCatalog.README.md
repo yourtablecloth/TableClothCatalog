@@ -1,31 +1,35 @@
-# Remote skill catalog candidates
+# Remote skill catalog lifecycle
 
 [한국어](SkillCatalog.README.ko.md)
 
-## Candidate scope
+## Installable catalog entries
 
-As of October 25, 2026, [SkillCatalog.xml](SkillCatalog.xml) lists twelve community skill and MCP integration candidates. Every license review and installation review remains pending. Listing an entry does not enable installation or endorse its upstream service.
+As of October 25, 2026, [SkillCatalog.xml](SkillCatalog.xml) contains five active skill entries. Each active `Skill` element offers an upstream skill for installation. There are no listing or review states. The catalog retains seven other candidates as XML comments: five deferred from the initial catalog and two MCP candidates whose pinned repositories provide no `SKILL.md`.
 
-## Catalog location
+## Adding and removing a skill
 
-The catalog is published at `https://catalog.yourtablecloth.app/SkillCatalog.xml` after the repository's normal Pages deployment. [publish.yml](../.github/workflows/publish.yml) copies the complete `docs` directory through the catalog builder. The application reads this XML without checking out the repository.
+Add an active `Skill` element with a stable ID, an existing upstream skill directory, a full commit SHA and a license URL pinned to that same repository and commit. `Install.Mode` is `upstream`. To remove a skill from the remote catalog, comment out its entire `Skill` element and record a short reason outside or inside that comment. Encode consecutive hyphens in element text as `&#45;&#45;` so the raw block can become a valid XML comment; XML readers preserve the original text. XML comments never become marketplace entries. A catalog removal leaves existing local installations available to manage and remove.
 
-## Immutable upstream references
+## Deferral of new skills that receive credentials through environment variables
 
-Each `Source` records the public GitHub repository, a relative directory and a full commit SHA. `Path="."` denotes the repository root for MCP candidates without a skill directory. A pinned Git commit does not pin packages subsequently downloaded by an upstream instruction. The NomaDamas candidates currently load instructions through an `npx` CLI; package pinning and runtime review remain open.
+New submissions of skills that receive user API keys, tokens or client secrets through environment variables are currently deferred. Secrets in environment variables risk plaintext exposure and child-process inheritance, and TableCloth has not yet implemented per-skill credential storage and delivery. Submissions will resume after the corresponding features in [TableCloth #321](https://github.com/yourtablecloth/TableCloth/issues/321) are implemented and verified. See the [contribution policy](../CONTRIBUTING.md).
 
-Directory segments can contain internal dots, such as `skills/example.v1`, but cannot end with a dot. The single root marker `.` remains valid. This prevents publishing paths that the marketplace client rejects.
+For functionality that works independently without a user key, specify the supported commands, output scope and additional dependencies separately from credential-dependent paths. New credential-delivery paths remain deferred even when an existing catalog entry also provides independently usable, keyless functionality. Do not suggest system or user environment variables, `.env` files or chat prompts as workarounds for the deferral. Never include real keys, tokens or client secrets in code, catalog entries, documentation or pull requests; use nonsecret placeholders in examples.
 
-## Independent review states
+## Pinned versions and updates
 
-`Status` accepts `listed` or `unlisted`. `License.ReviewStatus` accepts `pending`, `verified` or `rejected`. `Install.ReviewStatus` accepts `pending`, `approved` or `rejected`. Installation requires `listed`, a verified license, an approved installation review, `Mode="upstream"`, `Runtime="Codex"`, an immutable source ref and a license source pinned to the same repository and commit. The installer preserves that file as `LICENSE.upstream`. Other entries remain visible for review. `Mode="adapter"` records integration work; it does not install or configure an MCP server.
+Keep `Id`, `Source.Repository` and `Source.Path` unchanged when updating the same skill. Change `Source.Ref` to the new full commit SHA and change `License.Source` to the matching commit. The application compares the installed source commit with the current catalog commit to offer an update. A pinned Git commit does not pin packages downloaded later by upstream instructions. The NomaDamas skills currently load instructions through an `npx` CLI, so those packages have their own version behavior.
 
-## Upstream license evidence
+## Skill files and execution prerequisites
 
-The license identifiers come from the pinned source files: [NomaDamas MIT](https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/LICENSE), [jjlabsio ISC](https://github.com/jjlabsio/korea-stock-mcp/blob/210595eec73a39cd04e2fb175f6e69b1516f0dd4/LICENSE), [kimlawtech Apache-2.0](https://github.com/kimlawtech/korean-jangbu-for/blob/592f6d7c7be138ae578be9ed6769239cc527ddea/LICENSE), [chrisryugj MIT](https://github.com/chrisryugj/korean-law-mcp/blob/4ccedb0dc89fce164493ffc9019b5ad35cb9b782/LICENSE), [mouseco MIT](https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/LICENSE) and [tae0y MIT](https://github.com/tae0y/real-estate-mcp/blob/1119eb1069d1b1bae15f7b38c6c0268fe07995c0/LICENSE). The four mouseco candidates are identified as original contributions in the pinned [attribution notes](https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/docs/attribution.md). Their API data and referenced tools retain separate terms. These observations do not complete redistribution, security or compatibility review.
+Installing a skill copies its files and preserves the pinned license as `LICENSE.upstream`. It does not install runtimes, register MCP servers or configure API keys. The [Korean law skill](https://github.com/chrisryugj/korean-law-mcp/blob/4ccedb0dc89fce164493ffc9019b5ad35cb9b782/skills/korean-law/SKILL.md) is installable as a skill file and requires a separately configured `korean-law` MCP server. The [jangbu entry](https://github.com/kimlawtech/korean-jangbu-for/blob/592f6d7c7be138ae578be9ed6769239cc527ddea/skills/korean-jangbu-for/SKILL.md) also depends on a separate MCP server and sibling skills. Each entry's `Notes` lists the relevant prerequisites. `Network` describes execution; remote installation always downloads files.
 
-## Validation and qualification
+## License and source boundaries
 
-[SkillCatalog.xsd](SkillCatalog.xsd) validates the metadata, review values and unique IDs. Run `dotnet run --file src/checkskills.cs -- docs/SkillCatalog.xml docs/SkillCatalog.xsd` from the repository root. The Pages workflow runs the same check before publishing. Installation review also covers the complete file set and license notices, helper paths, package versions, compatibility with TableCloth's dedicated Codex environment, API keys and document access. Executing skills inside Windows Sandbox would require separate implementation and qualification. The catalog stores no credentials and runs no upstream code. `Network` describes skill execution; installing any remote skill still requires a download. The initial catalog intentionally offers no installable entries.
+The pinned licenses identify [NomaDamas MIT](https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/LICENSE), [kimlawtech Apache-2.0](https://github.com/kimlawtech/korean-jangbu-for/blob/592f6d7c7be138ae578be9ed6769239cc527ddea/LICENSE), [chrisryugj MIT](https://github.com/chrisryugj/korean-law-mcp/blob/4ccedb0dc89fce164493ffc9019b5ad35cb9b782/LICENSE) and [mouseco MIT](https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/LICENSE). All four mouseco candidates have original-contribution records in the pinned [attribution notes](https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/docs/attribution.md). API response data and referenced tools retain their own terms. The catalog stores no credentials and executes no upstream code.
 
-Run `dotnet run --file src/testskills.cs -- docs/SkillCatalog.xsd` to check path regressions against the actual schema. The [PR workflow](../.github/workflows/skill-catalog.yml) runs this check alongside catalog validation.
+## Validation and publication
+
+[SkillCatalog.xsd](SkillCatalog.xsd) requires immutable references and license sources, limits the catalog to 256 active entries and rejects review attributes. [checkskills.cs](../src/checkskills.cs) also limits the XML to 512 KiB, checks source paths and requires each license URL to match the source repository and commit. Directory segments may contain internal dots but cannot end with a dot; the root marker `.` remains valid. The application separately bounds downloads, rejects symlinks, submodules and nested `SKILL.md` files, and verifies Git blob identities before installation.
+
+Run `dotnet run --file src/checkskills.cs -- docs/SkillCatalog.xml docs/SkillCatalog.xsd` and `dotnet run --file src/testskills.cs -- docs/SkillCatalog.xsd` from the repository root. The [PR workflow](../.github/workflows/skill-catalog.yml) and [Pages workflow](../.github/workflows/publish.yml) run both checks. The existing catalog builder copies `docs` to the Pages output, publishing the XML at `https://catalog.yourtablecloth.app/SkillCatalog.xml` without requiring a client-side Git checkout.
