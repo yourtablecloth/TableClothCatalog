@@ -26,7 +26,7 @@
 
 - [docs/Catalog.xml](docs/Catalog.xml): 각 기관, 서비스 웹 사이트마다 필요로 하는 추가 소프트웨어들의 목록을 저장하고 관리하는 XML 파일입니다.
   - XML 파일 편집은 [Microsoft XML Notepad](https://microsoft.github.io/XmlNotepad/)를 사용하시는 것을 권장합니다.
-- [docs/SkillCatalog.xml](docs/SkillCatalog.xml): 설치할 수 있는 원격 스킬과 고정 원본을 관리합니다. 항목 추가, 주석을 통한 제거 및 버전 갱신 방식은 [원격 스킬 카탈로그 안내](docs/SkillCatalog.README.ko.md)를 참고하실 수 있습니다.
+- [docs/SkillCatalog.xml](docs/SkillCatalog.xml): 원격 스킬과 고정 원본을 관리합니다. `main` 공개 카탈로그는 실제 테스트를 위해 운영 후보 3개와 고정 스크립트 평가 후보 3개를 제공합니다. 스크립트 후보를 운영 호환성 통과로 승격하지 않습니다. [앱 PR #322](https://github.com/yourtablecloth/TableCloth/pull/322)는 아직 반영하지 않았으므로 현재 제품 대화는 설치한 스크립트의 자동 실행을 지원하지 않습니다. [AppContainer 평가 결과](docs/APP_CONTAINER_POC.ko.md), [English evaluation report](docs/APP_CONTAINER_POC.md)에서 실측과 미검증 범위를 설명합니다. [등재 기준과 기존 활성 8개 검증 기록](docs/SKILL_ELIGIBILITY.ko.md), [English criteria and verification](docs/SKILL_ELIGIBILITY.md)에서 파일 설치와 실제 실행 범위를 구분합니다. 항목 추가, 주석을 통한 보류 및 버전 갱신 방식은 [원격 스킬 카탈로그 안내](docs/SkillCatalog.README.ko.md)에서 설명합니다.
 - [docs/sites.xml](docs/sites.xml): Internet Explorer Mode로 띄우려는 웹 사이트들의 목록을 저장하고 관리하는 XML 파일입니다. (식탁보 0.5.5 버전부터 사용)
   - XML 파일 편집은 [Microsoft XML Notepad](https://microsoft.github.io/XmlNotepad/)를 사용하시는 것을 권장합니다.
   - Microsoft Edge 그룹 정책에서 <https://yourtablecloth.app/TableClothCatalog/sites.xml> 주소를 직접 지정하여 설정을 적용할 수 있습니다.
