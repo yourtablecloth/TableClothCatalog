@@ -90,13 +90,35 @@ def filters(categories, count, placeholder, skills=False):
     <div class="empty-state" data-empty hidden><h2>검색 결과 없음</h2><p>다른 검색어나 카테고리로 탐색할 수 있습니다.</p><button type="button" class="button secondary" data-reset>전체 목록 보기</button></div>'''
 
 
-def service_card(service):
+SITE_ICON_ALIASES = {
+    "TMoney": ("Other", "Tmoney"),
+    "PayInfo": ("Other", "PayInfo"),
+    "Epost": ("Banking", "ePostBank"),
+}
+
+
+def site_icon_url(service, source):
+    category, identifier = SITE_ICON_ALIASES.get(
+        service.get("Id"), (service.get("Category", "Other"), service.get("Id", "")))
+    if not all(re.fullmatch(r"[A-Za-z0-9_-]+", value) for value in (category, identifier)):
+        return "/assets/tablecloth.svg"
+    for extension in ("svg", "png", "ico"):
+        relative = Path("images") / category / f"{identifier}.{extension}"
+        path = source / relative
+        if path.is_file() and not path.is_symlink():
+            return "/" + quote(relative.as_posix(), safe="/")
+    return "/assets/tablecloth.svg"
+
+
+def service_card(service, source):
     identifier = service.get("Id", "")
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", identifier) or ".." in identifier:
         raise ValueError(f"Unsafe service identifier: {identifier!r}")
     name = service.get("DisplayName", identifier)
     category = service.get("Category", "Other")
     english = service.get("en-US-DisplayName", "")
+    icon_url = site_icon_url(service, source)
+    icon_fallback = ' title="등록된 사이트 아이콘이 없어 기본 아이콘을 표시합니다."' if icon_url == "/assets/tablecloth.svg" else ""
     packages = service.findall("./Packages/Package")
     extensions = service.findall("./EdgeExtensions/EdgeExtension")
     has_http_package = any(package.get("Url", "").strip().lower().startswith("http:") for package in packages)
@@ -121,10 +143,12 @@ def service_card(service):
     bootstrap = '<p class="muted">추가 시작 스크립트를 사용하는 사이트입니다.</p>' if text(service, "CustomBootstrap") else ""
     return f'''<article class="catalog-card site-card" id="site-{escape(identifier)}" {search_attributes(service, category)}>
       <div class="card-top"><span class="tag">{escape(category_label(category))}</span><a class="permalink" href="#site-{escape(identifier)}" aria-label="{escape(name)} 항목 링크">#</a></div>
-      <h3>{link(service.get("Url"), name)}</h3><p class="english-name">{escape(english or identifier)}</p>
+      <div class="site-identity"><span class="site-icon"{icon_fallback}><img src="{escape(icon_url)}" alt="" width="56" height="56" loading="lazy" decoding="async"></span><div class="site-name"><h3>{link(service.get("Url"), name)}</h3><p class="english-name">{escape(english or identifier)}</p></div></div>
       {transport_warning}
+      <div class="site-card-footer">
       <div class="card-actions"><a class="button primary" href="/wsb/{escape(identifier)}.wsb" download="TableCloth-{escape(identifier)}.wsb">식탁보 시작하기</a>{link(service.get("Url"), "사이트 방문", "text-link")}</div>
-      {compatibility}<details class="package-details"><summary>설치 패키지 {len(packages)}개{f' 및 확장 {len(extensions)}개' if extensions else ''}</summary>{package_content}{extension_content}{bootstrap}</details>
+      <div class="site-compatibility-slot">{compatibility}</div><details class="package-details"><summary>설치 패키지 {len(packages)}개{f' 및 확장 {len(extensions)}개' if extensions else ''}</summary>{package_content}{extension_content}{bootstrap}</details>
+      </div>
     </article>'''
 
 
@@ -193,8 +217,8 @@ def contribute(skills=False):
     </section>'''
 
 
-def sites_page(services, companions, skill_count):
-    cards = "".join(service_card(item) for item in services)
+def sites_page(services, companions, skill_count, source):
+    cards = "".join(service_card(item, source) for item in services)
     companion_cards = "".join(companion_card(item) for item in companions)
     categories = [item.get("Category", "Other") for item in services] + (["Companions"] if companions else [])
     return f'''<section class="hero"><div class="hero-copy"><p class="eyebrow">TABLECLOTH CATALOG</p><h1>사이트와 도구를 위한<br>식탁보 카탈로그</h1><p class="hero-description">은행, 공공기관과 생활 서비스의 설치 정보를 찾고<br class="desktop-break"> 사이트별 실행 설정으로 식탁보를 시작할 수 있습니다.</p><div class="hero-links"><a class="button primary" href="#catalog">사이트 탐색</a><a class="button secondary" href="/skills/">스킬 마켓플레이스</a></div></div><div class="hero-stats" aria-label="카탈로그 현황"><div><strong>{len(services)}</strong><span>등록 사이트</span></div><div><strong>{len(companions)}</strong><span>보조 프로그램</span></div><div><strong>{skill_count}</strong><span>탐색 가능한 스킬</span></div></div></section>
@@ -205,7 +229,7 @@ def sites_page(services, companions, skill_count):
       <a class="text-link" href="{GUIDE}docs/WEB_CATALOG.ko.md#사이트별-wsb-실행-범위">실행 환경과 이용 안내</a>
     </section>
     <section id="catalog" class="catalog-section" aria-labelledby="catalog-heading"><div class="section-heading"><div><p class="eyebrow">BROWSE SITES</p><h2 id="catalog-heading">사이트 카탈로그</h2></div><a class="text-link" href="/Catalog.xml">원본 XML</a></div>{filters(categories, len(services) + len(companions), '서비스명, 영문명 또는 설치 패키지 검색')}
-    <section data-result-section aria-label="사이트 목록"><div class="catalog-grid">{cards}</div></section>
+    <section data-result-section aria-label="사이트 목록"><div class="catalog-grid site-grid">{cards}</div></section>
     <section class="companions-section" data-result-section aria-labelledby="companions-heading"><div class="section-heading"><div><p class="eyebrow">COMPANIONS</p><h2 id="companions-heading">함께 사용하는 보조 프로그램</h2><p>각 제공사의 다운로드 안내 페이지로 이동합니다.</p></div></div><div class="catalog-grid companions-grid">{companion_cards}</div></section></section>{contribute()}'''
 
 
@@ -244,9 +268,10 @@ def build(source, output):
     output.mkdir(parents=True, exist_ok=True)
     (output / "skills").mkdir(exist_ok=True)
     (output / "assets").mkdir(exist_ok=True)
-    (output / "index.html").write_text(render(template, sites_page(services, companions, len(entries))), encoding="utf-8", newline="\n")
+    (output / "index.html").write_text(render(template, sites_page(services, companions, len(entries), source)), encoding="utf-8", newline="\n")
     (output / "skills" / "index.html").write_text(render(template, skills_page(entries), True), encoding="utf-8", newline="\n")
     shutil.copytree(source / "assets", output / "assets", dirs_exist_ok=True)
+    shutil.copytree(source / "images", output / "images", dirs_exist_ok=True)
     print(f"Rendered {len(services)} sites, {len(companions)} companions and {len(entries)} skills to {output}")
 
 
