@@ -99,6 +99,13 @@ def service_card(service):
     english = service.get("en-US-DisplayName", "")
     packages = service.findall("./Packages/Package")
     extensions = service.findall("./EdgeExtensions/EdgeExtension")
+    has_http_package = any(package.get("Url", "").strip().lower().startswith("http:") for package in packages)
+    transport_warning = (
+        '<p class="skill-condition evaluation transport-warning"><strong>HTTPS 설치 주소 미확인</strong>'
+        'HTTP 설치 주소를 사용하는 패키지가 있어 WSB 자동 준비를 중단합니다. '
+        '사이트 방문과 설치 안내를 이용할 수 있습니다.</p>'
+        if has_http_package else ""
+    )
     package_rows = []
     for package in packages:
         args = package.get("Arguments", "")
@@ -115,6 +122,7 @@ def service_card(service):
     return f'''<article class="catalog-card site-card" id="site-{escape(identifier)}" {search_attributes(service, category)}>
       <div class="card-top"><span class="tag">{escape(category_label(category))}</span><a class="permalink" href="#site-{escape(identifier)}" aria-label="{escape(name)} 항목 링크">#</a></div>
       <h3>{link(service.get("Url"), name)}</h3><p class="english-name">{escape(english or identifier)}</p>
+      {transport_warning}
       <div class="card-actions"><a class="button primary" href="/wsb/{escape(identifier)}.wsb" download="TableCloth-{escape(identifier)}.wsb">WSB 다운로드</a>{link(service.get("Url"), "사이트 방문", "text-link")}</div>
       {compatibility}<details class="package-details"><summary>설치 패키지 {len(packages)}개{f' 및 확장 {len(extensions)}개' if extensions else ''}</summary>{package_content}{extension_content}{bootstrap}</details>
     </article>'''
