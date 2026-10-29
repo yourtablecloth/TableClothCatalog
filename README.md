@@ -10,6 +10,8 @@
 
 그 외에 식탁보 프로그램 자체에 대한 이슈 제보나 최신 버전 다운로드는 [이곳](https://github.com/yourtablecloth/TableCloth)을 참고해주세요.
 
+[통합 웹 카탈로그](https://catalog.yourtablecloth.app/)에서 사이트와 보조 프로그램을 탐색하고 [스킬 페이지](https://catalog.yourtablecloth.app/skills/)에서 스킬의 원본과 실행 조건을 확인할 수 있습니다. 사이트별 WSB 다운로드, 기여 절차와 정적 HTML 게시 구조는 [웹 카탈로그 운영 안내](docs/WEB_CATALOG.ko.md)와 [English guide](docs/WEB_CATALOG.md)에서 설명합니다.
+
 ## 카탈로그 피드백 전달 방법
 
 식탁보에서 접속할 수 있는 특정 웹 사이트와 관련된 문제는 다음 중 한 가지 방법을 통하여 제보 또는 기여를 부탁드립니다.

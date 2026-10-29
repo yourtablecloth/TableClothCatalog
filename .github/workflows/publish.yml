@@ -1,63 +1,102 @@
-name: Deploy Docs to GitHub Pages with Catalog Builder Tool
+name: Build and publish integrated catalog
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/**'
-      - 'docs/**'
-      - 'src/**'
+    branches: [main]
+    paths: ['.github/workflows/publish.yml', 'docs/**', 'src/**', 'tests/**']
+  pull_request:
+    paths: ['.github/workflows/publish.yml', 'docs/**', 'src/**', 'tests/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: catalog-pages-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Validate skill catalog
+        run: dotnet run --file src/checkskills.cs -- ./docs/SkillCatalog.xml ./docs/SkillCatalog.xsd
+      - name: Run skill catalog regression checks
+        run: dotnet run --file src/testskills.cs -- ./docs/SkillCatalog.xsd
+      - name: Build catalog data and image archive
+        run: dotnet run --file src/catalogutil.cs -- ./docs/ ./outputs/
+      - name: Generate standalone Windows Sandbox launchers
+        run: python src/buildwsb.py docs/Catalog.xml outputs/wsb
+      - name: Render site and skill catalogs as HTML
+        run: python src/buildsite.py docs outputs
+      - name: Test generated website and Sandbox launchers
+        run: python -m unittest discover -s tests -v
+      - name: Create build information
+        env:
+          BUILD_SHA: ${{ github.sha }}
+          BUILD_REPOSITORY: ${{ github.repository }}
+          BUILD_BRANCH: ${{ github.ref_name }}
+          BUILD_RUN_ID: ${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import datetime, json, os, pathlib
+          sha = os.environ['BUILD_SHA']
+          info = {
+              'commit_id': sha,
+              'short_commit_id': sha[:7],
+              'build_timestamp': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+              'repository': os.environ['BUILD_REPOSITORY'],
+              'branch': os.environ['BUILD_BRANCH'],
+              'workflow_run_id': os.environ['BUILD_RUN_ID'],
+          }
+          pathlib.Path('outputs/build-info.json').write_text(json.dumps(info, indent=2) + '\n', encoding='utf-8')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: catalog-pages
+          path: outputs/
+          include-hidden-files: true
+          retention-days: 7
 
-    # Setup .NET Core SDK
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 10.0.x
+  validate-powershell:
+    needs: build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/download-artifact@v4
+        with:
+          name: catalog-pages
+          path: outputs
+      - name: Parse generated guest scripts with Windows PowerShell
+        shell: powershell
+        run: ./src/testwsb.ps1 -Directory ./outputs/wsb
+      - name: Test Windows guest error reporting without running installers
+        run: python -m unittest discover -s tests -p test_wsb.py -v
 
-    - name: Validate skill catalog
-      run: dotnet run --file src/checkskills.cs -- ./docs/SkillCatalog.xml ./docs/SkillCatalog.xsd
-
-    - name: Run skill catalog schema regression checks
-      run: dotnet run --file src/testskills.cs -- ./docs/SkillCatalog.xsd
-
-    # Run Catalog Builder tool
-    - name: Run Catalog Builder Tool
-      run: dotnet run --file src/catalogutil.cs -- ./docs/ ./outputs/
-
-    # Create build info file
-    - name: Create Build Info
-      run: |
-        mkdir -p ./outputs/
-        cat > ./outputs/build-info.json << EOF
-        {
-          "commit_id": "${{ github.sha }}",
-          "short_commit_id": "${GITHUB_SHA:0:7}",
-          "build_timestamp": "$(date -u '+%Y-%m-%dT%H:%M:%SZ')",
-          "repository": "${{ github.repository }}",
-          "branch": "${{ github.ref_name }}",
-          "workflow_run_id": "${{ github.run_id }}"
-        }
-        EOF
-
-    # Setup XSLT tools
-    - name: Setup XSLT tool
-      run: sudo apt-get update && sudo apt-get install -y xsltproc
-
-    # Transform XML to HTML with XSL
-    - name: Transform XML to HTML
-      run: xsltproc docs/Catalog.xsl docs/Catalog.xml > ./outputs/index.html
-
-    # Deploy to GitHub Pages
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./outputs
-        publish_branch: gh-pages
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: [build, validate-powershell]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: catalog-pages
+          path: outputs
+      - name: Publish existing GitHub Pages site
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./outputs
+          publish_branch: gh-pages
