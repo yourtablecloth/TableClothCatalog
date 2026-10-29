@@ -18,6 +18,8 @@
 dotnet run --file src/catalogutil.cs -- ./docs/ ./outputs/
 ```
 
+웹 페이지나 WSB 생성을 변경할 때에는 .NET 빌더 다음에 Python 생성기와 회귀 검사를 실행합니다. 명령과 출력 경로는 [웹 카탈로그 운영 안내](docs/WEB_CATALOG.ko.md)와 [English guide](docs/WEB_CATALOG.md)에서 설명합니다. 생성 결과와 실제 Windows Sandbox 실행 시험 결과를 구분하여 PR에 기록합니다.
+
 ## 데이터 수집 시 지켜주실 사항
 
 카탈로그 값을 확인하고 수집하실 때의 원칙은 [docs/DATA_BOUNDARY.md](docs/DATA_BOUNDARY.md)에 정리되어 있습니다. 그중 기여자에게 직접 적용되는 두 가지는 다음과 같습니다.

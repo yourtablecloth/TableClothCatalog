@@ -1,48 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=Catalog.xml">
-    <title>TableCloth Catalog - Redirecting...</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            text-align: center;
-        }
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(255,255,255,0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        a {
-            color: white;
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="@@DESCRIPTION@@">
+  <meta name="color-scheme" content="light dark">
+  <title>@@TITLE@@ | 식탁보 카탈로그</title>
+  <link rel="canonical" href="https://catalog.yourtablecloth.app@@PATH@@">
+  <link rel="stylesheet" href="/assets/catalog.css">
+  <script src="/assets/catalog.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <div class="spinner"></div>
-        <p>TableCloth Catalog로 이동 중...</p>
-        <p><a href="Catalog.xml">자동으로 이동하지 않으면 여기를 클릭하세요</a></p>
+  <a class="skip-link" href="#main">본문으로 이동</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="식탁보 카탈로그 홈"><span class="brand-mark" aria-hidden="true">T</span><span>식탁보 <strong>카탈로그</strong></span></a>
+      <nav aria-label="주요 메뉴">
+        <a href="/" @@SITES_CURRENT@@>사이트</a>
+        <a href="/skills/" @@SKILLS_CURRENT@@>스킬 마켓플레이스</a>
+        <a href="#contribute">기여 안내</a>
+        <a href="https://yourtablecloth.app/" class="app-link">식탁보 받기 <span aria-hidden="true">↗</span></a>
+      </nav>
     </div>
-    <script>
-        window.location.href = 'Catalog.xml';
-    </script>
+  </header>
+  <main id="main" tabindex="-1">@@CONTENT@@</main>
+  <footer class="site-footer">
+    <div><a class="footer-brand" href="/">TableCloth Catalog</a><p>사이트 정보와 스킬 원본을 함께 살펴볼 수 있습니다.</p></div>
+    <div class="footer-links"><a href="/Catalog.xml">사이트 XML</a><a href="/SkillCatalog.xml">스킬 XML</a><a href="https://github.com/yourtablecloth/TableClothCatalog">GitHub</a><a href="https://github.com/yourtablecloth/TableClothCatalog/blob/main/NOTICE.md">고지</a><a href="https://github.com/yourtablecloth/TableClothCatalog/blob/main/TRADEMARKS.md">상표 안내</a></div>
+    <p class="fine-print">카탈로그 수록은 제공사와의 제휴나 개별 설치 및 실행 검증을 뜻하지 않습니다. 제3자 이름과 로고의 권리는 각 권리자에게 있습니다.</p>
+  </footer>
 </body>
 </html>
