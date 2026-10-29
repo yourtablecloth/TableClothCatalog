@@ -21,7 +21,8 @@ LOADER = (
     "$m=New-Object IO.MemoryStream(,[Convert]::FromBase64String('__SCRIPT__'));"
     "$z=New-Object IO.Compression.GZipStream($m,[IO.Compression.CompressionMode]::Decompress);"
     "$r=New-Object IO.StreamReader($z,[Text.Encoding]::UTF8);"
-    "try{& ([scriptblock]::Create($r.ReadToEnd()))}finally{$r.Dispose();$m.Dispose()}"
+    "$TableClothGuestSource=$r.ReadToEnd();"
+    "try{& ([scriptblock]::Create($TableClothGuestSource))}finally{$r.Dispose();$m.Dispose()}"
 )
 ID_PATTERN = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,95}\Z")
 RESERVED_NAMES = {"CON", "PRN", "AUX", "NUL"} | {
@@ -101,6 +102,22 @@ function Download([string]$url,[string]$path) {
 function FindEdge {
     @("${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe","$env:ProgramFiles\Microsoft\Edge\Application\msedge.exe") | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
 }
+function IsGuestAdministrator {
+    $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+    try { return (New-Object Security.Principal.WindowsPrincipal($identity)).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator) }
+    finally { $identity.Dispose() }
+}
+function EnsureGuestAdministrator([string]$source) {
+    if (IsGuestAdministrator) { return $null }
+    if (-not $source) { throw 'Missing embedded bootstrap source. Reopen the WSB file.' }
+    Log 'Administrator permission is required inside this Windows guest. Approve its UAC prompt to continue; cancellation stops preparation.'
+    $retry = Join-Path ([IO.Path]::GetTempPath()) ('TableCloth-' + [guid]::NewGuid().ToString('N') + '.ps1')
+    try {
+        [IO.File]::WriteAllText($retry,$source,[Text.Encoding]::Unicode)
+        $elevated = Start-Process -FilePath "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe" -ArgumentList ('-NoLogo -NoProfile -ExecutionPolicy Bypass -File "' + $retry + '"') -Verb RunAs -Wait -PassThru -ErrorAction Stop
+        return [int]$elevated.ExitCode
+    } finally { if ([IO.File]::Exists($retry)) { [IO.File]::Delete($retry) } }
+}
 try {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     Log ('Preparing ' + $site.Name)
@@ -108,6 +125,10 @@ try {
     if ($site.Notes) { Log $site.Notes }
     $site | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $work 'catalog-entry.json') -Encoding UTF8
     foreach ($package in $site.Packages) { AssertInstallerHttps ([uri]$package.Url) }
+    if ($site.Packages -or $site.Extensions -or $site.Bootstrap) {
+        $elevationResult = EnsureGuestAdministrator $TableClothGuestSource
+        if ($null -ne $elevationResult) { exit $elevationResult }
+    }
     $number = 0
     foreach ($package in $site.Packages) {
         $number++

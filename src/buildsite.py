@@ -200,7 +200,7 @@ def sites_page(services, companions, skill_count):
     return f'''<section class="hero"><div class="hero-copy"><p class="eyebrow">TABLECLOTH CATALOG</p><h1>사이트와 도구를 위한<br>식탁보 카탈로그</h1><p class="hero-description">은행, 공공기관과 생활 서비스의 설치 정보를 찾고<br class="desktop-break"> 사이트별 실행 설정으로 식탁보를 시작할 수 있습니다.</p><div class="hero-links"><a class="button primary" href="#catalog">사이트 탐색</a><a class="button secondary" href="/skills/">스킬 마켓플레이스</a></div></div><div class="hero-stats" aria-label="카탈로그 현황"><div><strong>{len(services)}</strong><span>등록 사이트</span></div><div><strong>{len(companions)}</strong><span>보조 프로그램</span></div><div><strong>{skill_count}</strong><span>탐색 가능한 스킬</span></div></div></section>
     <section class="launch-guide" aria-labelledby="launch-heading">
       <div><span class="eyebrow">START TABLECLOTH</span><h2 id="launch-heading">사이트별 식탁보 시작</h2>
-      <p>‘식탁보 시작하기’를 누르면 WSB 실행 설정 파일을 내려받습니다. Windows에서는 Windows Sandbox로, Apple Silicon Mac에서는 macSandbox로 열 수 있습니다. 각 실행 환경을 먼저 준비한 후 이용할 수 있으며 사이트와 설치 패키지의 호환성은 환경에 따라 달라집니다.</p>
+      <p>‘식탁보 시작하기’를 누르면 WSB 실행 설정 파일을 내려받습니다. Windows에서는 Windows Sandbox로, Apple Silicon Mac에서는 macSandbox로 열 수 있습니다. 각 실행 환경을 먼저 준비한 후 이용할 수 있습니다. 설치에 필요한 관리자 권한 확인은 게스트 안에서 진행하며 사이트와 패키지의 호환성은 환경에 따라 달라집니다.</p>
       <div class="launch-links"><a href="https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/">Windows Sandbox 안내</a><a href="https://github.com/yourtablecloth/macSandbox">macSandbox 안내</a></div></div>
       <a class="text-link" href="{GUIDE}docs/WEB_CATALOG.ko.md#사이트별-wsb-실행-범위">실행 환경과 이용 안내</a>
     </section>
