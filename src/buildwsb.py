@@ -121,10 +121,10 @@ try {
     $number = 0
     $extensionLinks = @()
     foreach ($extension in $site.Extensions) {
-        $number++
         $key = 'HKLM:\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist'
         if (-not (Test-Path -LiteralPath $key)) { New-Item -Path $key -Force | Out-Null }
-        New-ItemProperty -Path $key -Name $number.ToString() -Value ($extension.Id + ';' + $extension.Url) -PropertyType String -Force | Out-Null
+        do { $number++ } while ($null -ne (Get-ItemProperty -LiteralPath $key -Name $number.ToString() -ErrorAction SilentlyContinue))
+        New-ItemProperty -Path $key -Name $number.ToString() -Value ($extension.Id + ';' + $extension.Url) -PropertyType String | Out-Null
         Log ('Registered Edge extension policy: ' + $extension.Id + '. Third-party force-install may be blocked in a non-domain Sandbox. Use the extension setup tab to complete installation.')
         if ($extension.Url -eq 'https://clients2.google.com/service/update2/crx') {
             $extensionLinks += '<li><a href="https://chromewebstore.google.com/detail/' + $extension.Id + '">' + $extension.Id + '</a></li>'

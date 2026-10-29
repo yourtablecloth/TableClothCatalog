@@ -147,7 +147,16 @@ $script:keys = @{}
 $script:created = 0
 function Test-Path { param($LiteralPath) return $script:keys.ContainsKey($LiteralPath) }
 function New-Item { param($Path,[switch]$Force) $script:created++; $script:keys[$Path] = @{} }
-function New-ItemProperty { param($Path,$Name,$Value,$PropertyType,[switch]$Force) $script:keys[$Path][$Name] = $Value }
+function Get-ItemProperty {
+    param($LiteralPath,$Name,$ErrorAction)
+    if ($script:keys[$LiteralPath].ContainsKey([string]$Name)) { return [pscustomobject]@{Value=$script:keys[$LiteralPath][[string]$Name]} }
+    return $null
+}
+function New-ItemProperty {
+    param($Path,$Name,$Value,$PropertyType,[switch]$Force)
+    if ($script:keys[$Path].ContainsKey([string]$Name) -and -not $Force) { throw 'An existing registry value would be overwritten.' }
+    $script:keys[$Path][[string]$Name] = $Value
+}
 $site = [pscustomobject]@{Extensions=@(
     [pscustomobject]@{Id=('a' * 32); Url='https://clients2.google.com/service/update2/crx'},
     [pscustomobject]@{Id=('b' * 32); Url='https://clients2.google.com/service/update2/crx'}
@@ -158,10 +167,12 @@ $number = 0; $extensionLinks = @()
 . ([scriptblock]::Create($loop.Extent.Text))
 if ($script:created -ne 1 -or $script:keys[$registryPath].Count -ne 2) { throw 'Multiple extensions did not survive key creation.' }
 if ($script:keys[$registryPath]['1'] -notlike 'aaaaaaaa*' -or $script:keys[$registryPath]['2'] -notlike 'bbbbbbbb*') { throw 'An extension value was lost.' }
-$script:keys[$registryPath]['9'] = 'existing-value'
+$script:keys[$registryPath] = @{'1'='existing-first'; '9'='existing-ninth'}
 $number = 0; $extensionLinks = @()
 . ([scriptblock]::Create($loop.Extent.Text))
-if ($script:created -ne 1 -or $script:keys[$registryPath]['9'] -ne 'existing-value') { throw 'An existing registry value was reset.' }
+if ($script:created -ne 1 -or $script:keys[$registryPath].Count -ne 4) { throw 'The existing registry key was reset.' }
+if ($script:keys[$registryPath]['1'] -ne 'existing-first' -or $script:keys[$registryPath]['9'] -ne 'existing-ninth') { throw 'An existing registry value was overwritten.' }
+if ($script:keys[$registryPath]['2'] -notlike 'aaaaaaaa*' -or $script:keys[$registryPath]['3'] -notlike 'bbbbbbbb*') { throw 'New extensions did not use the available value names.' }
 Write-Output 'EXTENSION_VALUES_PRESERVED'
 """)
         self.assertEqual(result.returncode, 0, result.stderr)
