@@ -27,6 +27,157 @@ def decode(content):
 
 
 class WsbTests(unittest.TestCase):
+    def run_guest_fragment(self, body):
+        encoded_source = base64.b64encode(wsb.BOOTSTRAP.encode("utf-16-le")).decode("ascii")
+        harness = r"""
+$ErrorActionPreference = 'Stop'
+$source = [Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('__SOURCE__'))
+$tokens = $null; $errors = $null
+$ast = [System.Management.Automation.Language.Parser]::ParseInput($source,[ref]$tokens,[ref]$errors)
+if ($errors) { throw 'Generated script did not parse.' }
+$main = $ast.EndBlock.Statements | Where-Object { $_ -is [System.Management.Automation.Language.TryStatementAst] } | Select-Object -Last 1
+""".replace("__SOURCE__", encoded_source) + body
+        with tempfile.TemporaryDirectory() as directory:
+            test_script = Path(directory) / "fragment.ps1"
+            test_script.write_text(harness, encoding="ascii")
+            return subprocess.run(
+                [shutil.which("powershell.exe"), "-NoLogo", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(test_script)],
+                text=True, capture_output=True, timeout=30,
+            )
+
+    @unittest.skipUnless(shutil.which("powershell.exe"), "Windows PowerShell is unavailable")
+    def test_http_installer_preflight_stops_before_any_download(self):
+        # Keep legacy data visible and preserve the generated site's launcher.
+        service = ET.fromstring('<Service Id="Test" Url="http://example.test/"><Packages><Package Name="Legacy" Url="http://example.test/setup.exe"/></Packages></Service>')
+        data = wsb.service_data(service)
+        self.assertEqual(decode(wsb.make_wsb(data))[3]["Packages"][0]["Url"], "http://example.test/setup.exe")
+        result = self.run_guest_fragment(r"""
+$function = $ast.EndBlock.Statements | Where-Object { $_ -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $_.Name -eq 'AssertInstallerHttps' }
+. ([scriptblock]::Create($function.Extent.Text))
+$script:downloads = 0
+function Log { param($message) }
+function Set-Content { param($LiteralPath,$Encoding,$Value) }
+function Download { $script:downloads++; throw 'A download was attempted.' }
+$work = $PSScriptRoot
+$site = [pscustomobject]@{Name='Fixture'; Notes=''; Packages=@(
+    [pscustomobject]@{Url='https://example.test/first.exe'},
+    [pscustomobject]@{Url='http://127.0.0.1:1/blocked.exe'}
+)}
+$body = $main.Body.Extent.Text
+try { & ([scriptblock]::Create($body.Substring(1,$body.Length - 2))); throw 'Preflight unexpectedly succeeded.' }
+catch { if ($_.Exception.Message -notlike '*require HTTPS*') { throw } }
+if ($script:downloads -ne 0) { throw 'Preflight allowed a download.' }
+Write-Output 'HTTP_PREFLIGHT_BLOCKED'
+""")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("HTTP_PREFLIGHT_BLOCKED", result.stdout)
+
+    @unittest.skipUnless(shutil.which("powershell.exe"), "Windows PowerShell is unavailable")
+    def test_https_redirects_are_checked_before_each_request(self):
+        # An in-memory WebRequest provider replaces all HTTPS requests. Nothing
+        # contacts the network, changes certificate policy, or runs an installer.
+        result = self.run_guest_fragment(r"""
+Add-Type -TypeDefinition @'
+using System;
+using System.IO;
+using System.Net;
+using System.Collections.Generic;
+public class FixtureFactory : IWebRequestCreate {
+    public static List<string> Seen = new List<string>();
+    public static Queue<string> Redirects = new Queue<string>();
+    public WebRequest Create(Uri uri) { Seen.Add(uri.ToString()); return new FixtureRequest(); }
+}
+public class FixtureRequest : WebRequest {
+    public bool AllowAutoRedirect { get; set; }
+    public int ReadWriteTimeout { get; set; }
+    public string UserAgent { get; set; }
+    public override int Timeout { get; set; }
+    public FixtureRequest() { AllowAutoRedirect = true; }
+    public override WebResponse GetResponse() {
+        if (AllowAutoRedirect) throw new Exception("Automatic redirects were not disabled.");
+        return new FixtureResponse(FixtureFactory.Redirects.Count == 0 ? null : FixtureFactory.Redirects.Dequeue());
+    }
+}
+public class FixtureResponse : WebResponse {
+    public HttpStatusCode StatusCode { get; private set; }
+    private WebHeaderCollection headers = new WebHeaderCollection();
+    public override WebHeaderCollection Headers { get { return headers; } }
+    public override long ContentLength { get { return 2; } set {} }
+    public FixtureResponse(string location) {
+        StatusCode = location == null ? HttpStatusCode.OK : HttpStatusCode.Found;
+        if (location != null) headers["Location"] = location;
+    }
+    public override Stream GetResponseStream() { return new MemoryStream(new byte[] {77,90}); }
+    public override void Close() {}
+}
+'@
+if (-not [Net.WebRequest]::RegisterPrefix('https://wsb-fixture.invalid/',(New-Object FixtureFactory))) { throw 'Fixture registration failed.' }
+$functions = $ast.EndBlock.Statements | Where-Object { $_ -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $_.Name -in @('AssertInstallerHttps','Download') }
+foreach ($function in $functions) { . ([scriptblock]::Create($function.Extent.Text)) }
+$path = Join-Path $PSScriptRoot 'fixture.download'
+try { Download 'http://127.0.0.1:1/never-requested' $path; throw 'Initial HTTP was accepted.' }
+catch { if ($_.Exception.Message -notlike '*require HTTPS*') { throw } }
+if ([FixtureFactory]::Seen.Count -ne 0 -or (Test-Path -LiteralPath $path)) { throw 'HTTP caused a request or file write.' }
+[FixtureFactory]::Redirects.Enqueue('http://127.0.0.1:1/downgrade')
+try { Download 'https://wsb-fixture.invalid/first' $path; throw 'Downgrade was accepted.' }
+catch { if ($_.Exception.Message -notlike '*require HTTPS*') { throw } }
+if ([FixtureFactory]::Seen.Count -ne 1 -or (Test-Path -LiteralPath $path)) { throw 'Downgrade caused another request or file write.' }
+[FixtureFactory]::Seen.Clear()
+[FixtureFactory]::Redirects.Enqueue('/relative-target')
+Download 'https://wsb-fixture.invalid/first' $path
+if ([FixtureFactory]::Seen.Count -ne 2 -or [FixtureFactory]::Seen[1] -ne 'https://wsb-fixture.invalid/relative-target') { throw 'Relative HTTPS redirect failed.' }
+if ([IO.File]::ReadAllBytes($path).Length -ne 2) { throw 'Successful download body was not written.' }
+[FixtureFactory]::Seen.Clear()
+1..6 | ForEach-Object { [FixtureFactory]::Redirects.Enqueue('/again') }
+try { Download 'https://wsb-fixture.invalid/first' $path; throw 'Excess redirects were accepted.' }
+catch { if ($_.Exception.Message -notlike '*excessive installer redirects*') { throw } }
+if ([FixtureFactory]::Seen.Count -ne 6) { throw 'Redirect count exceeded the initial request plus five redirects.' }
+Write-Output 'HTTPS_REDIRECT_CHECKS_PASSED'
+""")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("HTTPS_REDIRECT_CHECKS_PASSED", result.stdout)
+
+    @unittest.skipUnless(shutil.which("powershell.exe"), "Windows PowerShell is unavailable")
+    def test_extension_registration_preserves_multiple_and_existing_values(self):
+        # Execute the generated loop against registry cmdlet stubs. New-Item
+        # intentionally clears a key just as a force-created key could do.
+        result = self.run_guest_fragment(r"""
+function Log { param($message) }
+$script:keys = @{}
+$script:created = 0
+function Test-Path { param($LiteralPath) return $script:keys.ContainsKey($LiteralPath) }
+function New-Item { param($Path,[switch]$Force) $script:created++; $script:keys[$Path] = @{} }
+function Get-ItemProperty {
+    param($LiteralPath,$Name,$ErrorAction)
+    if ($script:keys[$LiteralPath].ContainsKey([string]$Name)) { return [pscustomobject]@{Value=$script:keys[$LiteralPath][[string]$Name]} }
+    return $null
+}
+function New-ItemProperty {
+    param($Path,$Name,$Value,$PropertyType,[switch]$Force)
+    if ($script:keys[$Path].ContainsKey([string]$Name) -and -not $Force) { throw 'An existing registry value would be overwritten.' }
+    $script:keys[$Path][[string]$Name] = $Value
+}
+$site = [pscustomobject]@{Extensions=@(
+    [pscustomobject]@{Id=('a' * 32); Url='https://clients2.google.com/service/update2/crx'},
+    [pscustomobject]@{Id=('b' * 32); Url='https://clients2.google.com/service/update2/crx'}
+)}
+$loop = $main.Body.Statements | Where-Object { $_ -is [System.Management.Automation.Language.ForEachStatementAst] -and $_.Variable.VariablePath.UserPath -eq 'extension' }
+$registryPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist'
+$number = 0; $extensionLinks = @()
+. ([scriptblock]::Create($loop.Extent.Text))
+if ($script:created -ne 1 -or $script:keys[$registryPath].Count -ne 2) { throw 'Multiple extensions did not survive key creation.' }
+if ($script:keys[$registryPath]['1'] -notlike 'aaaaaaaa*' -or $script:keys[$registryPath]['2'] -notlike 'bbbbbbbb*') { throw 'An extension value was lost.' }
+$script:keys[$registryPath] = @{'1'='existing-first'; '9'='existing-ninth'}
+$number = 0; $extensionLinks = @()
+. ([scriptblock]::Create($loop.Extent.Text))
+if ($script:created -ne 1 -or $script:keys[$registryPath].Count -ne 4) { throw 'The existing registry key was reset.' }
+if ($script:keys[$registryPath]['1'] -ne 'existing-first' -or $script:keys[$registryPath]['9'] -ne 'existing-ninth') { throw 'An existing registry value was overwritten.' }
+if ($script:keys[$registryPath]['2'] -notlike 'aaaaaaaa*' -or $script:keys[$registryPath]['3'] -notlike 'bbbbbbbb*') { throw 'New extensions did not use the available value names.' }
+Write-Output 'EXTENSION_VALUES_PRESERVED'
+""")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("EXTENSION_VALUES_PRESERVED", result.stdout)
+
     @unittest.skipUnless(shutil.which("powershell.exe"), "Windows PowerShell is unavailable")
     def test_missing_viewers_leave_the_error_console_visible(self):
         # Execute only the generated error handler, with app/path/UI operations

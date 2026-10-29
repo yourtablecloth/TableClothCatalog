@@ -99,6 +99,13 @@ def service_card(service):
     english = service.get("en-US-DisplayName", "")
     packages = service.findall("./Packages/Package")
     extensions = service.findall("./EdgeExtensions/EdgeExtension")
+    has_http_package = any(package.get("Url", "").strip().lower().startswith("http:") for package in packages)
+    transport_warning = (
+        '<p class="skill-condition evaluation transport-warning"><strong>HTTPS 설치 주소 미확인</strong>'
+        'HTTP 설치 주소를 사용하는 패키지가 있어 WSB 자동 준비를 중단합니다. '
+        '사이트 방문과 설치 안내를 이용할 수 있습니다.</p>'
+        if has_http_package else ""
+    )
     package_rows = []
     for package in packages:
         args = package.get("Arguments", "")
@@ -115,6 +122,7 @@ def service_card(service):
     return f'''<article class="catalog-card site-card" id="site-{escape(identifier)}" {search_attributes(service, category)}>
       <div class="card-top"><span class="tag">{escape(category_label(category))}</span><a class="permalink" href="#site-{escape(identifier)}" aria-label="{escape(name)} 항목 링크">#</a></div>
       <h3>{link(service.get("Url"), name)}</h3><p class="english-name">{escape(english or identifier)}</p>
+      {transport_warning}
       <div class="card-actions"><a class="button primary" href="/wsb/{escape(identifier)}.wsb" download="TableCloth-{escape(identifier)}.wsb">WSB 다운로드</a>{link(service.get("Url"), "사이트 방문", "text-link")}</div>
       {compatibility}<details class="package-details"><summary>설치 패키지 {len(packages)}개{f' 및 확장 {len(extensions)}개' if extensions else ''}</summary>{package_content}{extension_content}{bootstrap}</details>
     </article>'''
@@ -189,7 +197,7 @@ def sites_page(services, companions, skill_count):
     cards = "".join(service_card(item) for item in services)
     companion_cards = "".join(companion_card(item) for item in companions)
     categories = [item.get("Category", "Other") for item in services] + (["Companions"] if companions else [])
-    return f'''<section class="hero"><div class="hero-copy"><p class="eyebrow">TABLECLOTH CATALOG</p><h1>필요한 사이트와 도구를<br>한곳에서 탐색합니다.</h1><p class="hero-description">은행, 공공기관과 생활 서비스의 설치 정보를 찾고<br class="desktop-break"> 사이트별 Windows Sandbox 파일을 내려받을 수 있습니다.</p><div class="hero-links"><a class="button primary" href="#catalog">사이트 탐색</a><a class="button secondary" href="/skills/">스킬 마켓플레이스</a></div></div><div class="hero-stats" aria-label="카탈로그 현황"><div><strong>{len(services)}</strong><span>등록 사이트</span></div><div><strong>{len(companions)}</strong><span>보조 프로그램</span></div><div><strong>{skill_count}</strong><span>탐색 가능한 스킬</span></div></div></section>
+    return f'''<section class="hero"><div class="hero-copy"><p class="eyebrow">TABLECLOTH CATALOG</p><h1>사이트와 도구를 위한<br>식탁보 카탈로그</h1><p class="hero-description">은행, 공공기관과 생활 서비스의 설치 정보를 찾고<br class="desktop-break"> 사이트별 Windows Sandbox 파일을 내려받을 수 있습니다.</p><div class="hero-links"><a class="button primary" href="#catalog">사이트 탐색</a><a class="button secondary" href="/skills/">스킬 마켓플레이스</a></div></div><div class="hero-stats" aria-label="카탈로그 현황"><div><strong>{len(services)}</strong><span>등록 사이트</span></div><div><strong>{len(companions)}</strong><span>보조 프로그램</span></div><div><strong>{skill_count}</strong><span>탐색 가능한 스킬</span></div></div></section>
     <section class="launch-guide" aria-labelledby="launch-heading"><div><span class="eyebrow">WINDOWS SANDBOX</span><h2 id="launch-heading">설치 없이 시작하는 식탁보</h2><p>사이트의 WSB 파일을 내려받아 Windows Sandbox를 지원하는 PC에서 열 수 있습니다. Windows Sandbox 기능을 미리 활성화한 환경에서 사용합니다. 사이트별 패키지와 호환성 안내도 함께 제공합니다.</p></div><a class="text-link" href="{GUIDE}docs/WEB_CATALOG.ko.md#사이트별-wsb-실행-범위">웹 카탈로그와 실행 안내</a></section>
     <section id="catalog" class="catalog-section" aria-labelledby="catalog-heading"><div class="section-heading"><div><p class="eyebrow">BROWSE SITES</p><h2 id="catalog-heading">사이트 카탈로그</h2></div><a class="text-link" href="/Catalog.xml">원본 XML</a></div>{filters(categories, len(services) + len(companions), '서비스명, 영문명 또는 설치 패키지 검색')}
     <section data-result-section aria-label="사이트 목록"><div class="catalog-grid">{cards}</div></section>
@@ -199,7 +207,7 @@ def sites_page(services, companions, skill_count):
 def skills_page(skills):
     cards = "".join(skill_card(item) for item in skills)
     categories = [item.get("Category", "") for item in skills]
-    return f'''<section class="hero skill-hero"><div class="hero-copy"><p class="eyebrow">SKILL MARKETPLACE</p><h1>스킬의 원본과 조건을<br>살펴보고 선택합니다.</h1><p class="hero-description">문서 작성, 통계 조회와 생활 도구까지.<br class="desktop-break"> 작성자와 고정 버전, 라이선스 및 실행 조건을 함께 제공합니다.</p><div class="hero-links"><a class="button primary" href="#catalog">스킬 {len(skills)}개 탐색</a><a class="button secondary" href="#contribute">스킬 기여</a></div></div><aside class="install-guide"><span class="eyebrow">GET STARTED</span><h2>식탁보에서 스킬 설치</h2><ol><li>최신 식탁보 앱을 설치합니다.</li><li>앱의 스킬 마켓플레이스에서 항목을 선택합니다.</li><li>원본과 실행 조건을 검토한 후 설치합니다.</li></ol><a class="text-link" href="https://yourtablecloth.app/">식탁보 다운로드</a></aside></section>
+    return f'''<section class="hero skill-hero"><div class="hero-copy"><p class="eyebrow">SKILL MARKETPLACE</p><h1>스킬의 원본과 실행 조건</h1><p class="hero-description">문서 작성, 통계 조회와 생활 도구까지.<br class="desktop-break"> 작성자와 고정 버전, 라이선스 및 실행 조건을 함께 제공합니다.</p><div class="hero-links"><a class="button primary" href="#catalog">스킬 {len(skills)}개 탐색</a><a class="button secondary" href="#contribute">스킬 기여</a></div></div><aside class="install-guide"><span class="eyebrow">GET STARTED</span><h2>식탁보에서 스킬 설치</h2><ol><li>최신 식탁보 앱을 설치합니다.</li><li>앱의 스킬 마켓플레이스에서 항목을 선택합니다.</li><li>원본과 실행 조건을 검토한 후 설치합니다.</li></ol><a class="text-link" href="https://yourtablecloth.app/">식탁보 다운로드</a></aside></section>
     <div class="qualification-notice"><strong>설치와 실행 조건</strong><p>스킬 설치는 파일을 복사합니다. 런타임 설치, API 키 설정과 MCP 서버 연결은 별도 조건을 따릅니다. 평가용 스크립트와 호스트 연동 항목의 실행 지원 범위는 사용하는 식탁보 버전에 따라 달라집니다.</p><div>{link(f'{GUIDE}docs/SKILL_ELIGIBILITY.ko.md', '등재 기준과 검증 범위')}{link(f'{GUIDE}docs/APP_CONTAINER_POC.ko.md', '격리 실행 평가 기록')}{link(f'{GUIDE}docs/SkillCatalog.README.ko.md', '설치 및 관리 안내')}</div></div>
     <section id="catalog" class="catalog-section" aria-labelledby="catalog-heading"><div class="section-heading"><div><p class="eyebrow">BROWSE SKILLS</p><h2 id="catalog-heading">스킬 탐색</h2></div><a class="text-link" href="/SkillCatalog.xml">원본 XML</a></div>{filters(categories, len(skills), '스킬명, 작성자 또는 실행 조건 검색', skills=True)}<section data-result-section aria-label="스킬 목록"><div class="catalog-grid skills-grid">{cards}</div></section></section>{contribute(True)}'''
 

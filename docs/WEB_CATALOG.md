@@ -36,6 +36,8 @@ The [launcher generator](../src/buildwsb.py) embeds its bootstrap and site data 
 
 Networking is enabled for guest downloads and site access, including possible access to the local network. The launcher shares no host folders or certificates and disables clipboard, microphone, camera, printer, and GPU redirection. It does not reproduce TableCloth's IE mode, certificate sharing, ASTx adjustments, or architecture compatibility handling. Closing the guest discards its files, installed software, and state; the launcher provides no host export folder.
 
+The generated package downloader accepts HTTPS only, including every redirect. If a catalog entry still contains an HTTP installer URL, the guest stops before downloading any packages. The site's web card explains this restriction; the catalog retains the original URL until an official HTTPS source is verified. The current DonggukUdrims custom bootstrap applies the same transport restriction to its separate curl downloads. CustomBootstrap remains separately reviewed executable catalog code.
+
 ## Build order and GitHub Pages publication
 
 Run the existing .NET builder first because it prepares the output directory. Then generate WSB files and HTML with Python's standard library. The [Pages workflow](../.github/workflows/publish.yml) validates the catalogs, runs the generators and regression checks, and publishes `outputs` to `gh-pages`.

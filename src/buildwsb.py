@@ -49,27 +49,45 @@ function Run([string]$file,[string]$arguments) {
         if ($process.ExitCode -ne 0) { Log 'Installer requested a reboot; this launcher does not reboot the Sandbox.' }
     } finally { $process.Dispose() }
 }
+function AssertInstallerHttps([uri]$uri) {
+    if (-not $uri.IsAbsoluteUri -or $uri.Scheme -ne 'https' -or $uri.UserInfo) { throw ('Installer downloads require HTTPS: ' + $uri) }
+}
 function Download([string]$url,[string]$path) {
-    $request = [Net.HttpWebRequest]::Create($url)
-    $request.Timeout = 120000
-    $request.ReadWriteTimeout = 120000
-    $request.UserAgent = 'TableClothCatalog-WSB/1.0'
-    $response = $request.GetResponse()
-    try {
-        if ($response.ResponseUri.Scheme -notin @('http','https')) { throw 'Unsupported download redirect.' }
-        if ($response.ContentLength -gt 536870912) { throw 'Installer exceeds 512 MiB.' }
-        $inputStream = $response.GetResponseStream()
-        $outputStream = [IO.File]::Create($path)
+    $current = [uri]$url
+    for ($redirect = 0; $redirect -le 5; $redirect++) {
+        AssertInstallerHttps $current
+        $request = [Net.HttpWebRequest]::Create($current)
+        $request.AllowAutoRedirect = $false
+        $request.Timeout = 120000
+        $request.ReadWriteTimeout = 120000
+        $request.UserAgent = 'TableClothCatalog-WSB/1.0'
+        $response = $request.GetResponse()
         try {
-            $buffer = New-Object byte[] 65536
-            $total = 0
-            while (($read = $inputStream.Read($buffer,0,$buffer.Length)) -gt 0) {
-                $total += $read
-                if ($total -gt 536870912) { throw 'Installer exceeds 512 MiB.' }
-                $outputStream.Write($buffer,0,$read)
+            $status = [int]$response.StatusCode
+            if ($status -in @(301,302,303,307,308)) {
+                $location = $response.Headers['Location']
+                if ($redirect -eq 5 -or -not $location) { throw 'Invalid or excessive installer redirects.' }
+                $next = [uri]::new($current,$location)
+                AssertInstallerHttps $next
+                $current = $next
+                continue
             }
-        } finally { $outputStream.Dispose(); $inputStream.Dispose() }
-    } finally { $response.Close() }
+            if ($status -lt 200 -or $status -ge 300) { throw ('Unexpected download status: ' + $status) }
+            if ($response.ContentLength -gt 536870912) { throw 'Installer exceeds 512 MiB.' }
+            $inputStream = $response.GetResponseStream()
+            $outputStream = [IO.File]::Create($path)
+            try {
+                $buffer = New-Object byte[] 65536
+                $total = 0
+                while (($read = $inputStream.Read($buffer,0,$buffer.Length)) -gt 0) {
+                    $total += $read
+                    if ($total -gt 536870912) { throw 'Installer exceeds 512 MiB.' }
+                    $outputStream.Write($buffer,0,$read)
+                }
+            } finally { $outputStream.Dispose(); $inputStream.Dispose() }
+            return
+        } finally { $response.Close() }
+    }
 }
 function FindEdge {
     @("${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe","$env:ProgramFiles\Microsoft\Edge\Application\msedge.exe") | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
@@ -80,6 +98,7 @@ try {
     Log 'This session uses networking. No host folders, certificates, clipboard, microphone, camera or printers are shared.'
     if ($site.Notes) { Log $site.Notes }
     $site | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $work 'catalog-entry.json') -Encoding UTF8
+    foreach ($package in $site.Packages) { AssertInstallerHttps ([uri]$package.Url) }
     $number = 0
     foreach ($package in $site.Packages) {
         $number++
@@ -102,10 +121,10 @@ try {
     $number = 0
     $extensionLinks = @()
     foreach ($extension in $site.Extensions) {
-        $number++
         $key = 'HKLM:\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist'
-        New-Item -Path $key -Force | Out-Null
-        New-ItemProperty -Path $key -Name $number.ToString() -Value ($extension.Id + ';' + $extension.Url) -PropertyType String -Force | Out-Null
+        if (-not (Test-Path -LiteralPath $key)) { New-Item -Path $key -Force | Out-Null }
+        do { $number++ } while ($null -ne (Get-ItemProperty -LiteralPath $key -Name $number.ToString() -ErrorAction SilentlyContinue))
+        New-ItemProperty -Path $key -Name $number.ToString() -Value ($extension.Id + ';' + $extension.Url) -PropertyType String | Out-Null
         Log ('Registered Edge extension policy: ' + $extension.Id + '. Third-party force-install may be blocked in a non-domain Sandbox. Use the extension setup tab to complete installation.')
         if ($extension.Url -eq 'https://clients2.google.com/service/update2/crx') {
             $extensionLinks += '<li><a href="https://chromewebstore.google.com/detail/' + $extension.Id + '">' + $extension.Id + '</a></li>'
