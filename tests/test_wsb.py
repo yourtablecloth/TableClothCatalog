@@ -4,9 +4,11 @@ import base64
 import gzip
 import importlib.util
 import json
+import random
 from pathlib import Path
 import re
 import shutil
+import string
 import subprocess
 import tempfile
 import unittest
@@ -21,12 +23,44 @@ SPEC.loader.exec_module(wsb)
 def decode(content):
     root = ET.fromstring(content)
     command = root.findtext("./LogonCommand/Command")
-    script = base64.b64decode(command.split("-EncodedCommand ", 1)[1]).decode("utf-16-le")
+    loader = command[len(wsb.COMMAND_PREFIX) + 1:-1]
+    pattern = re.escape(wsb.LOADER).replace("__SCRIPT__", r"([A-Za-z0-9+/=]+)")
+    compressed = re.fullmatch(pattern, loader).group(1)
+    script = gzip.decompress(base64.b64decode(compressed)).decode("utf-8")
     payload = re.search(r"\$encodedData = '([A-Za-z0-9+/=]+)'", script).group(1)
     return root, command, script, json.loads(gzip.decompress(base64.b64decode(payload)))
 
 
 class WsbTests(unittest.TestCase):
+    @unittest.skipUnless(shutil.which("cmd.exe") and shutil.which("powershell.exe"), "Windows command processors are unavailable")
+    def test_compressed_loader_runs_through_cmd_with_only_a_benign_fixture(self):
+        value = 'WSB_LOADER_OK: 한글 "quotes" & | % ! ^ $(literal)'
+        expected = base64.b64encode(value.encode("utf-8")).decode("ascii")
+        # Incompressible comments give the harmless fixture a command length
+        # comparable to real launchers while testing cmd's quoting and UTF-8.
+        generator = random.Random(7)
+        comment = "".join(generator.choices(string.ascii_letters + string.digits, k=6500))
+        fixture = "#" + comment + "\n$value = '" + value + "'\nWrite-Output ([Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($value)))\n"
+        command = wsb.make_command(fixture)
+        self.assertGreater(len(command), 6500)
+        self.assertLessEqual(len(command), 8000)
+        self.assertTrue(command.isascii())
+        with tempfile.TemporaryDirectory() as directory:
+            batch = Path(directory) / "benign-loader.cmd"
+            batch.write_text("@echo off\r\n" + command + "\r\n", encoding="ascii", newline="")
+            result = subprocess.run(
+                [shutil.which("cmd.exe"), "/d", "/c", str(batch)],
+                text=True, capture_output=True, timeout=30,
+            )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn(expected, result.stdout)
+
+    def test_compressed_loader_rejects_commands_above_the_cmd_budget(self):
+        generator = random.Random(8)
+        fixture = "#" + "".join(generator.choices(string.ascii_letters + string.digits, k=12000))
+        with self.assertRaisesRegex(ValueError, "8000-character"):
+            wsb.make_command(fixture)
+
     def run_guest_fragment(self, body):
         encoded_source = base64.b64encode(wsb.BOOTSTRAP.encode("utf-16-le")).decode("ascii")
         harness = r"""
@@ -221,6 +255,8 @@ function Read-Host { param($Prompt) Write-Host 'ERROR_CONSOLE_REMAINED_OPEN'; re
                     self.assertEqual(actual, wsb.make_wsb(data))
                     root, command, script, embedded = decode(actual)
                     self.assertLessEqual(len(command), wsb.MAX_COMMAND_CHARS)
+                    self.assertTrue(command.isascii())
+                    self.assertEqual(command, wsb.make_command(script))
                     self.assertEqual(embedded, data)
                     self.assertIsNone(root.find("MappedFolders"))
                     self.assertEqual(root.findtext("Networking"), "Enable")

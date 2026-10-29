@@ -17,7 +17,7 @@
 - `/wsb/{ServiceId}.wsb`: 활성 사이트마다 생성하는 단일 WSB 파일
 - `/Catalog.xml`, `/SkillCatalog.xml`: 기존 애플리케이션용 XML 피드
 
-원본 XML은 계속 데이터를 공급합니다. 생성기는 XML 주석을 활성 항목으로 표시하지 않습니다. 웹 페이지는 기존 도메인과 탐색 메뉴를 공유하며 별도 Sites 호스팅을 사용하지 않습니다.
+원본 XML은 계속 데이터를 공급합니다. 생성기는 XML 주석을 활성 항목으로 표시하지 않습니다. 웹 페이지는 기존 도메인과 탐색 메뉴를 공유하며 별도 Sites 호스팅을 사용하지 않습니다. 카탈로그는 [식탁보 메인 사이트](https://yourtablecloth.app/)의 로고와 글꼴, 빨간색과 리넨색 및 어두운 배경색을 사용합니다. 테마 제어는 밝은 화면과 어두운 화면을 전환합니다. 사용자가 선택하기 전에는 운영체제의 화면 설정을 따르며 선택 후에는 카탈로그 도메인에 해당 설정을 저장합니다. 두 사이트에서 사이트 카탈로그와 스킬 마켓플레이스로 이동할 수 있습니다.
 
 ## 스킬 탐색과 기여 검토
 
@@ -30,11 +30,15 @@
 
 ## 사이트별 WSB 실행 범위
 
-사이트의 `.wsb` 파일을 내려받은 뒤 Windows Sandbox를 지원하고 해당 기능을 활성화한 Windows 장치에서 파일을 엽니다. 식탁보 애플리케이션 설치 없이 이 경로를 이용할 수 있습니다. Microsoft는 [Windows Sandbox 지원 조건](https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/)과 [WSB 파일 실행 방법](https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/windows-sandbox-configure-using-wsb-file)을 안내합니다.
+사이트 카드의 **식탁보 시작하기**를 누르면 `.wsb` 실행 설정 파일을 내려받습니다. Windows에서는 Windows Sandbox로, Apple Silicon Mac에서는 [macSandbox for Windows](https://github.com/yourtablecloth/macSandbox)로 파일을 엽니다. 식탁보 애플리케이션 설치 없이 이 경로를 이용할 수 있습니다. Microsoft는 [Windows Sandbox 지원 조건](https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/)과 [WSB 파일 실행 방법](https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/windows-sandbox-configure-using-wsb-file)을 안내합니다.
+
+우선 선택한 실행 환경을 준비합니다. Windows Sandbox는 지원하는 Windows 장치에서 해당 기능을 활성화한 후 이용할 수 있습니다. macSandbox는 Apple Silicon Mac에 앱을 설치하고 사용 권한이 있는 Windows 11 ARM64 ISO로 기본 이미지를 한 번 준비한 후 이용할 수 있습니다. 현재 [macSandbox 지원 조건](https://github.com/yourtablecloth/macSandbox#requirements)은 macOS Tahoe 26 이상을 기준으로 하며 이전 macOS 버전은 검증하지 않았습니다. Windows ARM64의 애플리케이션 에뮬레이션만으로 사이트별 보안 드라이버의 호환성을 판정하지 않습니다.
 
 [WSB 생성기](../src/buildwsb.py)는 단일 파일에 부트스트랩과 사이트 데이터를 포함합니다. 게스트 부트스트랩은 카탈로그의 설치 패키지를 차례로 내려받아 설치하고 Edge 확장 정책과 게스트 초기화 명령을 적용한 뒤 Edge로 사이트를 엽니다. Sandbox는 도메인에 가입하지 않으므로 타사 확장은 수동 설치가 필요할 수 있습니다. 게스트는 설치 링크를 담은 `extension-setup.html`도 제공합니다. Microsoft는 [확장 정책 문서](https://learn.microsoft.com/deployedge/microsoft-edge-policies/extensioninstallforcelist)에서 이 제약을 설명합니다. 무인 설치 인수가 없는 설치기는 마법사를 표시할 수 있습니다. 다운로드 오류, 설치 파일 검사 실패, 설치 오류나 제한 시간 초과가 발생하면 후속 단계를 중단하고 게스트 바탕 화면의 `TableCloth-{ServiceId}/bootstrap.log`에 진단 내용을 남깁니다.
 
-게스트는 다운로드와 사이트 접속을 위해 네트워크를 사용하며 내부망에도 접근할 수 있습니다. WSB 파일은 호스트 폴더와 인증서를 공유하지 않으며 클립보드, 마이크, 카메라, 프린터와 GPU 리디렉션을 비활성화합니다. 식탁보의 IE 모드, 인증서 공유, ASTx 설정 조정과 아키텍처 호환 처리는 지원하지 않습니다. 게스트 세션을 종료하면 파일, 설치한 프로그램과 상태를 잃으며 호스트로 내보내는 공유 폴더도 제공하지 않습니다.
+게스트는 다운로드와 사이트 접속을 위해 네트워크를 사용하며 내부망에도 접근할 수 있습니다. WSB 파일은 호스트 폴더와 인증서를 공유하지 않으며 클립보드, 마이크, 카메라, 프린터와 VGpu의 비활성화를 지정합니다. 식탁보의 IE 모드, 인증서 공유, ASTx 설정 조정과 아키텍처 호환 처리는 지원하지 않습니다. 게스트 세션을 종료하면 파일, 설치한 프로그램과 상태를 잃으며 호스트로 내보내는 공유 폴더도 제공하지 않습니다.
+
+다만 실행 환경마다 일부 WSB 설정의 의미가 다릅니다. macSandbox는 ProtectedClient를 적용하지 않으며 VGpu를 Windows Sandbox의 GPU 설정과 달리 QEMU 콘솔 장치 선택에 사용합니다. [WSB 지원표](https://github.com/yourtablecloth/macSandbox/blob/main/WSB-SUPPORT.md)에서 클립보드, 마이크와 프린터 제어 범위를 확인할 수 있습니다. 생성기는 macSandbox의 `cmd.exe` 실행 경로에 맞춰 시작 명령을 8,000자 이하으로 압축합니다. Windows 명령 셸 검사는 외부 동작이 없는 코드로 복원과 인수 전달을 검증하며 실제 macOS 세션이나 제3자 설치기의 동작을 검증하지 않습니다.
 
 생성기의 패키지 다운로드는 모든 리디렉션을 포함해 HTTPS만 허용합니다. 카탈로그에 HTTP 설치 주소가 남아 있으면 게스트는 패키지를 내려받기 전에 준비를 중단합니다. 해당 사이트의 웹 카드도 이 제한을 안내합니다. 공식 HTTPS 출처를 확인하기 전까지 카탈로그는 원래 주소를 보존합니다. 현재 DonggukUdrims의 별도 curl 다운로드에도 같은 전송 제한을 적용합니다. CustomBootstrap의 실행 코드는 별도로 검토합니다.
 

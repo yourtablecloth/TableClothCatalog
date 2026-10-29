@@ -123,7 +123,7 @@ def service_card(service):
       <div class="card-top"><span class="tag">{escape(category_label(category))}</span><a class="permalink" href="#site-{escape(identifier)}" aria-label="{escape(name)} 항목 링크">#</a></div>
       <h3>{link(service.get("Url"), name)}</h3><p class="english-name">{escape(english or identifier)}</p>
       {transport_warning}
-      <div class="card-actions"><a class="button primary" href="/wsb/{escape(identifier)}.wsb" download="TableCloth-{escape(identifier)}.wsb">WSB 다운로드</a>{link(service.get("Url"), "사이트 방문", "text-link")}</div>
+      <div class="card-actions"><a class="button primary" href="/wsb/{escape(identifier)}.wsb" download="TableCloth-{escape(identifier)}.wsb">식탁보 시작하기</a>{link(service.get("Url"), "사이트 방문", "text-link")}</div>
       {compatibility}<details class="package-details"><summary>설치 패키지 {len(packages)}개{f' 및 확장 {len(extensions)}개' if extensions else ''}</summary>{package_content}{extension_content}{bootstrap}</details>
     </article>'''
 
@@ -197,8 +197,13 @@ def sites_page(services, companions, skill_count):
     cards = "".join(service_card(item) for item in services)
     companion_cards = "".join(companion_card(item) for item in companions)
     categories = [item.get("Category", "Other") for item in services] + (["Companions"] if companions else [])
-    return f'''<section class="hero"><div class="hero-copy"><p class="eyebrow">TABLECLOTH CATALOG</p><h1>사이트와 도구를 위한<br>식탁보 카탈로그</h1><p class="hero-description">은행, 공공기관과 생활 서비스의 설치 정보를 찾고<br class="desktop-break"> 사이트별 Windows Sandbox 파일을 내려받을 수 있습니다.</p><div class="hero-links"><a class="button primary" href="#catalog">사이트 탐색</a><a class="button secondary" href="/skills/">스킬 마켓플레이스</a></div></div><div class="hero-stats" aria-label="카탈로그 현황"><div><strong>{len(services)}</strong><span>등록 사이트</span></div><div><strong>{len(companions)}</strong><span>보조 프로그램</span></div><div><strong>{skill_count}</strong><span>탐색 가능한 스킬</span></div></div></section>
-    <section class="launch-guide" aria-labelledby="launch-heading"><div><span class="eyebrow">WINDOWS SANDBOX</span><h2 id="launch-heading">설치 없이 시작하는 식탁보</h2><p>사이트의 WSB 파일을 내려받아 Windows Sandbox를 지원하는 PC에서 열 수 있습니다. Windows Sandbox 기능을 미리 활성화한 환경에서 사용합니다. 사이트별 패키지와 호환성 안내도 함께 제공합니다.</p></div><a class="text-link" href="{GUIDE}docs/WEB_CATALOG.ko.md#사이트별-wsb-실행-범위">웹 카탈로그와 실행 안내</a></section>
+    return f'''<section class="hero"><div class="hero-copy"><p class="eyebrow">TABLECLOTH CATALOG</p><h1>사이트와 도구를 위한<br>식탁보 카탈로그</h1><p class="hero-description">은행, 공공기관과 생활 서비스의 설치 정보를 찾고<br class="desktop-break"> 사이트별 실행 설정으로 식탁보를 시작할 수 있습니다.</p><div class="hero-links"><a class="button primary" href="#catalog">사이트 탐색</a><a class="button secondary" href="/skills/">스킬 마켓플레이스</a></div></div><div class="hero-stats" aria-label="카탈로그 현황"><div><strong>{len(services)}</strong><span>등록 사이트</span></div><div><strong>{len(companions)}</strong><span>보조 프로그램</span></div><div><strong>{skill_count}</strong><span>탐색 가능한 스킬</span></div></div></section>
+    <section class="launch-guide" aria-labelledby="launch-heading">
+      <div><span class="eyebrow">START TABLECLOTH</span><h2 id="launch-heading">사이트별 식탁보 시작</h2>
+      <p>‘식탁보 시작하기’를 누르면 WSB 실행 설정 파일을 내려받습니다. Windows에서는 Windows Sandbox로, Apple Silicon Mac에서는 macSandbox로 열 수 있습니다. 각 실행 환경을 먼저 준비한 후 이용할 수 있으며 사이트와 설치 패키지의 호환성은 환경에 따라 달라집니다.</p>
+      <div class="launch-links"><a href="https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/">Windows Sandbox 안내</a><a href="https://github.com/yourtablecloth/macSandbox">macSandbox 안내</a></div></div>
+      <a class="text-link" href="{GUIDE}docs/WEB_CATALOG.ko.md#사이트별-wsb-실행-범위">실행 환경과 이용 안내</a>
+    </section>
     <section id="catalog" class="catalog-section" aria-labelledby="catalog-heading"><div class="section-heading"><div><p class="eyebrow">BROWSE SITES</p><h2 id="catalog-heading">사이트 카탈로그</h2></div><a class="text-link" href="/Catalog.xml">원본 XML</a></div>{filters(categories, len(services) + len(companions), '서비스명, 영문명 또는 설치 패키지 검색')}
     <section data-result-section aria-label="사이트 목록"><div class="catalog-grid">{cards}</div></section>
     <section class="companions-section" data-result-section aria-labelledby="companions-heading"><div class="section-heading"><div><p class="eyebrow">COMPANIONS</p><h2 id="companions-heading">함께 사용하는 보조 프로그램</h2><p>각 제공사의 다운로드 안내 페이지로 이동합니다.</p></div></div><div class="catalog-grid companions-grid">{companion_cards}</div></section></section>{contribute()}'''
@@ -215,7 +220,7 @@ def skills_page(skills):
 def render(template, content, skills=False):
     replacements = {
         "TITLE": "스킬 마켓플레이스" if skills else "사이트 탐색",
-        "DESCRIPTION": "식탁보 스킬의 원본, 라이선스와 실행 조건을 탐색하고 기여 절차를 확인합니다." if skills else "사이트별 설치 정보, 보조 프로그램과 Windows Sandbox 파일을 탐색합니다.",
+        "DESCRIPTION": "식탁보 스킬의 원본, 라이선스와 실행 조건을 탐색하고 기여 절차를 확인합니다." if skills else "사이트별 설치 정보, 보조 프로그램과 식탁보 실행 환경을 탐색합니다.",
         "PATH": "/skills/" if skills else "/", "CONTENT": content,
         "SITES_CURRENT": "" if skills else 'aria-current="page"',
         "SKILLS_CURRENT": 'aria-current="page"' if skills else "",
@@ -239,10 +244,9 @@ def build(source, output):
     output.mkdir(parents=True, exist_ok=True)
     (output / "skills").mkdir(exist_ok=True)
     (output / "assets").mkdir(exist_ok=True)
-    (output / "index.html").write_text(render(template, sites_page(services, companions, len(entries))), encoding="utf-8")
-    (output / "skills" / "index.html").write_text(render(template, skills_page(entries), True), encoding="utf-8")
-    for filename in ("catalog.css", "catalog.js"):
-        shutil.copyfile(source / "assets" / filename, output / "assets" / filename)
+    (output / "index.html").write_text(render(template, sites_page(services, companions, len(entries))), encoding="utf-8", newline="\n")
+    (output / "skills" / "index.html").write_text(render(template, skills_page(entries), True), encoding="utf-8", newline="\n")
+    shutil.copytree(source / "assets", output / "assets", dirs_exist_ok=True)
     print(f"Rendered {len(services)} sites, {len(companions)} companions and {len(entries)} skills to {output}")
 
 
