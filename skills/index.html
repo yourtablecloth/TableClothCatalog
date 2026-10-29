@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="식탁보 스킬의 원본, 라이선스와 실행 조건을 탐색하고 기여 절차를 확인합니다.">
+  <meta name="color-scheme" content="light dark">
+  <title>스킬 마켓플레이스 | 식탁보 카탈로그</title>
+  <link rel="canonical" href="https://catalog.yourtablecloth.app/skills/">
+  <link rel="stylesheet" href="/assets/catalog.css">
+  <script src="/assets/catalog.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 이동</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="식탁보 카탈로그 홈"><span class="brand-mark" aria-hidden="true">T</span><span>식탁보 <strong>카탈로그</strong></span></a>
+      <nav aria-label="주요 메뉴">
+        <a href="/" >사이트</a>
+        <a href="/skills/" aria-current="page">스킬 마켓플레이스</a>
+        <a href="#contribute">기여 안내</a>
+        <a href="https://yourtablecloth.app/" class="app-link">식탁보 받기 <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" tabindex="-1"><section class="hero skill-hero"><div class="hero-copy"><p class="eyebrow">SKILL MARKETPLACE</p><h1>스킬의 원본과 조건을<br>살펴보고 선택합니다.</h1><p class="hero-description">문서 작성, 통계 조회와 생활 도구까지.<br class="desktop-break"> 작성자와 고정 버전, 라이선스 및 실행 조건을 함께 제공합니다.</p><div class="hero-links"><a class="button primary" href="#catalog">스킬 6개 탐색</a><a class="button secondary" href="#contribute">스킬 기여</a></div></div><aside class="install-guide"><span class="eyebrow">GET STARTED</span><h2>식탁보에서 스킬 설치</h2><ol><li>최신 식탁보 앱을 설치합니다.</li><li>앱의 스킬 마켓플레이스에서 항목을 선택합니다.</li><li>원본과 실행 조건을 검토한 후 설치합니다.</li></ol><a class="text-link" href="https://yourtablecloth.app/">식탁보 다운로드</a></aside></section>
+    <div class="qualification-notice"><strong>설치와 실행 조건</strong><p>스킬 설치는 파일을 복사합니다. 런타임 설치, API 키 설정과 MCP 서버 연결은 별도 조건을 따릅니다. 평가용 스크립트와 호스트 연동 항목의 실행 지원 범위는 사용하는 식탁보 버전에 따라 달라집니다.</p><div><a href="https://github.com/yourtablecloth/TableClothCatalog/blob/main/docs/SKILL_ELIGIBILITY.ko.md">등재 기준과 검증 범위</a><a href="https://github.com/yourtablecloth/TableClothCatalog/blob/main/docs/APP_CONTAINER_POC.ko.md">격리 실행 평가 기록</a><a href="https://github.com/yourtablecloth/TableClothCatalog/blob/main/docs/SkillCatalog.README.ko.md">설치 및 관리 안내</a></div></div>
+    <section id="catalog" class="catalog-section" aria-labelledby="catalog-heading"><div class="section-heading"><div><p class="eyebrow">BROWSE SKILLS</p><h2 id="catalog-heading">스킬 탐색</h2></div><a class="text-link" href="/SkillCatalog.xml">원본 XML</a></div><form class="filters" data-filters hidden role="search">
+      <div class="search-field"><label for="search">검색어</label><input id="search" type="search" name="q" placeholder="스킬명, 작성자 또는 실행 조건 검색" autocomplete="off"></div>
+      <div class="category-field"><label for="category">카테고리</label><select id="category" name="category"><option value="">모든 카테고리</option><option value="Economics">경제</option><option value="Documents">문서</option><option value="Security">보안</option><option value="Utilities">생활 도구</option><option value="System">시스템</option><option value="Statistics">통계</option></select></div>
+      <button class="button secondary" type="reset">초기화</button>
+    </form>
+    <div class="result-line"><p data-result-count role="status" aria-live="polite">전체 6개</p><span>원본 XML에서 생성한 목록</span></div>
+    <noscript><p class="notice">모든 항목을 표시합니다. 브라우저의 페이지 내 찾기로 검색할 수 있습니다.</p></noscript>
+    <div class="empty-state" data-empty hidden><h2>검색 결과 없음</h2><p>다른 검색어나 카테고리로 탐색할 수 있습니다.</p><button type="button" class="button secondary" data-reset>전체 목록 보기</button></div><section data-result-section aria-label="스킬 목록"><div class="catalog-grid skills-grid"><article class="catalog-card skill-card" id="skill-bok-ecos-stats" data-entry data-category="Economics" data-search="bok-ecos-stats Economics 한국은행 경제통계 
+     한국은행 ECOS의 기준금리, 물가, 환율과 통화량 통계를 조회합니다. 
+     
+     
+     
+     
+     
+     ECOS에 직접 연결하며 sample 키 또는 사용자 KSKILL_BOK_ECOS_API_KEY를 사용합니다. sample 키는 호출당 최대 10행으로 제한합니다. 실행에는 Node.js 18 이상, npx CLI와 Python 3.9 이상을 사용합니다. 
+    경제 https://github.com/NomaDamas/k-skill bok-ecos-stats 0102e5133865f00886e37ac8cf39a49e2c7a3d39 NomaDamas https://github.com/NomaDamas MIT https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/LICENSE Codex required upstream">
+      <div class="card-top"><span class="tag">경제</span><span class="skill-id">bok-ecos-stats</span></div>
+      <h3>한국은행 경제통계</h3><p class="description">한국은행 ECOS의 기준금리, 물가, 환율과 통화량 통계를 조회합니다.</p><p class="skill-condition evaluation"><strong>평가용 스크립트</strong>스크립트 실행을 지원하는 호스트가 필요합니다. 운영 호환성 판단과 평가 근거는 등재 기준에서 제공합니다.</p>
+      <dl class="metadata"><div><dt>작성자</dt><dd><a href="https://github.com/NomaDamas">NomaDamas</a></dd></div><div><dt>라이선스</dt><dd><a href="https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/LICENSE">MIT</a></dd></div><div><dt>런타임</dt><dd>Codex</dd></div><div><dt>실행 중 네트워크</dt><dd>필수</dd></div></dl>
+      <div class="card-actions"><a href="https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/bok-ecos-stats/SKILL.md" class="button primary">고정 원본 SKILL.md</a><a href="https://github.com/NomaDamas/k-skill" class="text-link">저장소</a></div>
+      <details class="skill-details"><summary>설치 및 실행 조건</summary><p>ECOS에 직접 연결하며 sample 키 또는 사용자 KSKILL_BOK_ECOS_API_KEY를 사용합니다. sample 키는 호출당 최대 10행으로 제한합니다. 실행에는 Node.js 18 이상, npx CLI와 Python 3.9 이상을 사용합니다.</p><dl class="source-metadata"><dt>원본 경로</dt><dd><code>bok-ecos-stats</code></dd><dt>고정 커밋</dt><dd><code>0102e5133865f00886e37ac8cf39a49e2c7a3d39</code></dd></dl></details>
+    </article><article class="catalog-card skill-card" id="skill-kosis-stats" data-entry data-category="Statistics" data-search="kosis-stats Statistics 국가통계 조회 
+     KOSIS의 인구, 가구, 고용과 물가 통계를 검색하고 조회합니다. 
+     
+     
+     
+     
+     
+     기본 일반 조회는 외부 hosted proxy를 사용합니다. 사용자 KSKILL_KOSIS_API_KEY와 --direct 옵션으로 KOSIS에 직접 연결할 수 있습니다. 실행에는 Node.js 18 이상, npx CLI와 Python 3.9 이상을 사용합니다. 
+    통계 https://github.com/NomaDamas/k-skill kosis-stats 0102e5133865f00886e37ac8cf39a49e2c7a3d39 NomaDamas https://github.com/NomaDamas MIT https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/LICENSE Codex required upstream">
+      <div class="card-top"><span class="tag">통계</span><span class="skill-id">kosis-stats</span></div>
+      <h3>국가통계 조회</h3><p class="description">KOSIS의 인구, 가구, 고용과 물가 통계를 검색하고 조회합니다.</p><p class="skill-condition evaluation"><strong>평가용 스크립트</strong>스크립트 실행을 지원하는 호스트가 필요합니다. 운영 호환성 판단과 평가 근거는 등재 기준에서 제공합니다.</p>
+      <dl class="metadata"><div><dt>작성자</dt><dd><a href="https://github.com/NomaDamas">NomaDamas</a></dd></div><div><dt>라이선스</dt><dd><a href="https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/LICENSE">MIT</a></dd></div><div><dt>런타임</dt><dd>Codex</dd></div><div><dt>실행 중 네트워크</dt><dd>필수</dd></div></dl>
+      <div class="card-actions"><a href="https://github.com/NomaDamas/k-skill/blob/0102e5133865f00886e37ac8cf39a49e2c7a3d39/kosis-stats/SKILL.md" class="button primary">고정 원본 SKILL.md</a><a href="https://github.com/NomaDamas/k-skill" class="text-link">저장소</a></div>
+      <details class="skill-details"><summary>설치 및 실행 조건</summary><p>기본 일반 조회는 외부 hosted proxy를 사용합니다. 사용자 KSKILL_KOSIS_API_KEY와 --direct 옵션으로 KOSIS에 직접 연결할 수 있습니다. 실행에는 Node.js 18 이상, npx CLI와 Python 3.9 이상을 사용합니다.</p><dl class="source-metadata"><dt>원본 경로</dt><dd><code>kosis-stats</code></dd><dt>고정 커밋</dt><dd><code>0102e5133865f00886e37ac8cf39a49e2c7a3d39</code></dd></dl></details>
+    </article><article class="catalog-card skill-card" id="skill-official-report-skillset" data-entry data-category="Documents" data-search="official-report-skillset Documents 공공기관 보고서 작성 
+     공공기관 보고서와 내부 결재문서의 구성 및 초안 작성을 지원합니다. 
+     
+     
+     
+     
+     
+     SKILL.md와 references 문서를 함께 설치합니다. 사용자가 선택한 로컬 문서와 자료를 바탕으로 보고서 초안을 작성합니다. 문서 접근 범위와 외부 전송은 별도 실행 환경 설정을 따릅니다. 
+    문서 https://github.com/mouseco/k-gov-skills skills/official-report-skillset a55816b9b44e8391576204a095bf6337940d80f3 mouseco https://github.com/mouseco MIT https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/LICENSE Codex none upstream">
+      <div class="card-top"><span class="tag">문서</span><span class="skill-id">official-report-skillset</span></div>
+      <h3>공공기관 보고서 작성</h3><p class="description">공공기관 보고서와 내부 결재문서의 구성 및 초안 작성을 지원합니다.</p><p class="skill-condition"><strong>실행 조건</strong>원본 지침과 아래 요구 사항에 따라 기능 범위를 확인할 수 있습니다.</p>
+      <dl class="metadata"><div><dt>작성자</dt><dd><a href="https://github.com/mouseco">mouseco</a></dd></div><div><dt>라이선스</dt><dd><a href="https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/LICENSE">MIT</a></dd></div><div><dt>런타임</dt><dd>Codex</dd></div><div><dt>실행 중 네트워크</dt><dd>불필요</dd></div></dl>
+      <div class="card-actions"><a href="https://github.com/mouseco/k-gov-skills/blob/a55816b9b44e8391576204a095bf6337940d80f3/skills/official-report-skillset/SKILL.md" class="button primary">고정 원본 SKILL.md</a><a href="https://github.com/mouseco/k-gov-skills" class="text-link">저장소</a></div>
+      <details class="skill-details"><summary>설치 및 실행 조건</summary><p>SKILL.md와 references 문서를 함께 설치합니다. 사용자가 선택한 로컬 문서와 자료를 바탕으로 보고서 초안을 작성합니다. 문서 접근 범위와 외부 전송은 별도 실행 환경 설정을 따릅니다.</p><dl class="source-metadata"><dt>원본 경로</dt><dd><code>skills/official-report-skillset</code></dd><dt>고정 커밋</dt><dd><code>a55816b9b44e8391576204a095bf6337940d80f3</code></dd></dl></details>
+    </article><article class="catalog-card skill-card" id="skill-tablecloth-certificate-expiry" data-entry data-category="Security" data-search="tablecloth-certificate-expiry Security 공동인증서 만료 확인 
+     식탁보 호스트가 제공한 공동인증서 만료 건수와 조회 완료 여부를 설명합니다. 
+     
+     
+     
+     
+     
+     기본 구성에 포함하지 않는 선택 설치 스킬입니다. 별도 API 키를 요구하지 않습니다. 식탁보 AI의 호스트 브리지가 사용자 동의 후 전달한 만료 건수 보고서만 설명합니다. 개별 인증서 정보, 인증서 파일과 개인 키를 다루지 않으며 독립 실행용 인증서 검사 도구를 설치하지 않습니다. 원본 AGPL 라이선스와 별도 상용 라이선스 문의 안내를 함께 보존합니다. 
+    보안 https://github.com/yourtablecloth/tablecloth-certificate-expiry . 9d2eca6431d1cba34bc872b80fc55fa71fa2dcb2 yourtablecloth https://github.com/yourtablecloth AGPL-3.0-only https://github.com/yourtablecloth/tablecloth-certificate-expiry/blob/9d2eca6431d1cba34bc872b80fc55fa71fa2dcb2/LICENSE-AGPL Codex none upstream">
+      <div class="card-top"><span class="tag">보안</span><span class="skill-id">tablecloth-certificate-expiry</span></div>
+      <h3>공동인증서 만료 확인</h3><p class="description">식탁보 호스트가 제공한 공동인증서 만료 건수와 조회 완료 여부를 설명합니다.</p><p class="skill-condition"><strong>호스트 연동 조건</strong>호환되는 식탁보 호스트가 제공한 보고서를 사용합니다. 스킬 설치만으로 Windows 기능을 추가하지 않습니다.</p>
+      <dl class="metadata"><div><dt>작성자</dt><dd><a href="https://github.com/yourtablecloth">yourtablecloth</a></dd></div><div><dt>라이선스</dt><dd><a href="https://github.com/yourtablecloth/tablecloth-certificate-expiry/blob/9d2eca6431d1cba34bc872b80fc55fa71fa2dcb2/LICENSE-AGPL">AGPL-3.0-only</a></dd></div><div><dt>런타임</dt><dd>Codex</dd></div><div><dt>실행 중 네트워크</dt><dd>불필요</dd></div></dl>
+      <div class="card-actions"><a href="https://github.com/yourtablecloth/tablecloth-certificate-expiry/blob/9d2eca6431d1cba34bc872b80fc55fa71fa2dcb2/SKILL.md" class="button primary">고정 원본 SKILL.md</a><a href="https://github.com/yourtablecloth/tablecloth-certificate-expiry" class="text-link">저장소</a></div>
+      <details class="skill-details"><summary>설치 및 실행 조건</summary><p>기본 구성에 포함하지 않는 선택 설치 스킬입니다. 별도 API 키를 요구하지 않습니다. 식탁보 AI의 호스트 브리지가 사용자 동의 후 전달한 만료 건수 보고서만 설명합니다. 개별 인증서 정보, 인증서 파일과 개인 키를 다루지 않으며 독립 실행용 인증서 검사 도구를 설치하지 않습니다. 원본 AGPL 라이선스와 별도 상용 라이선스 문의 안내를 함께 보존합니다.</p><dl class="source-metadata"><dt>원본 경로</dt><dd><code>.</code></dd><dt>고정 커밋</dt><dd><code>9d2eca6431d1cba34bc872b80fc55fa71fa2dcb2</code></dd></dl></details>
+    </article><article class="catalog-card skill-card" id="skill-tablecloth-windows-sandbox" data-entry data-category="System" data-search="tablecloth-windows-sandbox System Windows Sandbox 관리 
+     식탁보 호스트가 제공한 Windows Sandbox 조회 및 제어 결과를 설명합니다. 
+     
+     
+     
+     
+     
+     기본 구성에 포함하지 않는 선택 설치 스킬입니다. 별도 API 키를 요구하지 않습니다. 호환되는 Windows Sandbox 환경과 식탁보 AI의 호스트 브리지가 필요합니다. 호스트가 전달한 list, start, stop, connect, ip 결과를 설명하며 스킬 자체가 wsb.exe를 실행하거나 Windows Sandbox를 설치하지 않습니다. 원본 AGPL 라이선스와 별도 상용 라이선스 문의 안내를 함께 보존합니다. 
+    시스템 https://github.com/yourtablecloth/tablecloth-windows-sandbox . b9e52bcd303624dbba81e7de66a3f56344e922fe yourtablecloth https://github.com/yourtablecloth AGPL-3.0-only https://github.com/yourtablecloth/tablecloth-windows-sandbox/blob/b9e52bcd303624dbba81e7de66a3f56344e922fe/LICENSE-AGPL Codex none upstream">
+      <div class="card-top"><span class="tag">시스템</span><span class="skill-id">tablecloth-windows-sandbox</span></div>
+      <h3>Windows Sandbox 관리</h3><p class="description">식탁보 호스트가 제공한 Windows Sandbox 조회 및 제어 결과를 설명합니다.</p><p class="skill-condition"><strong>호스트 연동 조건</strong>호환되는 식탁보 호스트가 제공한 보고서를 사용합니다. 스킬 설치만으로 Windows 기능을 추가하지 않습니다.</p>
+      <dl class="metadata"><div><dt>작성자</dt><dd><a href="https://github.com/yourtablecloth">yourtablecloth</a></dd></div><div><dt>라이선스</dt><dd><a href="https://github.com/yourtablecloth/tablecloth-windows-sandbox/blob/b9e52bcd303624dbba81e7de66a3f56344e922fe/LICENSE-AGPL">AGPL-3.0-only</a></dd></div><div><dt>런타임</dt><dd>Codex</dd></div><div><dt>실행 중 네트워크</dt><dd>불필요</dd></div></dl>
+      <div class="card-actions"><a href="https://github.com/yourtablecloth/tablecloth-windows-sandbox/blob/b9e52bcd303624dbba81e7de66a3f56344e922fe/SKILL.md" class="button primary">고정 원본 SKILL.md</a><a href="https://github.com/yourtablecloth/tablecloth-windows-sandbox" class="text-link">저장소</a></div>
+      <details class="skill-details"><summary>설치 및 실행 조건</summary><p>기본 구성에 포함하지 않는 선택 설치 스킬입니다. 별도 API 키를 요구하지 않습니다. 호환되는 Windows Sandbox 환경과 식탁보 AI의 호스트 브리지가 필요합니다. 호스트가 전달한 list, start, stop, connect, ip 결과를 설명하며 스킬 자체가 wsb.exe를 실행하거나 Windows Sandbox를 설치하지 않습니다. 원본 AGPL 라이선스와 별도 상용 라이선스 문의 안내를 함께 보존합니다.</p><dl class="source-metadata"><dt>원본 경로</dt><dd><code>.</code></dd><dt>고정 커밋</dt><dd><code>b9e52bcd303624dbba81e7de66a3f56344e922fe</code></dd></dl></details>
+    </article><article class="catalog-card skill-card" id="skill-tablecloth-calculators" data-entry data-category="Utilities" data-search="tablecloth-calculators Utilities 금융 및 생활 계산기 
+     사용자 입력으로 퍼센트, 할인, 이자, 대출 상환, 날짜, 고정 시차, 단위와 BMI 수치를 계산합니다. 
+     
+     
+     
+     
+     
+     선택 설치 스킬입니다. Python 3.11 이상과 표준 라이브러리만 사용하며 API 키, 외부 데이터 조회와 추가 패키지를 요구하지 않습니다. 설치된 스킬의 Python 스크립트 실행을 허용하는 호스트가 필요하며 이전 식탁보 빌드에 런타임만 설치해도 실행 권한을 추가하지는 않습니다. Network 값은 계산 스크립트의 조건이며 Codex 대화는 온라인 연결을 사용합니다. 세금, 최신 규제, 시세, 공휴일, 음력, 지역별 서머타임, 의학적 분류와 사이트 고유 통합분석을 제외합니다. 원본 저장소의 저작권 준수 기준과 기여 안내를 적용합니다. 
+    생활 도구 https://github.com/yourtablecloth/tablecloth-calculators . 877b58cf0741db21342445f2b3fcb54ad1ada85c yourtablecloth https://github.com/yourtablecloth AGPL-3.0-only https://github.com/yourtablecloth/tablecloth-calculators/blob/877b58cf0741db21342445f2b3fcb54ad1ada85c/LICENSE-AGPL Codex none upstream">
+      <div class="card-top"><span class="tag">생활 도구</span><span class="skill-id">tablecloth-calculators</span></div>
+      <h3>금융 및 생활 계산기</h3><p class="description">사용자 입력으로 퍼센트, 할인, 이자, 대출 상환, 날짜, 고정 시차, 단위와 BMI 수치를 계산합니다.</p><p class="skill-condition evaluation"><strong>평가용 스크립트</strong>스크립트 실행을 지원하는 호스트가 필요합니다. 운영 호환성 판단과 평가 근거는 등재 기준에서 제공합니다.</p>
+      <dl class="metadata"><div><dt>작성자</dt><dd><a href="https://github.com/yourtablecloth">yourtablecloth</a></dd></div><div><dt>라이선스</dt><dd><a href="https://github.com/yourtablecloth/tablecloth-calculators/blob/877b58cf0741db21342445f2b3fcb54ad1ada85c/LICENSE-AGPL">AGPL-3.0-only</a></dd></div><div><dt>런타임</dt><dd>Codex</dd></div><div><dt>실행 중 네트워크</dt><dd>불필요</dd></div></dl>
+      <div class="card-actions"><a href="https://github.com/yourtablecloth/tablecloth-calculators/blob/877b58cf0741db21342445f2b3fcb54ad1ada85c/SKILL.md" class="button primary">고정 원본 SKILL.md</a><a href="https://github.com/yourtablecloth/tablecloth-calculators" class="text-link">저장소</a></div>
+      <details class="skill-details"><summary>설치 및 실행 조건</summary><p>선택 설치 스킬입니다. Python 3.11 이상과 표준 라이브러리만 사용하며 API 키, 외부 데이터 조회와 추가 패키지를 요구하지 않습니다. 설치된 스킬의 Python 스크립트 실행을 허용하는 호스트가 필요하며 이전 식탁보 빌드에 런타임만 설치해도 실행 권한을 추가하지는 않습니다. Network 값은 계산 스크립트의 조건이며 Codex 대화는 온라인 연결을 사용합니다. 세금, 최신 규제, 시세, 공휴일, 음력, 지역별 서머타임, 의학적 분류와 사이트 고유 통합분석을 제외합니다. 원본 저장소의 저작권 준수 기준과 기여 안내를 적용합니다.</p><dl class="source-metadata"><dt>원본 경로</dt><dd><code>.</code></dd><dt>고정 커밋</dt><dd><code>877b58cf0741db21342445f2b3fcb54ad1ada85c</code></dd></dl></details>
+    </article></div></section></section><section class="contribution" id="contribute" aria-labelledby="contribute-heading">
+      <div class="section-heading"><div><p class="eyebrow">COMMUNITY</p><h2 id="contribute-heading">스킬 카탈로그 기여 절차</h2></div><a href="https://github.com/yourtablecloth/TableClothCatalog/blob/main/CONTRIBUTING.md" class="text-link">전체 기여 안내</a></div>
+      <ol class="contribution-steps"><li><h3>공식 출처 조사</h3><p>공개 저장소의 스킬 경로와 라이선스, 필수 실행 도구를 조사합니다.</p><a href="https://github.com/yourtablecloth/TableClothCatalog/blob/main/docs/SKILL_ELIGIBILITY.ko.md">조사 및 등재 기준</a></li><li><h3>변경안 작성</h3><p>40자리 원본 커밋과 같은 커밋의 라이선스, 네트워크 및 호스트 조건을 기록합니다.</p><a href="https://github.com/yourtablecloth/TableClothCatalog/edit/main/docs/SkillCatalog.xml">SkillCatalog.xml 편집</a></li><li><h3>검증과 검토 요청</h3><p>기여 안내의 검사를 실행하고 변경 근거와 검증 범위를 담아 Pull Request를 제출합니다.</p><a href="https://github.com/yourtablecloth/TableClothCatalog/compare">Pull Request 작성</a></li></ol><p class="notice">사용자 API 키, 토큰과 클라이언트 시크릿을 환경 변수로 받는 신규 스킬의 접수는 자격 증명 처리 기능 검증까지 보류합니다. 실제 비밀 값은 기여 내용에 포함하지 않습니다.</p>
+      <p class="muted">GitHub 이슈로 정정과 삭제를 제보할 수 있습니다. <a href="https://github.com/yourtablecloth/TableClothCatalog/issues/new/choose">제보 및 정정 요청</a></p>
+    </section></main>
+  <footer class="site-footer">
+    <div><a class="footer-brand" href="/">TableCloth Catalog</a><p>사이트 정보와 스킬 원본을 함께 살펴볼 수 있습니다.</p></div>
+    <div class="footer-links"><a href="/Catalog.xml">사이트 XML</a><a href="/SkillCatalog.xml">스킬 XML</a><a href="https://github.com/yourtablecloth/TableClothCatalog">GitHub</a><a href="https://github.com/yourtablecloth/TableClothCatalog/blob/main/NOTICE.md">고지</a><a href="https://github.com/yourtablecloth/TableClothCatalog/blob/main/TRADEMARKS.md">상표 안내</a></div>
+    <p class="fine-print">카탈로그 수록은 제공사와의 제휴나 개별 설치 및 실행 검증을 뜻하지 않습니다. 제3자 이름과 로고의 권리는 각 권리자에게 있습니다.</p>
+  </footer>
+</body>
+</html>

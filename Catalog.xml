@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="Catalog.xsl"?>
 <TableClothCatalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://yourtablecloth.app/TableClothCatalog/Catalog.xsd" Fallback="ko-KR">
   <!--
 	식탁보 카탈로그: 등록하려는 웹 사이트에 대한 정보를 XML 파일 문법에 맞게 넣어주세요.
@@ -20,6 +19,11 @@
     <Companion Id="Ghostscript" DisplayName="Ghostscript (AGPL)" Url="https://www.ghostscript.com/releases/gsdnld.html" Arguments="" en-US-DisplayName="Ghostscript (AGPL)" />
     <Companion Id="GhostPCL" DisplayName="GhostPCL (AGPL)" Url="https://www.ghostscript.com/releases/gpcldnld.html" Arguments="" en-US-DisplayName="GhostPCL (AGPL)" />
     <Companion Id="VisualCppRedist" DisplayName="Visual C++ 재배포 가능 패키지" Url="https://learn.microsoft.com/ko-kr/cpp/windows/latest-supported-vc-redist" Arguments="" en-US-DisplayName="Visual C++ Redistributable" />
+    <!-- Official download pages checked on 2026-10-29. Installation and Windows Sandbox compatibility have not been tested. -->
+    <Companion Id="AsideBrowser" DisplayName="Aside 브라우저" Url="https://aside.com/download" Arguments="" en-US-DisplayName="Aside Browser" />
+    <Companion Id="ChatGPT" DisplayName="ChatGPT" Url="https://chatgpt.com/download/" Arguments="" en-US-DisplayName="ChatGPT" />
+    <Companion Id="Claude" DisplayName="Claude" Url="https://claude.com/download" Arguments="" en-US-DisplayName="Claude" />
+    <Companion Id="GeminiDesktop" DisplayName="Gemini for Desktop" Url="https://gemini.google/desktop/" Arguments="" en-US-DisplayName="Gemini for Desktop" />
   </Companions>
   <InternetServices>
     <!-- 인터넷 뱅킹 시작 -->
