@@ -45,7 +45,7 @@ class SiteTests(unittest.TestCase):
         cls.source = Path(cls.temp.name) / 'source'
         cls.output = Path(cls.temp.name) / 'output'
         shutil.copytree(ROOT / 'docs', cls.source)
-        shutil.copytree(cls.source, cls.output)
+        shutil.copytree(cls.source, cls.output, ignore=shutil.ignore_patterns('images'))
         subprocess.run([sys.executable, str(ROOT / 'src/buildsite.py'), str(cls.source), str(cls.output)],
                        check=True, capture_output=True, text=True)
         subprocess.run([sys.executable, str(ROOT / 'src/buildwsb.py'), str(cls.source / 'Catalog.xml'),
