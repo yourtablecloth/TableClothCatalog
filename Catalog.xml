@@ -2212,25 +2212,29 @@ $MsiList = [Collections.Generic.List[String]]@()
 $TargetUri = 'https://udrims.dongguk.edu/MiDongguk/install320U/update_files_msi/MiPlatform_InstallBase320.msi'
 $FileName = "$([IO.Path]::GetFileName($TargetUri))"
 $TargetPath = Join-Path -Path $TempDir -ChildPath $FileName
-curl.exe -L $TargetUri -o $TargetPath
+curl.exe --proto "=https" --proto-redir "=https" --fail --show-error -L $TargetUri -o $TargetPath
+if ($LASTEXITCODE -ne 0) { throw "HTTPS download failed: $TargetUri" }
 $MsiList.Add($TargetPath)
 
 $TargetUri = 'https://udrims.dongguk.edu/MiDongguk/install320U/update_files_msi/MiPlatform_InstallEngine320U.msi'
 $FileName = "$([IO.Path]::GetFileName($TargetUri))"
 $TargetPath = Join-Path -Path $TempDir -ChildPath $FileName
-curl.exe -L $TargetUri -o $TargetPath
+curl.exe --proto "=https" --proto-redir "=https" --fail --show-error -L $TargetUri -o $TargetPath
+if ($LASTEXITCODE -ne 0) { throw "HTTPS download failed: $TargetUri" }
 $MsiList.Add($TargetPath)
 
 $TargetUri = 'https://udrims.dongguk.edu/MiDongguk/install320U/update_files_msi/MiPlatform_FixUACProblem320U.msi'
 $FileName = "$([IO.Path]::GetFileName($TargetUri))"
 $TargetPath = Join-Path -Path $TempDir -ChildPath $FileName
-curl.exe -L $TargetUri -o $TargetPath
+curl.exe --proto "=https" --proto-redir "=https" --fail --show-error -L $TargetUri -o $TargetPath
+if ($LASTEXITCODE -ne 0) { throw "HTTPS download failed: $TargetUri" }
 $MsiList.Add($TargetPath)
 
 $TargetUri = 'https://udrims.dongguk.edu/MiDongguk/install320U/MiPlatform_Updater321_20190129_1120.cab'
 $FileName = "$([IO.Path]::GetFileName($TargetUri))"
 $TargetPath = Join-Path -Path $TempDir -ChildPath $FileName
-curl.exe -L $TargetUri -o $TargetPath
+curl.exe --proto "=https" --proto-redir "=https" --fail --show-error -L $TargetUri -o $TargetPath
+if ($LASTEXITCODE -ne 0) { throw "HTTPS download failed: $TargetUri" }
 
 expand.exe -F:* "$TargetPath" "$TempDir"
 
