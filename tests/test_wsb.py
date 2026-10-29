@@ -4,9 +4,11 @@ import base64
 import gzip
 import importlib.util
 import json
+import random
 from pathlib import Path
 import re
 import shutil
+import string
 import subprocess
 import tempfile
 import unittest
@@ -21,12 +23,44 @@ SPEC.loader.exec_module(wsb)
 def decode(content):
     root = ET.fromstring(content)
     command = root.findtext("./LogonCommand/Command")
-    script = base64.b64decode(command.split("-EncodedCommand ", 1)[1]).decode("utf-16-le")
+    loader = command[len(wsb.COMMAND_PREFIX) + 1:-1]
+    pattern = re.escape(wsb.LOADER).replace("__SCRIPT__", r"([A-Za-z0-9+/=]+)")
+    compressed = re.fullmatch(pattern, loader).group(1)
+    script = gzip.decompress(base64.b64decode(compressed)).decode("utf-8")
     payload = re.search(r"\$encodedData = '([A-Za-z0-9+/=]+)'", script).group(1)
     return root, command, script, json.loads(gzip.decompress(base64.b64decode(payload)))
 
 
 class WsbTests(unittest.TestCase):
+    @unittest.skipUnless(shutil.which("cmd.exe") and shutil.which("powershell.exe"), "Windows command processors are unavailable")
+    def test_compressed_loader_runs_through_cmd_with_only_a_benign_fixture(self):
+        value = 'WSB_LOADER_OK: 한글 "quotes" & | % ! ^ $(literal)'
+        expected = base64.b64encode(value.encode("utf-8")).decode("ascii")
+        # Incompressible comments give the harmless fixture a command length
+        # comparable to real launchers while testing cmd's quoting and UTF-8.
+        generator = random.Random(7)
+        comment = "".join(generator.choices(string.ascii_letters + string.digits, k=6500))
+        fixture = "#" + comment + "\nif (-not $TableClothGuestSource -or $TableClothGuestSource.Length -lt 6500) { throw 'Source variable did not reach the child scriptblock.' }\n$value = '" + value + "'\nWrite-Output ([Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($value)))\n"
+        command = wsb.make_command(fixture)
+        self.assertGreater(len(command), 6500)
+        self.assertLessEqual(len(command), 8000)
+        self.assertTrue(command.isascii())
+        with tempfile.TemporaryDirectory() as directory:
+            batch = Path(directory) / "benign-loader.cmd"
+            batch.write_text("@echo off\r\n" + command + "\r\n", encoding="ascii", newline="")
+            result = subprocess.run(
+                [shutil.which("cmd.exe"), "/d", "/c", str(batch)],
+                text=True, capture_output=True, timeout=30,
+            )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn(expected, result.stdout)
+
+    def test_compressed_loader_rejects_commands_above_the_cmd_budget(self):
+        generator = random.Random(8)
+        fixture = "#" + "".join(generator.choices(string.ascii_letters + string.digits, k=12000))
+        with self.assertRaisesRegex(ValueError, "8000-character"):
+            wsb.make_command(fixture)
+
     def run_guest_fragment(self, body):
         encoded_source = base64.b64encode(wsb.BOOTSTRAP.encode("utf-16-le")).decode("ascii")
         harness = r"""
@@ -46,6 +80,97 @@ $main = $ast.EndBlock.Statements | Where-Object { $_ -is [System.Management.Auto
             )
 
     @unittest.skipUnless(shutil.which("powershell.exe"), "Windows PowerShell is unavailable")
+    def test_guest_elevation_preserves_admin_path_and_writes_only_the_retry_source(self):
+        # Only the elevation function runs. Start-Process is replaced before it
+        # can request any host permission; the source fixture is never executed.
+        result = self.run_guest_fragment(r"""
+$function = $ast.EndBlock.Statements | Where-Object { $_ -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $_.Name -eq 'EnsureGuestAdministrator' }
+. ([scriptblock]::Create($function.Extent.Text))
+$script:admin = $true; $script:launches = 0; $script:retry = $null
+function IsGuestAdministrator { return $script:admin }
+function Log { param($message) }
+function Start-Process {
+    param($FilePath,$ArgumentList,$Verb,[switch]$Wait,[switch]$PassThru,$ErrorAction)
+    $script:launches++
+    if ($Verb -ne 'RunAs' -or -not $Wait -or -not $PassThru -or $ErrorAction -ne 'Stop') { throw 'Incorrect elevation options.' }
+    if ($FilePath -ne "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe") { throw 'Incorrect guest PowerShell path.' }
+    if ($ArgumentList -notmatch '-File "([^"]+)"$') { throw 'Retry source path was not quoted.' }
+    $script:retry = $Matches[1]
+    if ([IO.File]::ReadAllText($script:retry,[Text.Encoding]::Unicode) -cne $script:expectedSource) { throw 'Retry source changed.' }
+    $bytes = [IO.File]::ReadAllBytes($script:retry)
+    if ($bytes[0] -ne 255 -or $bytes[1] -ne 254) { throw 'Retry source is not UTF-16LE with BOM.' }
+    return [pscustomobject]@{ExitCode=37}
+}
+if ($null -ne (EnsureGuestAdministrator $null) -or $script:launches -ne 0) { throw 'An elevated file required source or prompted again.' }
+$script:admin = $false
+$script:expectedSource = "Write-Output 'benign source fixture'"
+if ((EnsureGuestAdministrator $script:expectedSource) -ne 37) { throw 'Elevated exit code was not returned.' }
+if ($script:launches -ne 1 -or [IO.File]::Exists($script:retry)) { throw 'Retry source was not cleaned up.' }
+Write-Output 'GUEST_ELEVATION_FUNCTION_PASSED'
+""")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("GUEST_ELEVATION_FUNCTION_PASSED", result.stdout)
+
+    def run_elevation_main_fixture(self, deny):
+        mode = "throw 'UAC_DENIED_FIXTURE'" if deny else "return [pscustomobject]@{ExitCode=37}"
+        return self.run_guest_fragment(r"""
+$functions = $ast.EndBlock.Statements | Where-Object { $_ -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $_.Name -in @('EnsureGuestAdministrator','AssertInstallerHttps') }
+foreach ($function in $functions) { . ([scriptblock]::Create($function.Extent.Text)) }
+$script:retry = $null
+function IsGuestAdministrator { return $false }
+function Log { param($message) Write-Host $message }
+function Start-Process {
+    param($FilePath,$ArgumentList,$Verb,[switch]$Wait,[switch]$PassThru,$ErrorAction)
+    if ($Verb -ne 'RunAs') { throw 'Unexpected app launch.' }
+    if ($ArgumentList -notmatch '-File "([^"]+)"$') { throw 'Missing retry path.' }
+    $script:retry = $Matches[1]
+    if (-not [IO.File]::Exists($script:retry)) { throw 'Source was not written before elevation.' }
+    __MODE__
+}
+function Test-Path { param($LiteralPath) return $false }
+function FindEdge { return $null }
+function Read-Host { param($Prompt) Write-Host 'ERROR_CONSOLE_REMAINED_OPEN'; return '' }
+$site = [pscustomobject]@{Name='Elevation fixture'; Notes=''; Packages=@([pscustomobject]@{Url='https://example.test/never-downloaded.exe'})}
+$work = $PSScriptRoot
+function Set-Content { param($LiteralPath,$Encoding,$Value) }
+function Download { throw 'An installer download must not run in an elevation fixture.' }
+$TableClothGuestSource = $source
+try { & ([scriptblock]::Create($main.Extent.Text)) }
+finally {
+    if (-not $script:retry -or [IO.File]::Exists($script:retry)) { Write-Host 'RETRY_SOURCE_CLEANUP_FAILED' }
+    else { Write-Host 'RETRY_SOURCE_REMOVED' }
+}
+""".replace("__MODE__", mode))
+
+    @unittest.skipUnless(shutil.which("powershell.exe"), "Windows PowerShell is unavailable")
+    def test_elevated_exit_code_is_propagated_by_the_bootstrap(self):
+        result = self.run_elevation_main_fixture(False)
+        self.assertEqual(result.returncode, 37, result.stderr)
+        self.assertIn("RETRY_SOURCE_REMOVED", result.stdout)
+        self.assertNotIn("FAILED:", result.stdout)
+
+    @unittest.skipUnless(shutil.which("powershell.exe"), "Windows PowerShell is unavailable")
+    def test_guest_uac_denial_reaches_the_visible_error_handler(self):
+        result = self.run_elevation_main_fixture(True)
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn("FAILED: UAC_DENIED_FIXTURE", result.stdout)
+        self.assertIn("ERROR_CONSOLE_REMAINED_OPEN", result.stdout)
+        self.assertIn("RETRY_SOURCE_REMOVED", result.stdout)
+
+    @unittest.skipUnless(shutil.which("powershell.exe"), "Windows PowerShell is unavailable")
+    def test_site_without_installation_work_does_not_request_elevation(self):
+        result = self.run_guest_fragment(r"""
+function EnsureGuestAdministrator { throw 'A plain site requested elevation.' }
+$site = [pscustomobject]@{Packages=@(); Extensions=@(); Bootstrap=''}
+$guard = $main.Body.Statements | Where-Object { $_ -is [System.Management.Automation.Language.IfStatementAst] -and $_.Extent.Text -like '*EnsureGuestAdministrator*' }
+if (-not $guard) { throw 'Missing elevation guard.' }
+& ([scriptblock]::Create($guard.Extent.Text))
+Write-Output 'PLAIN_SITE_DID_NOT_ELEVATE'
+""")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("PLAIN_SITE_DID_NOT_ELEVATE", result.stdout)
+
+    @unittest.skipUnless(shutil.which("powershell.exe"), "Windows PowerShell is unavailable")
     def test_http_installer_preflight_stops_before_any_download(self):
         # Keep legacy data visible and preserve the generated site's launcher.
         service = ET.fromstring('<Service Id="Test" Url="http://example.test/"><Packages><Package Name="Legacy" Url="http://example.test/setup.exe"/></Packages></Service>')
@@ -57,6 +182,7 @@ $function = $ast.EndBlock.Statements | Where-Object { $_ -is [System.Management.
 $script:downloads = 0
 function Log { param($message) }
 function Set-Content { param($LiteralPath,$Encoding,$Value) }
+function EnsureGuestAdministrator { throw 'Elevation must not precede installer preflight.' }
 function Download { $script:downloads++; throw 'A download was attempted.' }
 $work = $PSScriptRoot
 $site = [pscustomobject]@{Name='Fixture'; Notes=''; Packages=@(
@@ -221,6 +347,8 @@ function Read-Host { param($Prompt) Write-Host 'ERROR_CONSOLE_REMAINED_OPEN'; re
                     self.assertEqual(actual, wsb.make_wsb(data))
                     root, command, script, embedded = decode(actual)
                     self.assertLessEqual(len(command), wsb.MAX_COMMAND_CHARS)
+                    self.assertTrue(command.isascii())
+                    self.assertEqual(command, wsb.make_command(script))
                     self.assertEqual(embedded, data)
                     self.assertIsNone(root.find("MappedFolders"))
                     self.assertEqual(root.findtext("Networking"), "Enable")

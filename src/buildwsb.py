@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build self-contained Windows Sandbox launchers; never execute catalog code here."""
+"""Build self-contained Windows guest launchers; never execute catalog code here."""
 
 from __future__ import annotations
 
@@ -13,7 +13,17 @@ from urllib.parse import urlsplit
 import xml.etree.ElementTree as ET
 
 MAX_XML_BYTES = 4 * 1024 * 1024
-MAX_COMMAND_CHARS = 32766  # CreateProcessW includes a terminating null in its limit.
+# macSandbox routes LogonCommand through a .cmd file. Leave room below cmd.exe's
+# 8191-character line limit, independently of CreateProcessW's larger limit.
+MAX_COMMAND_CHARS = 8000
+COMMAND_PREFIX = "powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -Command "
+LOADER = (
+    "$m=New-Object IO.MemoryStream(,[Convert]::FromBase64String('__SCRIPT__'));"
+    "$z=New-Object IO.Compression.GZipStream($m,[IO.Compression.CompressionMode]::Decompress);"
+    "$r=New-Object IO.StreamReader($z,[Text.Encoding]::UTF8);"
+    "$TableClothGuestSource=$r.ReadToEnd();"
+    "try{& ([scriptblock]::Create($TableClothGuestSource))}finally{$r.Dispose();$m.Dispose()}"
+)
 ID_PATTERN = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,95}\Z")
 RESERVED_NAMES = {"CON", "PRN", "AUX", "NUL"} | {
     f"{prefix}{number}" for prefix in ("COM", "LPT") for number in range(1, 10)
@@ -92,6 +102,22 @@ function Download([string]$url,[string]$path) {
 function FindEdge {
     @("${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe","$env:ProgramFiles\Microsoft\Edge\Application\msedge.exe") | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
 }
+function IsGuestAdministrator {
+    $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+    try { return (New-Object Security.Principal.WindowsPrincipal($identity)).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator) }
+    finally { $identity.Dispose() }
+}
+function EnsureGuestAdministrator([string]$source) {
+    if (IsGuestAdministrator) { return $null }
+    if (-not $source) { throw 'Missing embedded bootstrap source. Reopen the WSB file.' }
+    Log 'Administrator permission is required inside this Windows guest. Approve its UAC prompt to continue; cancellation stops preparation.'
+    $retry = Join-Path ([IO.Path]::GetTempPath()) ('TableCloth-' + [guid]::NewGuid().ToString('N') + '.ps1')
+    try {
+        [IO.File]::WriteAllText($retry,$source,[Text.Encoding]::Unicode)
+        $elevated = Start-Process -FilePath "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe" -ArgumentList ('-NoLogo -NoProfile -ExecutionPolicy Bypass -File "' + $retry + '"') -Verb RunAs -Wait -PassThru -ErrorAction Stop
+        return [int]$elevated.ExitCode
+    } finally { if ([IO.File]::Exists($retry)) { [IO.File]::Delete($retry) } }
+}
 try {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     Log ('Preparing ' + $site.Name)
@@ -99,6 +125,10 @@ try {
     if ($site.Notes) { Log $site.Notes }
     $site | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $work 'catalog-entry.json') -Encoding UTF8
     foreach ($package in $site.Packages) { AssertInstallerHttps ([uri]$package.Url) }
+    if ($site.Packages -or $site.Extensions -or $site.Bootstrap) {
+        $elevationResult = EnsureGuestAdministrator $TableClothGuestSource
+        if ($null -ne $elevationResult) { exit $elevationResult }
+    }
     $number = 0
     foreach ($package in $site.Packages) {
         $number++
@@ -223,17 +253,23 @@ def service_data(service: ET.Element) -> dict:
     }
 
 
+def make_command(script: str) -> str:
+    """Only a fixed ASCII loader and base64 can enter the native command line."""
+    compressed = base64.b64encode(gzip.compress(script.encode("utf-8"), mtime=0)).decode("ascii")
+    command = COMMAND_PREFIX + '"' + LOADER.replace("__SCRIPT__", compressed) + '"'
+    if len(command) > MAX_COMMAND_CHARS:
+        raise ValueError("Launcher exceeds the supported 8000-character command-line limit.")
+    return command
+
+
 def make_wsb(data: dict) -> bytes:
     payload = base64.b64encode(gzip.compress(
         json.dumps(data, ensure_ascii=False, separators=(",", ":")).encode("utf-8"), mtime=0
     )).decode("ascii")
     script = BOOTSTRAP.replace("__PAYLOAD__", payload)
-    encoded = base64.b64encode(script.encode("utf-16-le")).decode("ascii")
-    command = "powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -EncodedCommand " + encoded
-    if len(command) > MAX_COMMAND_CHARS:
-        raise ValueError(f"Launcher exceeds Windows command-line limit: {data['Id']}")
+    command = make_command(script)
     root = ET.Element("Configuration")
-    root.append(ET.Comment("Generated from the TableCloth catalog. Runs installers only inside Windows Sandbox."))
+    root.append(ET.Comment("Generated from the TableCloth catalog. Runs installers only inside the Windows guest."))
     for name, value in {
         "VGpu": "Disable", "Networking": "Enable", "AudioInput": "Disable",
         "VideoInput": "Disable", "ProtectedClient": "Enable",
