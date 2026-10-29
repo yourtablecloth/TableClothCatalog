@@ -19,6 +19,7 @@ class Page(HTMLParser):
         self.links = []
         self.ids = []
         self.scripts = []
+        self.images = []
         self.meta = []
         self.feed(text)
 
@@ -30,6 +31,8 @@ class Page(HTMLParser):
             self.links.append(attributes['href'])
         if tag == 'script':
             self.scripts.append(attributes)
+        if tag == 'img':
+            self.images.append(attributes)
         if tag == 'meta':
             self.meta.append(attributes)
 
@@ -88,6 +91,9 @@ class SiteTests(unittest.TestCase):
             for script in page.scripts:
                 if script.get('src', '').startswith('/'):
                     self.assertTrue((self.output / script['src'].lstrip('/')).is_file())
+            for image in page.images:
+                self.assertTrue(image.get('src', '').startswith('/'))
+                self.assertTrue((self.output / image['src'].lstrip('/')).is_file(), image['src'])
         self.assertTrue((self.output / 'Catalog.xml').is_file())
         self.assertTrue((self.output / 'SkillCatalog.xml').is_file())
 
